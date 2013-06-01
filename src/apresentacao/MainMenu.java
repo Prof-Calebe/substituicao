@@ -2,6 +2,8 @@ package apresentacao;
 
 import java.awt.Toolkit;
 import auxiliar.Perfil;
+import modelo.UsuarioModel;
+import servico.AdministrarUsuariosService;
 
 /*
  * To change this template, choose Tools | Templates
@@ -17,14 +19,19 @@ public class MainMenu extends javax.swing.JFrame {
     /**
      * Creates new form MainMenu
      */
-    public MainMenu(Perfil perfil) {
+    
+    private UsuarioModel user;
+    
+    public MainMenu(UsuarioModel user) {
         initComponents();
-        btnGroup_Opcoes.add(rbtn_AlocacoesConfirmadas);
-        btnGroup_Opcoes.add(rbtn_AlocacoesPendentes);
+//        btnGroup_Opcoes.add(rbtn_AlocacoesConfirmadas);
+        btnGroup_Opcoes.add(rbtn_AdministrarAlocacoes);
         btnGroup_Opcoes.add(rbtn_CriarUsuarios);
         btnGroup_Opcoes.add(rbtn_EmitirRelatorios);
         btnGroup_Opcoes.add(rbtn_NovaNotificacaoAusencia);
-        resolverTelasVisiveisPorPerfil(perfil);
+        resolverTelasVisiveisPorPerfil(user);
+        
+        this.user = user;
         
         this.setLocationRelativeTo(null);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg"));
@@ -42,8 +49,7 @@ public class MainMenu extends javax.swing.JFrame {
         btnGroup_Opcoes = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         rbtn_NovaNotificacaoAusencia = new javax.swing.JRadioButton();
-        rbtn_AlocacoesPendentes = new javax.swing.JRadioButton();
-        rbtn_AlocacoesConfirmadas = new javax.swing.JRadioButton();
+        rbtn_AdministrarAlocacoes = new javax.swing.JRadioButton();
         rbtn_EmitirRelatorios = new javax.swing.JRadioButton();
         rbtn_CriarUsuarios = new javax.swing.JRadioButton();
         btn_Sair = new javax.swing.JButton();
@@ -59,14 +65,12 @@ public class MainMenu extends javax.swing.JFrame {
         rbtn_NovaNotificacaoAusencia.setSelected(true);
         rbtn_NovaNotificacaoAusencia.setText("Nova Notificação de Ausência");
 
-        rbtn_AlocacoesPendentes.setText("Alocações Pendentes");
-        rbtn_AlocacoesPendentes.addActionListener(new java.awt.event.ActionListener() {
+        rbtn_AdministrarAlocacoes.setText("AdministrarAlocações");
+        rbtn_AdministrarAlocacoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtn_AlocacoesPendentesActionPerformed(evt);
+                rbtn_AdministrarAlocacoesActionPerformed(evt);
             }
         });
-
-        rbtn_AlocacoesConfirmadas.setText("Alocações Confirmadas");
 
         rbtn_EmitirRelatorios.setText("Emitir Relatórios");
 
@@ -99,9 +103,8 @@ public class MainMenu extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(rbtn_AlocacoesPendentes)
+                                    .addComponent(rbtn_AdministrarAlocacoes)
                                     .addComponent(rbtn_NovaNotificacaoAusencia)
-                                    .addComponent(rbtn_AlocacoesConfirmadas)
                                     .addComponent(rbtn_EmitirRelatorios)
                                     .addComponent(rbtn_CriarUsuarios))))
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -119,10 +122,8 @@ public class MainMenu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rbtn_NovaNotificacaoAusencia)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rbtn_AlocacoesPendentes)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rbtn_AlocacoesConfirmadas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rbtn_AdministrarAlocacoes)
+                .addGap(23, 23, 23)
                 .addComponent(rbtn_EmitirRelatorios)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rbtn_CriarUsuarios)
@@ -136,9 +137,9 @@ public class MainMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void rbtn_AlocacoesPendentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtn_AlocacoesPendentesActionPerformed
+    private void rbtn_AdministrarAlocacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtn_AdministrarAlocacoesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rbtn_AlocacoesPendentesActionPerformed
+    }//GEN-LAST:event_rbtn_AdministrarAlocacoesActionPerformed
 
     private void btn_SairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SairActionPerformed
         try {
@@ -149,15 +150,17 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_SairActionPerformed
 
     private void btn_ConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ConfirmarActionPerformed
-        if (rbtn_AlocacoesConfirmadas.isSelected()) {
+        if (rbtn_AdministrarAlocacoes.isSelected()) {
             this.setVisible(false);
-            AlocacoesPendentes alocacoesPendentes = new AlocacoesPendentes(this, false);
+            AlocacoesPendentes alocacoesPendentes = new AlocacoesPendentes(this, this.user);
             alocacoesPendentes.setVisible(true);
-        } else if (rbtn_AlocacoesPendentes.isSelected()) {
-            this.setVisible(false);
-            AlocacoesPendentes alocacoesPendentes = new AlocacoesPendentes(this, true);
-            alocacoesPendentes.setVisible(true);
-        } else if (rbtn_CriarUsuarios.isSelected()){
+        }
+//        else if (rbtn_AlocacoesPendentes.isSelected()) {
+//            this.setVisible(false);
+//            AlocacoesPendentes alocacoesPendentes = new AlocacoesPendentes(this, true);
+//            alocacoesPendentes.setVisible(true);
+//        } 
+        else if (rbtn_CriarUsuarios.isSelected()){
             this.setVisible(false);
             AdministrarUsuarios adminsitrarUsuarios = new AdministrarUsuarios(this);
             adminsitrarUsuarios.setVisible(true);
@@ -172,20 +175,22 @@ public class MainMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_ConfirmarActionPerformed
 
-    private void resolverTelasVisiveisPorPerfil(Perfil perfil){
+    private void resolverTelasVisiveisPorPerfil(UsuarioModel usuario){
+        
+        Perfil perfil = usuario.profile;
         
         if(perfil == Perfil.ADMINISTRADOR){ //admin
 
         }
         else if (perfil == Perfil.FUNCIONARIO){ //Funcionário
             
-            rbtn_AlocacoesConfirmadas.setVisible(false);
+//            rbtn_AlocacoesConfirmadas.setVisible(false);
             rbtn_CriarUsuarios.setVisible(false);
             rbtn_EmitirRelatorios.setVisible(false);
             
         }else if(perfil == Perfil.PROFESSOR){ //Professor
             
-            rbtn_AlocacoesConfirmadas.setVisible(false);
+  //          rbtn_AlocacoesConfirmadas.setVisible(false);
             rbtn_CriarUsuarios.setVisible(false);
             rbtn_EmitirRelatorios.setVisible(false);
             
@@ -224,7 +229,11 @@ public class MainMenu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainMenu(Perfil.ADMINISTRADOR).setVisible(true);
+                AdministrarUsuariosService userService = new AdministrarUsuariosService();
+
+                UsuarioModel usuarioLogando = userService.obterUsuario("admin");
+                
+                new MainMenu(usuarioLogando).setVisible(true);
             }
         });
     }
@@ -233,8 +242,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JButton btn_Confirmar;
     private javax.swing.JButton btn_Sair;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JRadioButton rbtn_AlocacoesConfirmadas;
-    private javax.swing.JRadioButton rbtn_AlocacoesPendentes;
+    private javax.swing.JRadioButton rbtn_AdministrarAlocacoes;
     private javax.swing.JRadioButton rbtn_CriarUsuarios;
     private javax.swing.JRadioButton rbtn_EmitirRelatorios;
     private javax.swing.JRadioButton rbtn_NovaNotificacaoAusencia;

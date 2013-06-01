@@ -39,9 +39,8 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="rbtn_AlocacoesPendentes" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rbtn_AdministrarAlocacoes" min="-2" max="-2" attributes="0"/>
                                   <Component id="rbtn_NovaNotificacaoAusencia" min="-2" max="-2" attributes="0"/>
-                                  <Component id="rbtn_AlocacoesConfirmadas" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="rbtn_EmitirRelatorios" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="rbtn_CriarUsuarios" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -67,10 +66,8 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="rbtn_NovaNotificacaoAusencia" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="rbtn_AlocacoesPendentes" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="rbtn_AlocacoesConfirmadas" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Component id="rbtn_AdministrarAlocacoes" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               <Component id="rbtn_EmitirRelatorios" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="rbtn_CriarUsuarios" min="-2" max="-2" attributes="0"/>
@@ -96,18 +93,13 @@
         <Property name="text" type="java.lang.String" value="Nova Notifica&#xe7;&#xe3;o de Aus&#xea;ncia"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="rbtn_AlocacoesPendentes">
+    <Component class="javax.swing.JRadioButton" name="rbtn_AdministrarAlocacoes">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Aloca&#xe7;&#xf5;es Pendentes"/>
+        <Property name="text" type="java.lang.String" value="AdministrarAloca&#xe7;&#xf5;es"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbtn_AlocacoesPendentesActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbtn_AdministrarAlocacoesActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JRadioButton" name="rbtn_AlocacoesConfirmadas">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Aloca&#xe7;&#xf5;es Confirmadas"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JRadioButton" name="rbtn_EmitirRelatorios">
       <Properties>
