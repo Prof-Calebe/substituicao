@@ -22,7 +22,7 @@ public class ListaProfessoresService {
    private ProfessorJpaController controller;
     
     public ListaProfessoresService(){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProSubPU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
         controller = new ProfessorJpaController(emf);
     }
     

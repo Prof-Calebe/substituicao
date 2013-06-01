@@ -33,7 +33,7 @@ public class NotificacaoService {
     private ProfessorJpaController profController;
     
     public NotificacaoService(){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProSubPU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
         ausenciaController = new AusenciaJpaController(emf);
 //        periodoController = new PeriodoJpaController(emf);
         profController = new ProfessorJpaController(emf);

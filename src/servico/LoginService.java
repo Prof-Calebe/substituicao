@@ -23,7 +23,7 @@ public class LoginService {
     private UsuarioJpaController controller;
     
     public LoginService(){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProSubPU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
         controller = new UsuarioJpaController(emf);
     }
     
