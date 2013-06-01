@@ -53,4 +53,17 @@ public class ListaProfessoresServiceTest {
         Assert.assertEquals("Calebe", modelos.get(0).Nome);
         Assert.assertEquals("Ana Claudia", modelos.get(1).Nome);
     }
+    
+    @Test
+    public void testeDeveAcharProfessorPorNome(){
+        
+        ProfessorModel modelo = serviceEmTeste.obterProfessor("ariovaldsssonnnn");
+        
+        Assert.assertNull(modelo);
+        
+        modelo = serviceEmTeste.obterProfessor("Calebe");
+        
+        Assert.assertNotNull(modelo);
+        
+    }
 }

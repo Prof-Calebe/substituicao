@@ -7,14 +7,12 @@ package servico;
 import datamapper.AusenciaJpaController;
 import datamapper.ProfessorJpaController;
 import datamapper.exceptions.NonexistentEntityException;
-import dominio.Aula;
 import dominio.Ausencia;
 import dominio.EstadoAusencia;
 import dominio.Professor;
 import modelo.AusenciaModel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -41,9 +39,6 @@ public class NotificacaoService {
     
     public String notificarAusencia(Long idProfessor, String dataInicio, String dataFim, String motivo, Long idProfessorSubstituto) throws ParseException {
         
-        //Calendar inicio = Calendar.getInstance();
-        //Calendar fim = Calendar.getInstance();
-        
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
         
@@ -51,14 +46,6 @@ public class NotificacaoService {
         DateTime fim = new DateTime(sdf.parse(dataFim));
         
         Interval periodo = new Interval(inicio, fim);
-        
-        
-        //inicio.setTime(sdf.parse(dataInicio));
-        //fim.setTime(sdf.parse(dataFim));
-        
-        //Periodo periodo = new Periodo(inicio, fim);
-        
-        //periodoController.create(periodo);
         
         Professor professor = profController.findProfessor(idProfessor);
         Professor professorSubstituto = profController.findProfessor(idProfessorSubstituto);
@@ -78,9 +65,6 @@ public class NotificacaoService {
     }
 
     public void editarAusencia(String codigo, String dataInicio, String dataFim, String motivo, Long idSubstituto) throws ParseException, NonexistentEntityException, Exception {
-        
-        //Calendar inicio = Calendar.getInstance();
-        //Calendar fim = Calendar.getInstance();
         
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
@@ -115,7 +99,6 @@ public class NotificacaoService {
             modelo.professorSubstituto = ausencia.getIndicacaoSubstituto().getNome();
             modelo.estado = this.determinarEstado(ausencia.getEstado());
             modelo.id = ausencia.getId();
-            //Periodo p = ausencia.getPeriodo();
             Interval p = ausencia.getPeriodo();
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             modelo.dataInicio = sdf.format(p.getStart().toDate());

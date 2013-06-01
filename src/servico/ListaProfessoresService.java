@@ -43,4 +43,20 @@ public class ListaProfessoresService {
         
         return modelos;
     }
+    
+    public ProfessorModel obterProfessor(String nome){
+        
+        Professor professor = controller.findProfessor(nome);
+        
+        if(professor == null)
+            return null;
+        
+        ProfessorModel model = new ProfessorModel();
+        
+        model.Nome = professor.getNome();
+        model.id = professor.getId();
+        
+        return model;
+        
+    }
 }
