@@ -1,0 +1,6 @@
+language: java
+jdk:
+  - oraclejdk7
+  
+before_script:
+  - mysql -e 'create database prosub;'
