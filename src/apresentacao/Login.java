@@ -146,7 +146,7 @@ public class Login extends javax.swing.JFrame {
                        AdministrarUsuariosService usuarioService = new AdministrarUsuariosService();
                        UsuarioModel model = usuarioService.obterUsuario(usuario);
                        
-                       MainMenu mainMenu = new MainMenu(model.profile);
+                       MainMenu mainMenu = new MainMenu(model);
                        mainMenu.setVisible(true);
                        this.dispose();
                     }
