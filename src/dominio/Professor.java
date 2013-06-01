@@ -34,15 +34,18 @@ public class Professor implements Serializable {
     
     private String nome;
     
+    private String username;
+    
     @OneToMany
     private List<Aula> grade;
     
     
     protected Professor(){}
 
-    public Professor(String nome) {
+    public Professor(String nome, String username) {
         this.nome = nome;
         this.grade = new LinkedList<Aula>();
+        this.username = username;
         
     }
 
@@ -187,5 +190,12 @@ public class Professor implements Serializable {
 //        
 //        return diasEntre;
 //    }
+
+    /**
+     * @return the username
+     */
+    public String getUsername() {
+        return username;
+    }
     
 }

@@ -4,6 +4,7 @@
  */
 package servico;
 
+import auxiliar.Perfil;
 import datamapper.PopulateDB;
 import datamapper.UsuarioJpaController;
 import datamapper.exceptions.NonexistentEntityException;
@@ -63,7 +64,7 @@ public class AdministrarUsuariosServiceTest {
     @Test
     public void testeDeveSalvarUsuario() throws NonexistentEntityException {
         
-        serviceEmTeste.SalvarUsuario("Victor hugo", "senhaDificil", 1);
+        serviceEmTeste.SalvarUsuario("Victor hugo", "senhaDificil", Perfil.FUNCIONARIO);
 
         Usuario usuarioQueEuColoquei = controller.findUsuario(proximoId);
         
@@ -76,12 +77,12 @@ public class AdministrarUsuariosServiceTest {
     @Test
     public void testeEditarUsuario() throws NonexistentEntityException, Exception{
               
-        serviceEmTeste.EditarUsuario("novaSenhaDificil", 2, idUsuarioJaNoBanco);
+        serviceEmTeste.EditarUsuario("novaSenhaDificil", Perfil.PROFESSOR, idUsuarioJaNoBanco);
         
         Usuario usuarioModificado = controller.findUsuario(idUsuarioJaNoBanco);
         
         Assert.assertEquals("novaSenhaDificil", usuarioModificado.getSenha());
-        Assert.assertEquals(2, usuarioModificado.getPermissao());
+        Assert.assertEquals(Perfil.PROFESSOR, usuarioModificado.getPermissao());
         
         
     }

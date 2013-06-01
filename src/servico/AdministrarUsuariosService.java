@@ -4,6 +4,7 @@
  */
 package servico;
 
+import auxiliar.Perfil;
 import datamapper.UsuarioJpaController;
 import datamapper.exceptions.NonexistentEntityException;
 import dominio.Usuario;
@@ -28,7 +29,7 @@ public class AdministrarUsuariosService {
         //controller = new UsuarioJpaController(emf);
     }
     
-    public void SalvarUsuario(String Nome, String Senha, int profile){
+    public void SalvarUsuario(String Nome, String Senha, Perfil profile){
         UsuarioJpaController controller = new UsuarioJpaController(emf);
         Usuario usuario = new Usuario(Nome);
         usuario.setSenha(Senha);
@@ -36,7 +37,7 @@ public class AdministrarUsuariosService {
         controller.create(usuario);
     }
     
-    public void EditarUsuario(String senha, int profile, Long id) throws NonexistentEntityException, Exception{
+    public void EditarUsuario(String senha, Perfil profile, Long id) throws NonexistentEntityException, Exception{
         
         UsuarioJpaController controller = new UsuarioJpaController(emf);
         Usuario usuarioAEditar = controller.findUsuario(id);

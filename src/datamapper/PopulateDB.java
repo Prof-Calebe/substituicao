@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package datamapper;
+import auxiliar.Perfil;
 import dominio.Aula;
 import dominio.Professor;
 import dominio.Usuario;
@@ -171,10 +172,10 @@ public class PopulateDB {
         Aula aula2 = new Aula(Calendar.MONDAY, periodo2);
         aulaJpa.create(aula2);
         
-        Professor prof1 = new Professor("Calebe");
+        Professor prof1 = new Professor("Calebe", "calebepb");
         prof1.adicionarAula(aula);
         
-        Professor prof2 = new Professor("Ana Claudia");
+        Professor prof2 = new Professor("Ana Claudia", "anarossi");
         prof2.adicionarAula(aula2);
         
         
@@ -188,16 +189,16 @@ public class PopulateDB {
         
         UsuarioJpaController usuarioJpa = new UsuarioJpaController(emf);
         
-        Usuario u1 = new Usuario("bob");
-        u1.setPermissao(3);
+        Usuario u1 = new Usuario("calebe");
+        u1.setPermissao(Perfil.PROFESSOR);
         
         Usuario u2 = new Usuario("jane");
-        u2.setPermissao(2);
+        u2.setPermissao(Perfil.FUNCIONARIO);
         u2.setSenha("mackenzie");
         
         Usuario u3 = new Usuario("admin");
         u3.setSenha("admin");
-        u3.setPermissao(1);
+        u3.setPermissao(Perfil.ADMINISTRADOR);
         
         
         usuarioJpa.create(u1);

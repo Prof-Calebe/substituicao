@@ -17,7 +17,7 @@ public class MainMenu extends javax.swing.JFrame {
     /**
      * Creates new form MainMenu
      */
-    public MainMenu(int perfil) {
+    public MainMenu(Perfil perfil) {
         initComponents();
         btnGroup_Opcoes.add(rbtn_AlocacoesConfirmadas);
         btnGroup_Opcoes.add(rbtn_AlocacoesPendentes);
@@ -172,18 +172,18 @@ public class MainMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_ConfirmarActionPerformed
 
-    private void resolverTelasVisiveisPorPerfil(int perfil){
+    private void resolverTelasVisiveisPorPerfil(Perfil perfil){
         
-        if(perfil == 1){ //admin
+        if(perfil == Perfil.ADMINISTRADOR){ //admin
 
         }
-        else if (perfil == 2){ //Funcionário
+        else if (perfil == Perfil.FUNCIONARIO){ //Funcionário
             
             rbtn_AlocacoesConfirmadas.setVisible(false);
             rbtn_CriarUsuarios.setVisible(false);
             rbtn_EmitirRelatorios.setVisible(false);
             
-        }else if(perfil == 3){ //Professor
+        }else if(perfil == Perfil.PROFESSOR){ //Professor
             
             rbtn_AlocacoesConfirmadas.setVisible(false);
             rbtn_CriarUsuarios.setVisible(false);
@@ -224,8 +224,7 @@ public class MainMenu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                int perfilAdmin = 1;
-                new MainMenu(perfilAdmin).setVisible(true);
+                new MainMenu(Perfil.ADMINISTRADOR).setVisible(true);
             }
         });
     }

@@ -4,6 +4,8 @@
  */
 package modelo;
 
+import auxiliar.Perfil;
+
 
 /**
  *
@@ -11,7 +13,7 @@ package modelo;
  */
 public class UsuarioModel{
     
-    public int profile;
+    public Perfil profile;
     public String Usuario;
     public String Senha;
     public Long id;

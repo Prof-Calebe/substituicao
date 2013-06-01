@@ -4,6 +4,7 @@
  */
 package dominio;
 
+import auxiliar.Perfil;
 import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
@@ -17,7 +18,7 @@ import static org.junit.Assert.*;
 public class UsuarioTest {
 
     private Usuario User;
-    private int profile;
+    private Perfil profile;
     private String Usuario;
     private String Senha;
     
@@ -28,7 +29,7 @@ public class UsuarioTest {
     public void setUp() {
         
         User = new Usuario("Calebe");
-        profile = 1;
+        profile = Perfil.FUNCIONARIO;
         Usuario = "Calebe";
         Senha = "123456";
     }
@@ -55,7 +56,7 @@ public class UsuarioTest {
     public void ValidaPermissao(){
         Assert.assertEquals(User.getPermissao(), profile);
         //Alterando profile para teste negativo
-        this.profile = 2;
+        this.profile = Perfil.ADMINISTRADOR;
         Assert.assertNotSame(User.getPermissao(), this.profile);
     }
     

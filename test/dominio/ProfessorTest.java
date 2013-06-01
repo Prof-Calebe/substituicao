@@ -30,6 +30,7 @@ public class ProfessorTest {
     private Professor objetoEmTeste;
     private Interval periodo;
     private String nome;
+    private String username;
     private List<Aula> aulas;
     
     private Interval p1;
@@ -57,8 +58,9 @@ public class ProfessorTest {
     public void setUp() {
         
         nome = "ariovaldson";
+        username = "ari";
             
-        objetoEmTeste = new Professor(nome);
+        objetoEmTeste = new Professor(nome, username);
         
         DateTime limiteInfP1 = new DateTime(2013, 05, 20, 22, 40);
         DateTime limiteSupP1 = new DateTime(2013, 05, 20, 23, 59);
@@ -129,6 +131,7 @@ public class ProfessorTest {
     public void testeDeveSerInicializadoComNome() {
 
         Assert.assertEquals(objetoEmTeste.getNome(), nome);
+        Assert.assertEquals(objetoEmTeste.getUsername(), username);
     }
 
     
@@ -149,13 +152,13 @@ public class ProfessorTest {
 
         Assert.assertFalse(objetoEmTeste.EhCompativelCom(aulas));
         
-        objetoEmTeste = new Professor("outroNome");
+        objetoEmTeste = new Professor("outroNome", "username");
         
         objetoEmTeste.adicionarAula(aula6);
         
         Assert.assertFalse(objetoEmTeste.EhCompativelCom(aulas));
         
-        objetoEmTeste = new Professor("outroNomeAinda");
+        objetoEmTeste = new Professor("outroNomeAinda", "username");
         
         objetoEmTeste.adicionarAula(aula7);
         
@@ -177,7 +180,7 @@ public class ProfessorTest {
         
         Aula aula1 = new Aula(DateTimeConstants.TUESDAY, intervalAula1);
         
-        objetoEmTeste = new Professor("umProf");
+        objetoEmTeste = new Professor("umProf", "username");
         objetoEmTeste.adicionarAula(aula1);
         
         List<Aula> aulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(ausencia1);
@@ -191,7 +194,7 @@ public class ProfessorTest {
         
         Aula aula2 = new Aula(DateTimeConstants.FRIDAY, intervalAula2);     
         
-        objetoEmTeste = new Professor("outroProf");
+        objetoEmTeste = new Professor("outroProf", "username");
         objetoEmTeste.adicionarAula(aula2);
         
         aulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(ausencia1);
@@ -213,7 +216,7 @@ public class ProfessorTest {
         
         Aula aula3 = new Aula(DateTimeConstants.WEDNESDAY, intervalAula3);      
         
-        objetoEmTeste = new Professor("outroProf");
+        objetoEmTeste = new Professor("outroProf", "username");
         objetoEmTeste.adicionarAula(aula3);
         
         aulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(ausencia2);
@@ -228,7 +231,7 @@ public class ProfessorTest {
         
         Aula aula4 = new Aula(DateTimeConstants.WEDNESDAY, intervalAula4);      
         
-        objetoEmTeste = new Professor("outroProf");
+        objetoEmTeste = new Professor("outroProf", "username");
         objetoEmTeste.adicionarAula(aula4);
         
         aulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(ausencia2);

@@ -1,5 +1,6 @@
 package apresentacao;
 
+import auxiliar.Perfil;
 import datamapper.exceptions.NonexistentEntityException;
 import modelo.UsuarioModel;
 import servico.AdministrarUsuariosService;
@@ -300,13 +301,16 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
 
     private void salvarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarButtonActionPerformed
         aum = new AdministrarUsuariosService();
+        Perfil perfil = (Perfil)cmb_Perfil.getSelectedItem();
         
         if(rbtn_EditarUsuario.isSelected()){
             try {
                 
                 UsuarioModel model = aum.obterUsuario(txt_Nome.getText());
                 
-                aum.EditarUsuario(txt_Senha.getText(), cmb_Perfil.getSelectedIndex(), model.id);
+                
+                
+                aum.EditarUsuario(txt_Senha.getText(), perfil, model.id);
             } catch (NonexistentEntityException ex) {
                 Logger.getLogger(AdministrarUsuarios.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
@@ -314,7 +318,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
             }
         }
         else{
-            aum.SalvarUsuario(txt_Nome.getText(),txt_Senha.getText(),cmb_Perfil.getSelectedIndex());
+            aum.SalvarUsuario(txt_Nome.getText(),txt_Senha.getText(), perfil);
         }
 		
     }//GEN-LAST:event_salvarButtonActionPerformed
@@ -335,7 +339,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
                     txt_Senha.setText(modelo.Senha);
                     txt_Confirme.setText(modelo.Senha);
 
-                    cmb_Perfil.setSelectedIndex(modelo.profile);
+                    cmb_Perfil.setSelectedItem(modelo.profile);
                 }
     }//GEN-LAST:event_cmb_NomeItemStateChanged
 

@@ -4,6 +4,7 @@
  */
 package dominio;
 
+import auxiliar.Perfil;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     
     private Long id;
-    private int profile;
+    private Perfil profile;
     private String Usuario;
     private String Senha;
 
@@ -34,19 +35,19 @@ public class Usuario implements Serializable {
     //
     
     public Usuario(String Usuario){
-        this.profile = 1;
+        this.profile = Perfil.FUNCIONARIO;
         this.Usuario = Usuario;
         this.Senha = "123456";
     }
     
-    public Usuario(String Usuario, String Senha, int profile){
+    public Usuario(String Usuario, String Senha, Perfil profile){
         this.profile = profile;
         this.Usuario = Usuario;
         this.Senha = Senha;
     }
     
     public Usuario(String Usuario, String Senha){
-        this.profile = 2;
+        this.profile = Perfil.ADMINISTRADOR;
         this.Usuario = Usuario;
         this.Senha = Senha;
     }
@@ -59,7 +60,7 @@ public class Usuario implements Serializable {
         return this.Senha;
     }
     
-    public int getPermissao(){
+    public Perfil getPermissao(){
         return this.profile;
     }
     
@@ -72,7 +73,7 @@ public class Usuario implements Serializable {
     }
     
     
-    public void setPermissao(int profile){
+    public void setPermissao(Perfil profile){
         this.profile = profile;
     }
     
