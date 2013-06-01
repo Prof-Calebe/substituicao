@@ -6,7 +6,9 @@ package datamapper;
 
 import datamapper.exceptions.NonexistentEntityException;
 import dominio.Ausencia;
+import dominio.Professor;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -93,6 +95,25 @@ public class AusenciaJpaController implements Serializable {
     public List<Ausencia> findAusenciaEntities(int maxResults, int firstResult) {
         return findAusenciaEntities(false, maxResults, firstResult);
     }
+    
+    public List<Ausencia> listAusenciasPorProfessor(Professor prof){
+        List<Ausencia> ausencias = this.findAusenciaEntities();
+        
+        List<Ausencia> ausenciasComProfessor = new ArrayList<Ausencia>();
+        
+        for(Ausencia ausencia : ausencias){
+            
+            if(ausencia.getProfessor().equals(prof)){
+                ausenciasComProfessor.add(ausencia);
+            }
+            
+        }
+        
+        return ausenciasComProfessor;
+    }
+    
+    
+    
 
     private List<Ausencia> findAusenciaEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();

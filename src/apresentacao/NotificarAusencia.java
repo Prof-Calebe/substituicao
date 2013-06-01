@@ -255,7 +255,7 @@ public class NotificarAusencia extends javax.swing.JFrame {
             String nomeProfEscolhido = (String)evt.getItem();
             
             ListaProfessoresService profService = new ListaProfessoresService();
-            
+             
             List<ProfessorModel> professores = profService.ListarProfessores();
             
             for (ProfessorModel professor : professores){

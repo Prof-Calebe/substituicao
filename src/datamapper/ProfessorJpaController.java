@@ -126,6 +126,16 @@ public class ProfessorJpaController implements Serializable {
         
         return null;
     }
+    
+    public Professor findProfessorPorUsername(String username){
+        List<Professor> professores = this.findProfessorEntities();
+        for(Professor professor : professores){
+            if(professor.getUsername().equals(username))
+                return professor;
+        }
+        
+        return null;
+    }    
 
     public int getProfessorCount() {
         EntityManager em = getEntityManager();

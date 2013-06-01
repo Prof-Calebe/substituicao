@@ -1,13 +1,17 @@
 package apresentacao;
 
+import auxiliar.Perfil;
 import dominio.EstadoAusencia;
 import modelo.AusenciaModel;
 import servico.ListaAlocacoesPendentesService;
 import servico.NotificacaoService;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
+import modelo.UsuarioModel;
+import servico.AdministrarUsuariosService;
 
 /*
  * To change this template, choose Tools | Templates
@@ -25,14 +29,14 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
     /**
      * Creates new form AlocacoesPendentes
      */
-    public AlocacoesPendentes() {
+    public AlocacoesPendentes(UsuarioModel usuario) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg"));
-        this.populateGrid();
+        this.populateGrid(usuario);
     }
 
-    public AlocacoesPendentes(JFrame previous, boolean isPending) {
+    public AlocacoesPendentes(JFrame previous, UsuarioModel usuario) {
         initComponents();
         previousFrame = previous;
         this.setLocationRelativeTo(null);
@@ -40,7 +44,7 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
         
         //if (isPending) {
         btn_RejeitarAlocacao.setEnabled(false);
-        this.populateGrid();
+        this.populateGrid(usuario);
 //            NotificacaoService listaAlocacoesPendentes = new NotificacaoService();
 //            List<AusenciaModel> listaAusencias = listaAlocacoesPendentes.listarAusenciasPorEstado(EstadoAusencia.Alocacao_Pendente);
 //            for (AusenciaModel model : listaAusencias) {
@@ -195,7 +199,7 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
 
     private void btn_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CancelarActionPerformed
         try {
-            this.dispose();
+            this.dispose(); 
             previousFrame.setVisible(true);
         } catch (Exception e) {
             System.out.println("Erro ao retornar para janela anterior!");
@@ -213,9 +217,29 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_EfetuarAlocacaoActionPerformed
 
     
-    private void populateGrid(){
+    private void populateGrid(UsuarioModel usuario){
+        
             NotificacaoService listaAlocacoesPendentes = new NotificacaoService();
-            List<AusenciaModel> listaAusencias = listaAlocacoesPendentes.listarAusenciasPorEstado(EstadoAusencia.Alocacao_Pendente);
+            List<AusenciaModel> listaAusencias = null;
+                    
+                    
+            
+            Perfil perfil = usuario.profile;
+            
+            if(perfil.equals(Perfil.ADMINISTRADOR)){
+                listaAusencias = listaAlocacoesPendentes.listarAusencias();
+            }
+            else if(perfil.equals(Perfil.FUNCIONARIO)){
+                listaAusencias = listaAlocacoesPendentes.listarAusencias();
+            }
+            else if(perfil.equals(Perfil.PROFESSOR)){
+                listaAusencias = listaAlocacoesPendentes.listarAusenciasPorProfessor(usuario.Usuario);
+            }
+            else{
+                //Algum erro
+            }
+        
+            
             for (AusenciaModel model : listaAusencias) {
                 if (model.estado.equals("Alocação pendente")) {
                     DefaultTableModel tableModel = (DefaultTableModel) tbl_Alocacoes.getModel();
@@ -253,7 +277,12 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AlocacoesPendentes().setVisible(true);
+                
+                AdministrarUsuariosService userService = new AdministrarUsuariosService();
+
+                UsuarioModel usuarioLogando = userService.obterUsuario("admin");
+                
+                new AlocacoesPendentes(usuarioLogando).setVisible(true);
             }
         });
     }

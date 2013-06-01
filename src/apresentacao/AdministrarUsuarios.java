@@ -33,11 +33,11 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         btnGroup_Acao.add(rbtn_CriarUsuario);
-        btnGroup_Acao.add(rbtn_EditarUsuario);
+        btnGroup_Acao.add(rbtn_EditarUsuario); 
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg"));
         
         
-
+ 
     }
     
     public AdministrarUsuarios(JFrame previous) {

@@ -93,17 +93,19 @@ public class NotificacaoService {
         
         for(Ausencia ausencia : ausencias){
             
-            AusenciaModel modelo = new AusenciaModel();
+//            AusenciaModel modelo = new AusenciaModel();
+//            
+//            modelo.codigo = ausencia.getCodigo();
+//            modelo.professorAusente = ausencia.getProfessor().getNome();
+//            modelo.professorSubstituto = ausencia.getIndicacaoSubstituto().getNome();
+//            modelo.estado = this.determinarEstado(ausencia.getEstado());
+//            modelo.id = ausencia.getId();
+//            Interval p = ausencia.getPeriodo();
+//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//            modelo.dataInicio = sdf.format(p.getStart().toDate());
+//            modelo.dataFim = sdf.format(p.getEnd().toDate());
             
-            modelo.codigo = ausencia.getCodigo();
-            modelo.professorAusente = ausencia.getProfessor().getNome();
-            modelo.professorSubstituto = ausencia.getIndicacaoSubstituto().getNome();
-            modelo.estado = this.determinarEstado(ausencia.getEstado());
-            modelo.id = ausencia.getId();
-            Interval p = ausencia.getPeriodo();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            modelo.dataInicio = sdf.format(p.getStart().toDate());
-            modelo.dataInicio = sdf.format(p.getEnd().toDate());
+              AusenciaModel modelo = this.montarAusencia(ausencia);
             
             modelos.add(modelo);
         }
@@ -131,22 +133,64 @@ public class NotificacaoService {
         for(Ausencia ausencia : ausencias){
             
             if(ausencia.getEstado().equals(estado)){
-                AusenciaModel modelo = new AusenciaModel();
+                //AusenciaModel modelo = new AusenciaModel();
                 
-                modelo.codigo = ausencia.getCodigo();
-                modelo.professorAusente = ausencia.getProfessor().getNome();
-                modelo.professorSubstituto = ausencia.getIndicacaoSubstituto().getNome();
-                modelo.estado = this.determinarEstado(ausencia.getEstado());
-                modelo.id = ausencia.getId();
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                Interval periodo = ausencia.getPeriodo();
-                modelo.dataInicio = sdf.format(periodo.getStart().toDate());
-                modelo.dataFim = sdf.format(periodo.getEnd().toDate());
+//                modelo.codigo = ausencia.getCodigo();
+//                modelo.professorAusente = ausencia.getProfessor().getNome();
+//                modelo.professorSubstituto = ausencia.getIndicacaoSubstituto().getNome();
+//                modelo.estado = this.determinarEstado(ausencia.getEstado());
+//                modelo.id = ausencia.getId();
+//                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//                Interval periodo = ausencia.getPeriodo();
+//                modelo.dataInicio = sdf.format(periodo.getStart().toDate());
+//                modelo.dataFim = sdf.format(periodo.getEnd().toDate());
+                
+                
+                AusenciaModel modelo = this.montarAusencia(ausencia);
                 
                 modelos.add(modelo);   
             }               
         }            
         return modelos;   
+    }
+    
+    public List<AusenciaModel> listarAusenciasPorProfessor(String usernameProfessor){
+        
+        Professor professor = profController.findProfessorPorUsername(usernameProfessor);
+        
+        List<Ausencia> ausenciasPorProfessor = ausenciaController.listAusenciasPorProfessor(professor);
+        
+        List<AusenciaModel> modelos = new ArrayList<AusenciaModel>();
+        
+        for(Ausencia ausencia : ausenciasPorProfessor){
+            
+            AusenciaModel modelo = this.montarAusencia(ausencia);
+            
+            modelos.add(modelo);
+            
+        }
+        
+        return modelos;
+        
+        
+    }
+    
+    private AusenciaModel montarAusencia(Ausencia ausencia){
+
+        AusenciaModel modelo = new AusenciaModel();
+
+        modelo.codigo = ausencia.getCodigo();
+        modelo.professorAusente = ausencia.getProfessor().getNome();
+        modelo.professorSubstituto = ausencia.getIndicacaoSubstituto().getNome();
+        modelo.estado = this.determinarEstado(ausencia.getEstado());
+        modelo.id = ausencia.getId();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Interval periodo = ausencia.getPeriodo();
+        modelo.dataInicio = sdf.format(periodo.getStart().toDate());
+        modelo.dataFim = sdf.format(periodo.getEnd().toDate());
+        
+        return modelo;
+        
     }
     
 
