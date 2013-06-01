@@ -24,7 +24,7 @@ public class AdministrarUsuariosService {
     
     public AdministrarUsuariosService(){
         
-        emf = Persistence.createEntityManagerFactory("ProSubPU");
+        emf = Persistence.createEntityManagerFactory("pro_subPU");
         //controller = new UsuarioJpaController(emf);
     }
     

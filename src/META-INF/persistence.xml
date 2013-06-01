@@ -3,6 +3,9 @@
   <persistence-unit name="pro_subPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <class>dominio.Usuario</class>
+    <class>dominio.Aula</class>
+    <class>dominio.Ausencia</class>
+    <class>dominio.Professor</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/prosub?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.password" value=""/>
