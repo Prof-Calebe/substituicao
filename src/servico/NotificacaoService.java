@@ -13,6 +13,7 @@ import dominio.Professor;
 import modelo.AusenciaModel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -120,6 +121,32 @@ public class NotificacaoService {
         else{
             return "Aulas canceladas";
         }
+    }
+    
+    public List<AusenciaModel> listarAusenciasPorEstado(EstadoAusencia estado){
+        
+        List<Ausencia> ausencias = ausenciaController.findAusenciaEntities();
+        List<AusenciaModel> modelos = new ArrayList<AusenciaModel>();
+        
+        for(Ausencia ausencia : ausencias){
+            
+            if(ausencia.getEstado().equals(estado)){
+                AusenciaModel modelo = new AusenciaModel();
+                
+                modelo.codigo = ausencia.getCodigo();
+                modelo.professorAusente = ausencia.getProfessor().getNome();
+                modelo.professorSubstituto = ausencia.getIndicacaoSubstituto().getNome();
+                modelo.estado = this.determinarEstado(ausencia.getEstado());
+                modelo.id = ausencia.getId();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                Interval periodo = ausencia.getPeriodo();
+                modelo.dataInicio = sdf.format(periodo.getStart().toDate());
+                modelo.dataFim = sdf.format(periodo.getEnd().toDate());
+                
+                modelos.add(modelo);   
+            }               
+        }            
+        return modelos;   
     }
     
 
