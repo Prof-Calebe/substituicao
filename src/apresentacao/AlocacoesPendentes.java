@@ -100,10 +100,11 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
         setResizable(false);
 
         btn_AceitarAlocacao.setText("Aceitar Alocação");
+        btn_AceitarAlocacao.setActionCommand("Eleger-se para alocação");
 
         tbl_Alocacoes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "Id", "Professor", "Início", "Fim", "Substituto", "Status"
@@ -222,8 +223,6 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
             NotificacaoService listaAlocacoesPendentes = new NotificacaoService();
             List<AusenciaModel> listaAusencias = null;
                     
-                    
-            
             Perfil perfil = usuario.profile;
             
             if(perfil.equals(Perfil.ADMINISTRADOR)){
@@ -234,6 +233,7 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
             }
             else if(perfil.equals(Perfil.PROFESSOR)){
                 listaAusencias = listaAlocacoesPendentes.listarAusenciasPorProfessor(usuario.Usuario);
+                listaAusencias.addAll(listaAlocacoesPendentes.listarAusenciasPorIndicacaoDeSubstituto(usuario.Usuario));
             }
             else{
                 //Algum erro

@@ -3,11 +3,14 @@ package apresentacao;
 import java.awt.Toolkit;
 import java.awt.event.ItemEvent;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import modelo.ProfessorModel;
 import servico.ListaProfessoresService;
 import servico.NotificacaoService;
@@ -58,6 +61,8 @@ public class NotificarAusencia extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         cmb_Professor = new javax.swing.JComboBox();
@@ -75,6 +80,22 @@ public class NotificarAusencia extends javax.swing.JFrame {
         confirmarButton = new javax.swing.JButton();
         txt_dataInicio = new javax.swing.JFormattedTextField();
         txt_dataFim = new javax.swing.JFormattedTextField();
+        adicionarButton = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tabelaIndicacoes = new javax.swing.JTable();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Notificar Ausência");
@@ -116,7 +137,7 @@ public class NotificarAusencia extends javax.swing.JFrame {
         txta_Motivo.setToolTipText("Descreva o motivo da ausência.");
         jScrollPane1.setViewportView(txta_Motivo);
 
-        jLabel7.setText("Professor Sugerido:");
+        jLabel7.setText("Professores que poderão ver a notificação de ausência:");
 
         cmb_ProfessorSugerido.setToolTipText("Sugira um professor para ser o substituto nesta ausência.");
         cmb_ProfessorSugerido.addItemListener(new java.awt.event.ItemListener() {
@@ -143,6 +164,31 @@ public class NotificarAusencia extends javax.swing.JFrame {
 
         txt_dataFim.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
 
+        adicionarButton.setText("Adicionar");
+        adicionarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adicionarButtonActionPerformed(evt);
+            }
+        });
+
+        tabelaIndicacoes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Professor"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tabelaIndicacoes);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -151,41 +197,44 @@ public class NotificarAusencia extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmb_DataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmb_DataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 12, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cmb_Professor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txt_dataInicio)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmb_Professor, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txt_dataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txt_dataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cmb_DataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel3)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmb_DataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel7)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cmb_ProfessorSugerido, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(txt_dataFim))))
+                                .addComponent(adicionarButton))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btn_Cancelar)
-                        .addGap(38, 38, 38)
-                        .addComponent(confirmarButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(cmb_ProfessorSugerido, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(26, 26, 26)
+                        .addComponent(confirmarButton)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,36 +244,34 @@ public class NotificarAusencia extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(cmb_Professor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(txt_dataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(txt_dataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txt_dataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(txt_dataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(cmb_DataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
                     .addComponent(cmb_DataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel6)
-                        .addGap(88, 88, 88))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                    .addComponent(jLabel6)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addComponent(jLabel7)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmb_ProfessorSugerido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                    .addComponent(adicionarButton))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_Cancelar)
                     .addComponent(confirmarButton))
-                .addGap(23, 23, 23))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         pack();
@@ -258,6 +305,8 @@ public class NotificarAusencia extends javax.swing.JFrame {
              
             List<ProfessorModel> professores = profService.ListarProfessores();
             
+            cmb_ProfessorSugerido.addItem("- Indique professores - ");
+            
             for (ProfessorModel professor : professores){
                 
                 if(!professor.Nome.equals(nomeProfEscolhido)){
@@ -272,12 +321,12 @@ public class NotificarAusencia extends javax.swing.JFrame {
 
     private void confirmarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarButtonActionPerformed
         String nomeProfAusente = (String)cmb_Professor.getSelectedItem();
-        String nomeProfSugerido = (String)cmb_ProfessorSugerido.getSelectedItem();
+        //String nomeProfSugerido = (String)cmb_ProfessorSugerido.getSelectedItem();
 
         ListaProfessoresService listProfService = new ListaProfessoresService();
         
         ProfessorModel profAusente = listProfService.obterProfessor(nomeProfAusente);
-        ProfessorModel profSugerido = listProfService.obterProfessor(nomeProfSugerido);
+        //ProfessorModel profSugerido = listProfService.obterProfessor(nomeProfSugerido);
         
         String dataInicio = txt_dataInicio.getText();
         String dataFim = txt_dataFim.getText();
@@ -287,14 +336,41 @@ public class NotificarAusencia extends javax.swing.JFrame {
         String codigoAusencia = null;
                 
         NotificacaoService notService = new NotificacaoService();
+        
+        DefaultTableModel tableModel = (DefaultTableModel) tabelaIndicacoes.getModel();
+        
+        int linhas = tableModel.getRowCount();
+        int colunas = 1;
+        
+        List<String> nomeProfs = new ArrayList<String>();
+        
+        for(int i = 0 ; i < linhas ; i++){
+            nomeProfs.add((String)tableModel.getValueAt(i, 0));
+        }
+        
         try {
-            codigoAusencia = notService.notificarAusencia(profAusente.id, dataInicio, dataFim, motivo, profSugerido.id);
+            codigoAusencia = notService.notificarAusencia(profAusente.id, dataInicio, dataFim, motivo, nomeProfs);
         } catch (ParseException ex) {
             Logger.getLogger(NotificarAusencia.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         JOptionPane.showMessageDialog(null, "Ausência de nº " + codigoAusencia + " foi gerada.", "Notificação de Ausencia", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_confirmarButtonActionPerformed
+
+    private void adicionarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarButtonActionPerformed
+        
+        if(cmb_ProfessorSugerido.getSelectedIndex() != 0 ){
+            
+            String nomeProf = (String) cmb_ProfessorSugerido.getSelectedItem();
+            
+            DefaultTableModel tableModel = (DefaultTableModel) tabelaIndicacoes.getModel();
+            
+            tableModel.addRow(new Object[]{nomeProf});
+            
+            cmb_ProfessorSugerido.removeItemAt(cmb_ProfessorSugerido.getSelectedIndex());
+        }
+        
+    }//GEN-LAST:event_adicionarButtonActionPerformed
 
     private void populateComboProfessor(){
         cmb_Professor.addItem("- Selecione um professor - ");
@@ -308,8 +384,7 @@ public class NotificarAusencia extends javax.swing.JFrame {
             
         } 
     }
-            
-    
+   
     
     /**
      * @param args the command line arguments
@@ -348,6 +423,7 @@ public class NotificarAusencia extends javax.swing.JFrame {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton adicionarButton;
     private javax.swing.JToggleButton btn_Cancelar;
     private javax.swing.JComboBox cmb_DataFim;
     private javax.swing.JComboBox cmb_DataInicio;
@@ -362,6 +438,10 @@ public class NotificarAusencia extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tabelaIndicacoes;
     private javax.swing.JFormattedTextField txt_dataFim;
     private javax.swing.JFormattedTextField txt_dataInicio;
     private javax.swing.JTextArea txta_Motivo;

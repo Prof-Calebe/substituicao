@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.joda.time.DateTime;
@@ -38,7 +40,7 @@ public class NotificacaoService {
         profController = new ProfessorJpaController(emf);
     }
     
-    public String notificarAusencia(Long idProfessor, String dataInicio, String dataFim, String motivo, Long idProfessorSubstituto) throws ParseException {
+    public String notificarAusencia(Long idProfessor, String dataInicio, String dataFim, String motivo, List<String> nomesProfessoresIndicados) throws ParseException {
         
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
@@ -49,15 +51,21 @@ public class NotificacaoService {
         Interval periodo = new Interval(inicio, fim);
         
         Professor professor = profController.findProfessor(idProfessor);
-        Professor professorSubstituto = profController.findProfessor(idProfessorSubstituto);
+        List<Professor> professoresIndicados = new ArrayList<Professor>();
+        
+        //Professor professorSubstituto = profController.findProfessor(idProfessorSubstituto);
         
         Random r = new Random();
         
         String codigo = Integer.toString(r.nextInt(10000));
         
         Ausencia ausencia = new Ausencia(codigo, periodo, professor, motivo);
-        ausencia.indicarSubstituto(professorSubstituto);
+        //ausencia.indicarSubstituto(professorSubstituto);
         
+        for(String nomeProf : nomesProfessoresIndicados){
+            Professor professorIndicado = profController.findProfessor(nomeProf);
+            ausencia.indicarSubstituto(professorIndicado);
+        }
         
         ausenciaController.create(ausencia);
         
@@ -65,26 +73,26 @@ public class NotificacaoService {
         
     }
 
-    public void editarAusencia(String codigo, String dataInicio, String dataFim, String motivo, Long idSubstituto) throws ParseException, NonexistentEntityException, Exception {
-        
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        
-        DateTime inicio = new DateTime(sdf.parse(dataInicio));
-        DateTime fim = new DateTime(sdf.parse(dataFim));
-        
-        Interval periodo = new Interval(inicio, fim);
-        
-        Professor professorSubstituto = profController.findProfessor(idSubstituto);
-        
-        Random r = new Random();
-        
-        Ausencia ausencia = ausenciaController.findAusencia(codigo);
-        ausencia.setPeriodo(periodo);
-        ausencia.setMotivo(motivo);
-        ausencia.indicarSubstituto(professorSubstituto);
-                
-        ausenciaController.edit(ausencia);
-    }
+//    public void editarAusencia(String codigo, String dataInicio, String dataFim, String motivo, Long idSubstituto) throws ParseException, NonexistentEntityException, Exception {
+//        
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//        
+//        DateTime inicio = new DateTime(sdf.parse(dataInicio));
+//        DateTime fim = new DateTime(sdf.parse(dataFim));
+//        
+//        Interval periodo = new Interval(inicio, fim);
+//        
+//        Professor professorSubstituto = profController.findProfessor(idSubstituto);
+//        
+//        Random r = new Random();
+//        
+//        Ausencia ausencia = ausenciaController.findAusencia(codigo);
+//        ausencia.setPeriodo(periodo);
+//        ausencia.setMotivo(motivo);
+//        ausencia.indicarSubstituto(professorSubstituto);
+//                
+//        ausenciaController.edit(ausencia);
+//    }
 
     public List<AusenciaModel> listarAusencias() {
         
@@ -93,19 +101,7 @@ public class NotificacaoService {
         
         for(Ausencia ausencia : ausencias){
             
-//            AusenciaModel modelo = new AusenciaModel();
-//            
-//            modelo.codigo = ausencia.getCodigo();
-//            modelo.professorAusente = ausencia.getProfessor().getNome();
-//            modelo.professorSubstituto = ausencia.getIndicacaoSubstituto().getNome();
-//            modelo.estado = this.determinarEstado(ausencia.getEstado());
-//            modelo.id = ausencia.getId();
-//            Interval p = ausencia.getPeriodo();
-//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//            modelo.dataInicio = sdf.format(p.getStart().toDate());
-//            modelo.dataFim = sdf.format(p.getEnd().toDate());
-            
-              AusenciaModel modelo = this.montarAusencia(ausencia);
+            AusenciaModel modelo = this.montarAusencia(ausencia);
             
             modelos.add(modelo);
         }
@@ -133,19 +129,6 @@ public class NotificacaoService {
         for(Ausencia ausencia : ausencias){
             
             if(ausencia.getEstado().equals(estado)){
-                //AusenciaModel modelo = new AusenciaModel();
-                
-//                modelo.codigo = ausencia.getCodigo();
-//                modelo.professorAusente = ausencia.getProfessor().getNome();
-//                modelo.professorSubstituto = ausencia.getIndicacaoSubstituto().getNome();
-//                modelo.estado = this.determinarEstado(ausencia.getEstado());
-//                modelo.id = ausencia.getId();
-//                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//                Interval periodo = ausencia.getPeriodo();
-//                modelo.dataInicio = sdf.format(periodo.getStart().toDate());
-//                modelo.dataFim = sdf.format(periodo.getEnd().toDate());
-                
-                
                 AusenciaModel modelo = this.montarAusencia(ausencia);
                 
                 modelos.add(modelo);   
@@ -171,9 +154,28 @@ public class NotificacaoService {
         }
         
         return modelos;
-        
-        
     }
+    
+    public List<AusenciaModel> listarAusenciasPorIndicacaoDeSubstituto(String usernameProfessor){
+        
+        Professor professorIndicado = profController.findProfessorPorUsername(usernameProfessor);
+        
+        List<Ausencia> ausenciasComIndicacaoDeSubstituto = ausenciaController.listAusenciasPorIndicacaoDeSubstituto(professorIndicado);
+        
+        List<AusenciaModel> modelos = new ArrayList<AusenciaModel>();
+        
+        for(Ausencia ausencia : ausenciasComIndicacaoDeSubstituto){
+            
+            AusenciaModel modelo = this.montarAusencia(ausencia);
+            
+            modelos.add(modelo);
+            
+        }
+        
+        return modelos;
+    }
+    
+    
     
     private AusenciaModel montarAusencia(Ausencia ausencia){
 
@@ -181,7 +183,14 @@ public class NotificacaoService {
 
         modelo.codigo = ausencia.getCodigo();
         modelo.professorAusente = ausencia.getProfessor().getNome();
-        modelo.professorSubstituto = ausencia.getIndicacaoSubstituto().getNome();
+        
+        if(ausencia.getProfessorSubstituto() != null){
+            modelo.professorSubstituto = ausencia.getProfessorSubstituto().getNome();    
+        }else{
+            modelo.professorSubstituto = "";
+        }
+        
+        //modelo.professorSubstituto = ausencia.getIndicacoesSubstitutos().getNome();
         modelo.estado = this.determinarEstado(ausencia.getEstado());
         modelo.id = ausencia.getId();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -190,6 +199,33 @@ public class NotificacaoService {
         modelo.dataFim = sdf.format(periodo.getEnd().toDate());
         
         return modelo;
+        
+    }
+
+    void definirSubstituto(String codigo, Long idSubstituto) {
+        
+        Professor profSubstituto = profController.findProfessor(idSubstituto);
+        
+        if(profSubstituto == null){
+            throw new IllegalStateException("Professor de id " + idSubstituto + " não existe");
+        }
+        
+        Ausencia ausencia = ausenciaController.findAusencia(codigo);
+        
+        
+        if(ausencia == null){
+            throw new IllegalStateException("Ausência de código " + idSubstituto + " não existe");
+        }        
+        
+        ausencia.setProfessorSubstituto(profSubstituto);
+        try {
+            ausenciaController.edit(ausencia);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         
     }
     

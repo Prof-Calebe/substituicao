@@ -112,6 +112,22 @@ public class AusenciaJpaController implements Serializable {
         return ausenciasComProfessor;
     }
     
+    public List<Ausencia> listAusenciasPorIndicacaoDeSubstituto(Professor professor){
+        List<Ausencia> ausencias = this.findAusenciaEntities();
+        
+        List<Ausencia> ausenciasComProfessor = new ArrayList<Ausencia>();
+        
+        for(Ausencia ausencia : ausencias){
+            
+            if(ausencia.getIndicacoesSubstitutos().contains(professor)){
+                ausenciasComProfessor.add(ausencia);
+            }
+            
+        }
+        
+        return ausenciasComProfessor;
+    }
+    
     
     
 

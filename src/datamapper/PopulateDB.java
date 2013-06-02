@@ -4,7 +4,9 @@
  */
 package datamapper;
 import auxiliar.Perfil;
+import datamapper.exceptions.NonexistentEntityException;
 import dominio.Aula;
+import dominio.Ausencia;
 import dominio.Professor;
 import dominio.Usuario;
 import java.sql.*;
@@ -20,12 +22,12 @@ import org.joda.time.Interval;
  */
 public class PopulateDB {
     
-    public static void main (String[]args){
+    public static void main (String[]args) throws NonexistentEntityException, Exception{
         PopulateDB.fullSetupDB("prosub", "root", "");
         //PopulateDB.recreateDB("prosub", "root", "");
     }
     
-    public static void fullSetupDB(String dbName, String user, String password){
+    public static void fullSetupDB(String dbName, String user, String password) throws NonexistentEntityException, Exception{
                 
         dropDB(dbName, user, password);
         createDB(dbName, user, password);
@@ -130,23 +132,20 @@ public class PopulateDB {
         
     }
     
-    private static void populateDB(){
+    private static void populateDB() throws NonexistentEntityException, Exception{
         
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
         
         populateUsuario(emf);
         populateProfessores(emf);
         
+        populateAusencia(emf);
+        
     }
     
     private static void populateProfessores(EntityManagerFactory emf){
         
         AulaJpaController aulaJpa = new AulaJpaController(emf);
-        
-//        Calendar comeco1 = Calendar.getInstance();
-//        Calendar fim1 = Calendar.getInstance();
-//        comeco1.set(2013, 06, 10, 10, 10);
-//        fim1.set(2013, 06, 10, 10, 20);
         
         DateTime comeco1 = new DateTime(2013, 06, 10, 10, 10);
         DateTime fim1 = new DateTime(2013, 06, 10, 10, 20);
@@ -155,11 +154,6 @@ public class PopulateDB {
         
         Aula aula = new Aula(Calendar.MONDAY, periodo);
         aulaJpa.create(aula);
-        
-//        Calendar comeco2 = Calendar.getInstance();
-//        Calendar fim2 = Calendar.getInstance();
-//        comeco2.set(2013, 06, 10, 18, 20);
-//        fim2.set(2013, 06, 10, 20, 0);
         
         DateTime comeco2 = new DateTime(2013, 06, 10, 18, 20);
         DateTime fim2 = new DateTime(2013, 06, 10, 20, 0);
@@ -172,17 +166,31 @@ public class PopulateDB {
         Aula aula2 = new Aula(Calendar.MONDAY, periodo2);
         aulaJpa.create(aula2);
         
-        Professor prof1 = new Professor("Calebe", "calebepb");
+        Professor prof1 = new Professor("Calebe", "calebe");
+        
         prof1.adicionarAula(aula);
         
         Professor prof2 = new Professor("Ana Claudia", "anarossi");
         prof2.adicionarAula(aula2);
+        
+        Professor prof3 = new Professor("Vilar", "vilar");
+        //prof1.adicionarAula(aula);
+        
+        Professor prof4 = new Professor("Gaston", "gaston");
+        //prof2.adicionarAula(aula2);
+        
+        Professor prof5 = new Professor("Denise", "denise");
+        //prof1.adicionarAula(aula);
+
         
         
         ProfessorJpaController profJpa = new ProfessorJpaController(emf);
         
         profJpa.create(prof1);
         profJpa.create(prof2);
+        profJpa.create(prof3);
+        profJpa.create(prof4);
+        profJpa.create(prof5);
     }
     
     private static void populateUsuario(EntityManagerFactory emf){
@@ -192,6 +200,7 @@ public class PopulateDB {
         Usuario u1 = new Usuario("calebe");
         u1.setPermissao(Perfil.PROFESSOR);
         
+        
         Usuario u2 = new Usuario("jane");
         u2.setPermissao(Perfil.FUNCIONARIO);
         u2.setSenha("mackenzie");
@@ -200,10 +209,27 @@ public class PopulateDB {
         u3.setSenha("admin");
         u3.setPermissao(Perfil.ADMINISTRADOR);
         
+        Usuario u4 = new Usuario("anarossi");
+        u4.setPermissao(Perfil.PROFESSOR);
+        
+        Usuario u5 = new Usuario("vilar");
+        u5.setPermissao(Perfil.PROFESSOR);
+        
+        Usuario u6 = new Usuario("gaston");
+        u6.setPermissao(Perfil.PROFESSOR);
+        
+        
+        Usuario u7 = new Usuario("denise");
+        u7.setPermissao(Perfil.PROFESSOR);
+        
         
         usuarioJpa.create(u1);
         usuarioJpa.create(u2);
         usuarioJpa.create(u3);
+        usuarioJpa.create(u4);
+        usuarioJpa.create(u5);
+        usuarioJpa.create(u6);
+        usuarioJpa.create(u7);
         
     }
     
@@ -215,6 +241,38 @@ public class PopulateDB {
     public static void populateProfessores(){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
         PopulateDB.populateProfessores(emf);        
+    }
+
+    private static void populateAusencia(EntityManagerFactory emf) throws NonexistentEntityException, Exception {
+        
+        AusenciaJpaController ausenciaJpa = new AusenciaJpaController(emf);
+        ProfessorJpaController professorJpa = new ProfessorJpaController(emf);
+        
+        DateTime d1 = new DateTime(2013, 05, 02, 0, 0);
+        DateTime d2 = new DateTime(2013, 05, 02, 0, 0);
+        
+        Interval periodo = new Interval(d1, d2);
+        
+        Professor professorAusente = professorJpa.findProfessor("Gaston");
+        
+        Ausencia ausencia = new Ausencia("1234", periodo, professorAusente, "Um motivo");
+        
+        Professor professorSubstituto = professorJpa.findProfessor("Denise");
+        ausencia.indicarSubstituto(professorSubstituto);
+        
+        ausenciaJpa.create(ausencia);
+        
+        
+        
+//        
+//        Ausencia ausencia2 = ausenciaJpa.findAusencia("1234");
+//        
+//        
+//        
+//        ausencia2.indicarSubstituto(professorSubstituto);
+//        
+//        ausenciaJpa.edit(ausencia2);
+        
     }
     
 }

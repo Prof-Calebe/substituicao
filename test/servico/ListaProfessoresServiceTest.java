@@ -6,6 +6,7 @@ package servico;
 
 import datamapper.PopulateDB;
 import datamapper.ProfessorJpaController;
+import datamapper.exceptions.NonexistentEntityException;
 import dominio.Professor;
 import modelo.ProfessorModel;
 import servico.ListaProfessoresService;
@@ -27,7 +28,7 @@ public class ListaProfessoresServiceTest {
     private ListaProfessoresService serviceEmTeste;
     
     @Before
-    public void setUp() {
+    public void setUp() throws NonexistentEntityException, Exception {
         
         PopulateDB.fullSetupDB("prosub", "root", "");
         serviceEmTeste = new ListaProfessoresService();

@@ -57,10 +57,6 @@ public class AdministrarUsuariosServiceTest {
        PopulateDB.recreateDB("prosub", "root", "");
     }
     
-   
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
     @Test
     public void testeDeveSalvarUsuario() throws NonexistentEntityException {
         
@@ -90,8 +86,10 @@ public class AdministrarUsuariosServiceTest {
     @Test
     public void testeDeveListarTodosOsUsuarios(){
         
+        int countUsuarios = controller.getUsuarioCount();
+        
         List<UsuarioModel> modelos = serviceEmTeste.ListarUsuarios();
-        Assert.assertEquals(3, modelos.size());
+        Assert.assertEquals(countUsuarios, modelos.size());
         
         
     }

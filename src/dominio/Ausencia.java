@@ -5,11 +5,18 @@
 package dominio;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.Columns;
@@ -38,8 +45,18 @@ public class Ausencia implements Serializable {
     
     private String motivoRejeicao;
     
+    //@ManyToOne
+    //private Professor indicacaoSubstituto;
+    
     @ManyToOne
-    private Professor indicacaoSubstituto;
+    private Professor professorSubstituto;
+    
+//    , joinColumns = { @JoinColumn(referencedColumnName = "ausencia_id" ) }, 
+//            inverseJoinColumns = {@JoinColumn(referencedColumnName = "professor_id" )}
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="ausencia_professorSubstituto")
+    private List<Professor> indicacoesSubstituto;
     
     private EstadoAusencia estado;
     
@@ -56,7 +73,8 @@ public class Ausencia implements Serializable {
         this.professor = professor;
         this.motivo = motivo;
         this.motivoRejeicao = null;
-        this.indicacaoSubstituto = null;
+        //this.indicacaoSubstituto = null;
+        this.indicacoesSubstituto = new ArrayList<Professor>();
         this.estado = EstadoAusencia.Alocacao_Pendente;
     }
 
@@ -132,8 +150,8 @@ public class Ausencia implements Serializable {
     /**
      * @return the indicacaoSubstituto
      */
-    public Professor getIndicacaoSubstituto() {
-        return indicacaoSubstituto;
+    public List<Professor> getIndicacoesSubstitutos() {
+        return indicacoesSubstituto;
     }
 
     public void indicarSubstituto(Professor professor) {
@@ -141,14 +159,43 @@ public class Ausencia implements Serializable {
         if (professor == this.professor){
             throw new IllegalStateException("O professor substituto não deve ser o mesmo que o professor se ausentando.");
         }
-        this.indicacaoSubstituto = professor;
+        //this.indicacaoSubstituto = professor;
+        
+        this.indicacoesSubstituto.add(professor);
+    }
+    
+    public void retirarSubstituto(Professor professor){
+        
+        if(!this.indicacoesSubstituto.contains(professor)){
+            throw new IllegalStateException("O professor substituto não existe nesta notificação de ausência.");
+        }
+        
+        this.indicacoesSubstituto.remove(professor);
     }
 
     /**
-     * @return the codigo
+     * @return the codigothis
      */
     public String getCodigo() {
         return codigo;
+    }
+
+    /**
+     * @return the professorSubstituto
+     */
+    public Professor getProfessorSubstituto() {
+        return professorSubstituto;
+    }
+
+    /**
+     * @param professorSubstituto the professorSubstituto to set
+     */
+    public void setProfessorSubstituto(Professor professorSubstituto) {
+        if (professorSubstituto == this.professor){
+            throw new IllegalStateException("O professor substituto não deve ser o mesmo que o professor se ausentando.");
+        }
+        
+        this.professorSubstituto = professorSubstituto;
     }
     
 }

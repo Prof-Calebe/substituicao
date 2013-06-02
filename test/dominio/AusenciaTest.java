@@ -52,19 +52,65 @@ public class AusenciaTest {
         Assert.assertEquals(ausencia.getPeriodo(), periodo);
         Assert.assertEquals(ausencia.getProfessor(), professor);
         Assert.assertEquals(ausencia.getMotivo(), motivo);
-        Assert.assertEquals(ausencia.getIndicacaoSubstituto(), null);
+        Assert.assertEquals(0, ausencia.getIndicacoesSubstitutos().size());
+        //Assert.assertEquals(ausencia.getIndicacaoSubstituto(), null);
         Assert.assertEquals(ausencia.getEstado(), estado);
+        Assert.assertEquals(null, ausencia.getProfessorSubstituto());
     }
     
     @Test
-    public void testeDeveSerPossívelIndicarProfessorSubstitutoEmUmaAusencia(){
+    public void testeDeveSerPossívelIndicarProfessoresSubstitutoEmUmaAusencia(){
         ausencia.indicarSubstituto(professorSubstituto);
         
-        Assert.assertEquals(ausencia.getIndicacaoSubstituto(), professorSubstituto);
+        
+        Assert.assertEquals(1, ausencia.getIndicacoesSubstitutos().size());
+        
+        Assert.assertTrue(ausencia.getIndicacoesSubstitutos().contains(professorSubstituto));
+        
+        //Assert.assertEquals(ausencia.getIndicacaoSubstituto(), professorSubstituto);
     }
+    
+    @Test
+    public void testeDeveSerPossívelDefinirSubstitutoEmUmaAusencia(){
+        ausencia.setProfessorSubstituto(professorSubstituto);
+        
+        
+        Assert.assertEquals(professorSubstituto, ausencia.getProfessorSubstituto());
+        
+        //Assert.assertTrue(ausencia.getIndicacoesSubstitutos().contains(professorSubstituto));
+        
+        //Assert.assertEquals(ausencia.getIndicacaoSubstituto(), professorSubstituto);
+    }
+    
     
     @Test(expected=IllegalStateException.class)
     public void testeNaoEhPossivelIndicarProprioProfessorAusenteComoSubstituto(){
         ausencia.indicarSubstituto(professor);
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testeNaoEhPossivelDefinirProprioProfessorAusenteComoSubstituto(){
+        ausencia.setProfessorSubstituto(professor);
+    }
+    
+    @Test(expected=IllegalStateException.class)
+    public void testeNaoEhPossivelRetirarUmProfessorSubstitutoQueNaoEstejaNaListaDeProfsSubstitutos(){
+        ausencia.retirarSubstituto(professorSubstituto);
+    }
+    
+    @Test
+    public void testeDeveSerPossívelRetirarUmProfessorSubstitutoDaLista(){
+        ausencia.indicarSubstituto(professorSubstituto);
+        
+        Assert.assertEquals(1, ausencia.getIndicacoesSubstitutos().size());
+        
+        Assert.assertTrue(ausencia.getIndicacoesSubstitutos().contains(professorSubstituto));
+        
+        ausencia.retirarSubstituto(professorSubstituto);
+        
+        Assert.assertEquals(0, ausencia.getIndicacoesSubstitutos().size());
+        
+        Assert.assertFalse(ausencia.getIndicacoesSubstitutos().contains(professorSubstituto));        
+        
     }
 }
