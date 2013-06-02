@@ -1,0 +1,3 @@
+Era pro projeto sair com uma camada de apresentação em MVC, mas, por força maior, o "C" do MVC acabou junto do "V", rs.
+Caso alguém desenvolva isso depois, seria bom extrair os Controllers de forma decente.
+
