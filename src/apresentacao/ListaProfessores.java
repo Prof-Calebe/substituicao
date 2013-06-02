@@ -1,7 +1,10 @@
 package apresentacao;
 
 import java.awt.Toolkit;
+import java.util.List;
 import javax.swing.JFrame;
+import modelo.ProfessorModel;
+import servico.ListaProfessoresService;
 
 /*
  * To change this template, choose Tools | Templates
@@ -14,7 +17,9 @@ import javax.swing.JFrame;
  */
 public class ListaProfessores extends javax.swing.JDialog {
 
-    private JFrame previousFrame;
+    //private JFrame previousFrame;
+
+    private AlocacoesPendentes previousFrame; 
     
     /**
      * Creates new form ListaProfessores
@@ -25,12 +30,14 @@ public class ListaProfessores extends javax.swing.JDialog {
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg"));
     }
     
-    public ListaProfessores(JFrame previous) {
+    public ListaProfessores(AlocacoesPendentes previous) {
         initComponents();
         previousFrame = previous;
         previousFrame.setEnabled(false);
         this.setLocationRelativeTo(null);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg"));
+        
+        populateCombo();
     }
 
     /**
@@ -44,8 +51,8 @@ public class ListaProfessores extends javax.swing.JDialog {
 
         jLabel1 = new javax.swing.JLabel();
         cmb_Professor = new javax.swing.JComboBox();
-        btn_Confirmar = new javax.swing.JToggleButton();
         btn_Cancelar = new javax.swing.JToggleButton();
+        btnConfirmar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Lista de Professores");
@@ -56,15 +63,19 @@ public class ListaProfessores extends javax.swing.JDialog {
 
         jLabel1.setText("Lista de Professores:");
 
-        cmb_Professor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmb_Professor.setToolTipText("Escolha o professor a ser alocado para a ausência.");
-
-        btn_Confirmar.setText("Confirmar");
 
         btn_Cancelar.setText("Cancelar");
         btn_Cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_CancelarActionPerformed(evt);
+            }
+        });
+
+        btnConfirmar.setText("Confirmar");
+        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmarActionPerformed(evt);
             }
         });
 
@@ -74,16 +85,17 @@ public class ListaProfessores extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_Cancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_Confirmar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmb_Professor, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(cmb_Professor, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btn_Cancelar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnConfirmar)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,8 +106,8 @@ public class ListaProfessores extends javax.swing.JDialog {
                     .addComponent(cmb_Professor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_Confirmar)
-                    .addComponent(btn_Cancelar))
+                    .addComponent(btn_Cancelar)
+                    .addComponent(btnConfirmar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -109,8 +121,27 @@ public class ListaProfessores extends javax.swing.JDialog {
             previousFrame.setEnabled(true);
         } catch (Exception e) {
             System.out.println("Erro ao retornar para janela anterior!");
-        } 
+        }
     }//GEN-LAST:event_btn_CancelarActionPerformed
+
+    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+        
+        if(cmb_Professor.getSelectedIndex() == 0 )
+            return;
+        
+        String nomeProfParaAlocacao = (String)cmb_Professor.getSelectedItem();
+        
+        previousFrame.efetuarAlocacao(nomeProfParaAlocacao);
+        previousFrame.populateGrid();
+        
+        try {
+            this.dispose();
+            previousFrame.setVisible(true);
+            previousFrame.setEnabled(true);
+        } catch (Exception e) {
+            System.out.println("Erro ao retornar para janela anterior!");
+        }
+    }//GEN-LAST:event_btnConfirmarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -146,9 +177,32 @@ public class ListaProfessores extends javax.swing.JDialog {
             }
         });
     }
+    
+    private void populateCombo(){
+        
+            cmb_Professor.addItem("- Selecione um professor - ");
+            
+            String nomeProfAusente = previousFrame.getProfessorAusente();
+            
+            ListaProfessoresService profService = new ListaProfessoresService();
+            
+            List<ProfessorModel> professores = profService.ListarProfessores();
+            
+            for (ProfessorModel professor : professores){
+                
+                if(!professor.Nome.equals(nomeProfAusente)){
+                    
+                    cmb_Professor.addItem(professor.Nome);
+                
+                }
+
+            }
+        
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConfirmar;
     private javax.swing.JToggleButton btn_Cancelar;
-    private javax.swing.JToggleButton btn_Confirmar;
     private javax.swing.JComboBox cmb_Professor;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables

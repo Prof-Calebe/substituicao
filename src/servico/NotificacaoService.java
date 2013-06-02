@@ -110,8 +110,8 @@ public class NotificacaoService {
     }
     
     private String determinarEstado(EstadoAusencia estado){
-        if(estado == EstadoAusencia.Alocacao_Cancelada)
-            return "Alocação cancelada";
+        if(estado == EstadoAusencia.Ausencia_Cancelada)
+            return "Ausência cancelada";
         else if(estado == EstadoAusencia.Alocacao_Efetuada)
             return "Alocação efetuada";
         else if(estado == EstadoAusencia.Alocacao_Pendente)
@@ -202,22 +202,26 @@ public class NotificacaoService {
         
     }
 
-    void definirSubstituto(String codigo, Long idSubstituto) {
+    public void definirSubstituto(String codigo, String nomeProfessor) {
         
-        Professor profSubstituto = profController.findProfessor(idSubstituto);
+        Professor profSubstituto = profController.findProfessor(nomeProfessor);
+
         
         if(profSubstituto == null){
-            throw new IllegalStateException("Professor de id " + idSubstituto + " não existe");
+            throw new IllegalStateException("Professor de nome " + nomeProfessor + " não existe");
         }
         
         Ausencia ausencia = ausenciaController.findAusencia(codigo);
         
         
         if(ausencia == null){
-            throw new IllegalStateException("Ausência de código " + idSubstituto + " não existe");
+            throw new IllegalStateException("Ausência de código " + codigo + " não existe");
         }        
         
         ausencia.setProfessorSubstituto(profSubstituto);
+        ausencia.definirComoAlocado();
+        
+        
         try {
             ausenciaController.edit(ausencia);
         } catch (NonexistentEntityException ex) {
@@ -229,5 +233,34 @@ public class NotificacaoService {
         
     }
     
+    public void cancelarAusencia(String codigo){
+        
+        Ausencia ausencia = ausenciaController.findAusencia(codigo);
+        
+        ausencia.cancelarAusencia();
+        try {
+            ausenciaController.edit(ausencia);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    public void cancelarAulas(String codigo){
+        
+        Ausencia ausencia = ausenciaController.findAusencia(codigo);
+        
+        ausencia.cancelarAulas();
+        try {
+            ausenciaController.edit(ausencia);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
 
 }

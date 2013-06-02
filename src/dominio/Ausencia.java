@@ -45,14 +45,12 @@ public class Ausencia implements Serializable {
     
     private String motivoRejeicao;
     
+   
     //@ManyToOne
     //private Professor indicacaoSubstituto;
     
     @ManyToOne
     private Professor professorSubstituto;
-    
-//    , joinColumns = { @JoinColumn(referencedColumnName = "ausencia_id" ) }, 
-//            inverseJoinColumns = {@JoinColumn(referencedColumnName = "professor_id" )}
     
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="ausencia_professorSubstituto")
@@ -76,6 +74,7 @@ public class Ausencia implements Serializable {
         //this.indicacaoSubstituto = null;
         this.indicacoesSubstituto = new ArrayList<Professor>();
         this.estado = EstadoAusencia.Alocacao_Pendente;
+       
     }
 
     public Long getId() {
@@ -197,5 +196,25 @@ public class Ausencia implements Serializable {
         
         this.professorSubstituto = professorSubstituto;
     }
+
+    public void cancelarAusencia() {
+        
+        this.estado = EstadoAusencia.Ausencia_Cancelada;
+        this.professorSubstituto = null;
+    }
+    
+    public void cancelarAulas(){
+        
+        this.estado = EstadoAusencia.Aulas_Canceladas;
+        this.professorSubstituto = null;
+        
+    }
+    
+    public void definirComoAlocado(){
+        this.estado = EstadoAusencia.Alocacao_Efetuada;
+    }
+    
+    
+   
     
 }

@@ -53,7 +53,6 @@ public class AusenciaTest {
         Assert.assertEquals(ausencia.getProfessor(), professor);
         Assert.assertEquals(ausencia.getMotivo(), motivo);
         Assert.assertEquals(0, ausencia.getIndicacoesSubstitutos().size());
-        //Assert.assertEquals(ausencia.getIndicacaoSubstituto(), null);
         Assert.assertEquals(ausencia.getEstado(), estado);
         Assert.assertEquals(null, ausencia.getProfessorSubstituto());
     }
@@ -66,8 +65,6 @@ public class AusenciaTest {
         Assert.assertEquals(1, ausencia.getIndicacoesSubstitutos().size());
         
         Assert.assertTrue(ausencia.getIndicacoesSubstitutos().contains(professorSubstituto));
-        
-        //Assert.assertEquals(ausencia.getIndicacaoSubstituto(), professorSubstituto);
     }
     
     @Test
@@ -77,9 +74,7 @@ public class AusenciaTest {
         
         Assert.assertEquals(professorSubstituto, ausencia.getProfessorSubstituto());
         
-        //Assert.assertTrue(ausencia.getIndicacoesSubstitutos().contains(professorSubstituto));
-        
-        //Assert.assertEquals(ausencia.getIndicacaoSubstituto(), professorSubstituto);
+
     }
     
     
@@ -113,4 +108,39 @@ public class AusenciaTest {
         Assert.assertFalse(ausencia.getIndicacoesSubstitutos().contains(professorSubstituto));        
         
     }
+    
+    @Test
+    public void testeDeveSerPossivelCancelarUmaAusencia(){
+        
+        Assert.assertEquals(EstadoAusencia.Alocacao_Pendente, ausencia.getEstado());
+        
+        ausencia.cancelarAusencia();
+        
+        Assert.assertEquals(EstadoAusencia.Ausencia_Cancelada, ausencia.getEstado());
+        
+    }
+    @Test
+    public void testeDeveSerPossivelCancelarAulasRelativasAUmaAusencia(){
+        
+        Assert.assertEquals(EstadoAusencia.Alocacao_Pendente, ausencia.getEstado());
+        
+        ausencia.cancelarAulas();
+        
+        Assert.assertEquals(EstadoAusencia.Aulas_Canceladas, ausencia.getEstado());
+        
+    }
+    
+    @Test
+    public void testeDeveSerPossivelDefinirComoAlocada(){
+        
+        Assert.assertEquals(EstadoAusencia.Alocacao_Pendente, ausencia.getEstado());
+        
+        ausencia.definirComoAlocado();
+        
+        Assert.assertEquals(EstadoAusencia.Alocacao_Efetuada, ausencia.getEstado());
+        
+    }
+    
+    
+    
 }

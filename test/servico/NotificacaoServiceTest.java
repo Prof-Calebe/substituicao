@@ -9,6 +9,7 @@ import datamapper.PopulateDB;
 import datamapper.ProfessorJpaController;
 import datamapper.exceptions.NonexistentEntityException;
 import dominio.Ausencia;
+import dominio.EstadoAusencia;
 import dominio.Professor;
 import modelo.AusenciaModel;
 import servico.NotificacaoService;
@@ -148,9 +149,11 @@ public class NotificacaoServiceTest {
          
          String codigo3 = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
          
+         int ausenciaCount = ausController.getAusenciaCount();
+         
          List<AusenciaModel> modelos = serviceEmTeste.listarAusencias();
          
-         Assert.assertEquals(3, modelos.size());
+         Assert.assertEquals(ausenciaCount, modelos.size());
          
          cleanEntity.add(ausController.findAusencia(codigo));
          cleanEntity.add(ausController.findAusencia(codigo2));
@@ -170,16 +173,65 @@ public class NotificacaoServiceTest {
          
          String codigo = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
          
-         Long idSubstituto = professores.get(2).getId();
+         //Long idSubstituto = professores.get(2).getId();
          
-         serviceEmTeste.definirSubstituto(codigo, idSubstituto);
+         String nomeProf = professores.get(2).getNome();
+         
+         serviceEmTeste.definirSubstituto(codigo, nomeProf);
          
          Ausencia ausencia = ausController.findAusencia(codigo);
          
-         Professor profSubstituto = profController.findProfessor(idSubstituto);
+         Professor profSubstituto = profController.findProfessor(nomeProf);
          
          Assert.assertEquals(profSubstituto, ausencia.getProfessorSubstituto());
+         Assert.assertEquals(EstadoAusencia.Alocacao_Efetuada, ausencia.getEstado());
 
+         cleanEntity.add(ausencia);
+         
+     }
+     
+     @Test
+     public void testeDeveSerPossivelCancelarUmaAusencia() throws ParseException{
+         
+         String dataInicio = "20/05/2013";
+         String dataFim = "24/05/2013";
+         String motivo = "Problemas pessoais";
+         
+         String codigo = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
+         
+         Ausencia ausencia = ausController.findAusencia(codigo);
+         
+         Assert.assertEquals(EstadoAusencia.Alocacao_Pendente, ausencia.getEstado());
+         
+         serviceEmTeste.cancelarAusencia(codigo);
+         
+         ausencia = ausController.findAusencia(codigo);
+         
+         Assert.assertEquals(EstadoAusencia.Ausencia_Cancelada, ausencia.getEstado());
+         
+         cleanEntity.add(ausencia);
+         
+     }
+     
+     @Test
+     public void testeDeveSerPossivelCancelarAulasDeUmaAusencia() throws ParseException{
+         
+         String dataInicio = "20/05/2013";
+         String dataFim = "24/05/2013";
+         String motivo = "Problemas pessoais";
+         
+         String codigo = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
+         
+         Ausencia ausencia = ausController.findAusencia(codigo);
+         
+         Assert.assertEquals(EstadoAusencia.Alocacao_Pendente, ausencia.getEstado());
+         
+         serviceEmTeste.cancelarAulas(codigo);
+         
+         ausencia = ausController.findAusencia(codigo);
+         
+         Assert.assertEquals(EstadoAusencia.Aulas_Canceladas, ausencia.getEstado());
+         
          cleanEntity.add(ausencia);
          
      }

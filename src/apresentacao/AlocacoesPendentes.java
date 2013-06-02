@@ -9,6 +9,7 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.UsuarioModel;
 import servico.AdministrarUsuariosService;
@@ -26,12 +27,19 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
 
     private JFrame previousFrame;
     
+    private String professorParaAlocacao;
+    
+    private String professorAusente;
+    
+    private UsuarioModel usuario;
+    
     /**
      * Creates new form AlocacoesPendentes
      */
     public AlocacoesPendentes(UsuarioModel usuario) {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.usuario = usuario;
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg"));
         this.populateGrid(usuario);
     }
@@ -39,37 +47,14 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
     public AlocacoesPendentes(JFrame previous, UsuarioModel usuario) {
         initComponents();
         previousFrame = previous;
+        this.usuario = usuario;
         this.setLocationRelativeTo(null);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg"));
         
         //if (isPending) {
         btn_RejeitarAlocacao.setEnabled(false);
         this.populateGrid(usuario);
-//            NotificacaoService listaAlocacoesPendentes = new NotificacaoService();
-//            List<AusenciaModel> listaAusencias = listaAlocacoesPendentes.listarAusenciasPorEstado(EstadoAusencia.Alocacao_Pendente);
-//            for (AusenciaModel model : listaAusencias) {
-//                if (model.estado.equals("Alocação pendente")) {
-//                    DefaultTableModel tableModel = (DefaultTableModel) tbl_Alocacoes.getModel();
-//                    tableModel.addRow(new Object[]{model.codigo, model.professorAusente, model.dataInicio, model.dataFim, model.professorSubstituto, model.estado});
-//                }
-           // }
-//        } else {
-//            btn_CancelarAusencia.setEnabled(false);
-//            btn_CancelarAulas.setEnabled(false);
-//            NotificacaoService listaAlocacoesPendentes =  new NotificacaoService();;
-//            List<AusenciaModel> listaAusencias = listaAlocacoesPendentes.listarAusencias();
-//            for (AusenciaModel model : listaAusencias) {
-//                if (model.estado.equals("Alocação efetuada")) {
-//                    DefaultTableModel tableModel = (DefaultTableModel) tbl_Alocacoes.getModel();
-//                    tableModel.addRow(new Object[]{model.codigo,
-//                                                    model.professorAusente,
-//                                                    model.dataInicio,
-//                                                    model.dataFim,
-//                                                    model.professorSubstituto,
-//                                                    model.estado});
-//                }
-//            }
-//        }
+
     }
     
     /**
@@ -82,15 +67,15 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
-        btn_AceitarAlocacao = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Alocacoes = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         btn_RejeitarAlocacao = new javax.swing.JToggleButton();
-        btn_EfetuarAlocacao = new javax.swing.JToggleButton();
-        btn_CancelarAusencia = new javax.swing.JToggleButton();
-        btn_CancelarAulas = new javax.swing.JToggleButton();
         btn_Cancelar = new javax.swing.JToggleButton();
+        btnCancelarAusencia = new javax.swing.JButton();
+        btnCancelarAulas = new javax.swing.JButton();
+        btnAlocacao = new javax.swing.JButton();
+        btnEleger = btnEleger;
 
         jLabel2.setText("jLabel2");
 
@@ -98,9 +83,6 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
         setTitle("Alocações Pendentes");
         setName("frm_AlocacoesPendentes"); // NOI18N
         setResizable(false);
-
-        btn_AceitarAlocacao.setText("Aceitar Alocação");
-        btn_AceitarAlocacao.setActionCommand("Eleger-se para alocação");
 
         tbl_Alocacoes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -136,21 +118,38 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
             }
         });
 
-        btn_EfetuarAlocacao.setLabel("Efetuar Alocação");
-        btn_EfetuarAlocacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_EfetuarAlocacaoActionPerformed(evt);
-            }
-        });
-
-        btn_CancelarAusencia.setText("Cancelar Ausência");
-
-        btn_CancelarAulas.setText("Cancelar Aulas");
-
         btn_Cancelar.setText("Cancelar");
         btn_Cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_CancelarActionPerformed(evt);
+            }
+        });
+
+        btnCancelarAusencia.setText("Cancelar Ausência");
+        btnCancelarAusencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarAusenciaActionPerformed(evt);
+            }
+        });
+
+        btnCancelarAulas.setText("Cancelar Aulas");
+        btnCancelarAulas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarAulasActionPerformed(evt);
+            }
+        });
+
+        btnAlocacao.setText("Efetuar Alocação");
+        btnAlocacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlocacaoActionPerformed(evt);
+            }
+        });
+
+        btnEleger.setText("Eleger-se Substituto");
+        btnEleger.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnElegerActionPerformed(evt);
             }
         });
 
@@ -160,16 +159,18 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 651, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 798, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_AceitarAlocacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(jLabel1))
                     .addComponent(btn_RejeitarAlocacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_EfetuarAlocacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_CancelarAusencia, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                    .addComponent(btn_CancelarAulas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_Cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_Cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCancelarAusencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCancelarAulas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAlocacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEleger))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -180,16 +181,16 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_AceitarAlocacao)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(21, 21, 21)
                         .addComponent(btn_RejeitarAlocacao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_EfetuarAlocacao)
+                        .addComponent(btnAlocacao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_CancelarAusencia)
+                        .addComponent(btnCancelarAusencia)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_CancelarAulas)
+                        .addComponent(btnCancelarAulas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEleger)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_Cancelar)))
                 .addContainerGap())
@@ -212,13 +213,78 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
         motivoRejeitarAlocacao.setVisible(true);
     }//GEN-LAST:event_btn_RejeitarAlocacaoActionPerformed
 
-    private void btn_EfetuarAlocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EfetuarAlocacaoActionPerformed
-        ListaProfessores listaProfessores = new ListaProfessores(this);
-        listaProfessores.setVisible(true);
-    }//GEN-LAST:event_btn_EfetuarAlocacaoActionPerformed
+    private void btnCancelarAusenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarAusenciaActionPerformed
+        
+        if(tbl_Alocacoes.getSelectedRow() != -1){
+            
+            String estado = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 5);
+                        
+            String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);
+            
+            if(estado.equals("Ausência cancelada")){
+                
+                JOptionPane.showMessageDialog(null, "Ausência nº " + codigo + " já foi cancelada." , "Administrar Alocação", JOptionPane.INFORMATION_MESSAGE);
+                
+            }
+            else{
+                NotificacaoService notifService = new NotificacaoService();
 
+                notifService.cancelarAusencia(codigo);
+
+               this.populateGrid(this.usuario); 
+            }
+        
+
+        }
+        
+
+    }//GEN-LAST:event_btnCancelarAusenciaActionPerformed
+
+    private void btnCancelarAulasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarAulasActionPerformed
+        
+        if(tbl_Alocacoes.getSelectedRow() != -1){
+            
+            String estado = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 5);
+                        
+            String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);
+            
+            if(estado.equals("Aulas canceladas")){
+                
+                JOptionPane.showMessageDialog(null, "Aulas da ausência nº " + codigo + " já foram canceladas." , "Administrar Alocação", JOptionPane.INFORMATION_MESSAGE);
+                
+            }
+        
+             NotificacaoService notifService = new NotificacaoService();
+         
+             notifService.cancelarAulas(codigo);
+         
+            this.populateGrid(this.usuario);
+        }
+        
+    }//GEN-LAST:event_btnCancelarAulasActionPerformed
+
+    private void btnAlocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlocacaoActionPerformed
+        if(tbl_Alocacoes.getSelectedRow() != -1){
+            
+            this.setProfessorAusente((String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 1));
+
+            ListaProfessores listaProfessores = new ListaProfessores(this);
+            listaProfessores.setVisible(true);
+        }
+    }//GEN-LAST:event_btnAlocacaoActionPerformed
+
+    private void btnElegerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnElegerActionPerformed
+
+    public void populateGrid(){
+        this.populateGrid(this.usuario);
+    }
     
     private void populateGrid(UsuarioModel usuario){
+        
+            DefaultTableModel dm = (DefaultTableModel)tbl_Alocacoes.getModel();
+            dm.getDataVector().removeAllElements();
         
             NotificacaoService listaAlocacoesPendentes = new NotificacaoService();
             List<AusenciaModel> listaAusencias = null;
@@ -238,13 +304,12 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
             else{
                 //Algum erro
             }
-        
             
             for (AusenciaModel model : listaAusencias) {
-                if (model.estado.equals("Alocação pendente")) {
+                //if (model.estado.equals("Alocação pendente")) {
                     DefaultTableModel tableModel = (DefaultTableModel) tbl_Alocacoes.getModel();
                     tableModel.addRow(new Object[]{model.codigo, model.professorAusente, model.dataInicio, model.dataFim, model.professorSubstituto, model.estado});
-                }
+                //}
             }
     }
     /**
@@ -287,15 +352,53 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton btn_AceitarAlocacao;
+    private javax.swing.JButton btnAlocacao;
+    private javax.swing.JButton btnCancelarAulas;
+    private javax.swing.JButton btnCancelarAusencia;
+    private javax.swing.JButton btnEleger;
     private javax.swing.JToggleButton btn_Cancelar;
-    private javax.swing.JToggleButton btn_CancelarAulas;
-    private javax.swing.JToggleButton btn_CancelarAusencia;
-    private javax.swing.JToggleButton btn_EfetuarAlocacao;
     private javax.swing.JToggleButton btn_RejeitarAlocacao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_Alocacoes;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the professorParaAlocacao
+     */
+    public String getProfessorParaAlocacao() {
+        return professorParaAlocacao;
+    }
+
+    /**
+     * @param professorParaAlocacao the professorParaAlocacao to set
+     */
+    public void setProfessorParaAlocacao(String professorParaAlocacao) {
+        this.professorParaAlocacao = professorParaAlocacao;
+    }
+
+    /**
+     * @return the professorAusente
+     */
+    public String getProfessorAusente() {
+        return professorAusente;
+    }
+
+    /**
+     * @param professorAusente the professorAusente to set
+     */
+    public void setProfessorAusente(String professorAusente) {
+        this.professorAusente = professorAusente;
+    }
+    
+    public void efetuarAlocacao(String nomeProfessor){
+        
+        NotificacaoService notifService = new NotificacaoService();
+        
+        String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);
+        
+        notifService.definirSubstituto(codigo, nomeProfessor);
+        
+    }
 }

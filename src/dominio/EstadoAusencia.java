@@ -10,7 +10,7 @@ package dominio;
  */
 public enum EstadoAusencia {
     Alocacao_Efetuada(1),
-    Alocacao_Cancelada(2),
+    Ausencia_Cancelada(2),
     Alocacao_Pendente(3),
     Aulas_Canceladas(4);
 
