@@ -20,11 +20,11 @@ import org.joda.time.Interval;
  *
  * @author Rick
  */
-public class ListaProfessoresService {
+public class ProfessorService {
     
    private ProfessorJpaController controller;
     
-    public ListaProfessoresService(){
+    public ProfessorService(){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
         controller = new ProfessorJpaController(emf);
     }

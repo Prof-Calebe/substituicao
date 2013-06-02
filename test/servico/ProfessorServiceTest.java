@@ -9,7 +9,7 @@ import datamapper.ProfessorJpaController;
 import datamapper.exceptions.NonexistentEntityException;
 import dominio.Professor;
 import modelo.ProfessorModel;
-import servico.ListaProfessoresService;
+import servico.ProfessorService;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -25,15 +25,15 @@ import static org.junit.Assert.*;
  *
  * @author Rick
  */
-public class ListaProfessoresServiceTest {
+public class ProfessorServiceTest {
     
-    private ListaProfessoresService serviceEmTeste;
+    private ProfessorService serviceEmTeste;
     
     @Before
     public void setUp() throws NonexistentEntityException, Exception {
         
         PopulateDB.fullSetupDB("prosub", "root", "");
-        serviceEmTeste = new ListaProfessoresService();
+        serviceEmTeste = new ProfessorService();
         
     }
     

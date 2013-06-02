@@ -3,7 +3,7 @@ package apresentacao;
 import java.awt.Toolkit;
 import auxiliar.Perfil;
 import modelo.UsuarioModel;
-import servico.AdministrarUsuariosService;
+import servico.AdministracaoDeUsuariosService;
 
 /*
  * To change this template, choose Tools | Templates
@@ -14,7 +14,7 @@ import servico.AdministrarUsuariosService;
  *
  * @author Thiago Lima
  */
-public class MainMenu extends javax.swing.JFrame {
+public class MenuPrincipal extends javax.swing.JFrame {
 
     /**
      * Creates new form MainMenu
@@ -22,7 +22,7 @@ public class MainMenu extends javax.swing.JFrame {
     
     private UsuarioModel user;
     
-    public MainMenu(UsuarioModel user) {
+    public MenuPrincipal(UsuarioModel user) {
         initComponents();
 //        btnGroup_Opcoes.add(rbtn_AlocacoesConfirmadas);
         btnGroup_Opcoes.add(rbtn_AdministrarAlocacoes);
@@ -152,7 +152,7 @@ public class MainMenu extends javax.swing.JFrame {
     private void btn_ConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ConfirmarActionPerformed
         if (rbtn_AdministrarAlocacoes.isSelected()) {
             this.setVisible(false);
-            AlocacoesPendentes alocacoesPendentes = new AlocacoesPendentes(this, this.user);
+            Alocacoes alocacoesPendentes = new Alocacoes(this, this.user);
             alocacoesPendentes.setVisible(true);
         }
 //        else if (rbtn_AlocacoesPendentes.isSelected()) {
@@ -162,7 +162,7 @@ public class MainMenu extends javax.swing.JFrame {
 //        } 
         else if (rbtn_CriarUsuarios.isSelected()){
             this.setVisible(false);
-            AdministrarUsuarios adminsitrarUsuarios = new AdministrarUsuarios(this);
+            AdministracaoDeUsuarios adminsitrarUsuarios = new AdministracaoDeUsuarios(this);
             adminsitrarUsuarios.setVisible(true);
         } else if (rbtn_EmitirRelatorios.isSelected()) {
             this.setVisible(false);
@@ -170,7 +170,7 @@ public class MainMenu extends javax.swing.JFrame {
             menuRelatorios.setVisible(true);
         } else if (rbtn_NovaNotificacaoAusencia.isSelected()) {
             this.setVisible(false);
-            NotificarAusencia notificarAusencia = new NotificarAusencia(this);
+            NotificacaoDeAusencia notificarAusencia = new NotificacaoDeAusencia(this);
             notificarAusencia.setVisible(true);
         }
     }//GEN-LAST:event_btn_ConfirmarActionPerformed
@@ -216,24 +216,24 @@ public class MainMenu extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AdministrarUsuariosService userService = new AdministrarUsuariosService();
+                AdministracaoDeUsuariosService userService = new AdministracaoDeUsuariosService();
 
                 UsuarioModel usuarioLogando = userService.obterUsuario("admin");
                 
-                new MainMenu(usuarioLogando).setVisible(true);
+                new MenuPrincipal(usuarioLogando).setVisible(true);
             }
         });
     }

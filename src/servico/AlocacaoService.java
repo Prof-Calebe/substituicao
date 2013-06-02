@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Thiago Lima
  */
-public class ListaAlocacoesPendentesService {
+public class AlocacaoService {
     private List<AusenciaModel> listaDeAusencias = null;
     private List<Ausencia> listaDeAusenciaDummy = null;
     private AusenciaJpaController ausenciaJpaController;

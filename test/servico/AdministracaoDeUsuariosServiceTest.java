@@ -10,7 +10,7 @@ import datamapper.UsuarioJpaController;
 import datamapper.exceptions.NonexistentEntityException;
 import dominio.Usuario;
 import modelo.UsuarioModel;
-import servico.AdministrarUsuariosService;
+import servico.AdministracaoDeUsuariosService;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,9 +28,9 @@ import org.junit.BeforeClass;
  *
  * @author Rick
  */
-public class AdministrarUsuariosServiceTest {
+public class AdministracaoDeUsuariosServiceTest {
     
-    private AdministrarUsuariosService serviceEmTeste;
+    private AdministracaoDeUsuariosService serviceEmTeste;
     UsuarioJpaController controller;
     EntityManagerFactory emf;
     long idUsuarioJaNoBanco;
@@ -39,7 +39,7 @@ public class AdministrarUsuariosServiceTest {
     @Before
     public void setUp() {     
         
-        serviceEmTeste = new AdministrarUsuariosService();
+        serviceEmTeste = new AdministracaoDeUsuariosService();
         emf = Persistence.createEntityManagerFactory("pro_subPU");
         controller = new UsuarioJpaController(emf);
         idUsuarioJaNoBanco = 1;

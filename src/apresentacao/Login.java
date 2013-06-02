@@ -5,7 +5,7 @@ import servico.LoginService;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import modelo.UsuarioModel;
-import servico.AdministrarUsuariosService;
+import servico.AdministracaoDeUsuariosService;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -143,10 +143,10 @@ public class Login extends javax.swing.JFrame {
                     if (!LgnService.VerificarUsuarioESenha(usuario, strSenha)){
                         JOptionPane.showMessageDialog(null, "Usuário e/ou Senha Inválidos!", "Login", JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                       AdministrarUsuariosService usuarioService = new AdministrarUsuariosService();
+                       AdministracaoDeUsuariosService usuarioService = new AdministracaoDeUsuariosService();
                        UsuarioModel model = usuarioService.obterUsuario(usuario);
                        
-                       MainMenu mainMenu = new MainMenu(model);
+                       MenuPrincipal mainMenu = new MenuPrincipal(model);
                        mainMenu.setVisible(true);
                        this.dispose();
                     }

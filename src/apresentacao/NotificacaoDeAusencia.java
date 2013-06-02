@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.ProfessorModel;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
-import servico.ListaProfessoresService;
+import servico.ProfessorService;
 import servico.NotificacaoService;
 
 /*
@@ -27,14 +27,14 @@ import servico.NotificacaoService;
  *
  * @author Thiago Lima
  */
-public class NotificarAusencia extends javax.swing.JFrame {
+public class NotificacaoDeAusencia extends javax.swing.JFrame {
     
     private JFrame previousFrame;
     
     /**
      * Creates new form NotificarAusencia
      */
-    public NotificarAusencia() {
+    public NotificacaoDeAusencia() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg"));             
@@ -44,7 +44,7 @@ public class NotificarAusencia extends javax.swing.JFrame {
         
         
     }
-    public NotificarAusencia(JFrame previous) {
+    public NotificacaoDeAusencia(JFrame previous) {
         initComponents();
         previousFrame = previous;
         this.setLocationRelativeTo(null);
@@ -305,7 +305,7 @@ public class NotificarAusencia extends javax.swing.JFrame {
 
             String nomeProfEscolhido = (String)evt.getItem();
             
-            ListaProfessoresService profService = new ListaProfessoresService();
+            ProfessorService profService = new ProfessorService();
              
             //List<ProfessorModel> professores = profService.ListarProfessores();
             
@@ -321,7 +321,7 @@ public class NotificarAusencia extends javax.swing.JFrame {
                 inicio = new DateTime(sdf.parse(dataInicio));
                 fim = new DateTime(sdf.parse(dataFim));
             } catch (ParseException ex) {
-                Logger.getLogger(NotificarAusencia.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(NotificacaoDeAusencia.class.getName()).log(Level.SEVERE, null, ex);
             }
             
             Interval periodo = new Interval(inicio, fim);
@@ -346,7 +346,7 @@ public class NotificarAusencia extends javax.swing.JFrame {
         String nomeProfAusente = (String)cmb_Professor.getSelectedItem();
         //String nomeProfSugerido = (String)cmb_ProfessorSugerido.getSelectedItem();
 
-        ListaProfessoresService listProfService = new ListaProfessoresService();
+        ProfessorService listProfService = new ProfessorService();
         
         ProfessorModel profAusente = listProfService.obterProfessorPorNome(nomeProfAusente);
         //ProfessorModel profSugerido = listProfService.obterProfessor(nomeProfSugerido);
@@ -374,7 +374,7 @@ public class NotificarAusencia extends javax.swing.JFrame {
         try {
             codigoAusencia = notService.notificarAusencia(profAusente.id, dataInicio, dataFim, motivo, nomeProfs);
         } catch (ParseException ex) {
-            Logger.getLogger(NotificarAusencia.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoDeAusencia.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         JOptionPane.showMessageDialog(null, "Ausência de nº " + codigoAusencia + " foi gerada.", "Notificação de Ausencia", JOptionPane.INFORMATION_MESSAGE);
@@ -398,7 +398,7 @@ public class NotificarAusencia extends javax.swing.JFrame {
     private void populateComboProfessor(){
         cmb_Professor.addItem("- Selecione um professor - ");
         
-        ListaProfessoresService profService = new ListaProfessoresService();          
+        ProfessorService profService = new ProfessorService();          
         List<ProfessorModel> professores = profService.ListarProfessores();
 
         for(ProfessorModel professor : professores){
@@ -426,20 +426,20 @@ public class NotificarAusencia extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NotificarAusencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NotificacaoDeAusencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NotificarAusencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NotificacaoDeAusencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NotificarAusencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NotificacaoDeAusencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NotificarAusencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NotificacaoDeAusencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NotificarAusencia().setVisible(true);
+                new NotificacaoDeAusencia().setVisible(true);
             }
         });
     }

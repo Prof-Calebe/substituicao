@@ -3,7 +3,7 @@ package apresentacao;
 import auxiliar.Perfil;
 import dominio.EstadoAusencia;
 import modelo.AusenciaModel;
-import servico.ListaAlocacoesPendentesService;
+import servico.AlocacaoService;
 import servico.NotificacaoService;
 import java.awt.Toolkit;
 import java.text.ParseException;
@@ -19,8 +19,8 @@ import modelo.ProfessorModel;
 import modelo.UsuarioModel;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
-import servico.AdministrarUsuariosService;
-import servico.ListaProfessoresService;
+import servico.AdministracaoDeUsuariosService;
+import servico.ProfessorService;
 
 /*
  * To change this template, choose Tools | Templates
@@ -31,7 +31,7 @@ import servico.ListaProfessoresService;
  *
  * @author Thiago Lima
  */
-public class AlocacoesPendentes extends javax.swing.JFrame {
+public class Alocacoes extends javax.swing.JFrame {
 
     private JFrame previousFrame;
     
@@ -46,7 +46,7 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
     /**
      * Creates new form AlocacoesPendentes
      */
-    public AlocacoesPendentes(UsuarioModel usuario) {
+    public Alocacoes(UsuarioModel usuario) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.usuario = usuario;
@@ -54,7 +54,7 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
         this.populateGrid(usuario);
     }
 
-    public AlocacoesPendentes(JFrame previous, UsuarioModel usuario) {
+    public Alocacoes(JFrame previous, UsuarioModel usuario) {
         initComponents();
         previousFrame = previous;
         this.usuario = usuario;
@@ -233,7 +233,7 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
             
             String nomeProf = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 1);
             
-            ListaProfessoresService profService = new ListaProfessoresService();
+            ProfessorService profService = new ProfessorService();
             
             ProfessorModel professor = profService.obterProfessorPorUsername(this.usuario.Usuario);
             
@@ -299,7 +299,7 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
                 inicio = new DateTime(sdf.parse(dataInicio));
                 fim = new DateTime(sdf.parse(dataFim));
             } catch (ParseException ex) {
-                Logger.getLogger(NotificarAusencia.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(NotificacaoDeAusencia.class.getName()).log(Level.SEVERE, null, ex);
             }
             
             this.setPeriodoAusencia(new Interval(inicio, fim));
@@ -314,7 +314,7 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
         String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);
         String nomeProfessor = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 1);
         
-        ListaProfessoresService profService = new ListaProfessoresService();
+        ProfessorService profService = new ProfessorService();
         
         ProfessorModel professor = profService.obterProfessorPorUsername(this.usuario.Usuario);
         
@@ -395,13 +395,13 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AlocacoesPendentes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Alocacoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AlocacoesPendentes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Alocacoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AlocacoesPendentes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Alocacoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AlocacoesPendentes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Alocacoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -409,11 +409,11 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
-                AdministrarUsuariosService userService = new AdministrarUsuariosService();
+                AdministracaoDeUsuariosService userService = new AdministracaoDeUsuariosService();
 
                 UsuarioModel usuarioLogando = userService.obterUsuario("admin");
                 
-                new AlocacoesPendentes(usuarioLogando).setVisible(true);
+                new Alocacoes(usuarioLogando).setVisible(true);
             }
         });
     }

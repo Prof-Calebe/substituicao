@@ -3,7 +3,7 @@ package apresentacao;
 import auxiliar.Perfil;
 import datamapper.exceptions.NonexistentEntityException;
 import modelo.UsuarioModel;
-import servico.AdministrarUsuariosService;
+import servico.AdministracaoDeUsuariosService;
 import java.awt.Toolkit;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
@@ -21,15 +21,15 @@ import javax.swing.JFrame;
  *
  * @author Thiago Lima
  */
-public class AdministrarUsuarios extends javax.swing.JFrame {
+public class AdministracaoDeUsuarios extends javax.swing.JFrame {
 
     private JFrame previousFrame;
-    private AdministrarUsuariosService aum;
+    private AdministracaoDeUsuariosService aum;
     
     /**
      * Creates new form AdministrarUsuarios
      */
-    public AdministrarUsuarios() {
+    public AdministracaoDeUsuarios() {
         initComponents();
         this.setLocationRelativeTo(null);
         btnGroup_Acao.add(rbtn_CriarUsuario);
@@ -40,7 +40,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
  
     }
     
-    public AdministrarUsuarios(JFrame previous) {
+    public AdministracaoDeUsuarios(JFrame previous) {
         initComponents();
         this.setLocationRelativeTo(null);
         previousFrame = previous;
@@ -49,7 +49,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg"));
         salvarButton.setEnabled(false);
         
-        aum = new AdministrarUsuariosService();
+        aum = new AdministracaoDeUsuariosService();
         List<UsuarioModel> usuarios = aum.ListarUsuarios();
         List<String> listaDeUsuarios = new ArrayList<String>();
         
@@ -267,7 +267,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         
         cmb_Nome.removeAllItems();
         
-        aum = new AdministrarUsuariosService(); 
+        aum = new AdministracaoDeUsuariosService(); 
         
         List<UsuarioModel> usuarios = aum.ListarUsuarios();
         List<String> listaDeUsuarios = new ArrayList<String>();
@@ -300,7 +300,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void salvarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarButtonActionPerformed
-        aum = new AdministrarUsuariosService();
+        aum = new AdministracaoDeUsuariosService();
         Perfil perfil = (Perfil)cmb_Perfil.getSelectedItem();
         
         if(rbtn_EditarUsuario.isSelected()){
@@ -312,9 +312,9 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
                 
                 aum.EditarUsuario(txt_Senha.getText(), perfil, model.id);
             } catch (NonexistentEntityException ex) {
-                Logger.getLogger(AdministrarUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AdministracaoDeUsuarios.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
-                Logger.getLogger(AdministrarUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AdministracaoDeUsuarios.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else{
@@ -332,7 +332,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
 //                    int sobrevivi= 0;
                     String username = (String)evt.getItem();
                     
-                    aum = new AdministrarUsuariosService();
+                    aum = new AdministracaoDeUsuariosService();
                     UsuarioModel modelo = aum.obterUsuario(username);
                     
                     txt_Nome.setText(modelo.Usuario);
@@ -360,13 +360,13 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdministrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdministracaoDeUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdministrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdministracaoDeUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdministrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdministracaoDeUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdministrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdministracaoDeUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         
@@ -374,7 +374,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdministrarUsuarios().setVisible(true);                  
+                new AdministracaoDeUsuarios().setVisible(true);                  
             }
         });
     }

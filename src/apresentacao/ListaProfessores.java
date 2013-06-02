@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import modelo.ProfessorModel;
 import org.joda.time.Interval;
-import servico.ListaProfessoresService;
+import servico.ProfessorService;
 
 /*
  * To change this template, choose Tools | Templates
@@ -20,7 +20,7 @@ public class ListaProfessores extends javax.swing.JDialog {
 
     //private JFrame previousFrame;
 
-    private AlocacoesPendentes previousFrame; 
+    private Alocacoes previousFrame; 
     
     /**
      * Creates new form ListaProfessores
@@ -31,7 +31,7 @@ public class ListaProfessores extends javax.swing.JDialog {
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg"));
     }
     
-    public ListaProfessores(AlocacoesPendentes previous) {
+    public ListaProfessores(Alocacoes previous) {
         initComponents();
         previousFrame = previous;
         previousFrame.setEnabled(false);
@@ -186,7 +186,7 @@ public class ListaProfessores extends javax.swing.JDialog {
             String nomeProfAusente = previousFrame.getProfessorAusente();
             Interval periodo = previousFrame.getPeriodoAusencia();
             
-            ListaProfessoresService profService = new ListaProfessoresService();
+            ProfessorService profService = new ProfessorService();
             
             List<ProfessorModel> professores = profService.listarProfessoresCompativeisComAusenteNoPeriodo(nomeProfAusente, periodo);
             

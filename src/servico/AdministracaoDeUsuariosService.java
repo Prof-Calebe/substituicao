@@ -18,12 +18,12 @@ import javax.persistence.Persistence;
  *
  * @author Rick
  */
-public class AdministrarUsuariosService {
+public class AdministracaoDeUsuariosService {
     
    //private UsuarioJpaController controller;
     private EntityManagerFactory emf;
     
-    public AdministrarUsuariosService(){
+    public AdministracaoDeUsuariosService(){
         
         emf = Persistence.createEntityManagerFactory("pro_subPU");
         //controller = new UsuarioJpaController(emf);
