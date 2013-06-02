@@ -37,17 +37,16 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" pref="798" max="32767" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="btn_RejeitarAlocacao" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btn_Cancelar" max="32767" attributes="0"/>
+                      <Component id="btnCancelarAusencia" max="32767" attributes="0"/>
+                      <Component id="btnCancelarAulas" max="32767" attributes="0"/>
+                      <Component id="btnAlocacao" max="32767" attributes="0"/>
+                      <Component id="btnEleger" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="btn_RejeitarAlocacao" alignment="0" max="32767" attributes="0"/>
-                  <Component id="btn_Cancelar" max="32767" attributes="0"/>
-                  <Component id="btnCancelarAusencia" max="32767" attributes="0"/>
-                  <Component id="btnCancelarAulas" max="32767" attributes="0"/>
-                  <Component id="btnAlocacao" max="32767" attributes="0"/>
-                  <Component id="btnEleger" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -60,8 +59,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane1" pref="578" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btn_RejeitarAlocacao" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnAlocacao" min="-2" max="-2" attributes="0"/>
@@ -156,7 +156,7 @@
     </Component>
     <Component class="javax.swing.JToggleButton" name="btn_Cancelar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cancelar"/>
+        <Property name="text" type="java.lang.String" value="Voltar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_CancelarActionPerformed"/>

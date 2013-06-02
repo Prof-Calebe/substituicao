@@ -128,7 +128,7 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
             }
         });
 
-        btn_Cancelar.setText("Cancelar");
+        btn_Cancelar.setText("Voltar");
         btn_Cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_CancelarActionPerformed(evt);
@@ -171,16 +171,15 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 798, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(jLabel1))
-                    .addComponent(btn_RejeitarAlocacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_Cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCancelarAusencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCancelarAulas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAlocacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEleger))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btn_RejeitarAlocacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_Cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCancelarAusencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCancelarAulas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAlocacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEleger))
+                    .addComponent(jLabel1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -190,8 +189,9 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addComponent(jLabel1)
-                        .addGap(21, 21, 21)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_RejeitarAlocacao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAlocacao)
@@ -231,10 +231,19 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
                         
             String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);
             
+            String nomeProf = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 1);
+            
+            ListaProfessoresService profService = new ListaProfessoresService();
+            
+            ProfessorModel professor = profService.obterProfessorPorUsername(this.usuario.Usuario);
+            
             if(estado.equals("Ausência cancelada")){
                 
                 JOptionPane.showMessageDialog(null, "Ausência nº " + codigo + " já foi cancelada." , "Administrar Alocação", JOptionPane.INFORMATION_MESSAGE);
                 
+            } else if(!professor.Nome.equals(nomeProf)){
+                JOptionPane.showMessageDialog(null, "Não é possível cancelar a ausência de código " + codigo + " pois ela não foi criada por você." , 
+                        "Administrar Alocação", JOptionPane.INFORMATION_MESSAGE);
             }
             else{
                 NotificacaoService notifService = new NotificacaoService();
@@ -338,11 +347,23 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
             
             if(perfil.equals(Perfil.ADMINISTRADOR)){
                 listaAusencias = listaAlocacoesPendentes.listarAusencias();
+                btnEleger.setVisible(false);
+                btn_RejeitarAlocacao.setVisible(false);
+                
+                
             }
             else if(perfil.equals(Perfil.FUNCIONARIO)){
+                btnAlocacao.setVisible(false);
+                btnCancelarAulas.setVisible(false);
+                btnCancelarAusencia.setVisible(false);
+                btnEleger.setVisible(false);
+                btn_RejeitarAlocacao.setVisible(false);
                 listaAusencias = listaAlocacoesPendentes.listarAusencias();
             }
             else if(perfil.equals(Perfil.PROFESSOR)){
+                btnAlocacao.setVisible(false);
+                btnCancelarAulas.setVisible(false);
+                
                 listaAusencias = listaAlocacoesPendentes.listarAusenciasPorProfessor(usuario.Usuario);
                 listaAusencias.addAll(listaAlocacoesPendentes.listarAusenciasPorIndicacaoDeSubstituto(usuario.Usuario));
             }
