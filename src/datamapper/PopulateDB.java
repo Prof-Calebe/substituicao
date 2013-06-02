@@ -14,6 +14,7 @@ import java.util.Calendar;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
 import org.joda.time.Interval;
 
 /**
@@ -152,7 +153,7 @@ public class PopulateDB {
         
         Interval periodo = new Interval(comeco1, fim1);
         
-        Aula aula = new Aula(Calendar.MONDAY, periodo);
+        Aula aula = new Aula(DateTimeConstants.MONDAY, periodo);
         aulaJpa.create(aula);
         
         DateTime comeco2 = new DateTime(2013, 06, 10, 18, 20);
@@ -163,7 +164,7 @@ public class PopulateDB {
         
         //Periodo periodo2 = new Periodo(comeco2, fim2);
         
-        Aula aula2 = new Aula(Calendar.MONDAY, periodo2);
+        Aula aula2 = new Aula(DateTimeConstants.MONDAY, periodo2);
         aulaJpa.create(aula2);
         
         Professor prof1 = new Professor("Calebe", "calebe");
@@ -174,14 +175,36 @@ public class PopulateDB {
         prof2.adicionarAula(aula2);
         
         Professor prof3 = new Professor("Vilar", "vilar");
+        
+        DateTime comeco3 = new DateTime(2013, 06, 10, 9, 0);
+        DateTime fim3 = new DateTime(2013, 06, 10, 11, 0);
+        
+        Interval periodo3 = new Interval(comeco3, fim3);
+        
+        Aula aula3 = new Aula(DateTimeConstants.MONDAY, periodo3);
+        aulaJpa.create(aula3);
+        
+        prof3.adicionarAula(aula3);
+        
         //prof1.adicionarAula(aula);
         
         Professor prof4 = new Professor("Gaston", "gaston");
+        
+        
         //prof2.adicionarAula(aula2);
         
         Professor prof5 = new Professor("Denise", "denise");
         //prof1.adicionarAula(aula);
 
+        DateTime comeco4 = new DateTime(2013, 06, 10, 8, 0);
+        DateTime fim4 = new DateTime(2013, 06, 10, 10, 20);
+        
+        Interval periodo4 = new Interval(comeco4, fim4);
+        
+        Aula aula4 = new Aula(DateTimeConstants.MONDAY, periodo4);
+        aulaJpa.create(aula4);
+        
+        prof5.adicionarAula(aula4);
         
         
         ProfessorJpaController profJpa = new ProfessorJpaController(emf);

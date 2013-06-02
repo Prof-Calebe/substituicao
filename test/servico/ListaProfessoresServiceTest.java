@@ -13,6 +13,8 @@ import servico.ListaProfessoresService;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -39,7 +41,7 @@ public class ListaProfessoresServiceTest {
     public void tearDown() {
     }
 
-    
+
     @Test
     public void testeDeveListarTodosOsProfessores() {
         
@@ -58,13 +60,37 @@ public class ListaProfessoresServiceTest {
     @Test
     public void testeDeveAcharProfessorPorNome(){
         
-        ProfessorModel modelo = serviceEmTeste.obterProfessor("ariovaldsssonnnn");
+        ProfessorModel modelo = serviceEmTeste.obterProfessorPorNome("ariovaldsssonnnn");
         
         Assert.assertNull(modelo);
         
-        modelo = serviceEmTeste.obterProfessor("Calebe");
+        modelo = serviceEmTeste.obterProfessorPorNome("Calebe");
         
         Assert.assertNotNull(modelo);
         
     }
+    
+    @Test
+    public void testeDeveListarProfessoresPossiveisDadoUmPeriodoDeAusenciaEAulasDeProfessorAusente(){
+        
+        //02/06/2013 até 04/06/2013
+        
+        DateTime inicio = new DateTime(2013, 06, 02, 0, 0);
+        DateTime fim = new DateTime(2013, 06, 04, 0, 0);
+        
+        Interval periodo = new Interval(inicio, fim);
+        
+        List<ProfessorModel> professoresDisponiveis = serviceEmTeste.listarProfessoresCompativeisComAusenteNoPeriodo("Calebe", periodo);
+        
+        Assert.assertEquals(2, professoresDisponiveis.size());
+        
+        ProfessorModel prof1 = serviceEmTeste.obterProfessorPorNome("Ana Claudia");
+        
+        ProfessorModel prof2 = serviceEmTeste.obterProfessorPorNome("Gaston");
+        
+        Assert.assertTrue(professoresDisponiveis.contains(prof1));
+        Assert.assertTrue(professoresDisponiveis.contains(prof2));
+        
+    }
+    
 }

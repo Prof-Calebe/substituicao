@@ -206,7 +206,6 @@ public class NotificacaoService {
         
         Professor profSubstituto = profController.findProfessor(nomeProfessor);
 
-        
         if(profSubstituto == null){
             throw new IllegalStateException("Professor de nome " + nomeProfessor + " não existe");
         }

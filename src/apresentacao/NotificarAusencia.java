@@ -3,6 +3,7 @@ package apresentacao;
 import java.awt.Toolkit;
 import java.awt.event.ItemEvent;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -12,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ProfessorModel;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import servico.ListaProfessoresService;
 import servico.NotificacaoService;
 
@@ -76,7 +79,7 @@ public class NotificarAusencia extends javax.swing.JFrame {
         txta_Motivo = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
         cmb_ProfessorSugerido = new javax.swing.JComboBox();
-        btn_Cancelar = new javax.swing.JToggleButton();
+        btn_Voltar = new javax.swing.JToggleButton();
         confirmarButton = new javax.swing.JButton();
         txt_dataInicio = new javax.swing.JFormattedTextField();
         txt_dataFim = new javax.swing.JFormattedTextField();
@@ -146,10 +149,10 @@ public class NotificarAusencia extends javax.swing.JFrame {
             }
         });
 
-        btn_Cancelar.setText("Cancelar");
-        btn_Cancelar.addActionListener(new java.awt.event.ActionListener() {
+        btn_Voltar.setText("Voltar");
+        btn_Voltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_CancelarActionPerformed(evt);
+                btn_VoltarActionPerformed(evt);
             }
         });
 
@@ -231,7 +234,7 @@ public class NotificarAusencia extends javax.swing.JFrame {
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_Cancelar)
+                        .addComponent(btn_Voltar)
                         .addGap(26, 26, 26)
                         .addComponent(confirmarButton)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -269,7 +272,7 @@ public class NotificarAusencia extends javax.swing.JFrame {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_Cancelar)
+                    .addComponent(btn_Voltar)
                     .addComponent(confirmarButton))
                 .addContainerGap(60, Short.MAX_VALUE))
         );
@@ -277,14 +280,14 @@ public class NotificarAusencia extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CancelarActionPerformed
+    private void btn_VoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_VoltarActionPerformed
          try {
             this.dispose();
             previousFrame.setVisible(true);
         } catch (Exception e) {
             System.out.println("Erro ao retornar para janela anterior!");
         }   
-    }//GEN-LAST:event_btn_CancelarActionPerformed
+    }//GEN-LAST:event_btn_VoltarActionPerformed
 
     private void cmb_DataFimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_DataFimActionPerformed
         // TODO add your handling code here:
@@ -295,7 +298,8 @@ public class NotificarAusencia extends javax.swing.JFrame {
     }//GEN-LAST:event_cmb_ProfessorSugeridoItemStateChanged
 
     private void cmb_ProfessorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmb_ProfessorItemStateChanged
-        if( evt.getStateChange() == ItemEvent.SELECTED && (cmb_Professor.getSelectedIndex() != 0)){
+        if( evt.getStateChange() == ItemEvent.SELECTED && (cmb_Professor.getSelectedIndex() != 0) &&
+                !txt_dataInicio.getText().equals("") && !txt_dataFim.getText().equals("") ){
             
             cmb_ProfessorSugerido.removeAllItems();
 
@@ -303,7 +307,26 @@ public class NotificarAusencia extends javax.swing.JFrame {
             
             ListaProfessoresService profService = new ListaProfessoresService();
              
-            List<ProfessorModel> professores = profService.ListarProfessores();
+            //List<ProfessorModel> professores = profService.ListarProfessores();
+            
+            String dataInicio = txt_dataInicio.getText();
+            String dataFim = txt_dataFim.getText();
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
+        
+            DateTime inicio = null;
+            DateTime fim = null;
+            try {
+                inicio = new DateTime(sdf.parse(dataInicio));
+                fim = new DateTime(sdf.parse(dataFim));
+            } catch (ParseException ex) {
+                Logger.getLogger(NotificarAusencia.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            Interval periodo = new Interval(inicio, fim);
+            
+            List<ProfessorModel> professores = profService.listarProfessoresCompativeisComAusenteNoPeriodo(nomeProfEscolhido, periodo);
             
             cmb_ProfessorSugerido.addItem("- Indique professores - ");
             
@@ -325,7 +348,7 @@ public class NotificarAusencia extends javax.swing.JFrame {
 
         ListaProfessoresService listProfService = new ListaProfessoresService();
         
-        ProfessorModel profAusente = listProfService.obterProfessor(nomeProfAusente);
+        ProfessorModel profAusente = listProfService.obterProfessorPorNome(nomeProfAusente);
         //ProfessorModel profSugerido = listProfService.obterProfessor(nomeProfSugerido);
         
         String dataInicio = txt_dataInicio.getText();
@@ -424,7 +447,7 @@ public class NotificarAusencia extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton adicionarButton;
-    private javax.swing.JToggleButton btn_Cancelar;
+    private javax.swing.JToggleButton btn_Voltar;
     private javax.swing.JComboBox cmb_DataFim;
     private javax.swing.JComboBox cmb_DataInicio;
     private javax.swing.JComboBox cmb_Professor;

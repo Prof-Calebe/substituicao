@@ -6,13 +6,21 @@ import modelo.AusenciaModel;
 import servico.ListaAlocacoesPendentesService;
 import servico.NotificacaoService;
 import java.awt.Toolkit;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.ProfessorModel;
 import modelo.UsuarioModel;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import servico.AdministrarUsuariosService;
+import servico.ListaProfessoresService;
 
 /*
  * To change this template, choose Tools | Templates
@@ -30,6 +38,8 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
     private String professorParaAlocacao;
     
     private String professorAusente;
+    
+    private Interval periodoAusencia;
     
     private UsuarioModel usuario;
     
@@ -75,7 +85,7 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
         btnCancelarAusencia = new javax.swing.JButton();
         btnCancelarAulas = new javax.swing.JButton();
         btnAlocacao = new javax.swing.JButton();
-        btnEleger = btnEleger;
+        btnEleger = new javax.swing.JButton();
 
         jLabel2.setText("jLabel2");
 
@@ -267,6 +277,23 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
         if(tbl_Alocacoes.getSelectedRow() != -1){
             
             this.setProfessorAusente((String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 1));
+            
+            String dataInicio = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 2);
+            String dataFim = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 3);
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
+        
+            DateTime inicio = null;
+            DateTime fim = null;
+            try {
+                inicio = new DateTime(sdf.parse(dataInicio));
+                fim = new DateTime(sdf.parse(dataFim));
+            } catch (ParseException ex) {
+                Logger.getLogger(NotificarAusencia.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            this.setPeriodoAusencia(new Interval(inicio, fim));
 
             ListaProfessores listaProfessores = new ListaProfessores(this);
             listaProfessores.setVisible(true);
@@ -274,7 +301,25 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAlocacaoActionPerformed
 
     private void btnElegerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegerActionPerformed
-        // TODO add your handling code here:
+
+        String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);
+        String nomeProfessor = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 1);
+        
+        ListaProfessoresService profService = new ListaProfessoresService();
+        
+        ProfessorModel professor = profService.obterProfessorPorUsername(this.usuario.Usuario);
+        
+        if(nomeProfessor.equals(professor.Nome)){
+            
+            JOptionPane.showMessageDialog(null, "Não é possivel cobrir a própria ausência." , "Administrar Alocação", JOptionPane.INFORMATION_MESSAGE);
+            
+        } else{
+            NotificacaoService notifService = new NotificacaoService();
+
+            notifService.definirSubstituto(codigo, professor.Nome);
+
+            this.populateGrid(usuario);
+        }
     }//GEN-LAST:event_btnElegerActionPerformed
 
     public void populateGrid(){
@@ -400,5 +445,19 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
         
         notifService.definirSubstituto(codigo, nomeProfessor);
         
+    }
+
+    /**
+     * @return the periodoAusencia
+     */
+    public Interval getPeriodoAusencia() {
+        return periodoAusencia;
+    }
+
+    /**
+     * @param periodoAusencia the periodoAusencia to set
+     */
+    public void setPeriodoAusencia(Interval periodoAusencia) {
+        this.periodoAusencia = periodoAusencia;
     }
 }

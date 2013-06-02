@@ -6,10 +6,13 @@ package dominio;
 
 import dominio.Aula;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ElementCollection;
@@ -19,6 +22,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Hours;
@@ -40,6 +45,7 @@ public class Professor implements Serializable {
     private String username;
     
     @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE) 
     private List<Aula> grade;
     
     @ManyToMany(targetEntity=Ausencia.class,mappedBy="indicacoesSubstituto",fetch = FetchType.EAGER)
@@ -50,7 +56,7 @@ public class Professor implements Serializable {
 
     public Professor(String nome, String username) {
         this.nome = nome;
-        this.grade = new LinkedList<Aula>();
+        this.grade = new ArrayList<Aula>();
         this.username = username;
         
     }
@@ -158,6 +164,7 @@ public class Professor implements Serializable {
                 }
                 
                 dias = dias.minus(1);
+                data = data.plusDays(1);
                 
             }
             

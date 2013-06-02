@@ -4,6 +4,7 @@ import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.JFrame;
 import modelo.ProfessorModel;
+import org.joda.time.Interval;
 import servico.ListaProfessoresService;
 
 /*
@@ -183,10 +184,11 @@ public class ListaProfessores extends javax.swing.JDialog {
             cmb_Professor.addItem("- Selecione um professor - ");
             
             String nomeProfAusente = previousFrame.getProfessorAusente();
+            Interval periodo = previousFrame.getPeriodoAusencia();
             
             ListaProfessoresService profService = new ListaProfessoresService();
             
-            List<ProfessorModel> professores = profService.ListarProfessores();
+            List<ProfessorModel> professores = profService.listarProfessoresCompativeisComAusenteNoPeriodo(nomeProfAusente, periodo);
             
             for (ProfessorModel professor : professores){
                 
