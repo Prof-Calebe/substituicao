@@ -70,10 +70,6 @@ public class NotificacaoDeAusencia extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         cmb_Professor = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        cmb_DataInicio = new javax.swing.JComboBox();
-        jLabel5 = new javax.swing.JLabel();
-        cmb_DataFim = new javax.swing.JComboBox();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txta_Motivo = new javax.swing.JTextArea();
@@ -117,21 +113,6 @@ public class NotificacaoDeAusencia extends javax.swing.JFrame {
         });
 
         jLabel3.setText("Data Fim:");
-
-        jLabel4.setText("Aula Início:");
-
-        cmb_DataInicio.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "Aula 1", "Aula 2", "Aula 3", "Aula 4" }));
-        cmb_DataInicio.setToolTipText("Escolha a primeira aula da ausência.");
-
-        jLabel5.setText("Aula Fim:");
-
-        cmb_DataFim.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "Aula 1", "Aula 2", "Aula 3", "Aula 4" }));
-        cmb_DataFim.setToolTipText("Escolha a última aula da ausência");
-        cmb_DataFim.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmb_DataFimActionPerformed(evt);
-            }
-        });
 
         jLabel6.setText("Motivo:");
 
@@ -214,14 +195,6 @@ public class NotificacaoDeAusencia extends javax.swing.JFrame {
                                         .addComponent(jLabel3)
                                         .addGap(18, 18, 18)
                                         .addComponent(txt_dataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cmb_DataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmb_DataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel7)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(cmb_ProfessorSugerido, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -252,13 +225,7 @@ public class NotificacaoDeAusencia extends javax.swing.JFrame {
                     .addComponent(txt_dataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(txt_dataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(cmb_DataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(cmb_DataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -274,7 +241,7 @@ public class NotificacaoDeAusencia extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_Voltar)
                     .addComponent(confirmarButton))
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         pack();
@@ -288,10 +255,6 @@ public class NotificacaoDeAusencia extends javax.swing.JFrame {
             System.out.println("Erro ao retornar para janela anterior!");
         }   
     }//GEN-LAST:event_btn_VoltarActionPerformed
-
-    private void cmb_DataFimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_DataFimActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmb_DataFimActionPerformed
 
     private void cmb_ProfessorSugeridoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmb_ProfessorSugeridoItemStateChanged
 
@@ -448,16 +411,12 @@ public class NotificacaoDeAusencia extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton adicionarButton;
     private javax.swing.JToggleButton btn_Voltar;
-    private javax.swing.JComboBox cmb_DataFim;
-    private javax.swing.JComboBox cmb_DataInicio;
     private javax.swing.JComboBox cmb_Professor;
     private javax.swing.JComboBox cmb_ProfessorSugerido;
     private javax.swing.JButton confirmarButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;

@@ -31,7 +31,7 @@ import servico.ProfessorService;
  *
  * @author Thiago Lima
  */
-public class Alocacoes extends javax.swing.JFrame {
+public class Ausências extends javax.swing.JFrame {
 
     private JFrame previousFrame;
     
@@ -46,7 +46,7 @@ public class Alocacoes extends javax.swing.JFrame {
     /**
      * Creates new form AlocacoesPendentes
      */
-    public Alocacoes(UsuarioModel usuario) {
+    public Ausências(UsuarioModel usuario) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.usuario = usuario;
@@ -54,7 +54,7 @@ public class Alocacoes extends javax.swing.JFrame {
         this.populateGrid(usuario);
     }
 
-    public Alocacoes(JFrame previous, UsuarioModel usuario) {
+    public Ausências(JFrame previous, UsuarioModel usuario) {
         initComponents();
         previousFrame = previous;
         this.usuario = usuario;
@@ -90,7 +90,8 @@ public class Alocacoes extends javax.swing.JFrame {
         jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Alocações Pendentes");
+        setTitle("Ausências");
+        setAlwaysOnTop(true);
         setName("frm_AlocacoesPendentes"); // NOI18N
         setResizable(false);
 
@@ -395,13 +396,13 @@ public class Alocacoes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Alocacoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ausências.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Alocacoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ausências.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Alocacoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ausências.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Alocacoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ausências.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -413,7 +414,7 @@ public class Alocacoes extends javax.swing.JFrame {
 
                 UsuarioModel usuarioLogando = userService.obterUsuario("admin");
                 
-                new Alocacoes(usuarioLogando).setVisible(true);
+                new Ausências(usuarioLogando).setVisible(true);
             }
         });
     }

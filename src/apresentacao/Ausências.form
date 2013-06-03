@@ -10,7 +10,8 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
-    <Property name="title" type="java.lang.String" value="Aloca&#xe7;&#xf5;es Pendentes"/>
+    <Property name="title" type="java.lang.String" value="Aus&#xea;ncias"/>
+    <Property name="alwaysOnTop" type="boolean" value="true"/>
     <Property name="name" type="java.lang.String" value="frm_AlocacoesPendentes" noResource="true"/>
     <Property name="resizable" type="boolean" value="false"/>
   </Properties>

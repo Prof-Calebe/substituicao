@@ -20,7 +20,7 @@ public class ListaProfessores extends javax.swing.JDialog {
 
     //private JFrame previousFrame;
 
-    private Alocacoes previousFrame; 
+    private Ausências previousFrame; 
     
     /**
      * Creates new form ListaProfessores
@@ -31,7 +31,7 @@ public class ListaProfessores extends javax.swing.JDialog {
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg"));
     }
     
-    public ListaProfessores(Alocacoes previous) {
+    public ListaProfessores(Ausências previous) {
         initComponents();
         previousFrame = previous;
         previousFrame.setEnabled(false);
