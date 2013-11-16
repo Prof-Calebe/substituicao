@@ -190,6 +190,46 @@ public class NotificacaoServiceTest {
          
      }
      
+     @Test(expected=IllegalStateException.class)
+     public void testeNãoDeveSerPossivelDefinirSubstitutoComNomeNulo() throws ParseException {
+         
+         String dataInicio = "20/05/2013";
+         String dataFim = "24/05/2013";
+         String motivo = "Problemas pessoais";
+         
+         List<Long> idsIndicacoesSubstituto = new ArrayList<Long>();
+         
+         idsIndicacoesSubstituto.add(professores.get(1).getId());
+         
+         String codigo = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
+         
+         //Long idSubstituto = professores.get(2).getId();
+         
+         String nomeProf = professores.get(2).getNome();
+         
+         serviceEmTeste.definirSubstituto(codigo, null);         
+     }
+     
+     @Test(expected=IllegalStateException.class)
+     public void testeNãoDeveSerPossivelDefinirSubstitutoDeUmaAusênciaInexistente() throws ParseException {
+         
+         String dataInicio = "20/05/2013";
+         String dataFim = "24/05/2013";
+         String motivo = "Problemas pessoais";
+         
+         List<Long> idsIndicacoesSubstituto = new ArrayList<Long>();
+         
+         idsIndicacoesSubstituto.add(professores.get(1).getId());
+         
+         String codigo = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
+         
+         //Long idSubstituto = professores.get(2).getId();
+         
+         String nomeProf = professores.get(2).getNome();
+         
+         serviceEmTeste.definirSubstituto("", nomeProf);         
+     }
+     
      @Test
      public void testeDeveSerPossivelCancelarUmaAusencia() throws ParseException{
          

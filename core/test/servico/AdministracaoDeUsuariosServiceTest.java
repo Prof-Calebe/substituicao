@@ -90,7 +90,13 @@ public class AdministracaoDeUsuariosServiceTest {
         
         List<UsuarioModel> modelos = serviceEmTeste.ListarUsuarios();
         Assert.assertEquals(countUsuarios, modelos.size());
+    }
+    
+    @Test
+    public void testeEncontrarUsuarioPorNome(){
         
+        UsuarioModel modelo = serviceEmTeste.obterUsuario("calebe");
         
+        assertNotNull(modelo);
     }
 }

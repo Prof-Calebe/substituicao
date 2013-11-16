@@ -206,15 +206,15 @@ public class NotificacaoService {
         
 <span class="fc" id="L207">        Professor profSubstituto = profController.findProfessor(nomeProfessor);</span>
 
-<span class="pc bpc" id="L209" title="1 of 2 branches missed.">        if(profSubstituto == null){</span>
-<span class="nc" id="L210">            throw new IllegalStateException(&quot;Professor de nome &quot; + nomeProfessor + &quot; não existe&quot;);</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">        if(profSubstituto == null){</span>
+<span class="fc" id="L210">            throw new IllegalStateException(&quot;Professor de nome &quot; + nomeProfessor + &quot; não existe&quot;);</span>
         }
         
 <span class="fc" id="L213">        Ausencia ausencia = ausenciaController.findAusencia(codigo);</span>
         
         
-<span class="pc bpc" id="L216" title="1 of 2 branches missed.">        if(ausencia == null){</span>
-<span class="nc" id="L217">            throw new IllegalStateException(&quot;Ausência de código &quot; + codigo + &quot; não existe&quot;);</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">        if(ausencia == null){</span>
+<span class="fc" id="L217">            throw new IllegalStateException(&quot;Ausência de código &quot; + codigo + &quot; não existe&quot;);</span>
         }        
         
 <span class="fc" id="L220">        ausencia.setProfessorSubstituto(profSubstituto);</span>

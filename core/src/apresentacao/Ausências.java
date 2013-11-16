@@ -3,7 +3,6 @@ package apresentacao;
 import auxiliar.Perfil;
 import dominio.EstadoAusencia;
 import modelo.AusenciaModel;
-import servico.AlocacaoService;
 import servico.NotificacaoService;
 import java.awt.Toolkit;
 import java.text.ParseException;

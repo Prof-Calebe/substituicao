@@ -66,8 +66,19 @@ public class ProfessorServiceTest {
         
         modelo = serviceEmTeste.obterProfessorPorNome("Calebe");
         
-        Assert.assertNotNull(modelo);
+        Assert.assertNotNull(modelo);        
+    }
+    
+    @Test
+    public void testeDeveAcharProfessorPorNomeDeUsuario(){
         
+        ProfessorModel modelo = serviceEmTeste.obterProfessorPorUsername("ariovaldsssonnnn");
+        
+        Assert.assertNull(modelo);
+        
+        modelo = serviceEmTeste.obterProfessorPorUsername("calebe");
+        
+        Assert.assertNotNull(modelo);        
     }
     
     @Test

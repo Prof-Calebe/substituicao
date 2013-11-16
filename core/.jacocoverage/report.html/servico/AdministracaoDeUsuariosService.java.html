@@ -68,17 +68,17 @@ public class AdministracaoDeUsuariosService {
     
     public UsuarioModel obterUsuario(String nome){
         
-<span class="nc" id="L71">        UsuarioJpaController controller = new UsuarioJpaController(emf);</span>
+<span class="fc" id="L71">        UsuarioJpaController controller = new UsuarioJpaController(emf);</span>
         
-<span class="nc" id="L73">        Usuario usuario = controller.findUsuario(nome);</span>
+<span class="fc" id="L73">        Usuario usuario = controller.findUsuario(nome);</span>
         
-<span class="nc" id="L75">        UsuarioModel model = new UsuarioModel();</span>
-<span class="nc" id="L76">        model.Usuario = usuario.getUsuario();</span>
-<span class="nc" id="L77">        model.Senha = usuario.getSenha();</span>
-<span class="nc" id="L78">        model.profile = usuario.getPermissao();</span>
-<span class="nc" id="L79">        model.id = usuario.getId();</span>
+<span class="fc" id="L75">        UsuarioModel model = new UsuarioModel();</span>
+<span class="fc" id="L76">        model.Usuario = usuario.getUsuario();</span>
+<span class="fc" id="L77">        model.Senha = usuario.getSenha();</span>
+<span class="fc" id="L78">        model.profile = usuario.getPermissao();</span>
+<span class="fc" id="L79">        model.id = usuario.getId();</span>
         
-<span class="nc" id="L81">        return model;</span>
+<span class="fc" id="L81">        return model;</span>
         
     }
     

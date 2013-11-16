@@ -128,13 +128,13 @@ public class ProfessorJpaController implements Serializable {
     }
     
     public Professor findProfessorPorUsername(String username){
-<span class="nc" id="L131">        List&lt;Professor&gt; professores = this.findProfessorEntities();</span>
-<span class="nc bnc" id="L132" title="All 2 branches missed.">        for(Professor professor : professores){</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">            if(professor.getUsername().equals(username))</span>
-<span class="nc" id="L134">                return professor;</span>
-<span class="nc" id="L135">        }</span>
+<span class="fc" id="L131">        List&lt;Professor&gt; professores = this.findProfessorEntities();</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        for(Professor professor : professores){</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">            if(professor.getUsername().equals(username))</span>
+<span class="fc" id="L134">                return professor;</span>
+<span class="fc" id="L135">        }</span>
         
-<span class="nc" id="L137">        return null;</span>
+<span class="fc" id="L137">        return null;</span>
     }    
 
     public int getProfessorCount() {

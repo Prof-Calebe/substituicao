@@ -156,12 +156,12 @@ public class AusenciaJpaController implements Serializable {
     
     public Ausencia findAusencia(String codigo){
 <span class="fc" id="L158">    List&lt;Ausencia&gt; ausencias = this.findAusenciaEntities();</span>
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">    for(Ausencia ausencia : ausencias){</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">    for(Ausencia ausencia : ausencias){</span>
 <span class="fc bfc" id="L160" title="All 2 branches covered.">        if(ausencia.getCodigo().equals(codigo))</span>
 <span class="fc" id="L161">            return ausencia;</span>
 <span class="fc" id="L162">    }</span>
         
-<span class="nc" id="L164">        return null;</span>
+<span class="fc" id="L164">        return null;</span>
     }
     
 

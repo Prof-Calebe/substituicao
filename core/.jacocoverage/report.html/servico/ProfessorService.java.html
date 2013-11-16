@@ -96,17 +96,17 @@ public class ProfessorService {
     }
     
     public ProfessorModel obterProfessorPorUsername(String username){
-<span class="nc" id="L99">        Professor professor = controller.findProfessorPorUsername(username);</span>
+<span class="fc" id="L99">        Professor professor = controller.findProfessorPorUsername(username);</span>
         
-<span class="nc bnc" id="L101" title="All 2 branches missed.">        if(professor == null)</span>
-<span class="nc" id="L102">            return null;</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        if(professor == null)</span>
+<span class="fc" id="L102">            return null;</span>
         
-<span class="nc" id="L104">        ProfessorModel model = new ProfessorModel();</span>
+<span class="fc" id="L104">        ProfessorModel model = new ProfessorModel();</span>
         
-<span class="nc" id="L106">        model.Nome = professor.getNome();</span>
-<span class="nc" id="L107">        model.id = professor.getId();</span>
+<span class="fc" id="L106">        model.Nome = professor.getNome();</span>
+<span class="fc" id="L107">        model.id = professor.getId();</span>
         
-<span class="nc" id="L109">        return model; </span>
+<span class="fc" id="L109">        return model; </span>
     }
     
     
