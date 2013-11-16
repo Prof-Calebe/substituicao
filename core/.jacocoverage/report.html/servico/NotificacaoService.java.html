@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>NotificacaoService.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;core&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.html" class="el_package">servico</a> &gt; <span class="el_source">NotificacaoService.java</span></div><h1>NotificacaoService.java</h1><pre class="source lang-java linenums">/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package servico;
+
+import datamapper.AusenciaJpaController;
+import datamapper.ProfessorJpaController;
+import datamapper.exceptions.NonexistentEntityException;
+import dominio.Ausencia;
+import dominio.EstadoAusencia;
+import dominio.Professor;
+import modelo.AusenciaModel;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
+
+/**
+ *
+ * @author Thiago Lima
+ */
+public class NotificacaoService {
+    
+    private AusenciaJpaController ausenciaController;
+    private ProfessorJpaController profController;
+    
+<span class="fc" id="L36">    public NotificacaoService(){</span>
+<span class="fc" id="L37">        EntityManagerFactory emf = Persistence.createEntityManagerFactory(&quot;pro_subPU&quot;);</span>
+<span class="fc" id="L38">        ausenciaController = new AusenciaJpaController(emf);</span>
+//        periodoController = new PeriodoJpaController(emf);
+<span class="fc" id="L40">        profController = new ProfessorJpaController(emf);</span>
+<span class="fc" id="L41">    }</span>
+    
+    public String notificarAusencia(Long idProfessor, String dataInicio, String dataFim, String motivo, List&lt;String&gt; nomesProfessoresIndicados) throws ParseException {
+        
+<span class="fc" id="L45">        SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
+        
+        
+<span class="fc" id="L48">        DateTime inicio = new DateTime(sdf.parse(dataInicio));</span>
+<span class="fc" id="L49">        DateTime fim = new DateTime(sdf.parse(dataFim));</span>
+        
+<span class="fc" id="L51">        Interval periodo = new Interval(inicio, fim);</span>
+        
+<span class="fc" id="L53">        Professor professor = profController.findProfessor(idProfessor);</span>
+<span class="fc" id="L54">        List&lt;Professor&gt; professoresIndicados = new ArrayList&lt;Professor&gt;();</span>
+        
+        //Professor professorSubstituto = profController.findProfessor(idProfessorSubstituto);
+        
+<span class="fc" id="L58">        Random r = new Random();</span>
+        
+<span class="fc" id="L60">        String codigo = Integer.toString(r.nextInt(10000));</span>
+        
+<span class="fc" id="L62">        Ausencia ausencia = new Ausencia(codigo, periodo, professor, motivo);</span>
+        //ausencia.indicarSubstituto(professorSubstituto);
+        
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        for(String nomeProf : nomesProfessoresIndicados){</span>
+<span class="fc" id="L66">            Professor professorIndicado = profController.findProfessor(nomeProf);</span>
+<span class="fc" id="L67">            ausencia.indicarSubstituto(professorIndicado);</span>
+<span class="fc" id="L68">        }</span>
+        
+<span class="fc" id="L70">        ausenciaController.create(ausencia);</span>
+        
+<span class="fc" id="L72">        return codigo;</span>
+        
+    }
+
+//    public void editarAusencia(String codigo, String dataInicio, String dataFim, String motivo, Long idSubstituto) throws ParseException, NonexistentEntityException, Exception {
+//        
+//        SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);
+//        
+//        DateTime inicio = new DateTime(sdf.parse(dataInicio));
+//        DateTime fim = new DateTime(sdf.parse(dataFim));
+//        
+//        Interval periodo = new Interval(inicio, fim);
+//        
+//        Professor professorSubstituto = profController.findProfessor(idSubstituto);
+//        
+//        Random r = new Random();
+//        
+//        Ausencia ausencia = ausenciaController.findAusencia(codigo);
+//        ausencia.setPeriodo(periodo);
+//        ausencia.setMotivo(motivo);
+//        ausencia.indicarSubstituto(professorSubstituto);
+//                
+//        ausenciaController.edit(ausencia);
+//    }
+
+    public List&lt;AusenciaModel&gt; listarAusencias() {
+        
+<span class="fc" id="L99">        List&lt;Ausencia&gt; ausencias = ausenciaController.findAusenciaEntities();</span>
+<span class="fc" id="L100">        List&lt;AusenciaModel&gt; modelos = new LinkedList&lt;AusenciaModel&gt;();</span>
+        
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        for(Ausencia ausencia : ausencias){</span>
+            
+<span class="fc" id="L104">            AusenciaModel modelo = this.montarAusencia(ausencia);</span>
+            
+<span class="fc" id="L106">            modelos.add(modelo);</span>
+<span class="fc" id="L107">        }</span>
+        
+<span class="fc" id="L109">        return modelos;</span>
+    }
+    
+    private String determinarEstado(EstadoAusencia estado){
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">        if(estado == EstadoAusencia.Ausencia_Cancelada)</span>
+<span class="nc" id="L114">            return &quot;Ausência cancelada&quot;;</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">        else if(estado == EstadoAusencia.Alocacao_Efetuada)</span>
+<span class="nc" id="L116">            return &quot;Alocação efetuada&quot;;</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        else if(estado == EstadoAusencia.Alocacao_Pendente)</span>
+<span class="fc" id="L118">            return &quot;Alocação pendente&quot;;</span>
+        else{
+<span class="nc" id="L120">            return &quot;Aulas canceladas&quot;;</span>
+        }
+    }
+    
+    public List&lt;AusenciaModel&gt; listarAusenciasPorEstado(EstadoAusencia estado){
+        
+<span class="nc" id="L126">        List&lt;Ausencia&gt; ausencias = ausenciaController.findAusenciaEntities();</span>
+<span class="nc" id="L127">        List&lt;AusenciaModel&gt; modelos = new ArrayList&lt;AusenciaModel&gt;();</span>
+        
+<span class="nc bnc" id="L129" title="All 2 branches missed.">        for(Ausencia ausencia : ausencias){</span>
+            
+<span class="nc bnc" id="L131" title="All 2 branches missed.">            if(ausencia.getEstado().equals(estado)){</span>
+<span class="nc" id="L132">                AusenciaModel modelo = this.montarAusencia(ausencia);</span>
+                
+<span class="nc" id="L134">                modelos.add(modelo);   </span>
+            }               
+<span class="nc" id="L136">        }            </span>
+<span class="nc" id="L137">        return modelos;   </span>
+    }
+    
+    public List&lt;AusenciaModel&gt; listarAusenciasPorProfessor(String usernameProfessor){
+        
+<span class="nc" id="L142">        Professor professor = profController.findProfessorPorUsername(usernameProfessor);</span>
+        
+<span class="nc" id="L144">        List&lt;Ausencia&gt; ausenciasPorProfessor = ausenciaController.listAusenciasPorProfessor(professor);</span>
+        
+<span class="nc" id="L146">        List&lt;AusenciaModel&gt; modelos = new ArrayList&lt;AusenciaModel&gt;();</span>
+        
+<span class="nc bnc" id="L148" title="All 2 branches missed.">        for(Ausencia ausencia : ausenciasPorProfessor){</span>
+            
+<span class="nc" id="L150">            AusenciaModel modelo = this.montarAusencia(ausencia);</span>
+            
+<span class="nc" id="L152">            modelos.add(modelo);</span>
+            
+<span class="nc" id="L154">        }</span>
+        
+<span class="nc" id="L156">        return modelos;</span>
+    }
+    
+    public List&lt;AusenciaModel&gt; listarAusenciasPorIndicacaoDeSubstituto(String usernameProfessor){
+        
+<span class="nc" id="L161">        Professor professorIndicado = profController.findProfessorPorUsername(usernameProfessor);</span>
+        
+<span class="nc" id="L163">        List&lt;Ausencia&gt; ausenciasComIndicacaoDeSubstituto = ausenciaController.listAusenciasPorIndicacaoDeSubstituto(professorIndicado);</span>
+        
+<span class="nc" id="L165">        List&lt;AusenciaModel&gt; modelos = new ArrayList&lt;AusenciaModel&gt;();</span>
+        
+<span class="nc bnc" id="L167" title="All 2 branches missed.">        for(Ausencia ausencia : ausenciasComIndicacaoDeSubstituto){</span>
+            
+<span class="nc" id="L169">            AusenciaModel modelo = this.montarAusencia(ausencia);</span>
+            
+<span class="nc" id="L171">            modelos.add(modelo);</span>
+            
+<span class="nc" id="L173">        }</span>
+        
+<span class="nc" id="L175">        return modelos;</span>
+    }
+    
+    
+    
+    private AusenciaModel montarAusencia(Ausencia ausencia){
+
+<span class="fc" id="L182">        AusenciaModel modelo = new AusenciaModel();</span>
+
+<span class="fc" id="L184">        modelo.codigo = ausencia.getCodigo();</span>
+<span class="fc" id="L185">        modelo.professorAusente = ausencia.getProfessor().getNome();</span>
+        
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">        if(ausencia.getProfessorSubstituto() != null){</span>
+<span class="nc" id="L188">            modelo.professorSubstituto = ausencia.getProfessorSubstituto().getNome();    </span>
+        }else{
+<span class="fc" id="L190">            modelo.professorSubstituto = &quot;&quot;;</span>
+        }
+        
+        //modelo.professorSubstituto = ausencia.getIndicacoesSubstitutos().getNome();
+<span class="fc" id="L194">        modelo.estado = this.determinarEstado(ausencia.getEstado());</span>
+<span class="fc" id="L195">        modelo.id = ausencia.getId();</span>
+<span class="fc" id="L196">        SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
+<span class="fc" id="L197">        Interval periodo = ausencia.getPeriodo();</span>
+<span class="fc" id="L198">        modelo.dataInicio = sdf.format(periodo.getStart().toDate());</span>
+<span class="fc" id="L199">        modelo.dataFim = sdf.format(periodo.getEnd().toDate());</span>
+        
+<span class="fc" id="L201">        return modelo;</span>
+        
+    }
+
+    public void definirSubstituto(String codigo, String nomeProfessor) {
+        
+<span class="fc" id="L207">        Professor profSubstituto = profController.findProfessor(nomeProfessor);</span>
+
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">        if(profSubstituto == null){</span>
+<span class="nc" id="L210">            throw new IllegalStateException(&quot;Professor de nome &quot; + nomeProfessor + &quot; não existe&quot;);</span>
+        }
+        
+<span class="fc" id="L213">        Ausencia ausencia = ausenciaController.findAusencia(codigo);</span>
+        
+        
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">        if(ausencia == null){</span>
+<span class="nc" id="L217">            throw new IllegalStateException(&quot;Ausência de código &quot; + codigo + &quot; não existe&quot;);</span>
+        }        
+        
+<span class="fc" id="L220">        ausencia.setProfessorSubstituto(profSubstituto);</span>
+<span class="fc" id="L221">        ausencia.definirComoAlocado();</span>
+        
+        
+        try {
+<span class="fc" id="L225">            ausenciaController.edit(ausencia);</span>
+<span class="nc" id="L226">        } catch (NonexistentEntityException ex) {</span>
+<span class="nc" id="L227">            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L228">        } catch (Exception ex) {</span>
+<span class="nc" id="L229">            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="pc" id="L230">        }</span>
+
+        
+<span class="fc" id="L233">    }</span>
+    
+    public void cancelarAusencia(String codigo){
+        
+<span class="fc" id="L237">        Ausencia ausencia = ausenciaController.findAusencia(codigo);</span>
+        
+<span class="fc" id="L239">        ausencia.cancelarAusencia();</span>
+        try {
+<span class="fc" id="L241">            ausenciaController.edit(ausencia);</span>
+<span class="nc" id="L242">        } catch (NonexistentEntityException ex) {</span>
+<span class="nc" id="L243">            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L244">        } catch (Exception ex) {</span>
+<span class="nc" id="L245">            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="pc" id="L246">        }</span>
+        
+<span class="fc" id="L248">    }</span>
+    
+    public void cancelarAulas(String codigo){
+        
+<span class="fc" id="L252">        Ausencia ausencia = ausenciaController.findAusencia(codigo);</span>
+        
+<span class="fc" id="L254">        ausencia.cancelarAulas();</span>
+        try {
+<span class="fc" id="L256">            ausenciaController.edit(ausencia);</span>
+<span class="nc" id="L257">        } catch (NonexistentEntityException ex) {</span>
+<span class="nc" id="L258">            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L259">        } catch (Exception ex) {</span>
+<span class="nc" id="L260">            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="pc" id="L261">        }</span>
+        
+<span class="fc" id="L263">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span></div></body></html>

@@ -168,41 +168,20 @@ public class ProfessorTest {
     @Test
     public void testeDeveDevolverAulasQuePerdeNoPeriodo(){
         
-        DateTime inicio1 = new DateTime(2013, 05, 24, 10, 10);
-        DateTime fim1 = new DateTime(2013, 05, 26, 10, 30);
-        
-        Interval ausencia1 = new Interval(inicio1, fim1);
-        
-        DateTime inicioAula1 = new DateTime(2013, 05, 24, 19, 20);
-        DateTime fimAula1 = new DateTime(2013, 05, 24, 21, 0);
-        
-        Interval intervalAula1 = new Interval(inicioAula1, fimAula1);
-        
-        Aula aula1 = new Aula(DateTimeConstants.TUESDAY, intervalAula1);
-        
-        objetoEmTeste = new Professor("umProf", "username");
-        objetoEmTeste.adicionarAula(aula1);
+        Interval ausencia1 = setUpAusenciaSextaESábado();
+
+        setUpAulaTerçaFeira();
         
         List<Aula> aulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(ausencia1);
         
         Assert.assertEquals(0, aulasPerdidas.size());
-        
-        DateTime inicioAula2 = new DateTime(2013, 05, 24, 05, 0);
-        DateTime fimAula2 = new DateTime(2013, 05, 24, 07, 0);
-        
-        Interval intervalAula2 = new Interval(inicioAula2, fimAula2);
-        
-        Aula aula2 = new Aula(DateTimeConstants.FRIDAY, intervalAula2);     
-        
-        objetoEmTeste = new Professor("outroProf", "username");
-        objetoEmTeste.adicionarAula(aula2);
+
+        Aula aula2 = setUpAulaSextaFeira();
         
         aulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(ausencia1);
         
         Assert.assertEquals(1, aulasPerdidas.size());
         Assert.assertEquals(aula2, aulasPerdidas.toArray()[0]);
-        
-        
         
         DateTime inicio2 = new DateTime(2013, 05, 29, 10, 00);
         DateTime fim2 = new DateTime(2013, 05, 29, 14, 00);
@@ -236,7 +215,97 @@ public class ProfessorTest {
         
         aulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(ausencia2);
         
-        Assert.assertEquals(0, aulasPerdidas.size());        
+        Assert.assertEquals(0, aulasPerdidas.size()); 
+    }
+
+    private Aula setUpAulaSextaFeira() {
+        DateTime inicioAula2 = new DateTime(2013, 05, 24, 05, 0);
+        DateTime fimAula2 = new DateTime(2013, 05, 24, 07, 0);
+        Interval intervalAula2 = new Interval(inicioAula2, fimAula2);
+        Aula aula2 = new Aula(DateTimeConstants.FRIDAY, intervalAula2);
+        objetoEmTeste = new Professor("outroProf", "username");
+        objetoEmTeste.adicionarAula(aula2);
+        return aula2;
+    }
+
+    private void setUpAulaTerçaFeira() {
+        DateTime inicioAula1 = new DateTime(2013, 05, 24, 19, 20);
+        DateTime fimAula1 = new DateTime(2013, 05, 24, 21, 0);
         
+        Interval intervalAula1 = new Interval(inicioAula1, fimAula1);
+        
+        Aula aula1 = new Aula(DateTimeConstants.TUESDAY, intervalAula1);
+        
+        objetoEmTeste = new Professor("umProf", "username");
+        objetoEmTeste.adicionarAula(aula1);
+    }
+
+    private Interval setUpAusenciaSextaESábado() {
+        DateTime inicio1 = new DateTime(2013, 05, 24, 10, 10);
+        DateTime fim1 = new DateTime(2013, 05, 26, 10, 30);
+        Interval ausencia1 = new Interval(inicio1, fim1);
+        return ausencia1;
+    }
+    
+    @Test
+    public void testeDeveReportarCorretamenteToString(){
+        Long x = new Long("0");    
+        objetoEmTeste.setId(x);
+        
+        assertEquals("Dominio.Professor[ id=0 ]", objetoEmTeste.toString());
+        
+        x = new Long("10");    
+        objetoEmTeste.setId(x);
+        assertEquals("Dominio.Professor[ id=10 ]", objetoEmTeste.toString());        
+    }
+    
+    @Test
+    public void testeDeveSerConsideradoIgualSomenteAOutroProfessorDeIdIdentica()
+    {
+        Long x = new Long("0");  
+        assertFalse(objetoEmTeste.equals(x));           
+        
+        Professor outro = new Professor(nome, username);
+        assertTrue(objetoEmTeste.equals(outro));  
+        
+        outro.setId(x);
+        assertFalse(objetoEmTeste.equals(outro));      
+                
+        objetoEmTeste.setId(x);
+        assertTrue(objetoEmTeste.equals(outro));  
+        
+        outro = new Professor(nome, username);        
+        assertFalse(objetoEmTeste.equals(outro));       
+    }
+    
+    @Test
+    public void testeDeveReportarCorretamenteOHashCode(){
+        int hashCode = 0;
+        assertEquals(hashCode, objetoEmTeste.hashCode());
+        
+        Long x = new Long("0");  
+        objetoEmTeste.setId(x);
+        
+        hashCode = x.hashCode();
+        assertEquals(hashCode, objetoEmTeste.hashCode());
+    }
+    
+    @Test(expected=IllegalStateException.class)
+    public void testeNãoDevePermitirAdicionarAulasNulas(){
+        objetoEmTeste.adicionarAula(null);
+    }
+    
+    @Test(expected=IllegalStateException.class)
+    public void testeNãoDevePermitirAdicionarAulasDuplicadas(){
+        DateTime inicioAula1 = new DateTime(2013, 05, 24, 19, 20);
+        DateTime fimAula1 = new DateTime(2013, 05, 24, 21, 0);
+        
+        Interval intervalAula1 = new Interval(inicioAula1, fimAula1);
+        
+        Aula aula1 = new Aula(DateTimeConstants.TUESDAY, intervalAula1);
+        
+        objetoEmTeste.adicionarAula(aula1);
+        
+        objetoEmTeste.adicionarAula(aula1);
     }
 }

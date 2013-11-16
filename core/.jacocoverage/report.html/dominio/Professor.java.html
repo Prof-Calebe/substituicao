@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Professor.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;core&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.html" class="el_package">dominio</a> &gt; <span class="el_source">Professor.java</span></div><h1>Professor.java</h1><pre class="source lang-java linenums">/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package dominio;
+
+import dominio.Aula;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ElementCollection;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.Hours;
+import org.joda.time.Interval;
+
+/**
+ *
+ * @author Leticia
+ */
+@Entity
+public class Professor implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    
+    private String nome;
+    
+    private String username;
+    
+    @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE) 
+    private List&lt;Aula&gt; grade;
+    
+    @ManyToMany(targetEntity=Ausencia.class,mappedBy=&quot;indicacoesSubstituto&quot;,fetch = FetchType.EAGER)
+    private List&lt;Ausencia&gt; ausencias;
+    
+    
+<span class="fc" id="L55">    protected Professor(){}</span>
+
+<span class="fc" id="L57">    public Professor(String nome, String username) {</span>
+<span class="fc" id="L58">        this.nome = nome;</span>
+<span class="fc" id="L59">        this.grade = new ArrayList&lt;Aula&gt;();</span>
+<span class="fc" id="L60">        this.username = username;</span>
+        
+<span class="fc" id="L62">    }</span>
+
+    public Long getId() {
+<span class="fc" id="L65">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="fc" id="L69">        this.id = id;</span>
+<span class="fc" id="L70">    }</span>
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L74">        int hash = 0;</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        hash += (id != null ? id.hashCode() : 0);</span>
+<span class="fc" id="L76">        return hash;</span>
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (!(object instanceof Professor)) {</span>
+<span class="fc" id="L83">            return false;</span>
+        }
+<span class="fc" id="L85">        Professor other = (Professor) object;</span>
+        
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        if(this.id == null)</span>
+        {
+<span class="fc bfc" id="L89" title="All 2 branches covered.">            if(other.id == null)</span>
+            {
+<span class="fc" id="L91">                return true;</span>
+            }
+            else
+            {
+<span class="fc" id="L95">                return false;</span>
+            }
+        }
+        else
+        {
+<span class="fc bfc" id="L100" title="All 2 branches covered.">            if(other.id == null)</span>
+            {
+<span class="fc" id="L102">                return false;</span>
+            }
+            
+<span class="fc" id="L105">            return this.id.equals(other.id);</span>
+        }
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L111">        return &quot;Dominio.Professor[ id=&quot; + id + &quot; ]&quot;;</span>
+    }
+
+    /**
+     * @return the nome
+     */
+    public String getNome() {
+<span class="fc" id="L118">        return nome;</span>
+    }
+
+    /**
+     * @return the grade
+     */
+    public List&lt;Aula&gt; getGrade() {
+<span class="fc" id="L125">        return grade;</span>
+    }
+
+    public void adicionarAula(Aula aula) {
+        
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        if(aula == null){</span>
+<span class="fc" id="L131">            throw new IllegalStateException(&quot;Aula inválida.&quot;);</span>
+        }
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        if(grade.contains(aula)){</span>
+<span class="fc" id="L134">            throw new IllegalStateException(&quot;Professor já contem esta aula em sua grade&quot;);</span>
+        }
+        
+<span class="fc" id="L137">        grade.add(aula);</span>
+        
+<span class="fc" id="L139">    }</span>
+
+    public boolean  EhCompativelCom(List&lt;Aula&gt; aulas) {
+        
+//        Collections.sort(this.grade, new AulaComparator());
+        
+<span class="fc" id="L145">        boolean ehCompativel = true;</span>
+
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        for(Aula aulaIntruso : aulas){</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">            for(Aula minhaAula : this.getGrade()) {</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">                if(minhaAula.bateCom(aulaIntruso)){</span>
+<span class="fc" id="L150">                    ehCompativel = false;</span>
+<span class="fc" id="L151">                    break;</span>
+                }
+<span class="fc" id="L153">            } </span>
+<span class="fc" id="L154">        }</span>
+<span class="fc" id="L155">        return ehCompativel;</span>
+
+    }
+
+    public List&lt;Aula&gt; verificarAulasPerdidasNoPeriodo(Interval periodoAusencia) {
+              
+<span class="fc" id="L161">        DateTime inicioAusencia = periodoAusencia.getStart();</span>
+<span class="fc" id="L162">        DateTime finalAusencia = periodoAusencia.getEnd();</span>
+        
+<span class="fc" id="L164">        List&lt;Aula&gt; aulasComprometidas = new LinkedList&lt;Aula&gt;();</span>
+                        
+<span class="fc bfc" id="L166" title="All 2 branches covered.">        if(Hours.hoursBetween(inicioAusencia, finalAusencia).isGreaterThan(Hours.hours(23))){            </span>
+            
+<span class="fc" id="L168">            Days dias = Days.daysBetween(inicioAusencia, finalAusencia);</span>
+            
+            
+<span class="fc bfc" id="L171" title="All 2 branches covered.">            while(dias.isGreaterThan(Days.days(0))){</span>
+                
+<span class="fc bfc" id="L173" title="All 2 branches covered.">                for(Aula aula : this.grade){</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">                    if(aula.getDiaDaSemana() == inicioAusencia.getDayOfWeek())</span>
+                    {
+                        //TODO: Provavelmente existe um bug quando se declara uma ausência de mais de 1 semana. Na verdade, esse método deveria reportar cada aula com uma data de perda específica. Ou então, deveria haver N períodos de ausência unitários.
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">                        if(!aulasComprometidas.contains(aula))</span>
+                        {
+<span class="fc" id="L179">                            aulasComprometidas.add(aula);</span>
+                        }
+                    }
+                    
+                    /*if(aula.getDiaDaSemana() == inicioAusencia.getDayOfWeek() &amp;&amp;
+                            !aulasComprometidas.contains(aula)){
+                        aulasComprometidas.add(aula);
+                    }*/
+<span class="fc" id="L187">                }</span>
+                
+<span class="fc" id="L189">                dias = dias.minus(1);</span>
+<span class="fc" id="L190">                inicioAusencia = inicioAusencia.plusDays(1);</span>
+                
+            }
+            
+<span class="fc" id="L194">        }else{ //menos de 24 horas de ausência</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">            for(Aula aula : this.grade){</span>
+<span class="pc bpc" id="L196" title="2 of 6 branches missed.">                if(  aula.getDiaDaSemana() == periodoAusencia.getStart().getDayOfWeek() &amp;&amp;</span>
+                        aula.bateHorarioCom(periodoAusencia) &amp;&amp; 
+                        !aulasComprometidas.contains(aula) ){
+<span class="fc" id="L199">                    aulasComprometidas.add(aula);</span>
+                }
+<span class="fc" id="L201">            }</span>
+        }
+              
+<span class="fc" id="L204">        return aulasComprometidas;</span>
+    }
+   
+    /**
+     * @return the username
+     */
+    public String getUsername() {
+<span class="fc" id="L211">        return username;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span></div></body></html>

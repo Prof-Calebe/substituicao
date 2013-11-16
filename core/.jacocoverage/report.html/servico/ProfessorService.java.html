@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ProfessorService.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;core&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.html" class="el_package">servico</a> &gt; <span class="el_source">ProfessorService.java</span></div><h1>ProfessorService.java</h1><pre class="source lang-java linenums">/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package servico;
+
+import datamapper.ProfessorJpaController;
+import datamapper.UsuarioJpaController;
+import dominio.Aula;
+import dominio.Professor;
+import java.util.ArrayList;
+import modelo.ProfessorModel;
+import java.util.LinkedList;
+import java.util.List;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import org.joda.time.Interval;
+
+/**
+ *
+ * @author Rick
+ */
+public class ProfessorService {
+    
+   private ProfessorJpaController controller;
+    
+<span class="fc" id="L27">    public ProfessorService(){</span>
+<span class="fc" id="L28">        EntityManagerFactory emf = Persistence.createEntityManagerFactory(&quot;pro_subPU&quot;);</span>
+<span class="fc" id="L29">        controller = new ProfessorJpaController(emf);</span>
+<span class="fc" id="L30">    }</span>
+    
+    
+    public List&lt;ProfessorModel&gt; ListarProfessores(){
+        
+<span class="fc" id="L35">        List&lt;Professor&gt; professores = new LinkedList&lt;Professor&gt;(); </span>
+<span class="fc" id="L36">        List&lt;ProfessorModel&gt; modelos = new LinkedList&lt;ProfessorModel&gt;();</span>
+        
+<span class="fc" id="L38">        professores = controller.findProfessorEntities();</span>
+        
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        for (Professor prof : professores){</span>
+<span class="fc" id="L41">            ProfessorModel model = new ProfessorModel();</span>
+<span class="fc" id="L42">            model.Nome = prof.getNome();</span>
+<span class="fc" id="L43">            model.id = prof.getId();</span>
+<span class="fc" id="L44">            modelos.add(model);</span>
+<span class="fc" id="L45">        }</span>
+        
+<span class="fc" id="L47">        return modelos;</span>
+    }
+    
+    public List&lt;ProfessorModel&gt; listarProfessoresCompativeisComAusenteNoPeriodo(String nomeProfessor, Interval periodo){
+        
+<span class="fc" id="L52">        Professor professorAusente = controller.findProfessor(nomeProfessor);</span>
+        
+<span class="fc" id="L54">        List&lt;Aula&gt; aulasPerdidas = professorAusente.verificarAulasPerdidasNoPeriodo(periodo);</span>
+        
+<span class="fc" id="L56">        List&lt;Professor&gt; todosProfessores = controller.findProfessorEntities();</span>
+        
+<span class="fc" id="L58">        List&lt;ProfessorModel&gt; profsPossiveis = new ArrayList&lt;ProfessorModel&gt;();</span>
+        
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        for(Professor professor : todosProfessores){</span>
+            
+<span class="fc bfc" id="L62" title="All 2 branches covered.">            if(!professor.equals(professorAusente)){</span>
+                //profsMenosAusente.add(professor);
+                
+<span class="fc bfc" id="L65" title="All 2 branches covered.">                if(professor.EhCompativelCom(aulasPerdidas)){</span>
+                    
+                    //profsPossiveis.add(professor);
+                    
+<span class="fc" id="L69">                    ProfessorModel model = new ProfessorModel();</span>
+                    
+<span class="fc" id="L71">                    model.id = professor.getId();</span>
+<span class="fc" id="L72">                    model.Nome = professor.getNome();</span>
+                    
+<span class="fc" id="L74">                    profsPossiveis.add(model);</span>
+                }
+            }   
+<span class="fc" id="L77">        }</span>
+        
+<span class="fc" id="L79">        return profsPossiveis;</span>
+    }
+    
+    public ProfessorModel obterProfessorPorNome(String nome){
+        
+<span class="fc" id="L84">        Professor professor = controller.findProfessor(nome);</span>
+        
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        if(professor == null)</span>
+<span class="fc" id="L87">            return null;</span>
+        
+<span class="fc" id="L89">        ProfessorModel model = new ProfessorModel();</span>
+        
+<span class="fc" id="L91">        model.Nome = professor.getNome();</span>
+<span class="fc" id="L92">        model.id = professor.getId();</span>
+        
+<span class="fc" id="L94">        return model;</span>
+        
+    }
+    
+    public ProfessorModel obterProfessorPorUsername(String username){
+<span class="nc" id="L99">        Professor professor = controller.findProfessorPorUsername(username);</span>
+        
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        if(professor == null)</span>
+<span class="nc" id="L102">            return null;</span>
+        
+<span class="nc" id="L104">        ProfessorModel model = new ProfessorModel();</span>
+        
+<span class="nc" id="L106">        model.Nome = professor.getNome();</span>
+<span class="nc" id="L107">        model.id = professor.getId();</span>
+        
+<span class="nc" id="L109">        return model; </span>
+    }
+    
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span></div></body></html>

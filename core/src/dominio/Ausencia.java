@@ -99,10 +99,27 @@ public class Ausencia implements Serializable {
             return false;
         }
         Ausencia other = (Ausencia) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
+        
+        if(this.id == null)
+        {
+            if(other.id == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-        return true;
+        else
+        {
+            if(other.id == null)
+            {
+                return false;
+            }
+            
+            return this.id.equals(other.id);
+        }
     }
 
     @Override

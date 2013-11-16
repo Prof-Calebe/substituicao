@@ -78,4 +78,45 @@ public class AulaTest {
         
         Assert.assertFalse(objetoEmTeste.bateHorarioCom(outroPeriodo));
     }
+    
+    @Test
+    public void testeDeveSerAvaliadaIgualÀOutraAulaSomenteSeCasarEmDiaDaSemanaEPeríodo(){
+        
+        objetoEmTeste = new Aula(DateTimeConstants.MONDAY, periodo);
+        Aula outraAula = new Aula(DateTimeConstants.MONDAY, periodo);        
+        assertTrue(objetoEmTeste.equals(outraAula));
+        
+        outraAula = new Aula(DateTimeConstants.MONDAY, periodo2);
+        assertFalse(objetoEmTeste.equals(outraAula));
+        
+        outraAula = new Aula(DateTimeConstants.TUESDAY, periodo);
+        assertFalse(objetoEmTeste.equals(outraAula));    
+    }
+    
+    @Test
+    public void testeDevePermitirDefinirEConsultarIdDeUmaAula(){        
+        Long x = new Long("0");        
+        assertEquals(null, objetoEmTeste.getId());
+        
+        objetoEmTeste.setId(x);
+        assertEquals(x, objetoEmTeste.getId());
+    }
+    
+    @Test
+    public void testeDeveReportarCorretamenteToString(){
+        Long x = new Long("0");    
+        objetoEmTeste.setId(x);
+        
+        assertEquals("Dominio.Aula[ id=0 ]", objetoEmTeste.toString());
+        
+        x = new Long("10");    
+        objetoEmTeste.setId(x);
+        assertEquals("Dominio.Aula[ id=10 ]", objetoEmTeste.toString());        
+    }
+    
+    @Test
+    public void testeDeveReportarCorretamenteOHashCode(){
+        int hashCode = periodo.hashCode() + DateTimeConstants.MONDAY * 31;
+        assertEquals(hashCode, objetoEmTeste.hashCode());
+    }
 }

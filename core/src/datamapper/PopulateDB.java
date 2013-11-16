@@ -220,29 +220,29 @@ public class PopulateDB {
         
         UsuarioJpaController usuarioJpa = new UsuarioJpaController(emf);
         
-        Usuario u1 = new Usuario("calebe");
+        Usuario u1 = Usuario.createUsuarioPadrao("calebe");
         u1.setPermissao(Perfil.PROFESSOR);
         
         
-        Usuario u2 = new Usuario("jane");
+        Usuario u2 = Usuario.createUsuarioPadrao("jane");
         u2.setPermissao(Perfil.FUNCIONARIO);
         u2.setSenha("mackenzie");
         
-        Usuario u3 = new Usuario("admin");
+        Usuario u3 = Usuario.createUsuarioPadrao("admin");
         u3.setSenha("admin");
         u3.setPermissao(Perfil.ADMINISTRADOR);
         
-        Usuario u4 = new Usuario("anarossi");
+        Usuario u4 = Usuario.createUsuarioPadrao("anarossi");
         u4.setPermissao(Perfil.PROFESSOR);
         
-        Usuario u5 = new Usuario("vilar");
+        Usuario u5 = Usuario.createUsuarioPadrao("vilar");
         u5.setPermissao(Perfil.PROFESSOR);
         
-        Usuario u6 = new Usuario("gaston");
+        Usuario u6 = Usuario.createUsuarioPadrao("gaston");
         u6.setPermissao(Perfil.PROFESSOR);
         
         
-        Usuario u7 = new Usuario("denise");
+        Usuario u7 = Usuario.createUsuarioPadrao("denise");
         u7.setPermissao(Perfil.PROFESSOR);
         
         

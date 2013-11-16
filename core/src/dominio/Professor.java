@@ -83,10 +83,27 @@ public class Professor implements Serializable {
             return false;
         }
         Professor other = (Professor) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
+        
+        if(this.id == null)
+        {
+            if(other.id == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-        return true;
+        else
+        {
+            if(other.id == null)
+            {
+                return false;
+            }
+            
+            return this.id.equals(other.id);
+        }
     }
 
     @Override
@@ -129,7 +146,7 @@ public class Professor implements Serializable {
 
         for(Aula aulaIntruso : aulas){
             for(Aula minhaAula : this.getGrade()) {
-                if(minhaAula.bateCom(aulaIntruso) || aulaIntruso.bateCom(minhaAula) ){
+                if(minhaAula.bateCom(aulaIntruso)){
                     ehCompativel = false;
                     break;
                 }
@@ -141,30 +158,36 @@ public class Professor implements Serializable {
 
     public List<Aula> verificarAulasPerdidasNoPeriodo(Interval periodoAusencia) {
               
-        DateTime data = periodoAusencia.getStart();
+        DateTime inicioAusencia = periodoAusencia.getStart();
         DateTime finalAusencia = periodoAusencia.getEnd();
         
         List<Aula> aulasComprometidas = new LinkedList<Aula>();
-        
-        
-        if(Hours.hoursBetween(data, finalAusencia).isGreaterThan(Hours.hours(24)) ||
-                Hours.hoursBetween(data, finalAusencia).equals(Hours.hours(24))){
+                        
+        if(Hours.hoursBetween(inicioAusencia, finalAusencia).isGreaterThan(Hours.hours(23))){            
             
-            
-            Days dias = Days.daysBetween(data, finalAusencia);
+            Days dias = Days.daysBetween(inicioAusencia, finalAusencia);
             
             
             while(dias.isGreaterThan(Days.days(0))){
                 
                 for(Aula aula : this.grade){
-                    if(aula.getDiaDaSemana() == data.getDayOfWeek() &&
+                    if(aula.getDiaDaSemana() == inicioAusencia.getDayOfWeek())
+                    {
+                        //TODO: Provavelmente existe um bug quando se declara uma ausência de mais de 1 semana. Na verdade, esse método deveria reportar cada aula com uma data de perda específica. Ou então, deveria haver N períodos de ausência unitários.
+                        if(!aulasComprometidas.contains(aula))
+                        {
+                            aulasComprometidas.add(aula);
+                        }
+                    }
+                    
+                    /*if(aula.getDiaDaSemana() == inicioAusencia.getDayOfWeek() &&
                             !aulasComprometidas.contains(aula)){
                         aulasComprometidas.add(aula);
-                    }
+                    }*/
                 }
                 
                 dias = dias.minus(1);
-                data = data.plusDays(1);
+                inicioAusencia = inicioAusencia.plusDays(1);
                 
             }
             
@@ -181,29 +204,6 @@ public class Professor implements Serializable {
         return aulasComprometidas;
     }
    
-//    private int diasEntre(Periodo periodo){
-//        
-//        Calendar comeco = periodo.getLimiteInferior();
-//        Calendar fim = periodo.getLimiteSuperior();
-//        
-//        Calendar data = (Calendar)comeco.clone();
-//        
-//        int diasEntre = 0;
-//        
-//        if(comeco.equals(fim)){
-//            diasEntre = 2; //Contando os extremos
-//        }else{
-//            diasEntre = 1;
-//        }
-//        
-//        while(data.before(fim)){
-//            data.add(Calendar.DAY_OF_MONTH, 1);
-//            diasEntre++;
-//        }
-//        
-//        return diasEntre;
-//    }
-
     /**
      * @return the username
      */
