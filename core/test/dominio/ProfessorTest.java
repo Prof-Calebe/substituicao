@@ -104,13 +104,13 @@ public class ProfessorTest {
         
         Interval p8 = new Interval(limiteInfP8, limiteSupP8);
         
-        aula1 = new Aula(Calendar.MONDAY, p1);
-        aula2 = new Aula(Calendar.TUESDAY, p2);
-        aula3 = new Aula(Calendar.WEDNESDAY, p3);
-        aula4 = new Aula(Calendar.THURSDAY, p4);
-        aula5 = new Aula(Calendar.THURSDAY, p5);
-        aula6 = new Aula(Calendar.MONDAY, p6);
-        aula7 = new Aula(Calendar.SATURDAY, p7);
+        aula1 = new Aula("Aula1", Calendar.MONDAY, p1);
+        aula2 = new Aula("Aula2", Calendar.TUESDAY, p2);
+        aula3 = new Aula("Aula3", Calendar.WEDNESDAY, p3);
+        aula4 = new Aula("Aula4", Calendar.THURSDAY, p4);
+        aula5 = new Aula("Aula5", Calendar.THURSDAY, p5);
+        aula6 = new Aula("Aula6", Calendar.MONDAY, p6);
+        aula7 = new Aula("Aula7", Calendar.SATURDAY, p7);
         
         aulas = new LinkedList<Aula>();
         
@@ -169,7 +169,7 @@ public class ProfessorTest {
         DateTime inicioAula2 = new DateTime(2013, 05, 24, 05, 0);
         DateTime fimAula2 = new DateTime(2013, 05, 24, 07, 0);
         Interval intervalAula2 = new Interval(inicioAula2, fimAula2);
-        Aula aula2 = new Aula(DateTimeConstants.FRIDAY, intervalAula2);
+        Aula aula2 = new Aula("Aula2", DateTimeConstants.FRIDAY, intervalAula2);
         objetoEmTeste = new Professor("outroProf", "username");
         objetoEmTeste.adicionarAula(aula2);
         return aula2;
@@ -181,7 +181,7 @@ public class ProfessorTest {
         
         Interval intervalAula1 = new Interval(inicioAula1, fimAula1);
         
-        Aula aula1 = new Aula(DateTimeConstants.TUESDAY, intervalAula1);
+        Aula aula1 = new Aula("Aula1", DateTimeConstants.TUESDAY, intervalAula1);
         
         objetoEmTeste = new Professor("umProf", "username");
         objetoEmTeste.adicionarAula(aula1);
@@ -249,7 +249,7 @@ public class ProfessorTest {
         
         Interval intervalAula1 = new Interval(inicioAula1, fimAula1);
         
-        Aula aula1 = new Aula(DateTimeConstants.TUESDAY, intervalAula1);
+        Aula aula1 = new Aula("Aula1", DateTimeConstants.TUESDAY, intervalAula1);
         
         objetoEmTeste.adicionarAula(aula1);
         
@@ -267,16 +267,16 @@ public class ProfessorTest {
         DateTime finalSegundoHorário = new DateTime(1900, 01, 01, 21, 30);                      
         Interval segundoHorário = new Interval(inícioSegundoHorário, finalSegundoHorário);
         
-        Aula segundaFeiraPrimeiroHorário = new Aula(org.joda.time.DateTimeConstants.MONDAY, primeiroHorário);
+        Aula segundaFeiraPrimeiroHorário = new Aula("Aula1", org.joda.time.DateTimeConstants.MONDAY, primeiroHorário);
         segundaFeiraPrimeiroHorário.setId(new Long("1"));        
         
-        Aula segundaFeiraSegundoHorário = new Aula(org.joda.time.DateTimeConstants.MONDAY, segundoHorário);
+        Aula segundaFeiraSegundoHorário = new Aula("Aula2", org.joda.time.DateTimeConstants.MONDAY, segundoHorário);
         segundaFeiraSegundoHorário.setId(new Long("2"));
         
-        Aula terçaFeiraPrimeiroHorário = new Aula(org.joda.time.DateTimeConstants.TUESDAY, primeiroHorário);
+        Aula terçaFeiraPrimeiroHorário = new Aula("Aula3", org.joda.time.DateTimeConstants.TUESDAY, primeiroHorário);
         terçaFeiraPrimeiroHorário.setId(new Long("3"));
         
-        Aula quartaFeiraSegundoHorário = new Aula(org.joda.time.DateTimeConstants.WEDNESDAY, segundoHorário);
+        Aula quartaFeiraSegundoHorário = new Aula("Aula4", org.joda.time.DateTimeConstants.WEDNESDAY, segundoHorário);
         quartaFeiraSegundoHorário.setId(new Long("4"));
         
         objetoEmTeste.adicionarAula(segundaFeiraPrimeiroHorário);

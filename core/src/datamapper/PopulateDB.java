@@ -153,7 +153,7 @@ public class PopulateDB {
         
         Interval periodo = new Interval(comeco1, fim1);
         
-        Aula aula = new Aula(DateTimeConstants.MONDAY, periodo);
+        Aula aula = new Aula("Aula1", DateTimeConstants.MONDAY, periodo);
         aulaJpa.create(aula);
         
         DateTime comeco2 = new DateTime(2013, 06, 10, 18, 20);
@@ -164,7 +164,7 @@ public class PopulateDB {
         
         //Periodo periodo2 = new Periodo(comeco2, fim2);
         
-        Aula aula2 = new Aula(DateTimeConstants.MONDAY, periodo2);
+        Aula aula2 = new Aula("Aula2", DateTimeConstants.MONDAY, periodo2);
         aulaJpa.create(aula2);
         
         Professor prof1 = new Professor("Calebe", "calebe");
@@ -181,7 +181,7 @@ public class PopulateDB {
         
         Interval periodo3 = new Interval(comeco3, fim3);
         
-        Aula aula3 = new Aula(DateTimeConstants.MONDAY, periodo3);
+        Aula aula3 = new Aula("Aula3", DateTimeConstants.MONDAY, periodo3);
         aulaJpa.create(aula3);
         
         prof3.adicionarAula(aula3);
@@ -201,7 +201,7 @@ public class PopulateDB {
         
         Interval periodo4 = new Interval(comeco4, fim4);
         
-        Aula aula4 = new Aula(DateTimeConstants.MONDAY, periodo4);
+        Aula aula4 = new Aula("Aula4", DateTimeConstants.MONDAY, periodo4);
         aulaJpa.create(aula4);
         
         prof5.adicionarAula(aula4);

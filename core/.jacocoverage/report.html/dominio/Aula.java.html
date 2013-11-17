@@ -32,17 +32,17 @@ public class Aula implements Serializable {
     @Type(type=&quot;org.joda.time.contrib.hibernate.PersistentInterval&quot;)    
     private Interval periodo;
     
+    private String nome;
     private int diaDaSemana;
     
-<span class="fc" id="L37">    protected Aula(){</span>
+<span class="fc" id="L38">    protected Aula(){</span>
         
-<span class="fc" id="L39">    }</span>
+<span class="fc" id="L40">    }</span>
 
-<span class="fc" id="L41">    public Aula(int diaDaSemana, Interval periodo) {</span>
-        
-<span class="fc" id="L43">        this.periodo = periodo;</span>
-<span class="fc" id="L44">        this.diaDaSemana = diaDaSemana;</span>
-        
+<span class="fc" id="L42">    public Aula(String nome, int diaDaSemana, Interval periodo) {</span>
+<span class="fc" id="L43">        this.nome = nome;</span>
+<span class="fc" id="L44">        this.periodo = periodo;</span>
+<span class="fc" id="L45">        this.diaDaSemana = diaDaSemana;        </span>
 <span class="fc" id="L46">    }</span>
 
     public Long getId() {
@@ -98,43 +98,47 @@ public class Aula implements Serializable {
     public int getDiaDaSemana() {
 <span class="fc" id="L99">        return diaDaSemana;</span>
     }
+    
+    public String getNome() {
+<span class="fc" id="L103">        return nome;</span>
+    }
 
     public boolean bateCom(Aula outraAula) {
         
-<span class="fc bfc" id="L104" title="All 2 branches covered.">        if(this.diaDaSemana != outraAula.getDiaDaSemana()){</span>
-<span class="fc" id="L105">            return false;</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">        }else if (this.bateHorarioCom(outraAula.getPeriodo())){</span>
-<span class="fc" id="L107">            return true;</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        if(this.diaDaSemana != outraAula.getDiaDaSemana()){</span>
+<span class="fc" id="L109">            return false;</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        }else if (this.bateHorarioCom(outraAula.getPeriodo())){</span>
+<span class="fc" id="L111">            return true;</span>
         }
         
-<span class="fc" id="L110">        return false;</span>
+<span class="fc" id="L114">        return false;</span>
     }
     
     public boolean bateHorarioCom(Interval outroPeriodo){
         
-<span class="fc" id="L115">        int anoIntervalo = outroPeriodo.getStart().getYear();</span>
-<span class="fc" id="L116">        int mesIntervalo = outroPeriodo.getStart().getMonthOfYear();</span>
-<span class="fc" id="L117">        int diaIntervalo = outroPeriodo.getStart().getDayOfMonth();</span>
+<span class="fc" id="L119">        int anoIntervalo = outroPeriodo.getStart().getYear();</span>
+<span class="fc" id="L120">        int mesIntervalo = outroPeriodo.getStart().getMonthOfYear();</span>
+<span class="fc" id="L121">        int diaIntervalo = outroPeriodo.getStart().getDayOfMonth();</span>
         
-<span class="fc" id="L119">        int horaInicio = this.getPeriodo().getStart().getHourOfDay();</span>
-<span class="fc" id="L120">        int minutoInicio = this.getPeriodo().getStart().getMinuteOfHour();</span>
+<span class="fc" id="L123">        int horaInicio = this.getPeriodo().getStart().getHourOfDay();</span>
+<span class="fc" id="L124">        int minutoInicio = this.getPeriodo().getStart().getMinuteOfHour();</span>
         
-<span class="fc" id="L122">        int horaFim = this.getPeriodo().getEnd().getHourOfDay();</span>
-<span class="fc" id="L123">        int minutoFim = this.getPeriodo().getEnd().getMinuteOfHour();</span>
+<span class="fc" id="L126">        int horaFim = this.getPeriodo().getEnd().getHourOfDay();</span>
+<span class="fc" id="L127">        int minutoFim = this.getPeriodo().getEnd().getMinuteOfHour();</span>
         
         
-<span class="fc" id="L126">        DateTime tempInicio = new DateTime(anoIntervalo, mesIntervalo, diaIntervalo, horaInicio, minutoInicio);</span>
-<span class="fc" id="L127">        DateTime tempFim = new DateTime(anoIntervalo, mesIntervalo, diaIntervalo, horaFim, minutoFim);</span>
+<span class="fc" id="L130">        DateTime tempInicio = new DateTime(anoIntervalo, mesIntervalo, diaIntervalo, horaInicio, minutoInicio);</span>
+<span class="fc" id="L131">        DateTime tempFim = new DateTime(anoIntervalo, mesIntervalo, diaIntervalo, horaFim, minutoFim);</span>
         
-<span class="fc" id="L129">        Interval intervaloTemp = new Interval(tempInicio, tempFim);</span>
+<span class="fc" id="L133">        Interval intervaloTemp = new Interval(tempInicio, tempFim);</span>
         
-<span class="fc" id="L131">        Interval conflito = intervaloTemp.overlap(outroPeriodo);</span>
+<span class="fc" id="L135">        Interval conflito = intervaloTemp.overlap(outroPeriodo);</span>
         
-<span class="fc bfc" id="L133" title="All 2 branches covered.">        if(conflito != null){</span>
-<span class="fc" id="L134">            return true;</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        if(conflito != null){</span>
+<span class="fc" id="L138">            return true;</span>
         }
         else{
-<span class="fc" id="L137">            return false;</span>
+<span class="fc" id="L141">            return false;</span>
         }
             
     }
