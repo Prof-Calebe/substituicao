@@ -113,19 +113,19 @@ public class AusenciaJpaController implements Serializable {
     }
     
     public List&lt;Ausencia&gt; listAusenciasPorIndicacaoDeSubstituto(Professor professor){
-<span class="nc" id="L116">        List&lt;Ausencia&gt; ausencias = this.findAusenciaEntities();</span>
+<span class="fc" id="L116">        List&lt;Ausencia&gt; ausencias = this.findAusenciaEntities();</span>
         
-<span class="nc" id="L118">        List&lt;Ausencia&gt; ausenciasComProfessor = new ArrayList&lt;Ausencia&gt;();</span>
+<span class="fc" id="L118">        List&lt;Ausencia&gt; ausenciasComProfessor = new ArrayList&lt;Ausencia&gt;();</span>
         
-<span class="nc bnc" id="L120" title="All 2 branches missed.">        for(Ausencia ausencia : ausencias){</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        for(Ausencia ausencia : ausencias){</span>
             
-<span class="nc bnc" id="L122" title="All 2 branches missed.">            if(ausencia.getIndicacoesSubstitutos().contains(professor)){</span>
-<span class="nc" id="L123">                ausenciasComProfessor.add(ausencia);</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">            if(ausencia.getIndicacoesSubstitutos().contains(professor)){</span>
+<span class="fc" id="L123">                ausenciasComProfessor.add(ausencia);</span>
             }
             
-<span class="nc" id="L126">        }</span>
+<span class="fc" id="L126">        }</span>
         
-<span class="nc" id="L128">        return ausenciasComProfessor;</span>
+<span class="fc" id="L128">        return ausenciasComProfessor;</span>
     }
     
     

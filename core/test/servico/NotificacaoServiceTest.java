@@ -286,4 +286,46 @@ public class NotificacaoServiceTest {
         Assert.assertEquals(2, ausencias.size());
      }
      
+     @Test
+     public void testeDeveListarAsAusênciasComUmProfessorIndicado()
+     {
+         PopulateDB.recreateDB("prosub", "root", "");
+         PopulateDB.populateProfessores();
+         
+         List<AusenciaModel> ausencias = serviceEmTeste.listarAusenciasPorProfessor("calebe");
+         
+         Assert.assertEquals(0, ausencias.size());
+         
+         //Ausência numa segunda, terça e quarta.
+        DateTime inicio = new DateTime(2013, 11, 18, 0, 0);
+        DateTime fim = new DateTime(2013, 11, 20, 23, 59);        
+        Interval periodo = new Interval(inicio, fim);
+        
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
+        ProfessorJpaController professoresRepository = new ProfessorJpaController(emf);
+        Professor calebe = professoresRepository.findProfessor("Calebe");
+        Professor anarossi = professoresRepository.findProfessor("Ana Claudia");
+        Professor vilar = professoresRepository.findProfessor("Vilar");
+        
+        AusenciaJpaController ausenciasRepository = new AusenciaJpaController(emf);
+        List<Ausencia> ausenciasParaCriar = calebe.gerarAusencias(periodo, "Vou faltar");
+        
+        ausenciasParaCriar.get(0).indicarSubstituto(anarossi);
+        ausenciasParaCriar.get(1).indicarSubstituto(anarossi);
+        ausenciasParaCriar.get(1).indicarSubstituto(vilar);
+        
+        for(Ausencia ausencia : ausenciasParaCriar) {
+            ausenciasRepository.create(ausencia);
+        }    
+        
+        List<Ausencia> ausenciasCriadas = ausenciasRepository.findAusenciaEntities();
+        Assert.assertEquals(2, ausenciasCriadas.size());
+        
+        ausencias = serviceEmTeste.listarAusenciasPorIndicacaoDeSubstituto("anarossi");        
+        Assert.assertEquals(2, ausencias.size());
+        
+        ausencias = serviceEmTeste.listarAusenciasPorIndicacaoDeSubstituto("vilar");        
+        Assert.assertEquals(1, ausencias.size());
+     }
+     
 }

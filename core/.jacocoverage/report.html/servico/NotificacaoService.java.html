@@ -173,21 +173,21 @@ public class NotificacaoService {
     
     public List&lt;AusenciaModel&gt; listarAusenciasPorIndicacaoDeSubstituto(String usernameProfessor){
         
-<span class="nc" id="L176">        Professor professorIndicado = profController.findProfessorPorUsername(usernameProfessor);</span>
+<span class="fc" id="L176">        Professor professorIndicado = profController.findProfessorPorUsername(usernameProfessor);</span>
         
-<span class="nc" id="L178">        List&lt;Ausencia&gt; ausenciasComIndicacaoDeSubstituto = ausenciaController.listAusenciasPorIndicacaoDeSubstituto(professorIndicado);</span>
+<span class="fc" id="L178">        List&lt;Ausencia&gt; ausenciasComIndicacaoDeSubstituto = ausenciaController.listAusenciasPorIndicacaoDeSubstituto(professorIndicado);</span>
         
-<span class="nc" id="L180">        List&lt;AusenciaModel&gt; modelos = new ArrayList&lt;AusenciaModel&gt;();</span>
+<span class="fc" id="L180">        List&lt;AusenciaModel&gt; modelos = new ArrayList&lt;AusenciaModel&gt;();</span>
         
-<span class="nc bnc" id="L182" title="All 2 branches missed.">        for(Ausencia ausencia : ausenciasComIndicacaoDeSubstituto){</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">        for(Ausencia ausencia : ausenciasComIndicacaoDeSubstituto){</span>
             
-<span class="nc" id="L184">            AusenciaModel modelo = this.montarAusencia(ausencia);</span>
+<span class="fc" id="L184">            AusenciaModel modelo = this.montarAusencia(ausencia);</span>
             
-<span class="nc" id="L186">            modelos.add(modelo);</span>
+<span class="fc" id="L186">            modelos.add(modelo);</span>
             
-<span class="nc" id="L188">        }</span>
+<span class="fc" id="L188">        }</span>
         
-<span class="nc" id="L190">        return modelos;</span>
+<span class="fc" id="L190">        return modelos;</span>
     }
     
     
