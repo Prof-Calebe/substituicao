@@ -155,9 +155,9 @@ public class NotificacaoServiceTest {
          
          Assert.assertEquals(ausenciaCount, modelos.size());
          
-         cleanEntity.add(ausController.findAusencia(codigo));
-         cleanEntity.add(ausController.findAusencia(codigo2));
-         cleanEntity.add(ausController.findAusencia(codigo3));
+         //cleanEntity.add(ausController.findAusencia(codigo));
+         //cleanEntity.add(ausController.findAusencia(codigo2));
+         //cleanEntity.add(ausController.findAusencia(codigo3));
      }
      
      @Test

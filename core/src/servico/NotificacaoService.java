@@ -46,9 +46,12 @@ public class NotificacaoService {
         
         
         DateTime inicio = new DateTime(sdf.parse(dataInicio));
-        DateTime fim = new DateTime(sdf.parse(dataFim));
+        DateTime inícioReal = new DateTime(inicio.getYear(),inicio.getMonthOfYear(),inicio.getDayOfMonth(),00,00);
         
-        Interval periodo = new Interval(inicio, fim);
+        DateTime fim = new DateTime(sdf.parse(dataFim));
+        DateTime fimReal = new DateTime(fim.getYear(),fim.getMonthOfYear(),fim.getDayOfMonth(),23,59);
+        
+        Interval periodo = new Interval(inícioReal, fimReal);
         
         Professor professor = profController.findProfessor(idProfessor);
         List<Professor> professoresIndicados = new ArrayList<Professor>();
@@ -56,21 +59,31 @@ public class NotificacaoService {
         //Professor professorSubstituto = profController.findProfessor(idProfessorSubstituto);
         
         Random r = new Random();
+               
+        List<Ausencia> ausencias = professor.gerarAusencias(periodo, motivo);
         
-        String codigo = Integer.toString(r.nextInt(10000));
+        List<String> codigos = new LinkedList<String>();
         
-        Ausencia ausencia = new Ausencia(codigo, periodo, professor, motivo);
-        //ausencia.indicarSubstituto(professorSubstituto);
-        
-        for(String nomeProf : nomesProfessoresIndicados){
-            Professor professorIndicado = profController.findProfessor(nomeProf);
-            ausencia.indicarSubstituto(professorIndicado);
+        for(Ausencia ausencia : ausencias)
+        {
+            String codigo = Integer.toString(r.nextInt(10000));
+            
+            ausencia.setCodigo(codigo);
+            
+            codigos.add(codigo);
+            
+            for(String nomeProf : nomesProfessoresIndicados){
+                Professor professorIndicado = profController.findProfessor(nomeProf);
+                ausencia.indicarSubstituto(professorIndicado);
+            }
+
+            ausenciaController.create(ausencia);
         }
         
-        ausenciaController.create(ausencia);
-        
-        return codigo;
-        
+        if(codigos.size() > 0)
+            return codigos.get(0);       
+        else
+            return "0";
     }
 
 //    public void editarAusencia(String codigo, String dataInicio, String dataFim, String motivo, Long idSubstituto) throws ParseException, NonexistentEntityException, Exception {

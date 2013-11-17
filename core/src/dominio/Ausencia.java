@@ -80,6 +80,11 @@ public class Ausencia implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    public void setCodigo(String codigo)
+    {
+        this.codigo = codigo;
+    }
 
     @Override
     public int hashCode() {
