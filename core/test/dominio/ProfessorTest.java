@@ -308,4 +308,68 @@ public class ProfessorTest {
         
         objetoEmTeste.adicionarAula(aula1);
     }
+    
+    @Test
+    public void testeDeveGerarAusenciasParaAsAulasExistentesEmUmDeterminadoPeríodo()
+    {
+        DateTime inícioPrimeiroHorário = new DateTime(1900, 01, 01, 18, 30);
+        DateTime finalPrimeiroHorário = new DateTime(1900, 01, 01, 20, 00);                      
+        Interval primeiroHorário = new Interval(inícioPrimeiroHorário, finalPrimeiroHorário);
+        
+        DateTime inícioSegundoHorário = new DateTime(1900, 01, 01, 20, 00);
+        DateTime finalSegundoHorário = new DateTime(1900, 01, 01, 21, 30);                      
+        Interval segundoHorário = new Interval(inícioSegundoHorário, finalSegundoHorário);
+        
+        Aula segundaFeiraPrimeiroHorário = new Aula(org.joda.time.DateTimeConstants.MONDAY, primeiroHorário);
+        segundaFeiraPrimeiroHorário.setId(new Long("1"));        
+        
+        Aula segundaFeiraSegundoHorário = new Aula(org.joda.time.DateTimeConstants.MONDAY, segundoHorário);
+        segundaFeiraSegundoHorário.setId(new Long("2"));
+        
+        Aula terçaFeiraPrimeiroHorário = new Aula(org.joda.time.DateTimeConstants.TUESDAY, primeiroHorário);
+        terçaFeiraPrimeiroHorário.setId(new Long("3"));
+        
+        Aula quartaFeiraSegundoHorário = new Aula(org.joda.time.DateTimeConstants.WEDNESDAY, segundoHorário);
+        quartaFeiraSegundoHorário.setId(new Long("4"));
+        
+        objetoEmTeste.adicionarAula(segundaFeiraPrimeiroHorário);
+        objetoEmTeste.adicionarAula(segundaFeiraSegundoHorário);
+        objetoEmTeste.adicionarAula(quartaFeiraSegundoHorário);
+        
+        DateTime inícioAusência = new DateTime(2013,11,18,00,00);
+        DateTime finalAusência = new DateTime(2013,11,20,23,59);
+        Interval períodoDeAusência = new Interval(inícioAusência, finalAusência);
+        
+        List<Ausencia> ausências = objetoEmTeste.gerarAusencias(períodoDeAusência,"sem saco");
+        
+        assertEquals(3, ausências.size());
+        
+        inícioAusência = new DateTime(2013,11,18,00,00);
+        finalAusência = new DateTime(2013,11,26,23,59);
+        períodoDeAusência = new Interval(inícioAusência, finalAusência);
+        
+        ausências = objetoEmTeste.gerarAusencias(períodoDeAusência,"sem saco");
+        assertEquals(5, ausências.size());
+        
+        inícioAusência = new DateTime(2013,11,18,17,00);
+        finalAusência = new DateTime(2013,11,18,19,00);
+        períodoDeAusência = new Interval(inícioAusência, finalAusência);
+        
+        ausências = objetoEmTeste.gerarAusencias(períodoDeAusência,"sem saco");
+        assertEquals(1, ausências.size());
+        
+        inícioAusência = new DateTime(2013,11,18,17,00);
+        finalAusência = new DateTime(2013,11,18,20,00);
+        períodoDeAusência = new Interval(inícioAusência, finalAusência);
+        
+        ausências = objetoEmTeste.gerarAusencias(períodoDeAusência,"sem saco");
+        assertEquals(1, ausências.size());
+        
+        inícioAusência = new DateTime(2013,11,18,17,00);
+        finalAusência = new DateTime(2013,11,18,20,01);
+        períodoDeAusência = new Interval(inícioAusência, finalAusência);
+        
+        ausências = objetoEmTeste.gerarAusencias(períodoDeAusência,"sem saco");
+        assertEquals(2, ausências.size());
+    }
 }

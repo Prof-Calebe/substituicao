@@ -211,5 +211,90 @@ public class Professor implements Serializable {
 <span class="fc" id="L211">        return username;</span>
     }
     
+    public List&lt;Ausencia&gt; gerarAusencias(Interval periodoDeAusencia, String motivo)
+    {
+<span class="fc" id="L216">        List&lt;Ausencia&gt; ausencias = new LinkedList&lt;Ausencia&gt;();</span>
+        
+<span class="fc" id="L218">        Interval primeiroDia = null;</span>
+<span class="fc" id="L219">        Interval últimoDia = null;</span>
+<span class="fc" id="L220">        Interval diasCompletos = null;</span>
+        
+<span class="fc" id="L222">        DateTime inícioAusência = periodoDeAusencia.getStart();</span>
+<span class="fc" id="L223">        DateTime finalAusência = periodoDeAusencia.getEnd();</span>
+        
+<span class="fc" id="L225">        Boolean múltiplosDias = true;</span>
+        
+<span class="fc" id="L227">        DateTime finalDePrimeiroDiaDeAusência = new DateTime(inícioAusência.getYear(),inícioAusência.getMonthOfYear(),inícioAusência.getDayOfMonth(),23,59);</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">        if(finalDePrimeiroDiaDeAusência.isAfter(finalAusência))</span>
+        {
+<span class="fc" id="L230">            finalDePrimeiroDiaDeAusência = finalAusência;</span>
+<span class="fc" id="L231">            múltiplosDias = false;</span>
+        }
+        
+<span class="fc" id="L234">        primeiroDia = new Interval(inícioAusência, finalDePrimeiroDiaDeAusência);</span>
+        
+<span class="fc bfc" id="L236" title="All 2 branches covered.">        if(múltiplosDias)</span>
+        {
+<span class="fc" id="L238">            DateTime inícioDoÚltimoDiaDeAusência = new DateTime(finalAusência.getYear(),finalAusência.getMonthOfYear(),finalAusência.getDayOfMonth(),00,00);</span>
+<span class="fc" id="L239">            últimoDia = new Interval(inícioDoÚltimoDiaDeAusência,finalAusência);</span>
+            
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">            if(inícioDoÚltimoDiaDeAusência.isAfter(finalDePrimeiroDiaDeAusência.plusMinutes(1)))</span>
+            {
+<span class="fc" id="L243">                diasCompletos = new Interval(finalDePrimeiroDiaDeAusência.plusMinutes(1), inícioDoÚltimoDiaDeAusência.plusMinutes(-1));</span>
+            }
+        }
+        
+<span class="fc bfc" id="L247" title="All 2 branches covered.">        for(Aula aulaPedida : this.getGrade())</span>
+        {                    
+<span class="fc" id="L249">            Avaliar(aulaPedida, primeiroDia, motivo, ausencias);</span>
+            
+<span class="fc bfc" id="L251" title="All 2 branches covered.">            if(últimoDia != null)</span>
+            {
+<span class="fc" id="L253">                Avaliar(aulaPedida, últimoDia, motivo, ausencias);</span>
+            }
+            
+<span class="fc bfc" id="L256" title="All 2 branches covered.">            if(diasCompletos != null)</span>
+            {
+<span class="fc" id="L258">                DateTime inícioDiasCompletos = diasCompletos.getStart();</span>
+<span class="fc" id="L259">                DateTime fimDiascompletos = diasCompletos.getEnd();</span>
+<span class="fc" id="L260">                DateTime inícioDoÚltimoDiaCompleto = new DateTime(fimDiascompletos.getYear(),fimDiascompletos.getMonthOfYear(),fimDiascompletos.getDayOfMonth(),00,01);</span>
+<span class="fc" id="L261">                DateTime diaAtual = inícioDiasCompletos;</span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">                while(diaAtual.isBefore(inícioDoÚltimoDiaCompleto))</span>
+                {
+<span class="fc" id="L264">                    DateTime fimDoDiaAtual = new DateTime(diaAtual.getYear(),diaAtual.getMonthOfYear(),diaAtual.getDayOfMonth(),23,59);</span>
+<span class="fc" id="L265">                    Interval diaAtualCompleto = new Interval(diaAtual,fimDoDiaAtual);</span>
+                    
+<span class="fc" id="L267">                    Avaliar(aulaPedida, diaAtualCompleto, motivo, ausencias);</span>
+                                    
+<span class="fc" id="L269">                    diaAtual = diaAtual.plusDays(1);</span>
+<span class="fc" id="L270">                }                </span>
+            }            
+<span class="fc" id="L272">        }</span>
+        
+<span class="fc" id="L274">        return ausencias;</span>
+    }
+
+    private void Avaliar(Aula aulaPedida, Interval primeiroDia, String motivo, List&lt;Ausencia&gt; ausencias) {
+<span class="fc bfc" id="L278" title="All 2 branches covered.">        if(aulaPedida.getDiaDaSemana() == primeiroDia.getStart().getDayOfWeek())</span>
+        {
+<span class="fc bfc" id="L280" title="All 2 branches covered.">            if(aulaPedida.bateHorarioCom(primeiroDia))</span>
+            {
+<span class="fc" id="L282">                int anoAusência = primeiroDia.getStart().getYear();</span>
+<span class="fc" id="L283">                int mêsAusência = primeiroDia.getStart().getMonthOfYear();</span>
+<span class="fc" id="L284">                int diaAusência = primeiroDia.getStart().getDayOfMonth();</span>
+<span class="fc" id="L285">                int inícioHoraAula = aulaPedida.getPeriodo().getStart().getHourOfDay();</span>
+<span class="fc" id="L286">                int inícioMinutoAula = aulaPedida.getPeriodo().getStart().getMinuteOfHour();</span>
+<span class="fc" id="L287">                int finalHoraAula = aulaPedida.getPeriodo().getEnd().getHourOfDay();</span>
+<span class="fc" id="L288">                int finalMinutoAula = aulaPedida.getPeriodo().getEnd().getMinuteOfHour();</span>
+                
+<span class="fc" id="L290">                DateTime inícioAusênciaAula = new DateTime(anoAusência,mêsAusência,diaAusência,inícioHoraAula,inícioMinutoAula);</span>
+<span class="fc" id="L291">                DateTime finalAusênciaAula = new DateTime(anoAusência,mêsAusência,diaAusência,finalHoraAula,finalMinutoAula);</span>
+<span class="fc" id="L292">                Interval períodoAusência = new Interval(inícioAusênciaAula,finalAusênciaAula);</span>
+<span class="fc" id="L293">                Ausencia ausência = new Ausencia(&quot;0&quot;, períodoAusência, this, motivo);</span>
+<span class="fc" id="L294">                ausencias.add(ausência);</span>
+            }
+        }
+<span class="fc" id="L297">    }</span>
+    
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span></div></body></html>

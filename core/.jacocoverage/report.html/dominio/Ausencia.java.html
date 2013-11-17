@@ -45,10 +45,6 @@ public class Ausencia implements Serializable {
     
     private String motivoRejeicao;
     
-   
-    //@ManyToOne
-    //private Professor indicacaoSubstituto;
-    
     @ManyToOne
     private Professor professorSubstituto;
     
@@ -61,175 +57,175 @@ public class Ausencia implements Serializable {
     private String codigo;
     
     //blame Hibernate
-<span class="fc" id="L64">    protected Ausencia(){</span>
+<span class="fc" id="L60">    protected Ausencia(){</span>
     
-<span class="fc" id="L66">    }</span>
+<span class="fc" id="L62">    }</span>
 
-<span class="fc" id="L68">    public Ausencia(String codigo, Interval periodo, Professor professor, String motivo) {</span>
-<span class="fc" id="L69">        this.codigo = codigo;</span>
-<span class="fc" id="L70">        this.periodo = periodo;</span>
-<span class="fc" id="L71">        this.professor = professor;</span>
-<span class="fc" id="L72">        this.motivo = motivo;</span>
-<span class="fc" id="L73">        this.motivoRejeicao = null;</span>
+<span class="fc" id="L64">    public Ausencia(String codigo, Interval periodo, Professor professor, String motivo) {</span>
+<span class="fc" id="L65">        this.codigo = codigo;</span>
+<span class="fc" id="L66">        this.periodo = periodo;</span>
+<span class="fc" id="L67">        this.professor = professor;</span>
+<span class="fc" id="L68">        this.motivo = motivo;</span>
+<span class="fc" id="L69">        this.motivoRejeicao = null;</span>
         //this.indicacaoSubstituto = null;
-<span class="fc" id="L75">        this.indicacoesSubstituto = new ArrayList&lt;Professor&gt;();</span>
-<span class="fc" id="L76">        this.estado = EstadoAusencia.Alocacao_Pendente;</span>
+<span class="fc" id="L71">        this.indicacoesSubstituto = new ArrayList&lt;Professor&gt;();</span>
+<span class="fc" id="L72">        this.estado = EstadoAusencia.Alocacao_Pendente;</span>
        
-<span class="fc" id="L78">    }</span>
+<span class="fc" id="L74">    }</span>
 
     public Long getId() {
-<span class="fc" id="L81">        return id;</span>
+<span class="fc" id="L77">        return id;</span>
     }
 
     public void setId(Long id) {
-<span class="fc" id="L85">        this.id = id;</span>
-<span class="fc" id="L86">    }</span>
+<span class="fc" id="L81">        this.id = id;</span>
+<span class="fc" id="L82">    }</span>
 
     @Override
     public int hashCode() {
-<span class="fc" id="L90">        int hash = 0;</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">        hash += (id != null ? id.hashCode() : 0);</span>
-<span class="fc" id="L92">        return hash;</span>
+<span class="fc" id="L86">        int hash = 0;</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        hash += (id != null ? id.hashCode() : 0);</span>
+<span class="fc" id="L88">        return hash;</span>
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-<span class="fc bfc" id="L98" title="All 2 branches covered.">        if (!(object instanceof Ausencia)) {</span>
-<span class="fc" id="L99">            return false;</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if (!(object instanceof Ausencia)) {</span>
+<span class="fc" id="L95">            return false;</span>
         }
-<span class="fc" id="L101">        Ausencia other = (Ausencia) object;</span>
+<span class="fc" id="L97">        Ausencia other = (Ausencia) object;</span>
         
-<span class="fc bfc" id="L103" title="All 2 branches covered.">        if(this.id == null)</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        if(this.id == null)</span>
         {
-<span class="fc bfc" id="L105" title="All 2 branches covered.">            if(other.id == null)</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">            if(other.id == null)</span>
             {
-<span class="fc" id="L107">                return true;</span>
+<span class="fc" id="L103">                return true;</span>
             }
             else
             {
-<span class="fc" id="L111">                return false;</span>
+<span class="fc" id="L107">                return false;</span>
             }
         }
         else
         {
-<span class="fc bfc" id="L116" title="All 2 branches covered.">            if(other.id == null)</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">            if(other.id == null)</span>
             {
-<span class="fc" id="L118">                return false;</span>
+<span class="fc" id="L114">                return false;</span>
             }
             
-<span class="fc" id="L121">            return this.id.equals(other.id);</span>
+<span class="fc" id="L117">            return this.id.equals(other.id);</span>
         }
     }
 
     @Override
     public String toString() {
-<span class="fc" id="L127">        return &quot;Dominio.Ausencia[ id=&quot; + id + &quot; ]&quot;;</span>
+<span class="fc" id="L123">        return &quot;Dominio.Ausencia[ id=&quot; + id + &quot; ]&quot;;</span>
     }
 
     public Professor getProfessor() {
-<span class="fc" id="L131">        return professor;</span>
+<span class="fc" id="L127">        return professor;</span>
     }
     
     public void setProfessor(Professor professor) {
-<span class="fc" id="L135">        this.professor = professor;</span>
-<span class="fc" id="L136">    }</span>
+<span class="fc" id="L131">        this.professor = professor;</span>
+<span class="fc" id="L132">    }</span>
 
     public Interval getPeriodo() {
-<span class="fc" id="L139">        return periodo;</span>
+<span class="fc" id="L135">        return periodo;</span>
     }
     
     public void setPeriodo(Interval periodo) {
-<span class="nc" id="L143">        this.periodo = periodo;</span>
-<span class="nc" id="L144">    }</span>
+<span class="nc" id="L139">        this.periodo = periodo;</span>
+<span class="nc" id="L140">    }</span>
 
     public Object getMotivo() {
-<span class="fc" id="L147">        return motivo;</span>
+<span class="fc" id="L143">        return motivo;</span>
     }
     
     public void setMotivo(String motivo) {
-<span class="fc" id="L151">        this.motivo = motivo;</span>
-<span class="fc" id="L152">    }</span>
+<span class="fc" id="L147">        this.motivo = motivo;</span>
+<span class="fc" id="L148">    }</span>
     
     public String getMotivoRejeicao() {
-<span class="fc" id="L155">        return motivoRejeicao;</span>
+<span class="fc" id="L151">        return motivoRejeicao;</span>
     }
 
     public void setMotivoRejeicao(String motivo) {
-<span class="fc" id="L159">        this.motivoRejeicao = motivo;</span>
-<span class="fc" id="L160">    }</span>
+<span class="fc" id="L155">        this.motivoRejeicao = motivo;</span>
+<span class="fc" id="L156">    }</span>
     
     public EstadoAusencia getEstado() {
-<span class="fc" id="L163">        return this.estado;</span>
+<span class="fc" id="L159">        return this.estado;</span>
     }
     
     /**
      * @return the indicacaoSubstituto
      */
     public List&lt;Professor&gt; getIndicacoesSubstitutos() {
-<span class="fc" id="L170">        return indicacoesSubstituto;</span>
+<span class="fc" id="L166">        return indicacoesSubstituto;</span>
     }
 
     public void indicarSubstituto(Professor professor) {
         
-<span class="fc bfc" id="L175" title="All 2 branches covered.">        if (professor == this.professor){</span>
-<span class="fc" id="L176">            throw new IllegalStateException(&quot;O professor substituto não deve ser o mesmo que o professor se ausentando.&quot;);</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">        if (professor == this.professor){</span>
+<span class="fc" id="L172">            throw new IllegalStateException(&quot;O professor substituto não deve ser o mesmo que o professor se ausentando.&quot;);</span>
         }
         //this.indicacaoSubstituto = professor;
         
-<span class="fc" id="L180">        this.indicacoesSubstituto.add(professor);</span>
-<span class="fc" id="L181">    }</span>
+<span class="fc" id="L176">        this.indicacoesSubstituto.add(professor);</span>
+<span class="fc" id="L177">    }</span>
     
     public void retirarSubstituto(Professor professor){
         
-<span class="fc bfc" id="L185" title="All 2 branches covered.">        if(!this.indicacoesSubstituto.contains(professor)){</span>
-<span class="fc" id="L186">            throw new IllegalStateException(&quot;O professor substituto não existe nesta notificação de ausência.&quot;);</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">        if(!this.indicacoesSubstituto.contains(professor)){</span>
+<span class="fc" id="L182">            throw new IllegalStateException(&quot;O professor substituto não existe nesta notificação de ausência.&quot;);</span>
         }
         
-<span class="fc" id="L189">        this.indicacoesSubstituto.remove(professor);</span>
-<span class="fc" id="L190">    }</span>
+<span class="fc" id="L185">        this.indicacoesSubstituto.remove(professor);</span>
+<span class="fc" id="L186">    }</span>
 
     /**
      * @return the codigothis
      */
     public String getCodigo() {
-<span class="fc" id="L196">        return codigo;</span>
+<span class="fc" id="L192">        return codigo;</span>
     }
 
     /**
      * @return the professorSubstituto
      */
     public Professor getProfessorSubstituto() {
-<span class="fc" id="L203">        return professorSubstituto;</span>
+<span class="fc" id="L199">        return professorSubstituto;</span>
     }
 
     /**
      * @param professorSubstituto the professorSubstituto to set
      */
     public void setProfessorSubstituto(Professor professorSubstituto) {
-<span class="fc bfc" id="L210" title="All 2 branches covered.">        if (professorSubstituto == this.professor){</span>
-<span class="fc" id="L211">            throw new IllegalStateException(&quot;O professor substituto não deve ser o mesmo que o professor se ausentando.&quot;);</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">        if (professorSubstituto == this.professor){</span>
+<span class="fc" id="L207">            throw new IllegalStateException(&quot;O professor substituto não deve ser o mesmo que o professor se ausentando.&quot;);</span>
         }
         
-<span class="fc" id="L214">        this.professorSubstituto = professorSubstituto;</span>
-<span class="fc" id="L215">    }</span>
+<span class="fc" id="L210">        this.professorSubstituto = professorSubstituto;</span>
+<span class="fc" id="L211">    }</span>
 
     public void cancelarAusencia() {
         
-<span class="fc" id="L219">        this.estado = EstadoAusencia.Ausencia_Cancelada;</span>
-<span class="fc" id="L220">        this.professorSubstituto = null;</span>
-<span class="fc" id="L221">    }</span>
+<span class="fc" id="L215">        this.estado = EstadoAusencia.Ausencia_Cancelada;</span>
+<span class="fc" id="L216">        this.professorSubstituto = null;</span>
+<span class="fc" id="L217">    }</span>
     
     public void cancelarAulas(){
         
-<span class="fc" id="L225">        this.estado = EstadoAusencia.Aulas_Canceladas;</span>
-<span class="fc" id="L226">        this.professorSubstituto = null;</span>
+<span class="fc" id="L221">        this.estado = EstadoAusencia.Aulas_Canceladas;</span>
+<span class="fc" id="L222">        this.professorSubstituto = null;</span>
         
-<span class="fc" id="L228">    }</span>
+<span class="fc" id="L224">    }</span>
     
     public void definirComoAlocado(){
-<span class="fc" id="L231">        this.estado = EstadoAusencia.Alocacao_Efetuada;</span>
-<span class="fc" id="L232">    }</span>
+<span class="fc" id="L227">        this.estado = EstadoAusencia.Alocacao_Efetuada;</span>
+<span class="fc" id="L228">    }</span>
     
     
    

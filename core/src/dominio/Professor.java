@@ -211,4 +211,89 @@ public class Professor implements Serializable {
         return username;
     }
     
+    public List<Ausencia> gerarAusencias(Interval periodoDeAusencia, String motivo)
+    {
+        List<Ausencia> ausencias = new LinkedList<Ausencia>();
+        
+        Interval primeiroDia = null;
+        Interval últimoDia = null;
+        Interval diasCompletos = null;
+        
+        DateTime inícioAusência = periodoDeAusencia.getStart();
+        DateTime finalAusência = periodoDeAusencia.getEnd();
+        
+        Boolean múltiplosDias = true;
+        
+        DateTime finalDePrimeiroDiaDeAusência = new DateTime(inícioAusência.getYear(),inícioAusência.getMonthOfYear(),inícioAusência.getDayOfMonth(),23,59);
+        if(finalDePrimeiroDiaDeAusência.isAfter(finalAusência))
+        {
+            finalDePrimeiroDiaDeAusência = finalAusência;
+            múltiplosDias = false;
+        }
+        
+        primeiroDia = new Interval(inícioAusência, finalDePrimeiroDiaDeAusência);
+        
+        if(múltiplosDias)
+        {
+            DateTime inícioDoÚltimoDiaDeAusência = new DateTime(finalAusência.getYear(),finalAusência.getMonthOfYear(),finalAusência.getDayOfMonth(),00,00);
+            últimoDia = new Interval(inícioDoÚltimoDiaDeAusência,finalAusência);
+            
+            if(inícioDoÚltimoDiaDeAusência.isAfter(finalDePrimeiroDiaDeAusência.plusMinutes(1)))
+            {
+                diasCompletos = new Interval(finalDePrimeiroDiaDeAusência.plusMinutes(1), inícioDoÚltimoDiaDeAusência.plusMinutes(-1));
+            }
+        }
+        
+        for(Aula aulaPedida : this.getGrade())
+        {                    
+            Avaliar(aulaPedida, primeiroDia, motivo, ausencias);
+            
+            if(últimoDia != null)
+            {
+                Avaliar(aulaPedida, últimoDia, motivo, ausencias);
+            }
+            
+            if(diasCompletos != null)
+            {
+                DateTime inícioDiasCompletos = diasCompletos.getStart();
+                DateTime fimDiascompletos = diasCompletos.getEnd();
+                DateTime inícioDoÚltimoDiaCompleto = new DateTime(fimDiascompletos.getYear(),fimDiascompletos.getMonthOfYear(),fimDiascompletos.getDayOfMonth(),00,01);
+                DateTime diaAtual = inícioDiasCompletos;
+                while(diaAtual.isBefore(inícioDoÚltimoDiaCompleto))
+                {
+                    DateTime fimDoDiaAtual = new DateTime(diaAtual.getYear(),diaAtual.getMonthOfYear(),diaAtual.getDayOfMonth(),23,59);
+                    Interval diaAtualCompleto = new Interval(diaAtual,fimDoDiaAtual);
+                    
+                    Avaliar(aulaPedida, diaAtualCompleto, motivo, ausencias);
+                                    
+                    diaAtual = diaAtual.plusDays(1);
+                }                
+            }            
+        }
+        
+        return ausencias;
+    }
+
+    private void Avaliar(Aula aulaPedida, Interval primeiroDia, String motivo, List<Ausencia> ausencias) {
+        if(aulaPedida.getDiaDaSemana() == primeiroDia.getStart().getDayOfWeek())
+        {
+            if(aulaPedida.bateHorarioCom(primeiroDia))
+            {
+                int anoAusência = primeiroDia.getStart().getYear();
+                int mêsAusência = primeiroDia.getStart().getMonthOfYear();
+                int diaAusência = primeiroDia.getStart().getDayOfMonth();
+                int inícioHoraAula = aulaPedida.getPeriodo().getStart().getHourOfDay();
+                int inícioMinutoAula = aulaPedida.getPeriodo().getStart().getMinuteOfHour();
+                int finalHoraAula = aulaPedida.getPeriodo().getEnd().getHourOfDay();
+                int finalMinutoAula = aulaPedida.getPeriodo().getEnd().getMinuteOfHour();
+                
+                DateTime inícioAusênciaAula = new DateTime(anoAusência,mêsAusência,diaAusência,inícioHoraAula,inícioMinutoAula);
+                DateTime finalAusênciaAula = new DateTime(anoAusência,mêsAusência,diaAusência,finalHoraAula,finalMinutoAula);
+                Interval períodoAusência = new Interval(inícioAusênciaAula,finalAusênciaAula);
+                Ausencia ausência = new Ausencia("0", períodoAusência, this, motivo);
+                ausencias.add(ausência);
+            }
+        }
+    }
+    
 }

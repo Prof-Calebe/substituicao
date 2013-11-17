@@ -45,10 +45,6 @@ public class Ausencia implements Serializable {
     
     private String motivoRejeicao;
     
-   
-    //@ManyToOne
-    //private Professor indicacaoSubstituto;
-    
     @ManyToOne
     private Professor professorSubstituto;
     
