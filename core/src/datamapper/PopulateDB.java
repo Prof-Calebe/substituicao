@@ -10,7 +10,7 @@ import dominio.Ausencia;
 import dominio.Professor;
 import dominio.Usuario;
 import java.sql.*;
-import java.util.Calendar;
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.joda.time.DateTime;
@@ -270,6 +270,9 @@ public class PopulateDB {
         
         AusenciaJpaController ausenciaJpa = new AusenciaJpaController(emf);
         ProfessorJpaController professorJpa = new ProfessorJpaController(emf);
+        AulaJpaController aulaJps = new AulaJpaController(emf);
+        
+        List<Aula> aulas = aulaJps.findAulaEntities();
         
         DateTime d1 = new DateTime(2013, 05, 02, 0, 0);
         DateTime d2 = new DateTime(2013, 05, 02, 0, 0);
@@ -278,7 +281,7 @@ public class PopulateDB {
         
         Professor professorAusente = professorJpa.findProfessor("Gaston");
         
-        Ausencia ausencia = new Ausencia("1234", periodo, professorAusente, "Um motivo");
+        Ausencia ausencia = new Ausencia("1234", periodo, professorAusente, "Um motivo", aulas.get(0));
         
         Professor professorSubstituto = professorJpa.findProfessor("Denise");
         ausencia.indicarSubstituto(professorSubstituto);

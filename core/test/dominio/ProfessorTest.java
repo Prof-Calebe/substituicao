@@ -371,5 +371,12 @@ public class ProfessorTest {
         
         ausências = objetoEmTeste.gerarAusencias(períodoDeAusência,"sem saco");
         assertEquals(2, ausências.size());
+        
+        inícioAusência = new DateTime(2013,11,18,00,00);
+        finalAusência = new DateTime(2013,11,19,23,59);
+        períodoDeAusência = new Interval(inícioAusência, finalAusência);
+        
+        ausências = objetoEmTeste.gerarAusencias(períodoDeAusência,"sem saco");
+        assertEquals(2, ausências.size());
     }
 }

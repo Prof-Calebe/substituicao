@@ -37,6 +37,9 @@ public class Ausencia implements Serializable {
     @ManyToOne
     private Professor professor;
     
+    @ManyToOne
+    private Aula aula;
+    
     @Columns(columns={@Column(name="startTime"),@Column(name="endTime")})
     @Type(type="org.joda.time.contrib.hibernate.PersistentInterval")  
     private Interval periodo;
@@ -61,7 +64,7 @@ public class Ausencia implements Serializable {
     
     }
 
-    public Ausencia(String codigo, Interval periodo, Professor professor, String motivo) {
+    public Ausencia(String codigo, Interval periodo, Professor professor, String motivo, Aula aula) {
         this.codigo = codigo;
         this.periodo = periodo;
         this.professor = professor;
@@ -69,8 +72,8 @@ public class Ausencia implements Serializable {
         this.motivoRejeicao = null;
         //this.indicacaoSubstituto = null;
         this.indicacoesSubstituto = new ArrayList<Professor>();
-        this.estado = EstadoAusencia.Alocacao_Pendente;
-       
+        this.estado = EstadoAusencia.Alocacao_Pendente;       
+        this.aula = aula;
     }
 
     public Long getId() {
@@ -146,6 +149,10 @@ public class Ausencia implements Serializable {
 
     public Object getMotivo() {
         return motivo;
+    }
+    
+    public Aula getAula() {
+        return aula;
     }
     
     public void setMotivo(String motivo) {

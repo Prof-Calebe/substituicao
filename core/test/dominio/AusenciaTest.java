@@ -25,6 +25,7 @@ public class AusenciaTest {
     
     private Professor professor;
     private Professor professorSubstituto;
+    private Aula aulaPerdida;
     private Interval periodo;
     private Ausencia objetoEmTeste;
     private String motivo;
@@ -39,7 +40,8 @@ public class AusenciaTest {
         professor = EasyMock.createMock(Professor.class);
         professorSubstituto = EasyMock.createMock(Professor.class);
         motivo = "Congresso internacional";
-        objetoEmTeste = new Ausencia("1234", periodo, professor, motivo);
+        aulaPerdida = EasyMock.createMock(Aula.class);
+        objetoEmTeste = new Ausencia("1234", periodo, professor, motivo, aulaPerdida);
         estado = EstadoAusencia.Alocacao_Pendente;
     }
     
@@ -183,7 +185,7 @@ public class AusenciaTest {
         Long x = new Long("0");  
         assertFalse(objetoEmTeste.equals(x));           
         
-        Ausencia outro = new Ausencia("1234", periodo, professor, motivo);
+        Ausencia outro = new Ausencia("1234", periodo, professor, motivo, aulaPerdida);
         assertTrue(objetoEmTeste.equals(outro));  
         
         outro.setId(x);
@@ -192,7 +194,7 @@ public class AusenciaTest {
         objetoEmTeste.setId(x);
         assertTrue(objetoEmTeste.equals(outro));  
         
-        outro = new Ausencia("1234", periodo, professor, motivo);
+        outro = new Ausencia("1234", periodo, professor, motivo, aulaPerdida);
         assertFalse(objetoEmTeste.equals(outro));       
     }   
     
@@ -215,5 +217,11 @@ public class AusenciaTest {
     {
         objetoEmTeste.setProfessor(professor);
         assertEquals(professor, objetoEmTeste.getProfessor());
+    }
+    
+    @Test
+    public void testeDeveInformarAAulaPerdida()
+    {
+        assertEquals(aulaPerdida, objetoEmTeste.getAula());
     }
 }
