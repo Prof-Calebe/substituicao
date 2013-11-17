@@ -177,7 +177,7 @@ public class Professor implements Serializable {
 <span class="fc" id="L177">        Boolean múltiplosDias = true;</span>
         
 <span class="fc" id="L179">        DateTime finalDePrimeiroDiaDeAusência = new DateTime(inícioAusência.getYear(),inícioAusência.getMonthOfYear(),inícioAusência.getDayOfMonth(),23,59);</span>
-<span class="fc bfc" id="L180" title="All 2 branches covered.">        if(finalDePrimeiroDiaDeAusência.isAfter(finalAusência))</span>
+<span class="fc bfc" id="L180" title="All 4 branches covered.">        if(finalDePrimeiroDiaDeAusência.isAfter(finalAusência) || finalDePrimeiroDiaDeAusência.equals(finalAusência))</span>
         {
 <span class="fc" id="L182">            finalDePrimeiroDiaDeAusência = finalAusência;</span>
 <span class="fc" id="L183">            múltiplosDias = false;</span>

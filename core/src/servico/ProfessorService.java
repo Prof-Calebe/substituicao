@@ -4,6 +4,7 @@
  */
 package servico;
 
+import datamapper.AusenciaJpaController;
 import datamapper.ProfessorJpaController;
 import datamapper.UsuarioJpaController;
 import dominio.Aula;
@@ -24,10 +25,12 @@ import org.joda.time.Interval;
 public class ProfessorService {
     
    private ProfessorJpaController controller;
+   private AusenciaJpaController ausenciasRepository;
     
     public ProfessorService(){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
         controller = new ProfessorJpaController(emf);
+        ausenciasRepository = new AusenciaJpaController(emf);
     }
     
     
@@ -48,16 +51,15 @@ public class ProfessorService {
         return modelos;
     }
     
-    public List<ProfessorModel> listarProfessoresCompativeisComAusenteNoPeriodo(String nomeProfessor, Interval periodo){
+    public List<ProfessorModel> listarProfessoresCompativeisComAusenteNoPeriodo(String codigoAusencia){
         
-        Professor professorAusente = controller.findProfessor(nomeProfessor);
+        Ausencia ausência = ausenciasRepository.findAusencia(new Long(codigoAusencia ));
+        
         
         List<Aula> aulasPerdidas = new LinkedList<Aula>();
-        List<Ausencia> ausencias = professorAusente.gerarAusencias(periodo, nomeProfessor);
-        for(Ausencia ausencia : ausencias)
-        {
-            aulasPerdidas.add(ausencia.getAula());
-        }
+        aulasPerdidas.add(ausência.getAula());
+        
+        Professor professorAusente = ausência.getProfessor();
         
         List<Professor> todosProfessores = controller.findProfessorEntities();
         

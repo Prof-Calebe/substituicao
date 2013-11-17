@@ -40,31 +40,33 @@ public class Ausências extends javax.swing.JFrame {
     
     private Interval periodoAusencia;
     
+    private String codigoAusencia;
+    
     private UsuarioModel usuario;
     
     /**
      * Creates new form AlocacoesPendentes
      */
-<span class="nc" id="L48">    public Ausências(UsuarioModel usuario) {</span>
-<span class="nc" id="L49">        initComponents();</span>
-<span class="nc" id="L50">        this.setLocationRelativeTo(null);</span>
-<span class="nc" id="L51">        this.usuario = usuario;</span>
-<span class="nc" id="L52">        this.setIconImage(Toolkit.getDefaultToolkit().getImage(&quot;C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg&quot;));</span>
-<span class="nc" id="L53">        this.populateGrid(usuario);</span>
-<span class="nc" id="L54">    }</span>
+<span class="nc" id="L50">    public Ausências(UsuarioModel usuario) {</span>
+<span class="nc" id="L51">        initComponents();</span>
+<span class="nc" id="L52">        this.setLocationRelativeTo(null);</span>
+<span class="nc" id="L53">        this.usuario = usuario;</span>
+<span class="nc" id="L54">        this.setIconImage(Toolkit.getDefaultToolkit().getImage(&quot;C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg&quot;));</span>
+<span class="nc" id="L55">        this.populateGrid(usuario);</span>
+<span class="nc" id="L56">    }</span>
 
-<span class="nc" id="L56">    public Ausências(JFrame previous, UsuarioModel usuario) {</span>
-<span class="nc" id="L57">        initComponents();</span>
-<span class="nc" id="L58">        previousFrame = previous;</span>
-<span class="nc" id="L59">        this.usuario = usuario;</span>
-<span class="nc" id="L60">        this.setLocationRelativeTo(null);</span>
-<span class="nc" id="L61">        this.setIconImage(Toolkit.getDefaultToolkit().getImage(&quot;C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg&quot;));</span>
+<span class="nc" id="L58">    public Ausências(JFrame previous, UsuarioModel usuario) {</span>
+<span class="nc" id="L59">        initComponents();</span>
+<span class="nc" id="L60">        previousFrame = previous;</span>
+<span class="nc" id="L61">        this.usuario = usuario;</span>
+<span class="nc" id="L62">        this.setLocationRelativeTo(null);</span>
+<span class="nc" id="L63">        this.setIconImage(Toolkit.getDefaultToolkit().getImage(&quot;C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg&quot;));</span>
         
         //if (isPending) {
-<span class="nc" id="L64">        btn_RejeitarAlocacao.setEnabled(false);</span>
-<span class="nc" id="L65">        this.populateGrid(usuario);</span>
+<span class="nc" id="L66">        btn_RejeitarAlocacao.setEnabled(false);</span>
+<span class="nc" id="L67">        this.populateGrid(usuario);</span>
 
-<span class="nc" id="L67">    }</span>
+<span class="nc" id="L69">    }</span>
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -75,97 +77,97 @@ public class Ausências extends javax.swing.JFrame {
     // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents
     private void initComponents() {
 
-<span class="nc" id="L78">        jLabel2 = new javax.swing.JLabel();</span>
-<span class="nc" id="L79">        jScrollPane1 = new javax.swing.JScrollPane();</span>
-<span class="nc" id="L80">        tbl_Alocacoes = new javax.swing.JTable();</span>
-<span class="nc" id="L81">        jLabel1 = new javax.swing.JLabel();</span>
-<span class="nc" id="L82">        btn_RejeitarAlocacao = new javax.swing.JToggleButton();</span>
-<span class="nc" id="L83">        btn_Cancelar = new javax.swing.JToggleButton();</span>
-<span class="nc" id="L84">        btnCancelarAusencia = new javax.swing.JButton();</span>
-<span class="nc" id="L85">        btnCancelarAulas = new javax.swing.JButton();</span>
-<span class="nc" id="L86">        btnAlocacao = new javax.swing.JButton();</span>
-<span class="nc" id="L87">        btnEleger = new javax.swing.JButton();</span>
+<span class="nc" id="L80">        jLabel2 = new javax.swing.JLabel();</span>
+<span class="nc" id="L81">        jScrollPane1 = new javax.swing.JScrollPane();</span>
+<span class="nc" id="L82">        tbl_Alocacoes = new javax.swing.JTable();</span>
+<span class="nc" id="L83">        jLabel1 = new javax.swing.JLabel();</span>
+<span class="nc" id="L84">        btn_RejeitarAlocacao = new javax.swing.JToggleButton();</span>
+<span class="nc" id="L85">        btn_Cancelar = new javax.swing.JToggleButton();</span>
+<span class="nc" id="L86">        btnCancelarAusencia = new javax.swing.JButton();</span>
+<span class="nc" id="L87">        btnCancelarAulas = new javax.swing.JButton();</span>
+<span class="nc" id="L88">        btnAlocacao = new javax.swing.JButton();</span>
+<span class="nc" id="L89">        btnEleger = new javax.swing.JButton();</span>
 
-<span class="nc" id="L89">        jLabel2.setText(&quot;jLabel2&quot;);</span>
+<span class="nc" id="L91">        jLabel2.setText(&quot;jLabel2&quot;);</span>
 
-<span class="nc" id="L91">        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);</span>
-<span class="nc" id="L92">        setTitle(&quot;Ausências&quot;);</span>
-<span class="nc" id="L93">        setAlwaysOnTop(true);</span>
-<span class="nc" id="L94">        setName(&quot;frm_AlocacoesPendentes&quot;); // NOI18N</span>
-<span class="nc" id="L95">        setResizable(false);</span>
+<span class="nc" id="L93">        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);</span>
+<span class="nc" id="L94">        setTitle(&quot;Ausências&quot;);</span>
+<span class="nc" id="L95">        setAlwaysOnTop(true);</span>
+<span class="nc" id="L96">        setName(&quot;frm_AlocacoesPendentes&quot;); // NOI18N</span>
+<span class="nc" id="L97">        setResizable(false);</span>
 
-<span class="nc" id="L97">        tbl_Alocacoes.setModel(new javax.swing.table.DefaultTableModel(</span>
+<span class="nc" id="L99">        tbl_Alocacoes.setModel(new javax.swing.table.DefaultTableModel(</span>
             new Object [][] {
 
             },
             new String [] {
                 &quot;Id&quot;, &quot;Professor&quot;, &quot;Início&quot;, &quot;Fim&quot;, &quot;Substituto&quot;, &quot;Status&quot;
             }
-<span class="nc" id="L104">        ) {</span>
-<span class="nc" id="L105">            Class[] types = new Class [] {</span>
+<span class="nc" id="L106">        ) {</span>
+<span class="nc" id="L107">            Class[] types = new Class [] {</span>
                 java.lang.Long.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
-<span class="nc" id="L108">            boolean[] canEdit = new boolean [] {</span>
+<span class="nc" id="L110">            boolean[] canEdit = new boolean [] {</span>
                 false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
-<span class="nc" id="L113">                return types [columnIndex];</span>
+<span class="nc" id="L115">                return types [columnIndex];</span>
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-<span class="nc" id="L117">                return canEdit [columnIndex];</span>
+<span class="nc" id="L119">                return canEdit [columnIndex];</span>
             }
         });
-<span class="nc" id="L120">        jScrollPane1.setViewportView(tbl_Alocacoes);</span>
+<span class="nc" id="L122">        jScrollPane1.setViewportView(tbl_Alocacoes);</span>
 
-<span class="nc" id="L122">        jLabel1.setText(&quot;Ações:&quot;);</span>
+<span class="nc" id="L124">        jLabel1.setText(&quot;Ações:&quot;);</span>
 
-<span class="nc" id="L124">        btn_RejeitarAlocacao.setLabel(&quot;Rejeitar Alocação&quot;);</span>
-<span class="nc" id="L125">        btn_RejeitarAlocacao.addActionListener(new java.awt.event.ActionListener() {</span>
+<span class="nc" id="L126">        btn_RejeitarAlocacao.setLabel(&quot;Rejeitar Alocação&quot;);</span>
+<span class="nc" id="L127">        btn_RejeitarAlocacao.addActionListener(new java.awt.event.ActionListener() {</span>
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-<span class="nc" id="L127">                btn_RejeitarAlocacaoActionPerformed(evt);</span>
-<span class="nc" id="L128">            }</span>
+<span class="nc" id="L129">                btn_RejeitarAlocacaoActionPerformed(evt);</span>
+<span class="nc" id="L130">            }</span>
         });
 
-<span class="nc" id="L131">        btn_Cancelar.setText(&quot;Voltar&quot;);</span>
-<span class="nc" id="L132">        btn_Cancelar.addActionListener(new java.awt.event.ActionListener() {</span>
+<span class="nc" id="L133">        btn_Cancelar.setText(&quot;Voltar&quot;);</span>
+<span class="nc" id="L134">        btn_Cancelar.addActionListener(new java.awt.event.ActionListener() {</span>
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-<span class="nc" id="L134">                btn_CancelarActionPerformed(evt);</span>
-<span class="nc" id="L135">            }</span>
+<span class="nc" id="L136">                btn_CancelarActionPerformed(evt);</span>
+<span class="nc" id="L137">            }</span>
         });
 
-<span class="nc" id="L138">        btnCancelarAusencia.setText(&quot;Cancelar Ausência&quot;);</span>
-<span class="nc" id="L139">        btnCancelarAusencia.addActionListener(new java.awt.event.ActionListener() {</span>
+<span class="nc" id="L140">        btnCancelarAusencia.setText(&quot;Cancelar Ausência&quot;);</span>
+<span class="nc" id="L141">        btnCancelarAusencia.addActionListener(new java.awt.event.ActionListener() {</span>
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-<span class="nc" id="L141">                btnCancelarAusenciaActionPerformed(evt);</span>
-<span class="nc" id="L142">            }</span>
+<span class="nc" id="L143">                btnCancelarAusenciaActionPerformed(evt);</span>
+<span class="nc" id="L144">            }</span>
         });
 
-<span class="nc" id="L145">        btnCancelarAulas.setText(&quot;Cancelar Aulas&quot;);</span>
-<span class="nc" id="L146">        btnCancelarAulas.addActionListener(new java.awt.event.ActionListener() {</span>
+<span class="nc" id="L147">        btnCancelarAulas.setText(&quot;Cancelar Aulas&quot;);</span>
+<span class="nc" id="L148">        btnCancelarAulas.addActionListener(new java.awt.event.ActionListener() {</span>
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-<span class="nc" id="L148">                btnCancelarAulasActionPerformed(evt);</span>
-<span class="nc" id="L149">            }</span>
+<span class="nc" id="L150">                btnCancelarAulasActionPerformed(evt);</span>
+<span class="nc" id="L151">            }</span>
         });
 
-<span class="nc" id="L152">        btnAlocacao.setText(&quot;Efetuar Alocação&quot;);</span>
-<span class="nc" id="L153">        btnAlocacao.addActionListener(new java.awt.event.ActionListener() {</span>
+<span class="nc" id="L154">        btnAlocacao.setText(&quot;Efetuar Alocação&quot;);</span>
+<span class="nc" id="L155">        btnAlocacao.addActionListener(new java.awt.event.ActionListener() {</span>
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-<span class="nc" id="L155">                btnAlocacaoActionPerformed(evt);</span>
-<span class="nc" id="L156">            }</span>
+<span class="nc" id="L157">                btnAlocacaoActionPerformed(evt);</span>
+<span class="nc" id="L158">            }</span>
         });
 
-<span class="nc" id="L159">        btnEleger.setText(&quot;Eleger-se Substituto&quot;);</span>
-<span class="nc" id="L160">        btnEleger.addActionListener(new java.awt.event.ActionListener() {</span>
+<span class="nc" id="L161">        btnEleger.setText(&quot;Eleger-se Substituto&quot;);</span>
+<span class="nc" id="L162">        btnEleger.addActionListener(new java.awt.event.ActionListener() {</span>
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-<span class="nc" id="L162">                btnElegerActionPerformed(evt);</span>
-<span class="nc" id="L163">            }</span>
+<span class="nc" id="L164">                btnElegerActionPerformed(evt);</span>
+<span class="nc" id="L165">            }</span>
         });
 
-<span class="nc" id="L166">        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());</span>
-<span class="nc" id="L167">        getContentPane().setLayout(layout);</span>
-<span class="nc" id="L168">        layout.setHorizontalGroup(</span>
+<span class="nc" id="L168">        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());</span>
+<span class="nc" id="L169">        getContentPane().setLayout(layout);</span>
+<span class="nc" id="L170">        layout.setHorizontalGroup(</span>
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
@@ -182,7 +184,7 @@ public class Ausências extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addContainerGap())
         );
-<span class="nc" id="L185">        layout.setVerticalGroup(</span>
+<span class="nc" id="L187">        layout.setVerticalGroup(</span>
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -206,178 +208,184 @@ public class Ausências extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-<span class="nc" id="L209">        pack();</span>
-<span class="nc" id="L210">    }// &lt;/editor-fold&gt;//GEN-END:initComponents</span>
+<span class="nc" id="L211">        pack();</span>
+<span class="nc" id="L212">    }// &lt;/editor-fold&gt;//GEN-END:initComponents</span>
 
     private void btn_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CancelarActionPerformed
         try {
-<span class="nc" id="L214">            this.dispose(); </span>
-<span class="nc" id="L215">            previousFrame.setVisible(true);</span>
-<span class="nc" id="L216">        } catch (Exception e) {</span>
-<span class="nc" id="L217">            System.out.println(&quot;Erro ao retornar para janela anterior!&quot;);</span>
-<span class="nc" id="L218">        }   </span>
-<span class="nc" id="L219">    }//GEN-LAST:event_btn_CancelarActionPerformed</span>
+<span class="nc" id="L216">            this.dispose(); </span>
+<span class="nc" id="L217">            previousFrame.setVisible(true);</span>
+<span class="nc" id="L218">        } catch (Exception e) {</span>
+<span class="nc" id="L219">            System.out.println(&quot;Erro ao retornar para janela anterior!&quot;);</span>
+<span class="nc" id="L220">        }   </span>
+<span class="nc" id="L221">    }//GEN-LAST:event_btn_CancelarActionPerformed</span>
 
     private void btn_RejeitarAlocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RejeitarAlocacaoActionPerformed
-<span class="nc" id="L222">        MotivoRejeitarAlocacao motivoRejeitarAlocacao = new MotivoRejeitarAlocacao(this);</span>
-<span class="nc" id="L223">        motivoRejeitarAlocacao.setVisible(true);</span>
-<span class="nc" id="L224">    }//GEN-LAST:event_btn_RejeitarAlocacaoActionPerformed</span>
+<span class="nc" id="L224">        MotivoRejeitarAlocacao motivoRejeitarAlocacao = new MotivoRejeitarAlocacao(this);</span>
+<span class="nc" id="L225">        motivoRejeitarAlocacao.setVisible(true);</span>
+<span class="nc" id="L226">    }//GEN-LAST:event_btn_RejeitarAlocacaoActionPerformed</span>
 
     private void btnCancelarAusenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarAusenciaActionPerformed
         
-<span class="nc bnc" id="L228" title="All 2 branches missed.">        if(tbl_Alocacoes.getSelectedRow() != -1){</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">        if(tbl_Alocacoes.getSelectedRow() != -1){</span>
             
-<span class="nc" id="L230">            String estado = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 5);</span>
+<span class="nc" id="L232">            String estado = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 5);</span>
                         
-<span class="nc" id="L232">            String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);</span>
+<span class="nc" id="L234">            String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);</span>
+<span class="nc" id="L235">            setCodigoAusencia(codigo);</span>
             
-<span class="nc" id="L234">            String nomeProf = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 1);</span>
+<span class="nc" id="L237">            String nomeProf = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 1);</span>
             
-<span class="nc" id="L236">            ProfessorService profService = new ProfessorService();</span>
+<span class="nc" id="L239">            ProfessorService profService = new ProfessorService();</span>
             
-<span class="nc" id="L238">            ProfessorModel professor = profService.obterProfessorPorUsername(this.usuario.Usuario);</span>
+<span class="nc" id="L241">            ProfessorModel professor = profService.obterProfessorPorUsername(this.usuario.Usuario);</span>
             
-<span class="nc bnc" id="L240" title="All 2 branches missed.">            if(estado.equals(&quot;Ausência cancelada&quot;)){</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">            if(estado.equals(&quot;Ausência cancelada&quot;)){</span>
                 
-<span class="nc" id="L242">                JOptionPane.showMessageDialog(null, &quot;Ausência nº &quot; + codigo + &quot; já foi cancelada.&quot; , &quot;Administrar Alocação&quot;, JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L245">                JOptionPane.showMessageDialog(null, &quot;Ausência nº &quot; + codigo + &quot; já foi cancelada.&quot; , &quot;Administrar Alocação&quot;, JOptionPane.INFORMATION_MESSAGE);</span>
                 
-<span class="nc bnc" id="L244" title="All 2 branches missed.">            } else if(!professor.Nome.equals(nomeProf)){</span>
-<span class="nc" id="L245">                JOptionPane.showMessageDialog(null, &quot;Não é possível cancelar a ausência de código &quot; + codigo + &quot; pois ela não foi criada por você.&quot; , </span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">            } else if(!professor.Nome.equals(nomeProf)){</span>
+<span class="nc" id="L248">                JOptionPane.showMessageDialog(null, &quot;Não é possível cancelar a ausência de código &quot; + codigo + &quot; pois ela não foi criada por você.&quot; , </span>
                         &quot;Administrar Alocação&quot;, JOptionPane.INFORMATION_MESSAGE);
             }
             else{
-<span class="nc" id="L249">                NotificacaoService notifService = new NotificacaoService();</span>
+<span class="nc" id="L252">                NotificacaoService notifService = new NotificacaoService();</span>
 
-<span class="nc" id="L251">                notifService.cancelarAusencia(codigo);</span>
+<span class="nc" id="L254">                notifService.cancelarAusencia(codigo);</span>
 
-<span class="nc" id="L253">               this.populateGrid(this.usuario); </span>
+<span class="nc" id="L256">               this.populateGrid(this.usuario); </span>
             }
         
 
         }
         
 
-<span class="nc" id="L260">    }//GEN-LAST:event_btnCancelarAusenciaActionPerformed</span>
+<span class="nc" id="L263">    }//GEN-LAST:event_btnCancelarAusenciaActionPerformed</span>
 
     private void btnCancelarAulasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarAulasActionPerformed
         
-<span class="nc bnc" id="L264" title="All 2 branches missed.">        if(tbl_Alocacoes.getSelectedRow() != -1){</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">        if(tbl_Alocacoes.getSelectedRow() != -1){</span>
             
-<span class="nc" id="L266">            String estado = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 5);</span>
+<span class="nc" id="L269">            String estado = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 5);</span>
                         
-<span class="nc" id="L268">            String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);</span>
+<span class="nc" id="L271">            String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);</span>
+<span class="nc" id="L272">            setCodigoAusencia(codigo);</span>
             
-<span class="nc bnc" id="L270" title="All 2 branches missed.">            if(estado.equals(&quot;Aulas canceladas&quot;)){</span>
+<span class="nc bnc" id="L274" title="All 2 branches missed.">            if(estado.equals(&quot;Aulas canceladas&quot;)){</span>
                 
-<span class="nc" id="L272">                JOptionPane.showMessageDialog(null, &quot;Aulas da ausência nº &quot; + codigo + &quot; já foram canceladas.&quot; , &quot;Administrar Alocação&quot;, JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L276">                JOptionPane.showMessageDialog(null, &quot;Aulas da ausência nº &quot; + codigo + &quot; já foram canceladas.&quot; , &quot;Administrar Alocação&quot;, JOptionPane.INFORMATION_MESSAGE);</span>
                 
             }
         
-<span class="nc" id="L276">             NotificacaoService notifService = new NotificacaoService();</span>
+<span class="nc" id="L280">             NotificacaoService notifService = new NotificacaoService();</span>
          
-<span class="nc" id="L278">             notifService.cancelarAulas(codigo);</span>
+<span class="nc" id="L282">             notifService.cancelarAulas(codigo);</span>
          
-<span class="nc" id="L280">            this.populateGrid(this.usuario);</span>
+<span class="nc" id="L284">            this.populateGrid(this.usuario);</span>
         }
         
-<span class="nc" id="L283">    }//GEN-LAST:event_btnCancelarAulasActionPerformed</span>
+<span class="nc" id="L287">    }//GEN-LAST:event_btnCancelarAulasActionPerformed</span>
 
     private void btnAlocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlocacaoActionPerformed
-<span class="nc bnc" id="L286" title="All 2 branches missed.">        if(tbl_Alocacoes.getSelectedRow() != -1){</span>
+<span class="nc bnc" id="L290" title="All 2 branches missed.">        if(tbl_Alocacoes.getSelectedRow() != -1){</span>
             
-<span class="nc" id="L288">            this.setProfessorAusente((String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 1));</span>
+<span class="nc" id="L292">            this.setProfessorAusente((String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 1));</span>
             
-<span class="nc" id="L290">            String dataInicio = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 2);</span>
-<span class="nc" id="L291">            String dataFim = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 3);</span>
+<span class="nc" id="L294">            String dataInicio = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 2);</span>
+<span class="nc" id="L295">            String dataFim = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 3);</span>
             
-<span class="nc" id="L293">            SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
+<span class="nc" id="L297">            String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);</span>
+<span class="nc" id="L298">            setCodigoAusencia(codigo);</span>
+            
+<span class="nc" id="L300">            SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
         
         
-<span class="nc" id="L296">            DateTime inicio = null;</span>
-<span class="nc" id="L297">            DateTime fim = null;</span>
+<span class="nc" id="L303">            DateTime inicio = null;</span>
+<span class="nc" id="L304">            DateTime fim = null;</span>
             try {
-<span class="nc" id="L299">                inicio = new DateTime(sdf.parse(dataInicio));</span>
-<span class="nc" id="L300">                fim = new DateTime(sdf.parse(dataFim));</span>
-<span class="nc" id="L301">            } catch (ParseException ex) {</span>
-<span class="nc" id="L302">                Logger.getLogger(NotificacaoDeAusencia.class.getName()).log(Level.SEVERE, null, ex);</span>
-<span class="nc" id="L303">            }</span>
+<span class="nc" id="L306">                inicio = new DateTime(sdf.parse(dataInicio));</span>
+<span class="nc" id="L307">                fim = new DateTime(sdf.parse(dataFim));</span>
+<span class="nc" id="L308">            } catch (ParseException ex) {</span>
+<span class="nc" id="L309">                Logger.getLogger(NotificacaoDeAusencia.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L310">            }</span>
             
-<span class="nc" id="L305">            this.setPeriodoAusencia(new Interval(inicio, fim));</span>
+<span class="nc" id="L312">            this.setPeriodoAusencia(new Interval(inicio, fim));</span>
 
-<span class="nc" id="L307">            ListaProfessores listaProfessores = new ListaProfessores(this);</span>
-<span class="nc" id="L308">            listaProfessores.setVisible(true);</span>
+<span class="nc" id="L314">            ListaProfessores listaProfessores = new ListaProfessores(this);</span>
+<span class="nc" id="L315">            listaProfessores.setVisible(true);</span>
         }
-<span class="nc" id="L310">    }//GEN-LAST:event_btnAlocacaoActionPerformed</span>
+<span class="nc" id="L317">    }//GEN-LAST:event_btnAlocacaoActionPerformed</span>
 
     private void btnElegerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegerActionPerformed
 
-<span class="nc" id="L314">        String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);</span>
-<span class="nc" id="L315">        String nomeProfessor = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 1);</span>
+<span class="nc" id="L321">        String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);</span>
+<span class="nc" id="L322">        setCodigoAusencia(codigo);</span>
+<span class="nc" id="L323">        String nomeProfessor = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 1);</span>
         
-<span class="nc" id="L317">        ProfessorService profService = new ProfessorService();</span>
+<span class="nc" id="L325">        ProfessorService profService = new ProfessorService();</span>
         
-<span class="nc" id="L319">        ProfessorModel professor = profService.obterProfessorPorUsername(this.usuario.Usuario);</span>
+<span class="nc" id="L327">        ProfessorModel professor = profService.obterProfessorPorUsername(this.usuario.Usuario);</span>
         
-<span class="nc bnc" id="L321" title="All 2 branches missed.">        if(nomeProfessor.equals(professor.Nome)){</span>
+<span class="nc bnc" id="L329" title="All 2 branches missed.">        if(nomeProfessor.equals(professor.Nome)){</span>
             
-<span class="nc" id="L323">            JOptionPane.showMessageDialog(null, &quot;Não é possivel cobrir a própria ausência.&quot; , &quot;Administrar Alocação&quot;, JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L331">            JOptionPane.showMessageDialog(null, &quot;Não é possivel cobrir a própria ausência.&quot; , &quot;Administrar Alocação&quot;, JOptionPane.INFORMATION_MESSAGE);</span>
             
         } else{
-<span class="nc" id="L326">            NotificacaoService notifService = new NotificacaoService();</span>
+<span class="nc" id="L334">            NotificacaoService notifService = new NotificacaoService();</span>
 
-<span class="nc" id="L328">            notifService.definirSubstituto(codigo, professor.Nome);</span>
+<span class="nc" id="L336">            notifService.definirSubstituto(codigo, professor.Nome);</span>
 
-<span class="nc" id="L330">            this.populateGrid(usuario);</span>
+<span class="nc" id="L338">            this.populateGrid(usuario);</span>
         }
-<span class="nc" id="L332">    }//GEN-LAST:event_btnElegerActionPerformed</span>
+<span class="nc" id="L340">    }//GEN-LAST:event_btnElegerActionPerformed</span>
 
     public void populateGrid(){
-<span class="nc" id="L335">        this.populateGrid(this.usuario);</span>
-<span class="nc" id="L336">    }</span>
+<span class="nc" id="L343">        this.populateGrid(this.usuario);</span>
+<span class="nc" id="L344">    }</span>
     
     private void populateGrid(UsuarioModel usuario){
         
-<span class="nc" id="L340">            DefaultTableModel dm = (DefaultTableModel)tbl_Alocacoes.getModel();</span>
-<span class="nc" id="L341">            dm.getDataVector().removeAllElements();</span>
+<span class="nc" id="L348">            DefaultTableModel dm = (DefaultTableModel)tbl_Alocacoes.getModel();</span>
+<span class="nc" id="L349">            dm.getDataVector().removeAllElements();</span>
         
-<span class="nc" id="L343">            NotificacaoService listaAlocacoesPendentes = new NotificacaoService();</span>
-<span class="nc" id="L344">            List&lt;AusenciaModel&gt; listaAusencias = null;</span>
+<span class="nc" id="L351">            NotificacaoService listaAlocacoesPendentes = new NotificacaoService();</span>
+<span class="nc" id="L352">            List&lt;AusenciaModel&gt; listaAusencias = null;</span>
                     
-<span class="nc" id="L346">            Perfil perfil = usuario.profile;</span>
+<span class="nc" id="L354">            Perfil perfil = usuario.profile;</span>
             
-<span class="nc bnc" id="L348" title="All 2 branches missed.">            if(perfil.equals(Perfil.ADMINISTRADOR)){</span>
-<span class="nc" id="L349">                listaAusencias = listaAlocacoesPendentes.listarAusencias();</span>
-<span class="nc" id="L350">                btnEleger.setVisible(false);</span>
-<span class="nc" id="L351">                btn_RejeitarAlocacao.setVisible(false);</span>
+<span class="nc bnc" id="L356" title="All 2 branches missed.">            if(perfil.equals(Perfil.ADMINISTRADOR)){</span>
+<span class="nc" id="L357">                listaAusencias = listaAlocacoesPendentes.listarAusencias();</span>
+<span class="nc" id="L358">                btnEleger.setVisible(false);</span>
+<span class="nc" id="L359">                btn_RejeitarAlocacao.setVisible(false);</span>
                 
                 
             }
-<span class="nc bnc" id="L355" title="All 2 branches missed.">            else if(perfil.equals(Perfil.FUNCIONARIO)){</span>
-<span class="nc" id="L356">                btnAlocacao.setVisible(false);</span>
-<span class="nc" id="L357">                btnCancelarAulas.setVisible(false);</span>
-<span class="nc" id="L358">                btnCancelarAusencia.setVisible(false);</span>
-<span class="nc" id="L359">                btnEleger.setVisible(false);</span>
-<span class="nc" id="L360">                btn_RejeitarAlocacao.setVisible(false);</span>
-<span class="nc" id="L361">                listaAusencias = listaAlocacoesPendentes.listarAusencias();</span>
-            }
-<span class="nc bnc" id="L363" title="All 2 branches missed.">            else if(perfil.equals(Perfil.PROFESSOR)){</span>
+<span class="nc bnc" id="L363" title="All 2 branches missed.">            else if(perfil.equals(Perfil.FUNCIONARIO)){</span>
 <span class="nc" id="L364">                btnAlocacao.setVisible(false);</span>
 <span class="nc" id="L365">                btnCancelarAulas.setVisible(false);</span>
+<span class="nc" id="L366">                btnCancelarAusencia.setVisible(false);</span>
+<span class="nc" id="L367">                btnEleger.setVisible(false);</span>
+<span class="nc" id="L368">                btn_RejeitarAlocacao.setVisible(false);</span>
+<span class="nc" id="L369">                listaAusencias = listaAlocacoesPendentes.listarAusencias();</span>
+            }
+<span class="nc bnc" id="L371" title="All 2 branches missed.">            else if(perfil.equals(Perfil.PROFESSOR)){</span>
+<span class="nc" id="L372">                btnAlocacao.setVisible(false);</span>
+<span class="nc" id="L373">                btnCancelarAulas.setVisible(false);</span>
                 
-<span class="nc" id="L367">                listaAusencias = listaAlocacoesPendentes.listarAusenciasPorProfessor(usuario.Usuario);</span>
-<span class="nc" id="L368">                listaAusencias.addAll(listaAlocacoesPendentes.listarAusenciasPorIndicacaoDeSubstituto(usuario.Usuario));</span>
+<span class="nc" id="L375">                listaAusencias = listaAlocacoesPendentes.listarAusenciasPorProfessor(usuario.Usuario);</span>
+<span class="nc" id="L376">                listaAusencias.addAll(listaAlocacoesPendentes.listarAusenciasPorIndicacaoDeSubstituto(usuario.Usuario));</span>
             }
             else{
                 //Algum erro
             }
             
-<span class="nc bnc" id="L374" title="All 2 branches missed.">            for (AusenciaModel model : listaAusencias) {</span>
+<span class="nc bnc" id="L382" title="All 2 branches missed.">            for (AusenciaModel model : listaAusencias) {</span>
                 //if (model.estado.equals(&quot;Alocação pendente&quot;)) {
-<span class="nc" id="L376">                    DefaultTableModel tableModel = (DefaultTableModel) tbl_Alocacoes.getModel();</span>
-<span class="nc" id="L377">                    tableModel.addRow(new Object[]{model.codigo, model.professorAusente, model.dataInicio, model.dataFim, model.professorSubstituto, model.estado});</span>
+<span class="nc" id="L384">                    DefaultTableModel tableModel = (DefaultTableModel) tbl_Alocacoes.getModel();</span>
+<span class="nc" id="L385">                    tableModel.addRow(new Object[]{model.codigo, model.professorAusente, model.dataInicio, model.dataFim, model.professorSubstituto, model.estado});</span>
                 //}
-<span class="nc" id="L379">            }</span>
-<span class="nc" id="L380">    }</span>
+<span class="nc" id="L387">            }</span>
+<span class="nc" id="L388">    }</span>
     /**
      * @param args the command line arguments
      */
@@ -388,35 +396,35 @@ public class Ausências extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-<span class="nc bnc" id="L391" title="All 2 branches missed.">            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {</span>
-<span class="nc bnc" id="L392" title="All 2 branches missed.">                if (&quot;Nimbus&quot;.equals(info.getName())) {</span>
-<span class="nc" id="L393">                    javax.swing.UIManager.setLookAndFeel(info.getClassName());</span>
-<span class="nc" id="L394">                    break;</span>
+<span class="nc bnc" id="L399" title="All 2 branches missed.">            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {</span>
+<span class="nc bnc" id="L400" title="All 2 branches missed.">                if (&quot;Nimbus&quot;.equals(info.getName())) {</span>
+<span class="nc" id="L401">                    javax.swing.UIManager.setLookAndFeel(info.getClassName());</span>
+<span class="nc" id="L402">                    break;</span>
                 }
             }
-<span class="nc" id="L397">        } catch (ClassNotFoundException ex) {</span>
-<span class="nc" id="L398">            java.util.logging.Logger.getLogger(Ausências.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
-<span class="nc" id="L399">        } catch (InstantiationException ex) {</span>
-<span class="nc" id="L400">            java.util.logging.Logger.getLogger(Ausências.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
-<span class="nc" id="L401">        } catch (IllegalAccessException ex) {</span>
-<span class="nc" id="L402">            java.util.logging.Logger.getLogger(Ausências.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
-<span class="nc" id="L403">        } catch (javax.swing.UnsupportedLookAndFeelException ex) {</span>
-<span class="nc" id="L404">            java.util.logging.Logger.getLogger(Ausências.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
-<span class="nc" id="L405">        }</span>
+<span class="nc" id="L405">        } catch (ClassNotFoundException ex) {</span>
+<span class="nc" id="L406">            java.util.logging.Logger.getLogger(Ausências.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L407">        } catch (InstantiationException ex) {</span>
+<span class="nc" id="L408">            java.util.logging.Logger.getLogger(Ausências.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L409">        } catch (IllegalAccessException ex) {</span>
+<span class="nc" id="L410">            java.util.logging.Logger.getLogger(Ausências.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L411">        } catch (javax.swing.UnsupportedLookAndFeelException ex) {</span>
+<span class="nc" id="L412">            java.util.logging.Logger.getLogger(Ausências.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L413">        }</span>
         //&lt;/editor-fold&gt;
 
         /* Create and display the form */
-<span class="nc" id="L409">        java.awt.EventQueue.invokeLater(new Runnable() {</span>
+<span class="nc" id="L417">        java.awt.EventQueue.invokeLater(new Runnable() {</span>
             public void run() {
                 
-<span class="nc" id="L412">                AdministracaoDeUsuariosService userService = new AdministracaoDeUsuariosService();</span>
+<span class="nc" id="L420">                AdministracaoDeUsuariosService userService = new AdministracaoDeUsuariosService();</span>
 
-<span class="nc" id="L414">                UsuarioModel usuarioLogando = userService.obterUsuario(&quot;admin&quot;);</span>
+<span class="nc" id="L422">                UsuarioModel usuarioLogando = userService.obterUsuario(&quot;admin&quot;);</span>
                 
-<span class="nc" id="L416">                new Ausências(usuarioLogando).setVisible(true);</span>
-<span class="nc" id="L417">            }</span>
+<span class="nc" id="L424">                new Ausências(usuarioLogando).setVisible(true);</span>
+<span class="nc" id="L425">            }</span>
         });
-<span class="nc" id="L419">    }</span>
+<span class="nc" id="L427">    }</span>
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlocacao;
     private javax.swing.JButton btnCancelarAulas;
@@ -434,52 +442,61 @@ public class Ausências extends javax.swing.JFrame {
      * @return the professorParaAlocacao
      */
     public String getProfessorParaAlocacao() {
-<span class="nc" id="L437">        return professorParaAlocacao;</span>
+<span class="nc" id="L445">        return professorParaAlocacao;</span>
     }
 
     /**
      * @param professorParaAlocacao the professorParaAlocacao to set
      */
     public void setProfessorParaAlocacao(String professorParaAlocacao) {
-<span class="nc" id="L444">        this.professorParaAlocacao = professorParaAlocacao;</span>
-<span class="nc" id="L445">    }</span>
+<span class="nc" id="L452">        this.professorParaAlocacao = professorParaAlocacao;</span>
+<span class="nc" id="L453">    }</span>
 
     /**
      * @return the professorAusente
      */
     public String getProfessorAusente() {
-<span class="nc" id="L451">        return professorAusente;</span>
+<span class="nc" id="L459">        return professorAusente;</span>
     }
 
     /**
      * @param professorAusente the professorAusente to set
      */
     public void setProfessorAusente(String professorAusente) {
-<span class="nc" id="L458">        this.professorAusente = professorAusente;</span>
-<span class="nc" id="L459">    }</span>
+<span class="nc" id="L466">        this.professorAusente = professorAusente;</span>
+<span class="nc" id="L467">    }</span>
     
     public void efetuarAlocacao(String nomeProfessor){
         
-<span class="nc" id="L463">        NotificacaoService notifService = new NotificacaoService();</span>
+<span class="nc" id="L471">        NotificacaoService notifService = new NotificacaoService();</span>
         
-<span class="nc" id="L465">        String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);</span>
+<span class="nc" id="L473">        String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);</span>
         
-<span class="nc" id="L467">        notifService.definirSubstituto(codigo, nomeProfessor);</span>
+<span class="nc" id="L475">        notifService.definirSubstituto(codigo, nomeProfessor);</span>
         
-<span class="nc" id="L469">    }</span>
+<span class="nc" id="L477">    }</span>
 
     /**
      * @return the periodoAusencia
      */
     public Interval getPeriodoAusencia() {
-<span class="nc" id="L475">        return periodoAusencia;</span>
+<span class="nc" id="L483">        return periodoAusencia;</span>
     }
 
     /**
      * @param periodoAusencia the periodoAusencia to set
      */
     public void setPeriodoAusencia(Interval periodoAusencia) {
-<span class="nc" id="L482">        this.periodoAusencia = periodoAusencia;</span>
-<span class="nc" id="L483">    }</span>
+<span class="nc" id="L490">        this.periodoAusencia = periodoAusencia;</span>
+<span class="nc" id="L491">    }</span>
+    
+    public String getCodigoAusencia() {
+<span class="nc" id="L494">        return codigoAusencia;</span>
+    }
+    
+    public void setCodigoAusencia(String codigo)
+    {
+<span class="nc" id="L499">        this.codigoAusencia = codigo;</span>
+<span class="nc" id="L500">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span></div></body></html>

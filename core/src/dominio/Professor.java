@@ -177,7 +177,7 @@ public class Professor implements Serializable {
         Boolean múltiplosDias = true;
         
         DateTime finalDePrimeiroDiaDeAusência = new DateTime(inícioAusência.getYear(),inícioAusência.getMonthOfYear(),inícioAusência.getDayOfMonth(),23,59);
-        if(finalDePrimeiroDiaDeAusência.isAfter(finalAusência))
+        if(finalDePrimeiroDiaDeAusência.isAfter(finalAusência) || finalDePrimeiroDiaDeAusência.equals(finalAusência))
         {
             finalDePrimeiroDiaDeAusência = finalAusência;
             múltiplosDias = false;

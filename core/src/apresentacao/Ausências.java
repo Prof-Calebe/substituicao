@@ -40,6 +40,8 @@ public class Ausências extends javax.swing.JFrame {
     
     private Interval periodoAusencia;
     
+    private String codigoAusencia;
+    
     private UsuarioModel usuario;
     
     /**
@@ -230,6 +232,7 @@ public class Ausências extends javax.swing.JFrame {
             String estado = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 5);
                         
             String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);
+            setCodigoAusencia(codigo);
             
             String nomeProf = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 1);
             
@@ -266,6 +269,7 @@ public class Ausências extends javax.swing.JFrame {
             String estado = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 5);
                         
             String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);
+            setCodigoAusencia(codigo);
             
             if(estado.equals("Aulas canceladas")){
                 
@@ -290,6 +294,9 @@ public class Ausências extends javax.swing.JFrame {
             String dataInicio = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 2);
             String dataFim = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 3);
             
+            String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);
+            setCodigoAusencia(codigo);
+            
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
         
@@ -312,6 +319,7 @@ public class Ausências extends javax.swing.JFrame {
     private void btnElegerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegerActionPerformed
 
         String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);
+        setCodigoAusencia(codigo);
         String nomeProfessor = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 1);
         
         ProfessorService profService = new ProfessorService();
@@ -480,5 +488,14 @@ public class Ausências extends javax.swing.JFrame {
      */
     public void setPeriodoAusencia(Interval periodoAusencia) {
         this.periodoAusencia = periodoAusencia;
+    }
+    
+    public String getCodigoAusencia() {
+        return codigoAusencia;
+    }
+    
+    public void setCodigoAusencia(String codigo)
+    {
+        this.codigoAusencia = codigo;
     }
 }

@@ -188,7 +188,7 @@ public class ListaProfessores extends javax.swing.JDialog {
             
 <span class="nc" id="L189">            ProfessorService profService = new ProfessorService();</span>
             
-<span class="nc" id="L191">            List&lt;ProfessorModel&gt; professores = profService.listarProfessoresCompativeisComAusenteNoPeriodo(nomeProfAusente, periodo);</span>
+<span class="nc" id="L191">            List&lt;ProfessorModel&gt; professores = profService.listarProfessoresCompativeisComAusenteNoPeriodo(previousFrame.getCodigoAusencia());</span>
             
 <span class="nc bnc" id="L193" title="All 2 branches missed.">            for (ProfessorModel professor : professores){</span>
                 

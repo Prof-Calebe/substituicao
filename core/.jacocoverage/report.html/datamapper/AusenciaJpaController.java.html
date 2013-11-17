@@ -146,11 +146,11 @@ public class AusenciaJpaController implements Serializable {
     }
 
     public Ausencia findAusencia(Long id) {
-<span class="nc" id="L149">        EntityManager em = getEntityManager();</span>
+<span class="fc" id="L149">        EntityManager em = getEntityManager();</span>
         try {
-<span class="nc" id="L151">            return em.find(Ausencia.class, id);</span>
+<span class="fc" id="L151">            return em.find(Ausencia.class, id);</span>
         } finally {
-<span class="nc" id="L153">            em.close();</span>
+<span class="pc" id="L153">            em.close();</span>
         }
     }
     
