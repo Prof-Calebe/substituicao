@@ -20,8 +20,11 @@ import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import junit.framework.Assert;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.BeforeClass;
@@ -99,31 +102,6 @@ public class NotificacaoServiceTest {
          cleanEntity.add(ausencia);
 
      }
-     
-//     @Test
-//     public void testeDeveSerPossivelEditarAusencia() throws ParseException, NonexistentEntityException, Exception {
-//         
-//         List<Professor> professores = profController.findProfessorEntities();
-//         
-//         String dataInicio = "20/05/2013";
-//         String dataFim = "24/05/2013";
-//         String motivo = "Problemas pessoais";
-//         
-//         String codigo = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, professores.get(1).getId());
-//         
-//         motivo = "Problemas de força maior.";
-//             
-//         
-//         serviceEmTeste.editarAusencia(codigo, dataInicio, dataFim, motivo, professores.get(1).getId());
-//
-//         
-//         Ausencia ausencia = ausController.findAusencia(codigo);
-//         
-//         Assert.assertEquals(motivo, ausencia.getMotivo());
-//         
-//         cleanEntity.add(ausencia);
-//
-//     }
      
      @Test
      public void testeDeveSerPossivelListarAusencias() throws ParseException{
@@ -272,8 +250,40 @@ public class NotificacaoServiceTest {
          
          Assert.assertEquals(EstadoAusencia.Aulas_Canceladas, ausencia.getEstado());
          
-         cleanEntity.add(ausencia);
+         cleanEntity.add(ausencia);         
+     }
+     
+     @Test
+     public void testeDeveListarAsAusênciasDeclaradasDeUmProfessor()
+     {
+         PopulateDB.recreateDB("prosub", "root", "");
+         PopulateDB.populateProfessores();
          
+         List<AusenciaModel> ausencias = serviceEmTeste.listarAusenciasPorProfessor("calebe");
+         
+         Assert.assertEquals(0, ausencias.size());
+         
+         //Ausência numa segunda, terça e quarta.
+        DateTime inicio = new DateTime(2013, 11, 18, 0, 0);
+        DateTime fim = new DateTime(2013, 11, 20, 23, 59);        
+        Interval periodo = new Interval(inicio, fim);
+        
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
+        ProfessorJpaController professoresRepository = new ProfessorJpaController(emf);
+        Professor calebe = professoresRepository.findProfessor("Calebe");
+        
+        AusenciaJpaController ausenciasRepository = new AusenciaJpaController(emf);
+        List<Ausencia> ausenciasParaCriar = calebe.gerarAusencias(periodo, "Vou faltar");
+        for(Ausencia ausencia : ausenciasParaCriar) {
+            ausenciasRepository.create(ausencia);
+        }    
+        
+        List<Ausencia> ausenciasCriadas = ausenciasRepository.findAusenciaEntities();
+        Assert.assertEquals(2, ausenciasCriadas.size());
+        
+        ausencias = serviceEmTeste.listarAusenciasPorProfessor("calebe");
+        
+        Assert.assertEquals(2, ausencias.size());
      }
      
 }

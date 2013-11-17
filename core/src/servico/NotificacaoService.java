@@ -134,6 +134,7 @@ public class NotificacaoService {
         }
     }
     
+    /*
     public List<AusenciaModel> listarAusenciasPorEstado(EstadoAusencia estado){
         
         List<Ausencia> ausencias = ausenciaController.findAusenciaEntities();
@@ -149,6 +150,7 @@ public class NotificacaoService {
         }            
         return modelos;   
     }
+    */
     
     public List<AusenciaModel> listarAusenciasPorProfessor(String usernameProfessor){
         
