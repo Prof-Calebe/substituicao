@@ -138,10 +138,7 @@ public class PopulateDB {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
         
         populateUsuario(emf);
-        populateProfessores(emf);
-        
-        populateAusencia(emf);
-        
+        populateProfessores(emf);        
     }
     
     private static void populateProfessores(EntityManagerFactory emf){
@@ -222,8 +219,7 @@ public class PopulateDB {
         
         Usuario u1 = Usuario.createUsuarioPadrao("calebe");
         u1.setPermissao(Perfil.PROFESSOR);
-        
-        
+                
         Usuario u2 = Usuario.createUsuarioPadrao("jane");
         u2.setPermissao(Perfil.FUNCIONARIO);
         u2.setSenha("mackenzie");
@@ -244,8 +240,7 @@ public class PopulateDB {
         
         Usuario u7 = Usuario.createUsuarioPadrao("denise");
         u7.setPermissao(Perfil.PROFESSOR);
-        
-        
+                
         usuarioJpa.create(u1);
         usuarioJpa.create(u2);
         usuarioJpa.create(u3);
@@ -265,42 +260,6 @@ public class PopulateDB {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
         PopulateDB.populateProfessores(emf);        
     }
-
-    private static void populateAusencia(EntityManagerFactory emf) throws NonexistentEntityException, Exception {
-        
-        AusenciaJpaController ausenciaJpa = new AusenciaJpaController(emf);
-        ProfessorJpaController professorJpa = new ProfessorJpaController(emf);
-        AulaJpaController aulaJps = new AulaJpaController(emf);
-        
-        List<Aula> aulas = aulaJps.findAulaEntities();
-        
-        DateTime d1 = new DateTime(2013, 05, 02, 0, 0);
-        DateTime d2 = new DateTime(2013, 05, 02, 0, 0);
-        
-        Interval periodo = new Interval(d1, d2);
-        
-        Professor professorAusente = professorJpa.findProfessor("Gaston");
-        
-        Ausencia ausencia = new Ausencia("1234", periodo, professorAusente, "Um motivo", aulas.get(0));
-        
-        Professor professorSubstituto = professorJpa.findProfessor("Denise");
-        ausencia.indicarSubstituto(professorSubstituto);
-        
-        ausenciaJpa.create(ausencia);
-        
-        
-        
-//        
-//        Ausencia ausencia2 = ausenciaJpa.findAusencia("1234");
-//        
-//        
-//        
-//        ausencia2.indicarSubstituto(professorSubstituto);
-//        
-//        ausenciaJpa.edit(ausencia2);
-        
-    }
-    
 }
 
 
