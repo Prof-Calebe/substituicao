@@ -93,14 +93,15 @@ public class ProfessorServiceTest {
         
         List<ProfessorModel> professoresDisponiveis = serviceEmTeste.listarProfessoresCompativeisComAusenteNoPeriodo("Calebe", periodo);
         
-        Assert.assertEquals(2, professoresDisponiveis.size());
+        Assert.assertEquals(3, professoresDisponiveis.size());
         
-        ProfessorModel prof1 = serviceEmTeste.obterProfessorPorNome("Ana Claudia");
-        
+        ProfessorModel prof1 = serviceEmTeste.obterProfessorPorNome("Ana Claudia");        
         ProfessorModel prof2 = serviceEmTeste.obterProfessorPorNome("Gaston");
+        ProfessorModel prof3 = serviceEmTeste.obterProfessorPorNome("Vilar");
         
         Assert.assertTrue(professoresDisponiveis.contains(prof1));
         Assert.assertTrue(professoresDisponiveis.contains(prof2));
+        Assert.assertTrue(professoresDisponiveis.contains(prof3));
         
     }
     

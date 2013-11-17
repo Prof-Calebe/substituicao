@@ -89,7 +89,7 @@ public class AulaJpaController implements Serializable {
 <span class="nc" id="L89">    }</span>
 
     public List&lt;Aula&gt; findAulaEntities() {
-<span class="fc" id="L92">        return findAulaEntities(true, -1, -1);</span>
+<span class="nc" id="L92">        return findAulaEntities(true, -1, -1);</span>
     }
 
     public List&lt;Aula&gt; findAulaEntities(int maxResults, int firstResult) {
@@ -97,18 +97,18 @@ public class AulaJpaController implements Serializable {
     }
 
     private List&lt;Aula&gt; findAulaEntities(boolean all, int maxResults, int firstResult) {
-<span class="fc" id="L100">        EntityManager em = getEntityManager();</span>
+<span class="nc" id="L100">        EntityManager em = getEntityManager();</span>
         try {
-<span class="fc" id="L102">            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();</span>
-<span class="fc" id="L103">            cq.select(cq.from(Aula.class));</span>
-<span class="fc" id="L104">            Query q = em.createQuery(cq);</span>
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">            if (!all) {</span>
+<span class="nc" id="L102">            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();</span>
+<span class="nc" id="L103">            cq.select(cq.from(Aula.class));</span>
+<span class="nc" id="L104">            Query q = em.createQuery(cq);</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">            if (!all) {</span>
 <span class="nc" id="L106">                q.setMaxResults(maxResults);</span>
 <span class="nc" id="L107">                q.setFirstResult(firstResult);</span>
             }
-<span class="fc" id="L109">            return q.getResultList();</span>
+<span class="nc" id="L109">            return q.getResultList();</span>
         } finally {
-<span class="pc" id="L111">            em.close();</span>
+<span class="nc" id="L111">            em.close();</span>
         }
     }
 
