@@ -123,14 +123,14 @@ public class NotificacaoService {
     }
     
     private String determinarEstado(EstadoAusencia estado){
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">        if(estado == EstadoAusencia.Ausencia_Cancelada)</span>
-<span class="nc" id="L127">            return &quot;Ausência cancelada&quot;;</span>
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">        else if(estado == EstadoAusencia.Alocacao_Efetuada)</span>
-<span class="nc" id="L129">            return &quot;Alocação efetuada&quot;;</span>
-<span class="pc bpc" id="L130" title="1 of 2 branches missed.">        else if(estado == EstadoAusencia.Alocacao_Pendente)</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        if(estado == EstadoAusencia.Ausencia_Cancelada)</span>
+<span class="fc" id="L127">            return &quot;Ausência cancelada&quot;;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        else if(estado == EstadoAusencia.Alocacao_Efetuada)</span>
+<span class="fc" id="L129">            return &quot;Alocação efetuada&quot;;</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        else if(estado == EstadoAusencia.Alocacao_Pendente)</span>
 <span class="fc" id="L131">            return &quot;Alocação pendente&quot;;</span>
         else{
-<span class="nc" id="L133">            return &quot;Aulas canceladas&quot;;</span>
+<span class="fc" id="L133">            return &quot;Aulas canceladas&quot;;</span>
         }
     }
     
@@ -199,8 +199,8 @@ public class NotificacaoService {
 <span class="fc" id="L199">        modelo.codigo = ausencia.getCodigo();</span>
 <span class="fc" id="L200">        modelo.professorAusente = ausencia.getProfessor().getNome();</span>
         
-<span class="pc bpc" id="L202" title="1 of 2 branches missed.">        if(ausencia.getProfessorSubstituto() != null){</span>
-<span class="nc" id="L203">            modelo.professorSubstituto = ausencia.getProfessorSubstituto().getNome();    </span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">        if(ausencia.getProfessorSubstituto() != null){</span>
+<span class="fc" id="L203">            modelo.professorSubstituto = ausencia.getProfessorSubstituto().getNome();    </span>
         }else{
 <span class="fc" id="L205">            modelo.professorSubstituto = &quot;&quot;;</span>
         }

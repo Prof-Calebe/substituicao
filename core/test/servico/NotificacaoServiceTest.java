@@ -328,4 +328,83 @@ public class NotificacaoServiceTest {
         Assert.assertEquals(1, ausencias.size());
      }
      
+     @Test
+     public void testeDeveListarCorretamenteOsDetalhesDeUmaAusencia()
+     {
+         PopulateDB.recreateDB("prosub", "root", "");
+         PopulateDB.populateProfessores();
+         
+         List<AusenciaModel> ausencias = serviceEmTeste.listarAusencias();
+         
+         Assert.assertEquals(0, ausencias.size());
+         
+         //Ausência numa segunda feira.
+        DateTime inicio = new DateTime(2013, 11, 18, 0, 0);
+        DateTime fim = new DateTime(2013, 11, 18, 23, 59);        
+        Interval periodo = new Interval(inicio, fim);
+        
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
+        ProfessorJpaController professoresRepository = new ProfessorJpaController(emf);
+        Professor calebe = professoresRepository.findProfessor("Calebe");
+        
+        AusenciaJpaController ausenciasRepository = new AusenciaJpaController(emf);
+        List<Ausencia> ausenciasParaCriar = calebe.gerarAusencias(periodo, "Vou faltar");
+        for(Ausencia ausencia : ausenciasParaCriar) {
+            ausenciasRepository.create(ausencia);
+        }    
+        
+        List<Ausencia> ausenciasCriadas = ausenciasRepository.findAusenciaEntities();
+        Assert.assertEquals(1, ausenciasCriadas.size());
+        
+        String codigoAusencia = ausenciasCriadas.get(0).getCodigo();
+        
+        ausencias = serviceEmTeste.listarAusencias();
+        
+        Assert.assertEquals(1, ausencias.size());
+        
+        AusenciaModel ausenciaParaValidar = ausencias.get(0);
+        
+         assertEquals("Calebe", ausenciaParaValidar.professorAusente);
+         assertEquals("", ausenciaParaValidar.professorSubstituto);
+         assertEquals("18/11/2013", ausenciaParaValidar.dataInicio);
+         assertEquals("18/11/2013", ausenciaParaValidar.dataFim);
+         assertEquals("Alocação pendente", ausenciaParaValidar.estado);
+        
+        serviceEmTeste.definirSubstituto(codigoAusencia, "Vilar");
+        
+        ausencias = serviceEmTeste.listarAusencias();
+                
+        ausenciaParaValidar = ausencias.get(0);
+
+        assertEquals("Calebe", ausenciaParaValidar.professorAusente);
+        assertEquals("Vilar", ausenciaParaValidar.professorSubstituto);
+        assertEquals("18/11/2013", ausenciaParaValidar.dataInicio);
+        assertEquals("18/11/2013", ausenciaParaValidar.dataFim);
+        assertEquals("Alocação efetuada", ausenciaParaValidar.estado);
+        
+        serviceEmTeste.cancelarAulas(codigoAusencia);
+        
+        ausencias = serviceEmTeste.listarAusencias();
+                
+        ausenciaParaValidar = ausencias.get(0);
+
+        assertEquals("Calebe", ausenciaParaValidar.professorAusente);
+        assertEquals("", ausenciaParaValidar.professorSubstituto);
+        assertEquals("18/11/2013", ausenciaParaValidar.dataInicio);
+        assertEquals("18/11/2013", ausenciaParaValidar.dataFim);
+        assertEquals("Aulas canceladas", ausenciaParaValidar.estado);
+        
+        serviceEmTeste.cancelarAusencia(codigoAusencia);
+        
+        ausencias = serviceEmTeste.listarAusencias();
+                
+        ausenciaParaValidar = ausencias.get(0);
+
+        assertEquals("Calebe", ausenciaParaValidar.professorAusente);
+        assertEquals("", ausenciaParaValidar.professorSubstituto);
+        assertEquals("18/11/2013", ausenciaParaValidar.dataInicio);
+        assertEquals("18/11/2013", ausenciaParaValidar.dataFim);
+        assertEquals("Ausência cancelada", ausenciaParaValidar.estado);
+     }
+     
 }
