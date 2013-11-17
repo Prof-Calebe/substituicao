@@ -156,54 +156,6 @@ public class Professor implements Serializable {
 
     }
 
-    public List<Aula> verificarAulasPerdidasNoPeriodo(Interval periodoAusencia) {
-              
-        DateTime inicioAusencia = periodoAusencia.getStart();
-        DateTime finalAusencia = periodoAusencia.getEnd();
-        
-        List<Aula> aulasComprometidas = new LinkedList<Aula>();
-                        
-        if(Hours.hoursBetween(inicioAusencia, finalAusencia).isGreaterThan(Hours.hours(23))){            
-            
-            Days dias = Days.daysBetween(inicioAusencia, finalAusencia);
-            
-            
-            while(dias.isGreaterThan(Days.days(0))){
-                
-                for(Aula aula : this.grade){
-                    if(aula.getDiaDaSemana() == inicioAusencia.getDayOfWeek())
-                    {
-                        //TODO: Provavelmente existe um bug quando se declara uma ausência de mais de 1 semana. Na verdade, esse método deveria reportar cada aula com uma data de perda específica. Ou então, deveria haver N períodos de ausência unitários.
-                        if(!aulasComprometidas.contains(aula))
-                        {
-                            aulasComprometidas.add(aula);
-                        }
-                    }
-                    
-                    /*if(aula.getDiaDaSemana() == inicioAusencia.getDayOfWeek() &&
-                            !aulasComprometidas.contains(aula)){
-                        aulasComprometidas.add(aula);
-                    }*/
-                }
-                
-                dias = dias.minus(1);
-                inicioAusencia = inicioAusencia.plusDays(1);
-                
-            }
-            
-        }else{ //menos de 24 horas de ausência
-            for(Aula aula : this.grade){
-                if(  aula.getDiaDaSemana() == periodoAusencia.getStart().getDayOfWeek() &&
-                        aula.bateHorarioCom(periodoAusencia) && 
-                        !aulasComprometidas.contains(aula) ){
-                    aulasComprometidas.add(aula);
-                }
-            }
-        }
-              
-        return aulasComprometidas;
-    }
-   
     /**
      * @return the username
      */

@@ -7,6 +7,7 @@ package servico;
 import datamapper.ProfessorJpaController;
 import datamapper.UsuarioJpaController;
 import dominio.Aula;
+import dominio.Ausencia;
 import dominio.Professor;
 import java.util.ArrayList;
 import modelo.ProfessorModel;
@@ -51,7 +52,12 @@ public class ProfessorService {
         
         Professor professorAusente = controller.findProfessor(nomeProfessor);
         
-        List<Aula> aulasPerdidas = professorAusente.verificarAulasPerdidasNoPeriodo(periodo);
+        List<Aula> aulasPerdidas = new LinkedList<Aula>();
+        List<Ausencia> ausencias = professorAusente.gerarAusencias(periodo, nomeProfessor);
+        for(Ausencia ausencia : ausencias)
+        {
+            aulasPerdidas.add(ausencia.getAula());
+        }
         
         List<Professor> todosProfessores = controller.findProfessorEntities();
         

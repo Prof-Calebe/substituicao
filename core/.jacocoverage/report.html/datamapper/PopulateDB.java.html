@@ -10,7 +10,7 @@ import dominio.Ausencia;
 import dominio.Professor;
 import dominio.Usuario;
 import java.sql.*;
-import java.util.Calendar;
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.joda.time.DateTime;
@@ -270,20 +270,23 @@ import org.joda.time.Interval;
         
 <span class="fc" id="L271">        AusenciaJpaController ausenciaJpa = new AusenciaJpaController(emf);</span>
 <span class="fc" id="L272">        ProfessorJpaController professorJpa = new ProfessorJpaController(emf);</span>
+<span class="fc" id="L273">        AulaJpaController aulaJps = new AulaJpaController(emf);</span>
         
-<span class="fc" id="L274">        DateTime d1 = new DateTime(2013, 05, 02, 0, 0);</span>
-<span class="fc" id="L275">        DateTime d2 = new DateTime(2013, 05, 02, 0, 0);</span>
+<span class="fc" id="L275">        List&lt;Aula&gt; aulas = aulaJps.findAulaEntities();</span>
         
-<span class="fc" id="L277">        Interval periodo = new Interval(d1, d2);</span>
+<span class="fc" id="L277">        DateTime d1 = new DateTime(2013, 05, 02, 0, 0);</span>
+<span class="fc" id="L278">        DateTime d2 = new DateTime(2013, 05, 02, 0, 0);</span>
         
-<span class="fc" id="L279">        Professor professorAusente = professorJpa.findProfessor(&quot;Gaston&quot;);</span>
+<span class="fc" id="L280">        Interval periodo = new Interval(d1, d2);</span>
         
-<span class="fc" id="L281">        Ausencia ausencia = new Ausencia(&quot;1234&quot;, periodo, professorAusente, &quot;Um motivo&quot;);</span>
+<span class="fc" id="L282">        Professor professorAusente = professorJpa.findProfessor(&quot;Gaston&quot;);</span>
         
-<span class="fc" id="L283">        Professor professorSubstituto = professorJpa.findProfessor(&quot;Denise&quot;);</span>
-<span class="fc" id="L284">        ausencia.indicarSubstituto(professorSubstituto);</span>
+<span class="fc" id="L284">        Ausencia ausencia = new Ausencia(&quot;1234&quot;, periodo, professorAusente, &quot;Um motivo&quot;, aulas.get(0));</span>
         
-<span class="fc" id="L286">        ausenciaJpa.create(ausencia);</span>
+<span class="fc" id="L286">        Professor professorSubstituto = professorJpa.findProfessor(&quot;Denise&quot;);</span>
+<span class="fc" id="L287">        ausencia.indicarSubstituto(professorSubstituto);</span>
+        
+<span class="fc" id="L289">        ausenciaJpa.create(ausencia);</span>
         
         
         
@@ -296,7 +299,7 @@ import org.joda.time.Interval;
 //        
 //        ausenciaJpa.edit(ausencia2);
         
-<span class="fc" id="L299">    }</span>
+<span class="fc" id="L302">    }</span>
     
 }
 

@@ -164,60 +164,7 @@ public class ProfessorTest {
         
         Assert.assertTrue(objetoEmTeste.EhCompativelCom(aulas));
     }
-    
-    @Test
-    public void testeDeveDevolverAulasQuePerdeNoPeriodo(){
-        
-        Interval ausencia1 = setUpAusenciaSextaESábado();
-
-        setUpAulaTerçaFeira();
-        
-        List<Aula> aulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(ausencia1);
-        
-        Assert.assertEquals(0, aulasPerdidas.size());
-
-        Aula aula2 = setUpAulaSextaFeira();
-        
-        aulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(ausencia1);
-        
-        Assert.assertEquals(1, aulasPerdidas.size());
-        Assert.assertEquals(aula2, aulasPerdidas.toArray()[0]);
-        
-        DateTime inicio2 = new DateTime(2013, 05, 29, 10, 00);
-        DateTime fim2 = new DateTime(2013, 05, 29, 14, 00);
-        
-        Interval ausencia2 = new Interval(inicio2, fim2);
-        
-        DateTime inicioAula3 = new DateTime(2013, 05, 24, 10, 0);
-        DateTime fimAula3 = new DateTime(2013, 05, 24, 11, 0);
-        
-        Interval intervalAula3 = new Interval(inicioAula3, fimAula3);
-        
-        Aula aula3 = new Aula(DateTimeConstants.WEDNESDAY, intervalAula3);      
-        
-        objetoEmTeste = new Professor("outroProf", "username");
-        objetoEmTeste.adicionarAula(aula3);
-        
-        aulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(ausencia2);
-        
-        Assert.assertEquals(1, aulasPerdidas.size());
-        Assert.assertEquals(aula3, aulasPerdidas.toArray()[0]);
-
-        DateTime inicioAula4 = new DateTime(2013, 05, 24, 15, 0);
-        DateTime fimAula4 = new DateTime(2013, 05, 24, 17, 0);
-        
-        Interval intervalAula4 = new Interval(inicioAula4, fimAula4);
-        
-        Aula aula4 = new Aula(DateTimeConstants.WEDNESDAY, intervalAula4);      
-        
-        objetoEmTeste = new Professor("outroProf", "username");
-        objetoEmTeste.adicionarAula(aula4);
-        
-        aulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(ausencia2);
-        
-        Assert.assertEquals(0, aulasPerdidas.size()); 
-    }
-
+   
     private Aula setUpAulaSextaFeira() {
         DateTime inicioAula2 = new DateTime(2013, 05, 24, 05, 0);
         DateTime fimAula2 = new DateTime(2013, 05, 24, 07, 0);

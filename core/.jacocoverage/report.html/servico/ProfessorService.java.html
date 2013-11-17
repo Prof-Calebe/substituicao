@@ -7,6 +7,7 @@ package servico;
 import datamapper.ProfessorJpaController;
 import datamapper.UsuarioJpaController;
 import dominio.Aula;
+import dominio.Ausencia;
 import dominio.Professor;
 import java.util.ArrayList;
 import modelo.ProfessorModel;
@@ -24,89 +25,94 @@ public class ProfessorService {
     
    private ProfessorJpaController controller;
     
-<span class="fc" id="L27">    public ProfessorService(){</span>
-<span class="fc" id="L28">        EntityManagerFactory emf = Persistence.createEntityManagerFactory(&quot;pro_subPU&quot;);</span>
-<span class="fc" id="L29">        controller = new ProfessorJpaController(emf);</span>
-<span class="fc" id="L30">    }</span>
+<span class="fc" id="L28">    public ProfessorService(){</span>
+<span class="fc" id="L29">        EntityManagerFactory emf = Persistence.createEntityManagerFactory(&quot;pro_subPU&quot;);</span>
+<span class="fc" id="L30">        controller = new ProfessorJpaController(emf);</span>
+<span class="fc" id="L31">    }</span>
     
     
     public List&lt;ProfessorModel&gt; ListarProfessores(){
         
-<span class="fc" id="L35">        List&lt;Professor&gt; professores = new LinkedList&lt;Professor&gt;(); </span>
-<span class="fc" id="L36">        List&lt;ProfessorModel&gt; modelos = new LinkedList&lt;ProfessorModel&gt;();</span>
+<span class="fc" id="L36">        List&lt;Professor&gt; professores = new LinkedList&lt;Professor&gt;(); </span>
+<span class="fc" id="L37">        List&lt;ProfessorModel&gt; modelos = new LinkedList&lt;ProfessorModel&gt;();</span>
         
-<span class="fc" id="L38">        professores = controller.findProfessorEntities();</span>
+<span class="fc" id="L39">        professores = controller.findProfessorEntities();</span>
         
-<span class="fc bfc" id="L40" title="All 2 branches covered.">        for (Professor prof : professores){</span>
-<span class="fc" id="L41">            ProfessorModel model = new ProfessorModel();</span>
-<span class="fc" id="L42">            model.Nome = prof.getNome();</span>
-<span class="fc" id="L43">            model.id = prof.getId();</span>
-<span class="fc" id="L44">            modelos.add(model);</span>
-<span class="fc" id="L45">        }</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        for (Professor prof : professores){</span>
+<span class="fc" id="L42">            ProfessorModel model = new ProfessorModel();</span>
+<span class="fc" id="L43">            model.Nome = prof.getNome();</span>
+<span class="fc" id="L44">            model.id = prof.getId();</span>
+<span class="fc" id="L45">            modelos.add(model);</span>
+<span class="fc" id="L46">        }</span>
         
-<span class="fc" id="L47">        return modelos;</span>
+<span class="fc" id="L48">        return modelos;</span>
     }
     
     public List&lt;ProfessorModel&gt; listarProfessoresCompativeisComAusenteNoPeriodo(String nomeProfessor, Interval periodo){
         
-<span class="fc" id="L52">        Professor professorAusente = controller.findProfessor(nomeProfessor);</span>
+<span class="fc" id="L53">        Professor professorAusente = controller.findProfessor(nomeProfessor);</span>
         
-<span class="fc" id="L54">        List&lt;Aula&gt; aulasPerdidas = professorAusente.verificarAulasPerdidasNoPeriodo(periodo);</span>
+<span class="fc" id="L55">        List&lt;Aula&gt; aulasPerdidas = new LinkedList&lt;Aula&gt;();</span>
+<span class="fc" id="L56">        List&lt;Ausencia&gt; ausencias = professorAusente.gerarAusencias(periodo, nomeProfessor);</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        for(Ausencia ausencia : ausencias)</span>
+        {
+<span class="fc" id="L59">            aulasPerdidas.add(ausencia.getAula());</span>
+<span class="fc" id="L60">        }</span>
         
-<span class="fc" id="L56">        List&lt;Professor&gt; todosProfessores = controller.findProfessorEntities();</span>
+<span class="fc" id="L62">        List&lt;Professor&gt; todosProfessores = controller.findProfessorEntities();</span>
         
-<span class="fc" id="L58">        List&lt;ProfessorModel&gt; profsPossiveis = new ArrayList&lt;ProfessorModel&gt;();</span>
+<span class="fc" id="L64">        List&lt;ProfessorModel&gt; profsPossiveis = new ArrayList&lt;ProfessorModel&gt;();</span>
         
-<span class="fc bfc" id="L60" title="All 2 branches covered.">        for(Professor professor : todosProfessores){</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        for(Professor professor : todosProfessores){</span>
             
-<span class="fc bfc" id="L62" title="All 2 branches covered.">            if(!professor.equals(professorAusente)){</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">            if(!professor.equals(professorAusente)){</span>
                 //profsMenosAusente.add(professor);
                 
-<span class="fc bfc" id="L65" title="All 2 branches covered.">                if(professor.EhCompativelCom(aulasPerdidas)){</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">                if(professor.EhCompativelCom(aulasPerdidas)){</span>
                     
                     //profsPossiveis.add(professor);
                     
-<span class="fc" id="L69">                    ProfessorModel model = new ProfessorModel();</span>
+<span class="fc" id="L75">                    ProfessorModel model = new ProfessorModel();</span>
                     
-<span class="fc" id="L71">                    model.id = professor.getId();</span>
-<span class="fc" id="L72">                    model.Nome = professor.getNome();</span>
+<span class="fc" id="L77">                    model.id = professor.getId();</span>
+<span class="fc" id="L78">                    model.Nome = professor.getNome();</span>
                     
-<span class="fc" id="L74">                    profsPossiveis.add(model);</span>
+<span class="fc" id="L80">                    profsPossiveis.add(model);</span>
                 }
             }   
-<span class="fc" id="L77">        }</span>
+<span class="fc" id="L83">        }</span>
         
-<span class="fc" id="L79">        return profsPossiveis;</span>
+<span class="fc" id="L85">        return profsPossiveis;</span>
     }
     
     public ProfessorModel obterProfessorPorNome(String nome){
         
-<span class="fc" id="L84">        Professor professor = controller.findProfessor(nome);</span>
+<span class="fc" id="L90">        Professor professor = controller.findProfessor(nome);</span>
         
-<span class="fc bfc" id="L86" title="All 2 branches covered.">        if(professor == null)</span>
-<span class="fc" id="L87">            return null;</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        if(professor == null)</span>
+<span class="fc" id="L93">            return null;</span>
         
-<span class="fc" id="L89">        ProfessorModel model = new ProfessorModel();</span>
+<span class="fc" id="L95">        ProfessorModel model = new ProfessorModel();</span>
         
-<span class="fc" id="L91">        model.Nome = professor.getNome();</span>
-<span class="fc" id="L92">        model.id = professor.getId();</span>
+<span class="fc" id="L97">        model.Nome = professor.getNome();</span>
+<span class="fc" id="L98">        model.id = professor.getId();</span>
         
-<span class="fc" id="L94">        return model;</span>
+<span class="fc" id="L100">        return model;</span>
         
     }
     
     public ProfessorModel obterProfessorPorUsername(String username){
-<span class="fc" id="L99">        Professor professor = controller.findProfessorPorUsername(username);</span>
+<span class="fc" id="L105">        Professor professor = controller.findProfessorPorUsername(username);</span>
         
-<span class="fc bfc" id="L101" title="All 2 branches covered.">        if(professor == null)</span>
-<span class="fc" id="L102">            return null;</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        if(professor == null)</span>
+<span class="fc" id="L108">            return null;</span>
         
-<span class="fc" id="L104">        ProfessorModel model = new ProfessorModel();</span>
+<span class="fc" id="L110">        ProfessorModel model = new ProfessorModel();</span>
         
-<span class="fc" id="L106">        model.Nome = professor.getNome();</span>
-<span class="fc" id="L107">        model.id = professor.getId();</span>
+<span class="fc" id="L112">        model.Nome = professor.getNome();</span>
+<span class="fc" id="L113">        model.id = professor.getId();</span>
         
-<span class="fc" id="L109">        return model; </span>
+<span class="fc" id="L115">        return model; </span>
     }
     
     
