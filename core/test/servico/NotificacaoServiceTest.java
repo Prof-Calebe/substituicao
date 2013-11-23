@@ -366,8 +366,8 @@ public class NotificacaoServiceTest {
         
          assertEquals("Calebe", ausenciaParaValidar.professorAusente);
          assertEquals("", ausenciaParaValidar.professorSubstituto);
-         assertEquals("18/11/2013", ausenciaParaValidar.dataInicio);
-         assertEquals("18/11/2013", ausenciaParaValidar.dataFim);
+         assertEquals("18/11/2013 20:00", ausenciaParaValidar.dataInicio);
+         assertEquals("18/11/2013 21:30", ausenciaParaValidar.dataFim);
          assertEquals("Alocação pendente", ausenciaParaValidar.estado);
         
         serviceEmTeste.definirSubstituto(codigoAusencia, "Vilar");
@@ -378,8 +378,8 @@ public class NotificacaoServiceTest {
 
         assertEquals("Calebe", ausenciaParaValidar.professorAusente);
         assertEquals("Vilar", ausenciaParaValidar.professorSubstituto);
-        assertEquals("18/11/2013", ausenciaParaValidar.dataInicio);
-        assertEquals("18/11/2013", ausenciaParaValidar.dataFim);
+        assertEquals("18/11/2013 20:00", ausenciaParaValidar.dataInicio);
+        assertEquals("18/11/2013 21:30", ausenciaParaValidar.dataFim);
         assertEquals("Alocação efetuada", ausenciaParaValidar.estado);
         
         serviceEmTeste.cancelarAulas(codigoAusencia);
@@ -390,8 +390,8 @@ public class NotificacaoServiceTest {
 
         assertEquals("Calebe", ausenciaParaValidar.professorAusente);
         assertEquals("", ausenciaParaValidar.professorSubstituto);
-        assertEquals("18/11/2013", ausenciaParaValidar.dataInicio);
-        assertEquals("18/11/2013", ausenciaParaValidar.dataFim);
+        assertEquals("18/11/2013 20:00", ausenciaParaValidar.dataInicio);
+        assertEquals("18/11/2013 21:30", ausenciaParaValidar.dataFim);
         assertEquals("Aulas canceladas", ausenciaParaValidar.estado);
         
         serviceEmTeste.cancelarAusencia(codigoAusencia);
@@ -402,8 +402,8 @@ public class NotificacaoServiceTest {
 
         assertEquals("Calebe", ausenciaParaValidar.professorAusente);
         assertEquals("", ausenciaParaValidar.professorSubstituto);
-        assertEquals("18/11/2013", ausenciaParaValidar.dataInicio);
-        assertEquals("18/11/2013", ausenciaParaValidar.dataFim);
+        assertEquals("18/11/2013 20:00", ausenciaParaValidar.dataInicio);
+        assertEquals("18/11/2013 21:30", ausenciaParaValidar.dataFim);
         assertEquals("Ausência cancelada", ausenciaParaValidar.estado);
      }
      

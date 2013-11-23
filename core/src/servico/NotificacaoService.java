@@ -42,14 +42,34 @@ public class NotificacaoService {
     
     public String notificarAusencia(Long idProfessor, String dataInicio, String dataFim, String motivo, List<String> nomesProfessoresIndicados) throws ParseException {
         
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = null;
         
+        DateTime inicio = null;
+        DateTime inícioReal = null;
         
-        DateTime inicio = new DateTime(sdf.parse(dataInicio));
-        DateTime inícioReal = new DateTime(inicio.getYear(),inicio.getMonthOfYear(),inicio.getDayOfMonth(),00,00);
+        DateTime fim = null;
+        DateTime fimReal = null;
         
-        DateTime fim = new DateTime(sdf.parse(dataFim));
-        DateTime fimReal = new DateTime(fim.getYear(),fim.getMonthOfYear(),fim.getDayOfMonth(),23,59);
+        if(dataInicio.matches("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)"))
+        {
+            sdf = new SimpleDateFormat("dd/MM/yyyy");
+            
+            inicio = new DateTime(sdf.parse(dataInicio));
+            inícioReal = new DateTime(inicio.getYear(),inicio.getMonthOfYear(),inicio.getDayOfMonth(),00,00);
+
+            fim = new DateTime(sdf.parse(dataFim));
+            fimReal = new DateTime(fim.getYear(),fim.getMonthOfYear(),fim.getDayOfMonth(),23,59);            
+        }
+        else
+        {
+            sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                        
+            inicio = new DateTime(sdf.parse(dataInicio));
+            inícioReal = new DateTime(inicio.getYear(),inicio.getMonthOfYear(),inicio.getDayOfMonth(),inicio.getHourOfDay(),inicio.getMinuteOfHour());
+
+            fim = new DateTime(sdf.parse(dataFim));
+            fimReal = new DateTime(fim.getYear(),fim.getMonthOfYear(),fim.getDayOfMonth(),fim.getHourOfDay(),fim.getMinuteOfHour());
+        }
         
         Interval periodo = new Interval(inícioReal, fimReal);
         
@@ -85,27 +105,6 @@ public class NotificacaoService {
         else
             return "0";
     }
-
-//    public void editarAusencia(String codigo, String dataInicio, String dataFim, String motivo, Long idSubstituto) throws ParseException, NonexistentEntityException, Exception {
-//        
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//        
-//        DateTime inicio = new DateTime(sdf.parse(dataInicio));
-//        DateTime fim = new DateTime(sdf.parse(dataFim));
-//        
-//        Interval periodo = new Interval(inicio, fim);
-//        
-//        Professor professorSubstituto = profController.findProfessor(idSubstituto);
-//        
-//        Random r = new Random();
-//        
-//        Ausencia ausencia = ausenciaController.findAusencia(codigo);
-//        ausencia.setPeriodo(periodo);
-//        ausencia.setMotivo(motivo);
-//        ausencia.indicarSubstituto(professorSubstituto);
-//                
-//        ausenciaController.edit(ausencia);
-//    }
 
     public List<AusenciaModel> listarAusencias() {
         
@@ -208,7 +207,7 @@ public class NotificacaoService {
         //modelo.professorSubstituto = ausencia.getIndicacoesSubstitutos().getNome();
         modelo.estado = this.determinarEstado(ausencia.getEstado());
         modelo.id = ausencia.getId();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Interval periodo = ausencia.getPeriodo();
         modelo.dataInicio = sdf.format(periodo.getStart().toDate());
         modelo.dataFim = sdf.format(periodo.getEnd().toDate());
