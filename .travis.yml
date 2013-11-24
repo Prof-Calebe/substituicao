@@ -4,6 +4,6 @@ jdk:
   
 before_script:
   - mysql -e 'create database prosub;'
-  - "chmod +x ./build.sh"
+  - "chmod +x ./core/build.xml"
   
 script: "./core/build.xml"
