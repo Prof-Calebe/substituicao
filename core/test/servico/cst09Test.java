@@ -68,7 +68,7 @@ public class cst09Test {
     }
     
     @Test
-    public void testeEfetuarAlocação_Confirmar() throws ParseException
+    public void testeEfetuarRealocação_SemSubstitutosDisponíveis() throws ParseException
     {
         LoginService loginService = new LoginService();
         assertTrue(loginService.VerificarUsuarioESenha("Administrador", "123456"));
@@ -84,10 +84,8 @@ public class cst09Test {
         
         ProfessorService professorService = new ProfessorService();
         List<ProfessorModel> professoresCompatíveis = professorService.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).id.toString());
-        assertEquals(1, professoresCompatíveis.size());
-        assertEquals("Professor3", professoresCompatíveis.get(0).Nome);
+        assertEquals(0, professoresCompatíveis.size());
         
-        assertEquals(true, false);
     }
 
 }

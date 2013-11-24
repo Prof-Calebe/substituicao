@@ -141,112 +141,200 @@ import org.joda.time.Interval;
 <span class="fc" id="L141">        populateProfessores(emf);        </span>
 <span class="fc" id="L142">    }</span>
     
+    public static void populateUseCaseTest() throws NonexistentEntityException, Exception
+    {
+<span class="fc" id="L146">        EntityManagerFactory emf = Persistence.createEntityManagerFactory(&quot;pro_subPU&quot;);</span>
+        
+<span class="fc" id="L148">        UsuarioJpaController usuarioJpa = new UsuarioJpaController(emf);</span>
+<span class="fc" id="L149">        ProfessorJpaController profJpa = new ProfessorJpaController(emf);</span>
+        
+<span class="fc" id="L151">        Usuario u1 = Usuario.createUsuarioPadrao(&quot;Funcionario1&quot;);</span>
+<span class="fc" id="L152">        u1.setPermissao(Perfil.FUNCIONARIO);</span>
+        
+<span class="fc" id="L154">        Usuario u2 = Usuario.createUsuarioPadrao(&quot;Professor1&quot;);</span>
+<span class="fc" id="L155">        u2.setPermissao(Perfil.PROFESSOR);</span>
+        
+<span class="fc" id="L157">        Usuario u3 = Usuario.createUsuarioPadrao(&quot;Professor2&quot;);</span>
+<span class="fc" id="L158">        u3.setPermissao(Perfil.PROFESSOR);</span>
+        
+<span class="fc" id="L160">        Usuario u4 = Usuario.createUsuarioPadrao(&quot;Professor3&quot;);</span>
+<span class="fc" id="L161">        u4.setPermissao(Perfil.PROFESSOR);</span>
+        
+<span class="fc" id="L163">        Usuario u5 = Usuario.createUsuarioPadrao(&quot;Administrador&quot;);</span>
+<span class="fc" id="L164">        u5.setPermissao(Perfil.ADMINISTRADOR);</span>
+        
+<span class="fc" id="L166">        usuarioJpa.create(u1);</span>
+<span class="fc" id="L167">        usuarioJpa.create(u2);</span>
+<span class="fc" id="L168">        usuarioJpa.create(u3);</span>
+<span class="fc" id="L169">        usuarioJpa.create(u4);</span>
+<span class="fc" id="L170">        usuarioJpa.create(u5);</span>
+        
+<span class="fc" id="L172">        AulaJpaController aulaJpa = new AulaJpaController(emf);</span>
+        
+<span class="fc" id="L174">        DateTime inícioPrimeiroHorário = new DateTime(1900, 01, 01, 18, 30);</span>
+<span class="fc" id="L175">        DateTime finalPrimeiroHorário = new DateTime(1900, 01, 01, 20, 00);        </span>
+<span class="fc" id="L176">        Interval primeiroHorário = new Interval(inícioPrimeiroHorário, finalPrimeiroHorário);</span>
+        
+<span class="fc" id="L178">        DateTime inícioSegundoHorário = new DateTime(1900, 01, 01, 20, 00);</span>
+<span class="fc" id="L179">        DateTime finalSegundoHorário = new DateTime(1900, 01, 01, 21, 30);        </span>
+<span class="fc" id="L180">        Interval segundoHorário = new Interval(inícioSegundoHorário, finalSegundoHorário);</span>
+        
+<span class="fc" id="L182">        DateTime inícioTerceiroHorário = new DateTime(1900, 01, 01, 21, 30);</span>
+<span class="fc" id="L183">        DateTime finalTerceiroHorário = new DateTime(1900, 01, 01, 23, 00);        </span>
+<span class="fc" id="L184">        Interval terceiroHorário = new Interval(inícioTerceiroHorário, finalTerceiroHorário);</span>
+        
+<span class="fc" id="L186">        Aula aulaProfessor1SegundaFeiraPrimeiroHorário = new Aula(&quot;P1 - Segunda 18:30&quot;, DateTimeConstants.MONDAY, primeiroHorário);</span>
+<span class="fc" id="L187">        aulaJpa.create(aulaProfessor1SegundaFeiraPrimeiroHorário);</span>
+        
+<span class="fc" id="L189">        Aula aulaProfessor1SegundaFeiraSegundoHorário = new Aula(&quot;P1 - Segunda 20:00&quot;, DateTimeConstants.MONDAY, segundoHorário);</span>
+<span class="fc" id="L190">        aulaJpa.create(aulaProfessor1SegundaFeiraSegundoHorário);</span>
+        
+<span class="fc" id="L192">        Aula aulaProfessor1SegundaFeiraTerceiroHorário = new Aula(&quot;P1 - Segunda 21:30&quot;, DateTimeConstants.MONDAY, terceiroHorário);</span>
+<span class="fc" id="L193">        aulaJpa.create(aulaProfessor1SegundaFeiraTerceiroHorário);</span>
+                
+<span class="fc" id="L195">        Professor prof1 = new Professor(&quot;Professor1&quot;, &quot;Professor1&quot;);        </span>
+<span class="fc" id="L196">        prof1.adicionarAula(aulaProfessor1SegundaFeiraPrimeiroHorário);</span>
+<span class="fc" id="L197">        prof1.adicionarAula(aulaProfessor1SegundaFeiraSegundoHorário);</span>
+<span class="fc" id="L198">        prof1.adicionarAula(aulaProfessor1SegundaFeiraTerceiroHorário);        </span>
+<span class="fc" id="L199">        profJpa.create(prof1);</span>
+                
+<span class="fc" id="L201">        Aula aulaProfessor2SegundaFeiraPrimeiroHorário = new Aula(&quot;P2 - Segunda 18:30&quot;, DateTimeConstants.MONDAY, primeiroHorário);</span>
+<span class="fc" id="L202">        aulaJpa.create(aulaProfessor2SegundaFeiraPrimeiroHorário);</span>
+        
+<span class="fc" id="L204">        Aula aulaProfessor2TercaFeiraPrimeiroHorário = new Aula(&quot;P2 - Terca 18:30&quot;, DateTimeConstants.TUESDAY, primeiroHorário);</span>
+<span class="fc" id="L205">        aulaJpa.create(aulaProfessor2TercaFeiraPrimeiroHorário);</span>
+        
+<span class="fc" id="L207">        Aula aulaProfessor2TercaFeiraSegundoHorário = new Aula(&quot;P2 - Terca 20:00&quot;, DateTimeConstants.TUESDAY, segundoHorário);</span>
+<span class="fc" id="L208">        aulaJpa.create(aulaProfessor2TercaFeiraSegundoHorário);</span>
+        
+<span class="fc" id="L210">        Aula aulaProfessor2TercaFeiraTerceiroHorário = new Aula(&quot;P2 - Terca 21:30&quot;, DateTimeConstants.TUESDAY, terceiroHorário);</span>
+<span class="fc" id="L211">        aulaJpa.create(aulaProfessor2TercaFeiraTerceiroHorário);</span>
+        
+<span class="fc" id="L213">        Professor prof2 = new Professor(&quot;Professor2&quot;, &quot;Professor2&quot;);        </span>
+<span class="fc" id="L214">        prof2.adicionarAula(aulaProfessor2SegundaFeiraPrimeiroHorário);</span>
+<span class="fc" id="L215">        prof2.adicionarAula(aulaProfessor2TercaFeiraPrimeiroHorário);</span>
+<span class="fc" id="L216">        prof2.adicionarAula(aulaProfessor2TercaFeiraSegundoHorário);        </span>
+<span class="fc" id="L217">        prof2.adicionarAula(aulaProfessor2TercaFeiraTerceiroHorário);        </span>
+<span class="fc" id="L218">        profJpa.create(prof2);</span>
+                
+<span class="fc" id="L220">        Aula aulaProfessor3SegundaFeiraSegundoHorário = new Aula(&quot;P3 - Segunda 20:00&quot;, DateTimeConstants.MONDAY, segundoHorário);</span>
+<span class="fc" id="L221">        aulaJpa.create(aulaProfessor3SegundaFeiraSegundoHorário);</span>
+        
+<span class="fc" id="L223">        Aula aulaProfessor3SegundaFeiraTerceiroHorário = new Aula(&quot;P3 - Segunda 21:30&quot;, DateTimeConstants.MONDAY, terceiroHorário);</span>
+<span class="fc" id="L224">        aulaJpa.create(aulaProfessor3SegundaFeiraTerceiroHorário);</span>
+        
+<span class="fc" id="L226">        Professor prof3 = new Professor(&quot;Professor3&quot;, &quot;Professor3&quot;);        </span>
+<span class="fc" id="L227">        prof3.adicionarAula(aulaProfessor3SegundaFeiraSegundoHorário);</span>
+<span class="fc" id="L228">        prof3.adicionarAula(aulaProfessor3SegundaFeiraTerceiroHorário);</span>
+<span class="fc" id="L229">        profJpa.create(prof3);        </span>
+<span class="fc" id="L230">    }</span>
+    
     private static void populateProfessores(EntityManagerFactory emf){
         
-<span class="fc" id="L146">        AulaJpaController aulaJpa = new AulaJpaController(emf);</span>
+<span class="fc" id="L234">        AulaJpaController aulaJpa = new AulaJpaController(emf);</span>
         
-<span class="fc" id="L148">        DateTime inícioPrimeiroHorário = new DateTime(1900, 01, 01, 18, 30);</span>
-<span class="fc" id="L149">        DateTime finalPrimeiroHorário = new DateTime(1900, 01, 01, 20, 00);        </span>
-<span class="fc" id="L150">        Interval primeiroHorário = new Interval(inícioPrimeiroHorário, finalPrimeiroHorário);</span>
+<span class="fc" id="L236">        DateTime inícioPrimeiroHorário = new DateTime(1900, 01, 01, 18, 30);</span>
+<span class="fc" id="L237">        DateTime finalPrimeiroHorário = new DateTime(1900, 01, 01, 20, 00);        </span>
+<span class="fc" id="L238">        Interval primeiroHorário = new Interval(inícioPrimeiroHorário, finalPrimeiroHorário);</span>
         
-<span class="fc" id="L152">        DateTime inícioSegundoHorário = new DateTime(1900, 01, 01, 20, 00);</span>
-<span class="fc" id="L153">        DateTime finalSegundoHorário = new DateTime(1900, 01, 01, 21, 30);        </span>
-<span class="fc" id="L154">        Interval segundoHorário = new Interval(inícioSegundoHorário, finalSegundoHorário);</span>
+<span class="fc" id="L240">        DateTime inícioSegundoHorário = new DateTime(1900, 01, 01, 20, 00);</span>
+<span class="fc" id="L241">        DateTime finalSegundoHorário = new DateTime(1900, 01, 01, 21, 30);        </span>
+<span class="fc" id="L242">        Interval segundoHorário = new Interval(inícioSegundoHorário, finalSegundoHorário);</span>
         
-<span class="fc" id="L156">        DateTime inícioTerceiroHorário = new DateTime(1900, 01, 01, 21, 30);</span>
-<span class="fc" id="L157">        DateTime finalTerceiroHorário = new DateTime(1900, 01, 01, 23, 00);        </span>
-<span class="fc" id="L158">        Interval terceiroHorário = new Interval(inícioTerceiroHorário, finalTerceiroHorário);</span>
+<span class="fc" id="L244">        DateTime inícioTerceiroHorário = new DateTime(1900, 01, 01, 21, 30);</span>
+<span class="fc" id="L245">        DateTime finalTerceiroHorário = new DateTime(1900, 01, 01, 23, 00);        </span>
+<span class="fc" id="L246">        Interval terceiroHorário = new Interval(inícioTerceiroHorário, finalTerceiroHorário);</span>
         
-<span class="fc" id="L160">        Aula testeDeSoftwareSegundaFeiraSegundoHorário = new Aula(&quot;Teste de Software&quot;, DateTimeConstants.MONDAY, segundoHorário);</span>
-<span class="fc" id="L161">        aulaJpa.create(testeDeSoftwareSegundaFeiraSegundoHorário);</span>
+<span class="fc" id="L248">        Aula testeDeSoftwareSegundaFeiraSegundoHorário = new Aula(&quot;Teste de Software&quot;, DateTimeConstants.MONDAY, segundoHorário);</span>
+<span class="fc" id="L249">        aulaJpa.create(testeDeSoftwareSegundaFeiraSegundoHorário);</span>
         
-<span class="fc" id="L163">        Aula testeDeSoftwareTerçaFeiraSegundoHorário = new Aula(&quot;Teste de Software&quot;, DateTimeConstants.TUESDAY, segundoHorário);</span>
-<span class="fc" id="L164">        aulaJpa.create(testeDeSoftwareTerçaFeiraSegundoHorário);</span>
+<span class="fc" id="L251">        Aula testeDeSoftwareTerçaFeiraSegundoHorário = new Aula(&quot;Teste de Software&quot;, DateTimeConstants.TUESDAY, segundoHorário);</span>
+<span class="fc" id="L252">        aulaJpa.create(testeDeSoftwareTerçaFeiraSegundoHorário);</span>
         
-<span class="fc" id="L166">        Aula processosEPadrõesSegundaFeiraPrimeiroHorário = new Aula(&quot;Processos e Padrões&quot;, DateTimeConstants.MONDAY, primeiroHorário);</span>
-<span class="fc" id="L167">        aulaJpa.create(processosEPadrõesSegundaFeiraPrimeiroHorário);</span>
+<span class="fc" id="L254">        Aula processosEPadrõesSegundaFeiraPrimeiroHorário = new Aula(&quot;Processos e Padrões&quot;, DateTimeConstants.MONDAY, primeiroHorário);</span>
+<span class="fc" id="L255">        aulaJpa.create(processosEPadrõesSegundaFeiraPrimeiroHorário);</span>
         
-<span class="fc" id="L169">        Aula processosEPadrõesQuartaFeiraTerceiroHorário = new Aula(&quot;Processos e Padrões&quot;, DateTimeConstants.WEDNESDAY, terceiroHorário);</span>
-<span class="fc" id="L170">        aulaJpa.create(processosEPadrõesQuartaFeiraTerceiroHorário);</span>
+<span class="fc" id="L257">        Aula processosEPadrõesQuartaFeiraTerceiroHorário = new Aula(&quot;Processos e Padrões&quot;, DateTimeConstants.WEDNESDAY, terceiroHorário);</span>
+<span class="fc" id="L258">        aulaJpa.create(processosEPadrõesQuartaFeiraTerceiroHorário);</span>
         
-<span class="fc" id="L172">        Aula sistemasConcorrentesSegundaFeiraSegundoHorário = new Aula(&quot;Sistemas Concorrentes e Distribuídos&quot;, DateTimeConstants.MONDAY, segundoHorário);</span>
-<span class="fc" id="L173">        aulaJpa.create(sistemasConcorrentesSegundaFeiraSegundoHorário);</span>
+<span class="fc" id="L260">        Aula sistemasConcorrentesSegundaFeiraSegundoHorário = new Aula(&quot;Sistemas Concorrentes e Distribuídos&quot;, DateTimeConstants.MONDAY, segundoHorário);</span>
+<span class="fc" id="L261">        aulaJpa.create(sistemasConcorrentesSegundaFeiraSegundoHorário);</span>
         
-<span class="fc" id="L175">        Aula programaçãoFuncionalQuartaFeiraTerceiroHorário = new Aula(&quot;Programação Funcional&quot;, DateTimeConstants.WEDNESDAY, terceiroHorário);</span>
-<span class="fc" id="L176">        aulaJpa.create(programaçãoFuncionalQuartaFeiraTerceiroHorário);</span>
+<span class="fc" id="L263">        Aula programaçãoFuncionalQuartaFeiraTerceiroHorário = new Aula(&quot;Programação Funcional&quot;, DateTimeConstants.WEDNESDAY, terceiroHorário);</span>
+<span class="fc" id="L264">        aulaJpa.create(programaçãoFuncionalQuartaFeiraTerceiroHorário);</span>
                         
-<span class="fc" id="L178">        Professor prof1 = new Professor(&quot;Calebe&quot;, &quot;calebe&quot;);        </span>
-<span class="fc" id="L179">        prof1.adicionarAula(testeDeSoftwareSegundaFeiraSegundoHorário);</span>
-<span class="fc" id="L180">        prof1.adicionarAula(testeDeSoftwareTerçaFeiraSegundoHorário);</span>
+<span class="fc" id="L266">        Professor prof1 = new Professor(&quot;Calebe&quot;, &quot;calebe&quot;);        </span>
+<span class="fc" id="L267">        prof1.adicionarAula(testeDeSoftwareSegundaFeiraSegundoHorário);</span>
+<span class="fc" id="L268">        prof1.adicionarAula(testeDeSoftwareTerçaFeiraSegundoHorário);</span>
         
-<span class="fc" id="L182">        Professor prof2 = new Professor(&quot;Ana Claudia&quot;, &quot;anarossi&quot;);</span>
-<span class="fc" id="L183">        prof2.adicionarAula(processosEPadrõesSegundaFeiraPrimeiroHorário);</span>
-<span class="fc" id="L184">        prof2.adicionarAula(processosEPadrõesQuartaFeiraTerceiroHorário);</span>
+<span class="fc" id="L270">        Professor prof2 = new Professor(&quot;Ana Claudia&quot;, &quot;anarossi&quot;);</span>
+<span class="fc" id="L271">        prof2.adicionarAula(processosEPadrõesSegundaFeiraPrimeiroHorário);</span>
+<span class="fc" id="L272">        prof2.adicionarAula(processosEPadrõesQuartaFeiraTerceiroHorário);</span>
         
-<span class="fc" id="L186">        Professor prof3 = new Professor(&quot;Vilar&quot;, &quot;vilar&quot;);        </span>
-<span class="fc" id="L187">        prof3.adicionarAula(programaçãoFuncionalQuartaFeiraTerceiroHorário);</span>
+<span class="fc" id="L274">        Professor prof3 = new Professor(&quot;Vilar&quot;, &quot;vilar&quot;);        </span>
+<span class="fc" id="L275">        prof3.adicionarAula(programaçãoFuncionalQuartaFeiraTerceiroHorário);</span>
                 
-<span class="fc" id="L189">        Professor prof4 = new Professor(&quot;Gaston&quot;, &quot;gaston&quot;);</span>
+<span class="fc" id="L277">        Professor prof4 = new Professor(&quot;Gaston&quot;, &quot;gaston&quot;);</span>
         
-<span class="fc" id="L191">        Professor prof5 = new Professor(&quot;Denise&quot;, &quot;denise&quot;);</span>
-<span class="fc" id="L192">        prof5.adicionarAula(sistemasConcorrentesSegundaFeiraSegundoHorário);</span>
+<span class="fc" id="L279">        Professor prof5 = new Professor(&quot;Denise&quot;, &quot;denise&quot;);</span>
+<span class="fc" id="L280">        prof5.adicionarAula(sistemasConcorrentesSegundaFeiraSegundoHorário);</span>
                 
-<span class="fc" id="L194">        ProfessorJpaController profJpa = new ProfessorJpaController(emf);</span>
+<span class="fc" id="L282">        ProfessorJpaController profJpa = new ProfessorJpaController(emf);</span>
         
-<span class="fc" id="L196">        profJpa.create(prof1);</span>
-<span class="fc" id="L197">        profJpa.create(prof2);</span>
-<span class="fc" id="L198">        profJpa.create(prof3);</span>
-<span class="fc" id="L199">        profJpa.create(prof4);</span>
-<span class="fc" id="L200">        profJpa.create(prof5);</span>
-<span class="fc" id="L201">    }</span>
+<span class="fc" id="L284">        profJpa.create(prof1);</span>
+<span class="fc" id="L285">        profJpa.create(prof2);</span>
+<span class="fc" id="L286">        profJpa.create(prof3);</span>
+<span class="fc" id="L287">        profJpa.create(prof4);</span>
+<span class="fc" id="L288">        profJpa.create(prof5);</span>
+<span class="fc" id="L289">    }</span>
     
     private static void populateUsuario(EntityManagerFactory emf){
         
-<span class="fc" id="L205">        UsuarioJpaController usuarioJpa = new UsuarioJpaController(emf);</span>
+<span class="fc" id="L293">        UsuarioJpaController usuarioJpa = new UsuarioJpaController(emf);</span>
         
-<span class="fc" id="L207">        Usuario u1 = Usuario.createUsuarioPadrao(&quot;calebe&quot;);</span>
-<span class="fc" id="L208">        u1.setPermissao(Perfil.PROFESSOR);</span>
+<span class="fc" id="L295">        Usuario u1 = Usuario.createUsuarioPadrao(&quot;calebe&quot;);</span>
+<span class="fc" id="L296">        u1.setPermissao(Perfil.PROFESSOR);</span>
                 
-<span class="fc" id="L210">        Usuario u2 = Usuario.createUsuarioPadrao(&quot;jane&quot;);</span>
-<span class="fc" id="L211">        u2.setPermissao(Perfil.FUNCIONARIO);</span>
-<span class="fc" id="L212">        u2.setSenha(&quot;mackenzie&quot;);</span>
+<span class="fc" id="L298">        Usuario u2 = Usuario.createUsuarioPadrao(&quot;jane&quot;);</span>
+<span class="fc" id="L299">        u2.setPermissao(Perfil.FUNCIONARIO);</span>
+<span class="fc" id="L300">        u2.setSenha(&quot;mackenzie&quot;);</span>
         
-<span class="fc" id="L214">        Usuario u3 = Usuario.createUsuarioPadrao(&quot;admin&quot;);</span>
-<span class="fc" id="L215">        u3.setSenha(&quot;admin&quot;);</span>
-<span class="fc" id="L216">        u3.setPermissao(Perfil.ADMINISTRADOR);</span>
+<span class="fc" id="L302">        Usuario u3 = Usuario.createUsuarioPadrao(&quot;admin&quot;);</span>
+<span class="fc" id="L303">        u3.setSenha(&quot;admin&quot;);</span>
+<span class="fc" id="L304">        u3.setPermissao(Perfil.ADMINISTRADOR);</span>
         
-<span class="fc" id="L218">        Usuario u4 = Usuario.createUsuarioPadrao(&quot;anarossi&quot;);</span>
-<span class="fc" id="L219">        u4.setPermissao(Perfil.PROFESSOR);</span>
+<span class="fc" id="L306">        Usuario u4 = Usuario.createUsuarioPadrao(&quot;anarossi&quot;);</span>
+<span class="fc" id="L307">        u4.setPermissao(Perfil.PROFESSOR);</span>
         
-<span class="fc" id="L221">        Usuario u5 = Usuario.createUsuarioPadrao(&quot;vilar&quot;);</span>
-<span class="fc" id="L222">        u5.setPermissao(Perfil.PROFESSOR);</span>
+<span class="fc" id="L309">        Usuario u5 = Usuario.createUsuarioPadrao(&quot;vilar&quot;);</span>
+<span class="fc" id="L310">        u5.setPermissao(Perfil.PROFESSOR);</span>
         
-<span class="fc" id="L224">        Usuario u6 = Usuario.createUsuarioPadrao(&quot;gaston&quot;);</span>
-<span class="fc" id="L225">        u6.setPermissao(Perfil.PROFESSOR);</span>
+<span class="fc" id="L312">        Usuario u6 = Usuario.createUsuarioPadrao(&quot;gaston&quot;);</span>
+<span class="fc" id="L313">        u6.setPermissao(Perfil.PROFESSOR);</span>
         
         
-<span class="fc" id="L228">        Usuario u7 = Usuario.createUsuarioPadrao(&quot;denise&quot;);</span>
-<span class="fc" id="L229">        u7.setPermissao(Perfil.PROFESSOR);</span>
+<span class="fc" id="L316">        Usuario u7 = Usuario.createUsuarioPadrao(&quot;denise&quot;);</span>
+<span class="fc" id="L317">        u7.setPermissao(Perfil.PROFESSOR);</span>
                 
-<span class="fc" id="L231">        usuarioJpa.create(u1);</span>
-<span class="fc" id="L232">        usuarioJpa.create(u2);</span>
-<span class="fc" id="L233">        usuarioJpa.create(u3);</span>
-<span class="fc" id="L234">        usuarioJpa.create(u4);</span>
-<span class="fc" id="L235">        usuarioJpa.create(u5);</span>
-<span class="fc" id="L236">        usuarioJpa.create(u6);</span>
-<span class="fc" id="L237">        usuarioJpa.create(u7);</span>
+<span class="fc" id="L319">        usuarioJpa.create(u1);</span>
+<span class="fc" id="L320">        usuarioJpa.create(u2);</span>
+<span class="fc" id="L321">        usuarioJpa.create(u3);</span>
+<span class="fc" id="L322">        usuarioJpa.create(u4);</span>
+<span class="fc" id="L323">        usuarioJpa.create(u5);</span>
+<span class="fc" id="L324">        usuarioJpa.create(u6);</span>
+<span class="fc" id="L325">        usuarioJpa.create(u7);</span>
         
-<span class="fc" id="L239">    }</span>
+<span class="fc" id="L327">    }</span>
     
     public static void populateUsuario(){
-<span class="fc" id="L242">        EntityManagerFactory emf = Persistence.createEntityManagerFactory(&quot;pro_subPU&quot;);</span>
-<span class="fc" id="L243">        PopulateDB.populateUsuario(emf);</span>
-<span class="fc" id="L244">    }</span>
+<span class="fc" id="L330">        EntityManagerFactory emf = Persistence.createEntityManagerFactory(&quot;pro_subPU&quot;);</span>
+<span class="fc" id="L331">        PopulateDB.populateUsuario(emf);</span>
+<span class="fc" id="L332">    }</span>
     
     public static void populateProfessores(){
-<span class="fc" id="L247">        EntityManagerFactory emf = Persistence.createEntityManagerFactory(&quot;pro_subPU&quot;);</span>
-<span class="fc" id="L248">        PopulateDB.populateProfessores(emf);        </span>
-<span class="fc" id="L249">    }</span>
+<span class="fc" id="L335">        EntityManagerFactory emf = Persistence.createEntityManagerFactory(&quot;pro_subPU&quot;);</span>
+<span class="fc" id="L336">        PopulateDB.populateProfessores(emf);        </span>
+<span class="fc" id="L337">    }</span>
 }
 
 

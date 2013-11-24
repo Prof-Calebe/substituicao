@@ -128,6 +128,8 @@ public class NotificacaoService {
             return "Alocação efetuada";
         else if(estado == EstadoAusencia.Alocacao_Pendente)
             return "Alocação pendente";
+        else if(estado == EstadoAusencia.Alocacao_Confirmada)
+            return "Alocação confirmada";
         else{
             return "Aulas canceladas";
         }
@@ -189,7 +191,50 @@ public class NotificacaoService {
         return modelos;
     }
     
+    public List<AusenciaModel> listarAusenciasPorSubstituto(String usernameProfessor){
+        
+        Professor professorIndicado = profController.findProfessorPorUsername(usernameProfessor);
+        
+        List<Ausencia> ausenciasComIndicacaoDeSubstituto = ausenciaController.listAusenciasPorSubstituto(professorIndicado);
+        
+        List<AusenciaModel> modelos = new ArrayList<AusenciaModel>();
+        
+        for(Ausencia ausencia : ausenciasComIndicacaoDeSubstituto){
+            
+            AusenciaModel modelo = this.montarAusencia(ausencia);
+            
+            modelos.add(modelo);
+            
+        }
+        
+        return modelos;
+    }
     
+    public void aceitarSubstituicao(Long ausenciaId)
+    {        
+        try {
+            Ausencia ausencia = ausenciaController.findAusencia(ausenciaId);
+            ausencia.confirmar();
+            ausenciaController.edit(ausencia);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void recusarSubstituicao(Long ausenciaId)
+    {
+        try {
+            Ausencia ausencia = ausenciaController.findAusencia(ausenciaId);
+            ausencia.recusar();
+            ausenciaController.edit(ausencia);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     private AusenciaModel montarAusencia(Ausencia ausencia){
 
@@ -232,8 +277,6 @@ public class NotificacaoService {
         }        
         
         ausencia.setProfessorSubstituto(profSubstituto);
-        ausencia.definirComoAlocado();
-        
         
         try {
             ausenciaController.edit(ausencia);

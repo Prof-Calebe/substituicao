@@ -68,13 +68,13 @@ public class cst11Test {
     }
     
     @Test
-    public void testeEfetuarAlocação_Confirmar() throws ParseException
+    public void testeRejeitarAlocação() throws ParseException
     {
         LoginService loginService = new LoginService();
         assertTrue(loginService.VerificarUsuarioESenha("Professor3", "123456"));
         
         NotificacaoService notificaçãoService = new NotificacaoService();
-        List<AusenciaModel> ausencias = notificaçãoService.listarAusenciasPorIndicacaoDeSubstituto("Professor3");
+        List<AusenciaModel> ausencias = notificaçãoService.listarAusenciasPorSubstituto("Professor3");
         assertEquals(1, ausencias.size());
         assertEquals("Professor2", ausencias.get(0).professorAusente);
         assertEquals("Professor3", ausencias.get(0).professorSubstituto);
@@ -82,7 +82,7 @@ public class cst11Test {
         assertEquals("25/11/2013 20:00", ausencias.get(0).dataFim);
         assertEquals("Alocação efetuada", ausencias.get(0).estado); 
         
-        //notificaçãoService.recusarSubstituição(ausencias.get(0).id);
+        notificaçãoService.recusarSubstituicao(ausencias.get(0).id);
         
         ausencias = notificaçãoService.listarAusencias();
         assertEquals(1, ausencias.size());
@@ -90,9 +90,7 @@ public class cst11Test {
         assertEquals("", ausencias.get(0).professorSubstituto);
         assertEquals("25/11/2013 18:30", ausencias.get(0).dataInicio);
         assertEquals("25/11/2013 20:00", ausencias.get(0).dataFim);
-        assertEquals("Alocação pendente", ausencias.get(0).estado); 
-        
-        assertEquals(true, false);
+        assertEquals("Alocação pendente", ausencias.get(0).estado);         
     }
 
 }

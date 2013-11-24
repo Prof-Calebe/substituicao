@@ -54,14 +54,14 @@ public class ProfessorService {
     public List<ProfessorModel> listarProfessoresCompativeisComAusenteNoPeriodo(String codigoAusencia){
         
         Ausencia ausência = ausenciasRepository.findAusencia(new Long(codigoAusencia ));
-        
-        
+            
         List<Aula> aulasPerdidas = new LinkedList<Aula>();
         aulasPerdidas.add(ausência.getAula());
         
         Professor professorAusente = ausência.getProfessor();
         
         List<Professor> todosProfessores = controller.findProfessorEntities();
+        List<Ausencia> todasAsAusencias = ausenciasRepository.findAusenciaEntities();
         
         List<ProfessorModel> profsPossiveis = new ArrayList<ProfessorModel>();
         
@@ -72,14 +72,29 @@ public class ProfessorService {
                 
                 if(professor.EhCompativelCom(aulasPerdidas)){
                     
-                    //profsPossiveis.add(professor);
+                    Boolean compatível = true;
                     
-                    ProfessorModel model = new ProfessorModel();
+                    for(Ausencia ausenciaPreExistente : todasAsAusencias)
+                    {
+                        if(ausenciaPreExistente.getProfessorSubstituto() != null)
+                        {
+                            if(ausenciaPreExistente.getProfessorSubstituto().getNome().equals(professor.getNome()))
+                            {
+                                if(ausenciaPreExistente.getPeriodo().overlaps(ausência.getPeriodo()))
+                                    compatível = false;
+                            }
+                        }
+                    }
                     
-                    model.id = professor.getId();
-                    model.Nome = professor.getNome();
-                    
-                    profsPossiveis.add(model);
+                    if(compatível)
+                    {
+                        ProfessorModel model = new ProfessorModel();
+
+                        model.id = professor.getId();
+                        model.Nome = professor.getNome();
+
+                        profsPossiveis.add(model);
+                    }
                 }
             }   
         }

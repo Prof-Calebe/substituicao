@@ -128,8 +128,21 @@ public class AusenciaJpaController implements Serializable {
         return ausenciasComProfessor;
     }
     
-    
-    
+    public List<Ausencia> listAusenciasPorSubstituto(Professor professor){
+        List<Ausencia> ausencias = this.findAusenciaEntities();
+        
+        List<Ausencia> ausenciasComProfessor = new ArrayList<Ausencia>();
+        
+        for(Ausencia ausencia : ausencias){
+            
+            if(ausencia.getProfessorSubstituto().equals(professor)){
+                ausenciasComProfessor.add(ausencia);
+            }
+            
+        }
+        
+        return ausenciasComProfessor;
+    }
 
     private List<Ausencia> findAusenciaEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();

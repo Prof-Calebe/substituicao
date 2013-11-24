@@ -128,50 +128,63 @@ public class AusenciaJpaController implements Serializable {
 <span class="fc" id="L128">        return ausenciasComProfessor;</span>
     }
     
-    
-    
+    public List&lt;Ausencia&gt; listAusenciasPorSubstituto(Professor professor){
+<span class="fc" id="L132">        List&lt;Ausencia&gt; ausencias = this.findAusenciaEntities();</span>
+        
+<span class="fc" id="L134">        List&lt;Ausencia&gt; ausenciasComProfessor = new ArrayList&lt;Ausencia&gt;();</span>
+        
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        for(Ausencia ausencia : ausencias){</span>
+            
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">            if(ausencia.getProfessorSubstituto().equals(professor)){</span>
+<span class="fc" id="L139">                ausenciasComProfessor.add(ausencia);</span>
+            }
+            
+<span class="fc" id="L142">        }</span>
+        
+<span class="fc" id="L144">        return ausenciasComProfessor;</span>
+    }
 
     private List&lt;Ausencia&gt; findAusenciaEntities(boolean all, int maxResults, int firstResult) {
-<span class="fc" id="L135">        EntityManager em = getEntityManager();</span>
+<span class="fc" id="L148">        EntityManager em = getEntityManager();</span>
         try {
-<span class="fc" id="L137">            Query q = em.createQuery(&quot;select object(o) from Ausencia as o&quot;);</span>
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">            if (!all) {</span>
-<span class="nc" id="L139">                q.setMaxResults(maxResults);</span>
-<span class="nc" id="L140">                q.setFirstResult(firstResult);</span>
+<span class="fc" id="L150">            Query q = em.createQuery(&quot;select object(o) from Ausencia as o&quot;);</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">            if (!all) {</span>
+<span class="nc" id="L152">                q.setMaxResults(maxResults);</span>
+<span class="nc" id="L153">                q.setFirstResult(firstResult);</span>
             }
-<span class="fc" id="L142">            return q.getResultList();</span>
+<span class="fc" id="L155">            return q.getResultList();</span>
         } finally {
-<span class="pc" id="L144">            em.close();</span>
+<span class="pc" id="L157">            em.close();</span>
         }
     }
 
     public Ausencia findAusencia(Long id) {
-<span class="fc" id="L149">        EntityManager em = getEntityManager();</span>
+<span class="fc" id="L162">        EntityManager em = getEntityManager();</span>
         try {
-<span class="fc" id="L151">            return em.find(Ausencia.class, id);</span>
+<span class="fc" id="L164">            return em.find(Ausencia.class, id);</span>
         } finally {
-<span class="pc" id="L153">            em.close();</span>
+<span class="pc" id="L166">            em.close();</span>
         }
     }
     
     public Ausencia findAusencia(String codigo){
-<span class="fc" id="L158">    List&lt;Ausencia&gt; ausencias = this.findAusenciaEntities();</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">    for(Ausencia ausencia : ausencias){</span>
-<span class="fc bfc" id="L160" title="All 2 branches covered.">        if(ausencia.getCodigo().equals(codigo))</span>
-<span class="fc" id="L161">            return ausencia;</span>
-<span class="fc" id="L162">    }</span>
+<span class="fc" id="L171">    List&lt;Ausencia&gt; ausencias = this.findAusenciaEntities();</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">    for(Ausencia ausencia : ausencias){</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">        if(ausencia.getCodigo().equals(codigo))</span>
+<span class="fc" id="L174">            return ausencia;</span>
+<span class="fc" id="L175">    }</span>
         
-<span class="fc" id="L164">        return null;</span>
+<span class="fc" id="L177">        return null;</span>
     }
     
 
     public int getAusenciaCount() {
-<span class="fc" id="L169">        EntityManager em = getEntityManager();</span>
+<span class="fc" id="L182">        EntityManager em = getEntityManager();</span>
         try {
-<span class="fc" id="L171">            Query q = em.createQuery(&quot;select count(o) from Ausencia as o&quot;);</span>
-<span class="fc" id="L172">            return ((Long) q.getSingleResult()).intValue();</span>
+<span class="fc" id="L184">            Query q = em.createQuery(&quot;select count(o) from Ausencia as o&quot;);</span>
+<span class="fc" id="L185">            return ((Long) q.getSingleResult()).intValue();</span>
         } finally {
-<span class="pc" id="L174">            em.close();</span>
+<span class="pc" id="L187">            em.close();</span>
         }
     }
     

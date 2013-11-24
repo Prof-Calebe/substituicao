@@ -43,12 +43,12 @@ public class ProfessorJpaController implements Serializable {
 <span class="fc" id="L43">    }</span>
 
     public void edit(Professor professor) throws NonexistentEntityException, Exception {
-<span class="nc" id="L46">        EntityManager em = null;</span>
+<span class="fc" id="L46">        EntityManager em = null;</span>
         try {
-<span class="nc" id="L48">            em = getEntityManager();</span>
-<span class="nc" id="L49">            em.getTransaction().begin();</span>
-<span class="nc" id="L50">            professor = em.merge(professor);</span>
-<span class="nc" id="L51">            em.getTransaction().commit();</span>
+<span class="fc" id="L48">            em = getEntityManager();</span>
+<span class="fc" id="L49">            em.getTransaction().begin();</span>
+<span class="fc" id="L50">            professor = em.merge(professor);</span>
+<span class="fc" id="L51">            em.getTransaction().commit();</span>
 <span class="nc" id="L52">        } catch (Exception ex) {</span>
 <span class="nc" id="L53">            String msg = ex.getLocalizedMessage();</span>
 <span class="nc bnc" id="L54" title="All 4 branches missed.">            if (msg == null || msg.length() == 0) {</span>
@@ -59,32 +59,32 @@ public class ProfessorJpaController implements Serializable {
             }
 <span class="nc" id="L60">            throw ex;</span>
         } finally {
-<span class="nc bnc" id="L62" title="All 4 branches missed.">            if (em != null) {</span>
-<span class="nc" id="L63">                em.close();</span>
+<span class="pc bpc" id="L62" title="3 of 4 branches missed.">            if (em != null) {</span>
+<span class="pc" id="L63">                em.close();</span>
             }
         }
-<span class="nc" id="L66">    }</span>
+<span class="fc" id="L66">    }</span>
 
     public void destroy(Long id) throws NonexistentEntityException {
-<span class="nc" id="L69">        EntityManager em = null;</span>
+<span class="fc" id="L69">        EntityManager em = null;</span>
         try {
-<span class="nc" id="L71">            em = getEntityManager();</span>
-<span class="nc" id="L72">            em.getTransaction().begin();</span>
+<span class="fc" id="L71">            em = getEntityManager();</span>
+<span class="fc" id="L72">            em.getTransaction().begin();</span>
             Professor professor;
             try {
-<span class="nc" id="L75">                professor = em.getReference(Professor.class, id);</span>
-<span class="nc" id="L76">                professor.getId();</span>
+<span class="fc" id="L75">                professor = em.getReference(Professor.class, id);</span>
+<span class="fc" id="L76">                professor.getId();</span>
 <span class="nc" id="L77">            } catch (EntityNotFoundException enfe) {</span>
 <span class="nc" id="L78">                throw new NonexistentEntityException(&quot;The professor with id &quot; + id + &quot; no longer exists.&quot;, enfe);</span>
-<span class="nc" id="L79">            }</span>
-<span class="nc" id="L80">            em.remove(professor);</span>
-<span class="nc" id="L81">            em.getTransaction().commit();</span>
+<span class="fc" id="L79">            }</span>
+<span class="fc" id="L80">            em.remove(professor);</span>
+<span class="fc" id="L81">            em.getTransaction().commit();</span>
         } finally {
-<span class="nc bnc" id="L83" title="All 4 branches missed.">            if (em != null) {</span>
-<span class="nc" id="L84">                em.close();</span>
+<span class="pc bpc" id="L83" title="3 of 4 branches missed.">            if (em != null) {</span>
+<span class="pc" id="L84">                em.close();</span>
             }
         }
-<span class="nc" id="L87">    }</span>
+<span class="fc" id="L87">    }</span>
 
     public List&lt;Professor&gt; findProfessorEntities() {
 <span class="fc" id="L90">        return findProfessorEntities(true, -1, -1);</span>

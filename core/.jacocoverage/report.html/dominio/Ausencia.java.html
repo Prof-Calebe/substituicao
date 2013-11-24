@@ -220,24 +220,44 @@ public class Ausencia implements Serializable {
         }
         
 <span class="fc" id="L222">        this.professorSubstituto = professorSubstituto;</span>
-<span class="fc" id="L223">    }</span>
+<span class="fc" id="L223">        this.definirComoAlocado();</span>
+<span class="fc" id="L224">    }</span>
 
     public void cancelarAusencia() {
         
-<span class="fc" id="L227">        this.estado = EstadoAusencia.Ausencia_Cancelada;</span>
-<span class="fc" id="L228">        this.professorSubstituto = null;</span>
-<span class="fc" id="L229">    }</span>
+<span class="fc" id="L228">        this.estado = EstadoAusencia.Ausencia_Cancelada;</span>
+<span class="fc" id="L229">        this.professorSubstituto = null;</span>
+<span class="fc" id="L230">    }</span>
     
     public void cancelarAulas(){
         
-<span class="fc" id="L233">        this.estado = EstadoAusencia.Aulas_Canceladas;</span>
-<span class="fc" id="L234">        this.professorSubstituto = null;</span>
+<span class="fc" id="L234">        this.estado = EstadoAusencia.Aulas_Canceladas;</span>
+<span class="fc" id="L235">        this.professorSubstituto = null;</span>
         
-<span class="fc" id="L236">    }</span>
+<span class="fc" id="L237">    }</span>
     
     public void definirComoAlocado(){
-<span class="fc" id="L239">        this.estado = EstadoAusencia.Alocacao_Efetuada;</span>
-<span class="fc" id="L240">    }</span>
+<span class="fc" id="L240">        this.estado = EstadoAusencia.Alocacao_Efetuada;</span>
+<span class="fc" id="L241">    }</span>
+    
+    public void confirmar() {
+<span class="fc bfc" id="L244" title="All 2 branches covered.">        if(this.estado != EstadoAusencia.Alocacao_Efetuada)</span>
+        {
+<span class="fc" id="L246">            throw new IllegalStateException();</span>
+        }
+        
+<span class="fc" id="L249">        this.estado = EstadoAusencia.Alocacao_Confirmada;</span>
+<span class="fc" id="L250">    }</span>
+    
+    public void recusar() {
+<span class="fc bfc" id="L253" title="All 2 branches covered.">        if(this.estado != EstadoAusencia.Alocacao_Efetuada)</span>
+        {
+<span class="fc" id="L255">            throw new IllegalStateException();</span>
+        }
+        
+<span class="fc" id="L258">        this.estado = EstadoAusencia.Alocacao_Pendente;</span>
+<span class="fc" id="L259">        this.professorSubstituto = null;</span>
+<span class="fc" id="L260">    }</span>
     
     
    

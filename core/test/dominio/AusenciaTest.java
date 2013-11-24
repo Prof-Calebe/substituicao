@@ -74,12 +74,34 @@ public class AusenciaTest {
     
     @Test
     public void testeDeveSerPossívelDefinirSubstitutoEmUmaAusencia(){
-        objetoEmTeste.setProfessorSubstituto(professorSubstituto);
-        
+        objetoEmTeste.setProfessorSubstituto(professorSubstituto);       
         
         Assert.assertEquals(professorSubstituto, objetoEmTeste.getProfessorSubstituto());
-        
-
+    }
+    
+    @Test
+    public void testeDeveSerPossívelConfirmarUmaAusênciaComSubstituto(){
+        objetoEmTeste.setProfessorSubstituto(professorSubstituto);       
+        objetoEmTeste.confirmar();
+        assertEquals(objetoEmTeste.getEstado(), EstadoAusencia.Alocacao_Confirmada);
+    }
+    
+    @Test(expected=IllegalStateException.class) 
+    public void testeNãoDeveSerPossívelConfirmarAusênciaSemProfessorDeclarado(){
+        objetoEmTeste.confirmar();
+    }
+    
+    @Test
+    public void testeDeveSerPossívelRecusarUmaAusênciaComSubstituto(){
+        objetoEmTeste.setProfessorSubstituto(professorSubstituto);       
+        objetoEmTeste.recusar();
+        assertEquals(objetoEmTeste.getEstado(), EstadoAusencia.Alocacao_Pendente);
+        org.junit.Assert.assertNull(objetoEmTeste.getProfessorSubstituto());
+    }
+    
+    @Test(expected=IllegalStateException.class) 
+    public void testeNãoDeveSerPossívelRecusarAusênciaSemProfessorDeclarado(){
+        objetoEmTeste.recusar();
     }
     
     

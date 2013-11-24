@@ -220,6 +220,7 @@ public class Ausencia implements Serializable {
         }
         
         this.professorSubstituto = professorSubstituto;
+        this.definirComoAlocado();
     }
 
     public void cancelarAusencia() {
@@ -237,6 +238,25 @@ public class Ausencia implements Serializable {
     
     public void definirComoAlocado(){
         this.estado = EstadoAusencia.Alocacao_Efetuada;
+    }
+    
+    public void confirmar() {
+        if(this.estado != EstadoAusencia.Alocacao_Efetuada)
+        {
+            throw new IllegalStateException();
+        }
+        
+        this.estado = EstadoAusencia.Alocacao_Confirmada;
+    }
+    
+    public void recusar() {
+        if(this.estado != EstadoAusencia.Alocacao_Efetuada)
+        {
+            throw new IllegalStateException();
+        }
+        
+        this.estado = EstadoAusencia.Alocacao_Pendente;
+        this.professorSubstituto = null;
     }
     
     
