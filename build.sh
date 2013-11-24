@@ -26,6 +26,7 @@ for i in * ; do
 
     echo " "
     echo "----- $i -----"
+    ant -Dj2ee.server.home="$_PWD\glassfish3\glassfish" $TARGET
     RET=$?
     if [ ! "$RET" = "0" ]; then
         exit $RET
