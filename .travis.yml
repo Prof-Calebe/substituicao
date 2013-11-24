@@ -6,4 +6,4 @@ before_script:
   - mysql -e 'create database prosub;'
   - "chmod +x ./build.sh"
   
-script: "./build.sh"
+script: "./core/build.xml"
