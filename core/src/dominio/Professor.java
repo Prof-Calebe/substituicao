@@ -6,6 +6,7 @@ package dominio;
 
 import dominio.Aula;
 import java.io.Serializable;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -165,6 +166,9 @@ public class Professor implements Serializable {
     
     public List<Ausencia> gerarAusencias(Interval periodoDeAusencia, String motivo)
     {
+        if(motivo.equals(""))
+            throw new InvalidParameterException();
+        
         List<Ausencia> ausencias = new LinkedList<Ausencia>();
         
         Interval primeiroDia = null;

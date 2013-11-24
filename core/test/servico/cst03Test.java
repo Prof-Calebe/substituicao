@@ -8,6 +8,7 @@ package servico;
 
 import datamapper.PopulateDB;
 import datamapper.exceptions.NonexistentEntityException;
+import java.security.InvalidParameterException;
 import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
@@ -64,11 +65,21 @@ public class cst03Test {
         List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();        
         assertEquals(0, ausencias.size());
         
-        notificaçãoService.notificarAusencia(professor.id, "25/11/2013 20:01", "25/11/2013 21:29", "", new LinkedList<String>());
+        Boolean exceptionOk = false;
+        
+        try
+        {
+            notificaçãoService.notificarAusencia(professor.id, "25/11/2013 20:01", "25/11/2013 21:29", "", new LinkedList<String>());
+        }
+        catch(InvalidParameterException ex)
+        {
+            exceptionOk = true;
+        }
         
         assertTrue(loginService.VerificarUsuarioESenha("Administrador", "123456"));
         ausencias = notificaçãoService.listarAusencias();        
         assertEquals(0, ausencias.size());
+        assertTrue(exceptionOk);
     }
 
 }
