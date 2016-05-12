@@ -37,6 +37,9 @@ public class Ausencia implements Serializable {
     @ManyToOne
     private Professor professor;
     
+    @ManyToOne
+    private Aula aula;
+    
     @Columns(columns={@Column(name="startTime"),@Column(name="endTime")})
     @Type(type="org.joda.time.contrib.hibernate.PersistentInterval")  
     private Interval periodo;
@@ -44,10 +47,6 @@ public class Ausencia implements Serializable {
     private String motivo;
     
     private String motivoRejeicao;
-    
-   
-    //@ManyToOne
-    //private Professor indicacaoSubstituto;
     
     @ManyToOne
     private Professor professorSubstituto;
@@ -65,7 +64,7 @@ public class Ausencia implements Serializable {
     
     }
 
-    public Ausencia(String codigo, Interval periodo, Professor professor, String motivo) {
+    public Ausencia(String codigo, Interval periodo, Professor professor, String motivo, Aula aula) {
         this.codigo = codigo;
         this.periodo = periodo;
         this.professor = professor;
@@ -73,8 +72,8 @@ public class Ausencia implements Serializable {
         this.motivoRejeicao = null;
         //this.indicacaoSubstituto = null;
         this.indicacoesSubstituto = new ArrayList<Professor>();
-        this.estado = EstadoAusencia.Alocacao_Pendente;
-       
+        this.estado = EstadoAusencia.Alocacao_Pendente;       
+        this.aula = aula;
     }
 
     public Long getId() {
@@ -83,6 +82,11 @@ public class Ausencia implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public void setCodigo(String codigo)
+    {
+        this.codigo = codigo;
     }
 
     @Override
@@ -99,10 +103,27 @@ public class Ausencia implements Serializable {
             return false;
         }
         Ausencia other = (Ausencia) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
+        
+        if(this.id == null)
+        {
+            if(other.id == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-        return true;
+        else
+        {
+            if(other.id == null)
+            {
+                return false;
+            }
+            
+            return this.id.equals(other.id);
+        }
     }
 
     @Override
@@ -128,6 +149,10 @@ public class Ausencia implements Serializable {
 
     public Object getMotivo() {
         return motivo;
+    }
+    
+    public Aula getAula() {
+        return aula;
     }
     
     public void setMotivo(String motivo) {
@@ -195,6 +220,7 @@ public class Ausencia implements Serializable {
         }
         
         this.professorSubstituto = professorSubstituto;
+        this.definirComoAlocado();
     }
 
     public void cancelarAusencia() {
@@ -212,6 +238,25 @@ public class Ausencia implements Serializable {
     
     public void definirComoAlocado(){
         this.estado = EstadoAusencia.Alocacao_Efetuada;
+    }
+    
+    public void confirmar() {
+        if(this.estado != EstadoAusencia.Alocacao_Efetuada)
+        {
+            throw new IllegalStateException();
+        }
+        
+        this.estado = EstadoAusencia.Alocacao_Confirmada;
+    }
+    
+    public void recusar() {
+        if(this.estado != EstadoAusencia.Alocacao_Efetuada)
+        {
+            throw new IllegalStateException();
+        }
+        
+        this.estado = EstadoAusencia.Alocacao_Pendente;
+        this.professorSubstituto = null;
     }
     
     

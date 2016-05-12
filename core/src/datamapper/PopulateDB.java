@@ -10,7 +10,7 @@ import dominio.Ausencia;
 import dominio.Professor;
 import dominio.Usuario;
 import java.sql.*;
-import java.util.Calendar;
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.joda.time.DateTime;
@@ -138,75 +138,147 @@ public class PopulateDB {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
         
         populateUsuario(emf);
-        populateProfessores(emf);
+        populateProfessores(emf);        
+    }
+    
+    public static void populateUseCaseTest() throws NonexistentEntityException, Exception
+    {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
         
-        populateAusencia(emf);
+        UsuarioJpaController usuarioJpa = new UsuarioJpaController(emf);
+        ProfessorJpaController profJpa = new ProfessorJpaController(emf);
         
+        Usuario u1 = Usuario.createUsuarioPadrao("Funcionario1");
+        u1.setPermissao(Perfil.FUNCIONARIO);
+        
+        Usuario u2 = Usuario.createUsuarioPadrao("Professor1");
+        u2.setPermissao(Perfil.PROFESSOR);
+        
+        Usuario u3 = Usuario.createUsuarioPadrao("Professor2");
+        u3.setPermissao(Perfil.PROFESSOR);
+        
+        Usuario u4 = Usuario.createUsuarioPadrao("Professor3");
+        u4.setPermissao(Perfil.PROFESSOR);
+        
+        Usuario u5 = Usuario.createUsuarioPadrao("Administrador");
+        u5.setPermissao(Perfil.ADMINISTRADOR);
+        
+        usuarioJpa.create(u1);
+        usuarioJpa.create(u2);
+        usuarioJpa.create(u3);
+        usuarioJpa.create(u4);
+        usuarioJpa.create(u5);
+        
+        AulaJpaController aulaJpa = new AulaJpaController(emf);
+        
+        DateTime inícioPrimeiroHorário = new DateTime(1900, 01, 01, 18, 30);
+        DateTime finalPrimeiroHorário = new DateTime(1900, 01, 01, 20, 00);        
+        Interval primeiroHorário = new Interval(inícioPrimeiroHorário, finalPrimeiroHorário);
+        
+        DateTime inícioSegundoHorário = new DateTime(1900, 01, 01, 20, 00);
+        DateTime finalSegundoHorário = new DateTime(1900, 01, 01, 21, 30);        
+        Interval segundoHorário = new Interval(inícioSegundoHorário, finalSegundoHorário);
+        
+        DateTime inícioTerceiroHorário = new DateTime(1900, 01, 01, 21, 30);
+        DateTime finalTerceiroHorário = new DateTime(1900, 01, 01, 23, 00);        
+        Interval terceiroHorário = new Interval(inícioTerceiroHorário, finalTerceiroHorário);
+        
+        Aula aulaProfessor1SegundaFeiraPrimeiroHorário = new Aula("P1 - Segunda 18:30", DateTimeConstants.MONDAY, primeiroHorário);
+        aulaJpa.create(aulaProfessor1SegundaFeiraPrimeiroHorário);
+        
+        Aula aulaProfessor1SegundaFeiraSegundoHorário = new Aula("P1 - Segunda 20:00", DateTimeConstants.MONDAY, segundoHorário);
+        aulaJpa.create(aulaProfessor1SegundaFeiraSegundoHorário);
+        
+        Aula aulaProfessor1SegundaFeiraTerceiroHorário = new Aula("P1 - Segunda 21:30", DateTimeConstants.MONDAY, terceiroHorário);
+        aulaJpa.create(aulaProfessor1SegundaFeiraTerceiroHorário);
+                
+        Professor prof1 = new Professor("Professor1", "Professor1");        
+        prof1.adicionarAula(aulaProfessor1SegundaFeiraPrimeiroHorário);
+        prof1.adicionarAula(aulaProfessor1SegundaFeiraSegundoHorário);
+        prof1.adicionarAula(aulaProfessor1SegundaFeiraTerceiroHorário);        
+        profJpa.create(prof1);
+                
+        Aula aulaProfessor2SegundaFeiraPrimeiroHorário = new Aula("P2 - Segunda 18:30", DateTimeConstants.MONDAY, primeiroHorário);
+        aulaJpa.create(aulaProfessor2SegundaFeiraPrimeiroHorário);
+        
+        Aula aulaProfessor2TercaFeiraPrimeiroHorário = new Aula("P2 - Terca 18:30", DateTimeConstants.TUESDAY, primeiroHorário);
+        aulaJpa.create(aulaProfessor2TercaFeiraPrimeiroHorário);
+        
+        Aula aulaProfessor2TercaFeiraSegundoHorário = new Aula("P2 - Terca 20:00", DateTimeConstants.TUESDAY, segundoHorário);
+        aulaJpa.create(aulaProfessor2TercaFeiraSegundoHorário);
+        
+        Aula aulaProfessor2TercaFeiraTerceiroHorário = new Aula("P2 - Terca 21:30", DateTimeConstants.TUESDAY, terceiroHorário);
+        aulaJpa.create(aulaProfessor2TercaFeiraTerceiroHorário);
+        
+        Professor prof2 = new Professor("Professor2", "Professor2");        
+        prof2.adicionarAula(aulaProfessor2SegundaFeiraPrimeiroHorário);
+        prof2.adicionarAula(aulaProfessor2TercaFeiraPrimeiroHorário);
+        prof2.adicionarAula(aulaProfessor2TercaFeiraSegundoHorário);        
+        prof2.adicionarAula(aulaProfessor2TercaFeiraTerceiroHorário);        
+        profJpa.create(prof2);
+                
+        Aula aulaProfessor3SegundaFeiraSegundoHorário = new Aula("P3 - Segunda 20:00", DateTimeConstants.MONDAY, segundoHorário);
+        aulaJpa.create(aulaProfessor3SegundaFeiraSegundoHorário);
+        
+        Aula aulaProfessor3SegundaFeiraTerceiroHorário = new Aula("P3 - Segunda 21:30", DateTimeConstants.MONDAY, terceiroHorário);
+        aulaJpa.create(aulaProfessor3SegundaFeiraTerceiroHorário);
+        
+        Professor prof3 = new Professor("Professor3", "Professor3");        
+        prof3.adicionarAula(aulaProfessor3SegundaFeiraSegundoHorário);
+        prof3.adicionarAula(aulaProfessor3SegundaFeiraTerceiroHorário);
+        profJpa.create(prof3);        
     }
     
     private static void populateProfessores(EntityManagerFactory emf){
         
         AulaJpaController aulaJpa = new AulaJpaController(emf);
         
-        DateTime comeco1 = new DateTime(2013, 06, 10, 10, 10);
-        DateTime fim1 = new DateTime(2013, 06, 10, 10, 20);
+        DateTime inícioPrimeiroHorário = new DateTime(1900, 01, 01, 18, 30);
+        DateTime finalPrimeiroHorário = new DateTime(1900, 01, 01, 20, 00);        
+        Interval primeiroHorário = new Interval(inícioPrimeiroHorário, finalPrimeiroHorário);
         
-        Interval periodo = new Interval(comeco1, fim1);
+        DateTime inícioSegundoHorário = new DateTime(1900, 01, 01, 20, 00);
+        DateTime finalSegundoHorário = new DateTime(1900, 01, 01, 21, 30);        
+        Interval segundoHorário = new Interval(inícioSegundoHorário, finalSegundoHorário);
         
-        Aula aula = new Aula(DateTimeConstants.MONDAY, periodo);
-        aulaJpa.create(aula);
+        DateTime inícioTerceiroHorário = new DateTime(1900, 01, 01, 21, 30);
+        DateTime finalTerceiroHorário = new DateTime(1900, 01, 01, 23, 00);        
+        Interval terceiroHorário = new Interval(inícioTerceiroHorário, finalTerceiroHorário);
         
-        DateTime comeco2 = new DateTime(2013, 06, 10, 18, 20);
-        DateTime fim2 = new DateTime(2013, 06, 10, 20, 0);
+        Aula testeDeSoftwareSegundaFeiraSegundoHorário = new Aula("Teste de Software", DateTimeConstants.MONDAY, segundoHorário);
+        aulaJpa.create(testeDeSoftwareSegundaFeiraSegundoHorário);
         
-        Interval periodo2 = new Interval(comeco2, fim2);
-
+        Aula testeDeSoftwareTerçaFeiraSegundoHorário = new Aula("Teste de Software", DateTimeConstants.TUESDAY, segundoHorário);
+        aulaJpa.create(testeDeSoftwareTerçaFeiraSegundoHorário);
         
-        //Periodo periodo2 = new Periodo(comeco2, fim2);
+        Aula processosEPadrõesSegundaFeiraPrimeiroHorário = new Aula("Processos e Padrões", DateTimeConstants.MONDAY, primeiroHorário);
+        aulaJpa.create(processosEPadrõesSegundaFeiraPrimeiroHorário);
         
-        Aula aula2 = new Aula(DateTimeConstants.MONDAY, periodo2);
-        aulaJpa.create(aula2);
+        Aula processosEPadrõesQuartaFeiraTerceiroHorário = new Aula("Processos e Padrões", DateTimeConstants.WEDNESDAY, terceiroHorário);
+        aulaJpa.create(processosEPadrõesQuartaFeiraTerceiroHorário);
         
-        Professor prof1 = new Professor("Calebe", "calebe");
+        Aula sistemasConcorrentesSegundaFeiraSegundoHorário = new Aula("Sistemas Concorrentes e Distribuídos", DateTimeConstants.MONDAY, segundoHorário);
+        aulaJpa.create(sistemasConcorrentesSegundaFeiraSegundoHorário);
         
-        prof1.adicionarAula(aula);
+        Aula programaçãoFuncionalQuartaFeiraTerceiroHorário = new Aula("Programação Funcional", DateTimeConstants.WEDNESDAY, terceiroHorário);
+        aulaJpa.create(programaçãoFuncionalQuartaFeiraTerceiroHorário);
+                        
+        Professor prof1 = new Professor("Calebe", "calebe");        
+        prof1.adicionarAula(testeDeSoftwareSegundaFeiraSegundoHorário);
+        prof1.adicionarAula(testeDeSoftwareTerçaFeiraSegundoHorário);
         
         Professor prof2 = new Professor("Ana Claudia", "anarossi");
-        prof2.adicionarAula(aula2);
+        prof2.adicionarAula(processosEPadrõesSegundaFeiraPrimeiroHorário);
+        prof2.adicionarAula(processosEPadrõesQuartaFeiraTerceiroHorário);
         
-        Professor prof3 = new Professor("Vilar", "vilar");
-        
-        DateTime comeco3 = new DateTime(2013, 06, 10, 9, 0);
-        DateTime fim3 = new DateTime(2013, 06, 10, 11, 0);
-        
-        Interval periodo3 = new Interval(comeco3, fim3);
-        
-        Aula aula3 = new Aula(DateTimeConstants.MONDAY, periodo3);
-        aulaJpa.create(aula3);
-        
-        prof3.adicionarAula(aula3);
-        
-        //prof1.adicionarAula(aula);
-        
+        Professor prof3 = new Professor("Vilar", "vilar");        
+        prof3.adicionarAula(programaçãoFuncionalQuartaFeiraTerceiroHorário);
+                
         Professor prof4 = new Professor("Gaston", "gaston");
         
-        
-        //prof2.adicionarAula(aula2);
-        
         Professor prof5 = new Professor("Denise", "denise");
-        //prof1.adicionarAula(aula);
-
-        DateTime comeco4 = new DateTime(2013, 06, 10, 8, 0);
-        DateTime fim4 = new DateTime(2013, 06, 10, 10, 20);
-        
-        Interval periodo4 = new Interval(comeco4, fim4);
-        
-        Aula aula4 = new Aula(DateTimeConstants.MONDAY, periodo4);
-        aulaJpa.create(aula4);
-        
-        prof5.adicionarAula(aula4);
-        
-        
+        prof5.adicionarAula(sistemasConcorrentesSegundaFeiraSegundoHorário);
+                
         ProfessorJpaController profJpa = new ProfessorJpaController(emf);
         
         profJpa.create(prof1);
@@ -220,32 +292,30 @@ public class PopulateDB {
         
         UsuarioJpaController usuarioJpa = new UsuarioJpaController(emf);
         
-        Usuario u1 = new Usuario("calebe");
+        Usuario u1 = Usuario.createUsuarioPadrao("calebe");
         u1.setPermissao(Perfil.PROFESSOR);
-        
-        
-        Usuario u2 = new Usuario("jane");
+                
+        Usuario u2 = Usuario.createUsuarioPadrao("jane");
         u2.setPermissao(Perfil.FUNCIONARIO);
         u2.setSenha("mackenzie");
         
-        Usuario u3 = new Usuario("admin");
+        Usuario u3 = Usuario.createUsuarioPadrao("admin");
         u3.setSenha("admin");
         u3.setPermissao(Perfil.ADMINISTRADOR);
         
-        Usuario u4 = new Usuario("anarossi");
+        Usuario u4 = Usuario.createUsuarioPadrao("anarossi");
         u4.setPermissao(Perfil.PROFESSOR);
         
-        Usuario u5 = new Usuario("vilar");
+        Usuario u5 = Usuario.createUsuarioPadrao("vilar");
         u5.setPermissao(Perfil.PROFESSOR);
         
-        Usuario u6 = new Usuario("gaston");
+        Usuario u6 = Usuario.createUsuarioPadrao("gaston");
         u6.setPermissao(Perfil.PROFESSOR);
         
         
-        Usuario u7 = new Usuario("denise");
+        Usuario u7 = Usuario.createUsuarioPadrao("denise");
         u7.setPermissao(Perfil.PROFESSOR);
-        
-        
+                
         usuarioJpa.create(u1);
         usuarioJpa.create(u2);
         usuarioJpa.create(u3);
@@ -265,39 +335,6 @@ public class PopulateDB {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
         PopulateDB.populateProfessores(emf);        
     }
-
-    private static void populateAusencia(EntityManagerFactory emf) throws NonexistentEntityException, Exception {
-        
-        AusenciaJpaController ausenciaJpa = new AusenciaJpaController(emf);
-        ProfessorJpaController professorJpa = new ProfessorJpaController(emf);
-        
-        DateTime d1 = new DateTime(2013, 05, 02, 0, 0);
-        DateTime d2 = new DateTime(2013, 05, 02, 0, 0);
-        
-        Interval periodo = new Interval(d1, d2);
-        
-        Professor professorAusente = professorJpa.findProfessor("Gaston");
-        
-        Ausencia ausencia = new Ausencia("1234", periodo, professorAusente, "Um motivo");
-        
-        Professor professorSubstituto = professorJpa.findProfessor("Denise");
-        ausencia.indicarSubstituto(professorSubstituto);
-        
-        ausenciaJpa.create(ausencia);
-        
-        
-        
-//        
-//        Ausencia ausencia2 = ausenciaJpa.findAusencia("1234");
-//        
-//        
-//        
-//        ausencia2.indicarSubstituto(professorSubstituto);
-//        
-//        ausenciaJpa.edit(ausencia2);
-        
-    }
-    
 }
 
 

@@ -4,9 +4,11 @@
  */
 package servico;
 
+import datamapper.AusenciaJpaController;
 import datamapper.PopulateDB;
 import datamapper.ProfessorJpaController;
 import datamapper.exceptions.NonexistentEntityException;
+import dominio.Ausencia;
 import dominio.Professor;
 import modelo.ProfessorModel;
 import servico.ProfessorService;
@@ -66,30 +68,54 @@ public class ProfessorServiceTest {
         
         modelo = serviceEmTeste.obterProfessorPorNome("Calebe");
         
-        Assert.assertNotNull(modelo);
+        Assert.assertNotNull(modelo);        
+    }
+    
+    @Test
+    public void testeDeveAcharProfessorPorNomeDeUsuario(){
         
+        ProfessorModel modelo = serviceEmTeste.obterProfessorPorUsername("ariovaldsssonnnn");
+        
+        Assert.assertNull(modelo);
+        
+        modelo = serviceEmTeste.obterProfessorPorUsername("calebe");
+        
+        Assert.assertNotNull(modelo);        
     }
     
     @Test
     public void testeDeveListarProfessoresPossiveisDadoUmPeriodoDeAusenciaEAulasDeProfessorAusente(){
         
-        //02/06/2013 até 04/06/2013
-        
-        DateTime inicio = new DateTime(2013, 06, 02, 0, 0);
-        DateTime fim = new DateTime(2013, 06, 04, 0, 0);
-        
+        //Ausência numa segunda feira.
+        DateTime inicio = new DateTime(2013, 11, 18, 0, 0);
+        DateTime fim = new DateTime(2013, 11, 18, 23, 59);        
         Interval periodo = new Interval(inicio, fim);
         
-        List<ProfessorModel> professoresDisponiveis = serviceEmTeste.listarProfessoresCompativeisComAusenteNoPeriodo("Calebe", periodo);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
+        ProfessorJpaController professoresRepository = new ProfessorJpaController(emf);
+        Professor calebe = professoresRepository.findProfessor("Calebe");
         
-        Assert.assertEquals(2, professoresDisponiveis.size());
+        List<Ausencia> ausencias = calebe.gerarAusencias(periodo, "Vou faltar");
         
-        ProfessorModel prof1 = serviceEmTeste.obterProfessorPorNome("Ana Claudia");
+        assertEquals(1, ausencias.size());
         
+        AusenciaJpaController ausenciasRepositorty = new AusenciaJpaController(emf);
+        ausenciasRepositorty.create(ausencias.get(0));
+        
+        ausencias = ausenciasRepositorty.findAusenciaEntities();
+        assertEquals(1, ausencias.size());
+        
+        List<ProfessorModel> professoresDisponiveis = serviceEmTeste.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).getId().toString());
+        
+        Assert.assertEquals(3, professoresDisponiveis.size());
+        
+        ProfessorModel prof1 = serviceEmTeste.obterProfessorPorNome("Ana Claudia");        
         ProfessorModel prof2 = serviceEmTeste.obterProfessorPorNome("Gaston");
+        ProfessorModel prof3 = serviceEmTeste.obterProfessorPorNome("Vilar");
         
         Assert.assertTrue(professoresDisponiveis.contains(prof1));
         Assert.assertTrue(professoresDisponiveis.contains(prof2));
+        Assert.assertTrue(professoresDisponiveis.contains(prof3));
         
     }
     

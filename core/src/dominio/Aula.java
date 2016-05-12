@@ -32,17 +32,17 @@ public class Aula implements Serializable {
     @Type(type="org.joda.time.contrib.hibernate.PersistentInterval")    
     private Interval periodo;
     
+    private String nome;
     private int diaDaSemana;
     
     protected Aula(){
         
     }
 
-    public Aula(int diaDaSemana, Interval periodo) {
-        
+    public Aula(String nome, int diaDaSemana, Interval periodo) {
+        this.nome = nome;
         this.periodo = periodo;
-        this.diaDaSemana = diaDaSemana;
-        
+        this.diaDaSemana = diaDaSemana;        
     }
 
     public Long getId() {
@@ -97,6 +97,10 @@ public class Aula implements Serializable {
      */
     public int getDiaDaSemana() {
         return diaDaSemana;
+    }
+    
+    public String getNome() {
+        return nome;
     }
 
     public boolean bateCom(Aula outraAula) {

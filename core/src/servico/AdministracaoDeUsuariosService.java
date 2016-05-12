@@ -31,7 +31,7 @@ public class AdministracaoDeUsuariosService {
     
     public void SalvarUsuario(String Nome, String Senha, Perfil profile){
         UsuarioJpaController controller = new UsuarioJpaController(emf);
-        Usuario usuario = new Usuario(Nome);
+        Usuario usuario = Usuario.createUsuarioPadrao(Nome);
         usuario.setSenha(Senha);
         usuario.setPermissao(profile);
         controller.create(usuario);

@@ -17,9 +17,9 @@ import static org.junit.Assert.*;
  */
 public class UsuarioTest {
 
-    private Usuario User;
+    private Usuario objetoEmTeste;
     private Perfil profile;
-    private String Usuario;
+    private String usuario;
     private String Senha;
     
     public UsuarioTest() {
@@ -28,9 +28,9 @@ public class UsuarioTest {
     @Before
     public void setUp() {
         
-        User = new Usuario("Calebe");
+        objetoEmTeste = Usuario.createUsuarioPadrao("Calebe");
         profile = Perfil.FUNCIONARIO;
-        Usuario = "Calebe";
+        usuario = "Calebe";
         Senha = "123456";
     }
     
@@ -45,26 +45,77 @@ public class UsuarioTest {
     
     @Test
     public void ValidaSenhaOk(){
-        Assert.assertEquals(User.getSenha(), Senha);
+        Assert.assertEquals(objetoEmTeste.getSenha(), Senha);
         //Alterando senha para teste negativo
         this.Senha = "1234567";
-        Assert.assertNotSame(User.getSenha(), this.Senha);
+        Assert.assertNotSame(objetoEmTeste.getSenha(), this.Senha);
     }
    
     
     @Test
     public void ValidaPermissao(){
-        Assert.assertEquals(User.getPermissao(), profile);
+        Assert.assertEquals(objetoEmTeste.getPermissao(), profile);
         //Alterando profile para teste negativo
         this.profile = Perfil.ADMINISTRADOR;
-        Assert.assertNotSame(User.getPermissao(), this.profile);
+        Assert.assertNotSame(objetoEmTeste.getPermissao(), this.profile);
     }
     
     @Test
     public void UsuarioNaoVazio(){
-        Assert.assertNotNull(User.getUsuario());
-        this.Usuario = null;
-        Assert.assertNotSame(User.getUsuario(), this.Usuario);
+        Assert.assertNotNull(objetoEmTeste.getUsuario());
+        this.usuario = null;
+        Assert.assertNotSame(objetoEmTeste.getUsuario(), this.usuario);
     }
     
+    @Test
+    public void testeDevePermitirDefinirEConsultarIdDeUmUsuario(){        
+        Long x = new Long("0");        
+        assertEquals(null, objetoEmTeste.getId());
+        
+        objetoEmTeste.setId(x);
+        assertEquals(x, objetoEmTeste.getId());
+    }
+    
+    @Test
+    public void testeDeveReportarCorretamenteToString(){
+        Long x = new Long("0");    
+        objetoEmTeste.setId(x);
+        
+        assertEquals("Dominio.Usuario[ id=0 ]", objetoEmTeste.toString());
+        
+        x = new Long("10");    
+        objetoEmTeste.setId(x);
+        assertEquals("Dominio.Usuario[ id=10 ]", objetoEmTeste.toString());        
+    }
+    
+    @Test
+    public void testeDeveReportarCorretamenteOHashCode(){
+        int hashCode = 0;
+        assertEquals(hashCode, objetoEmTeste.hashCode());
+        
+        Long x = new Long("0");  
+        objetoEmTeste.setId(x);
+        
+        hashCode = x.hashCode();
+        assertEquals(hashCode, objetoEmTeste.hashCode());
+    }
+    
+    @Test
+    public void testeDeveSerConsideradoIgualSomenteAOutroProfessorDeIdIdentica()
+    {
+        Long x = new Long("0");  
+        assertFalse(objetoEmTeste.equals(x));           
+        
+        Usuario outro = Usuario.createUsuarioPadrao("Bob");
+        assertTrue(objetoEmTeste.equals(outro));  
+        
+        outro.setId(x);
+        assertFalse(objetoEmTeste.equals(outro));      
+                
+        objetoEmTeste.setId(x);
+        assertTrue(objetoEmTeste.equals(outro));  
+        
+        outro = Usuario.createUsuarioPadrao("Bob");
+        assertFalse(objetoEmTeste.equals(outro));       
+    }    
 }

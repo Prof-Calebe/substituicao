@@ -289,7 +289,7 @@ public class NotificacaoDeAusencia extends javax.swing.JFrame {
             
             Interval periodo = new Interval(inicio, fim);
             
-            List<ProfessorModel> professores = profService.listarProfessoresCompativeisComAusenteNoPeriodo(nomeProfEscolhido, periodo);
+            List<ProfessorModel> professores = profService.ListarProfessores();
             
             cmb_ProfessorSugerido.addItem("- Indique professores - ");
             

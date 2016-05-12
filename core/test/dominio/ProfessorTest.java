@@ -104,13 +104,13 @@ public class ProfessorTest {
         
         Interval p8 = new Interval(limiteInfP8, limiteSupP8);
         
-        aula1 = new Aula(Calendar.MONDAY, p1);
-        aula2 = new Aula(Calendar.TUESDAY, p2);
-        aula3 = new Aula(Calendar.WEDNESDAY, p3);
-        aula4 = new Aula(Calendar.THURSDAY, p4);
-        aula5 = new Aula(Calendar.THURSDAY, p5);
-        aula6 = new Aula(Calendar.MONDAY, p6);
-        aula7 = new Aula(Calendar.SATURDAY, p7);
+        aula1 = new Aula("Aula1", Calendar.MONDAY, p1);
+        aula2 = new Aula("Aula2", Calendar.TUESDAY, p2);
+        aula3 = new Aula("Aula3", Calendar.WEDNESDAY, p3);
+        aula4 = new Aula("Aula4", Calendar.THURSDAY, p4);
+        aula5 = new Aula("Aula5", Calendar.THURSDAY, p5);
+        aula6 = new Aula("Aula6", Calendar.MONDAY, p6);
+        aula7 = new Aula("Aula7", Calendar.SATURDAY, p7);
         
         aulas = new LinkedList<Aula>();
         
@@ -164,79 +164,173 @@ public class ProfessorTest {
         
         Assert.assertTrue(objetoEmTeste.EhCompativelCom(aulas));
     }
-    
-    @Test
-    public void testeDeveDevolverAulasQuePerdeNoPeriodo(){
-        
-        DateTime inicio1 = new DateTime(2013, 05, 24, 10, 10);
-        DateTime fim1 = new DateTime(2013, 05, 26, 10, 30);
-        
-        Interval ausencia1 = new Interval(inicio1, fim1);
-        
+   
+    private Aula setUpAulaSextaFeira() {
+        DateTime inicioAula2 = new DateTime(2013, 05, 24, 05, 0);
+        DateTime fimAula2 = new DateTime(2013, 05, 24, 07, 0);
+        Interval intervalAula2 = new Interval(inicioAula2, fimAula2);
+        Aula aula2 = new Aula("Aula2", DateTimeConstants.FRIDAY, intervalAula2);
+        objetoEmTeste = new Professor("outroProf", "username");
+        objetoEmTeste.adicionarAula(aula2);
+        return aula2;
+    }
+
+    private void setUpAulaTerçaFeira() {
         DateTime inicioAula1 = new DateTime(2013, 05, 24, 19, 20);
         DateTime fimAula1 = new DateTime(2013, 05, 24, 21, 0);
         
         Interval intervalAula1 = new Interval(inicioAula1, fimAula1);
         
-        Aula aula1 = new Aula(DateTimeConstants.TUESDAY, intervalAula1);
+        Aula aula1 = new Aula("Aula1", DateTimeConstants.TUESDAY, intervalAula1);
         
         objetoEmTeste = new Professor("umProf", "username");
         objetoEmTeste.adicionarAula(aula1);
-        
-        List<Aula> aulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(ausencia1);
-        
-        Assert.assertEquals(0, aulasPerdidas.size());
-        
-        DateTime inicioAula2 = new DateTime(2013, 05, 24, 05, 0);
-        DateTime fimAula2 = new DateTime(2013, 05, 24, 07, 0);
-        
-        Interval intervalAula2 = new Interval(inicioAula2, fimAula2);
-        
-        Aula aula2 = new Aula(DateTimeConstants.FRIDAY, intervalAula2);     
-        
-        objetoEmTeste = new Professor("outroProf", "username");
-        objetoEmTeste.adicionarAula(aula2);
-        
-        aulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(ausencia1);
-        
-        Assert.assertEquals(1, aulasPerdidas.size());
-        Assert.assertEquals(aula2, aulasPerdidas.toArray()[0]);
-        
-        
-        
-        DateTime inicio2 = new DateTime(2013, 05, 29, 10, 00);
-        DateTime fim2 = new DateTime(2013, 05, 29, 14, 00);
-        
-        Interval ausencia2 = new Interval(inicio2, fim2);
-        
-        DateTime inicioAula3 = new DateTime(2013, 05, 24, 10, 0);
-        DateTime fimAula3 = new DateTime(2013, 05, 24, 11, 0);
-        
-        Interval intervalAula3 = new Interval(inicioAula3, fimAula3);
-        
-        Aula aula3 = new Aula(DateTimeConstants.WEDNESDAY, intervalAula3);      
-        
-        objetoEmTeste = new Professor("outroProf", "username");
-        objetoEmTeste.adicionarAula(aula3);
-        
-        aulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(ausencia2);
-        
-        Assert.assertEquals(1, aulasPerdidas.size());
-        Assert.assertEquals(aula3, aulasPerdidas.toArray()[0]);
+    }
 
-        DateTime inicioAula4 = new DateTime(2013, 05, 24, 15, 0);
-        DateTime fimAula4 = new DateTime(2013, 05, 24, 17, 0);
+    private Interval setUpAusenciaSextaESábado() {
+        DateTime inicio1 = new DateTime(2013, 05, 24, 10, 10);
+        DateTime fim1 = new DateTime(2013, 05, 26, 10, 30);
+        Interval ausencia1 = new Interval(inicio1, fim1);
+        return ausencia1;
+    }
+    
+    @Test
+    public void testeDeveReportarCorretamenteToString(){
+        Long x = new Long("0");    
+        objetoEmTeste.setId(x);
         
-        Interval intervalAula4 = new Interval(inicioAula4, fimAula4);
+        assertEquals("Dominio.Professor[ id=0 ]", objetoEmTeste.toString());
         
-        Aula aula4 = new Aula(DateTimeConstants.WEDNESDAY, intervalAula4);      
+        x = new Long("10");    
+        objetoEmTeste.setId(x);
+        assertEquals("Dominio.Professor[ id=10 ]", objetoEmTeste.toString());        
+    }
+    
+    @Test
+    public void testeDeveSerConsideradoIgualSomenteAOutroProfessorDeIdIdentica()
+    {
+        Long x = new Long("0");  
+        assertFalse(objetoEmTeste.equals(x));           
         
-        objetoEmTeste = new Professor("outroProf", "username");
-        objetoEmTeste.adicionarAula(aula4);
+        Professor outro = new Professor(nome, username);
+        assertTrue(objetoEmTeste.equals(outro));  
         
-        aulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(ausencia2);
+        outro.setId(x);
+        assertFalse(objetoEmTeste.equals(outro));      
+                
+        objetoEmTeste.setId(x);
+        assertTrue(objetoEmTeste.equals(outro));  
         
-        Assert.assertEquals(0, aulasPerdidas.size());        
+        outro = new Professor(nome, username);        
+        assertFalse(objetoEmTeste.equals(outro));       
+    }
+    
+    @Test
+    public void testeDeveReportarCorretamenteOHashCode(){
+        int hashCode = 0;
+        assertEquals(hashCode, objetoEmTeste.hashCode());
         
+        Long x = new Long("0");  
+        objetoEmTeste.setId(x);
+        
+        hashCode = x.hashCode();
+        assertEquals(hashCode, objetoEmTeste.hashCode());
+    }
+    
+    @Test(expected=IllegalStateException.class)
+    public void testeNãoDevePermitirAdicionarAulasNulas(){
+        objetoEmTeste.adicionarAula(null);
+    }
+    
+    @Test(expected=IllegalStateException.class)
+    public void testeNãoDevePermitirAdicionarAulasDuplicadas(){
+        DateTime inicioAula1 = new DateTime(2013, 05, 24, 19, 20);
+        DateTime fimAula1 = new DateTime(2013, 05, 24, 21, 0);
+        
+        Interval intervalAula1 = new Interval(inicioAula1, fimAula1);
+        
+        Aula aula1 = new Aula("Aula1", DateTimeConstants.TUESDAY, intervalAula1);
+        
+        objetoEmTeste.adicionarAula(aula1);
+        
+        objetoEmTeste.adicionarAula(aula1);
+    }
+    
+    @Test
+    public void testeDeveGerarAusenciasParaAsAulasExistentesEmUmDeterminadoPeríodo()
+    {
+        DateTime inícioPrimeiroHorário = new DateTime(1900, 01, 01, 18, 30);
+        DateTime finalPrimeiroHorário = new DateTime(1900, 01, 01, 20, 00);                      
+        Interval primeiroHorário = new Interval(inícioPrimeiroHorário, finalPrimeiroHorário);
+        
+        DateTime inícioSegundoHorário = new DateTime(1900, 01, 01, 20, 00);
+        DateTime finalSegundoHorário = new DateTime(1900, 01, 01, 21, 30);                      
+        Interval segundoHorário = new Interval(inícioSegundoHorário, finalSegundoHorário);
+        
+        Aula segundaFeiraPrimeiroHorário = new Aula("Aula1", org.joda.time.DateTimeConstants.MONDAY, primeiroHorário);
+        segundaFeiraPrimeiroHorário.setId(new Long("1"));        
+        
+        Aula segundaFeiraSegundoHorário = new Aula("Aula2", org.joda.time.DateTimeConstants.MONDAY, segundoHorário);
+        segundaFeiraSegundoHorário.setId(new Long("2"));
+        
+        Aula terçaFeiraPrimeiroHorário = new Aula("Aula3", org.joda.time.DateTimeConstants.TUESDAY, primeiroHorário);
+        terçaFeiraPrimeiroHorário.setId(new Long("3"));
+        
+        Aula quartaFeiraSegundoHorário = new Aula("Aula4", org.joda.time.DateTimeConstants.WEDNESDAY, segundoHorário);
+        quartaFeiraSegundoHorário.setId(new Long("4"));
+        
+        objetoEmTeste.adicionarAula(segundaFeiraPrimeiroHorário);
+        objetoEmTeste.adicionarAula(segundaFeiraSegundoHorário);
+        objetoEmTeste.adicionarAula(quartaFeiraSegundoHorário);
+        
+        DateTime inícioAusência = new DateTime(2013,11,18,00,00);
+        DateTime finalAusência = new DateTime(2013,11,20,23,59);
+        Interval períodoDeAusência = new Interval(inícioAusência, finalAusência);
+        
+        List<Ausencia> ausências = objetoEmTeste.gerarAusencias(períodoDeAusência,"sem saco");
+        
+        assertEquals(3, ausências.size());
+        
+        inícioAusência = new DateTime(2013,11,18,00,00);
+        finalAusência = new DateTime(2013,11,26,23,59);
+        períodoDeAusência = new Interval(inícioAusência, finalAusência);
+        
+        ausências = objetoEmTeste.gerarAusencias(períodoDeAusência,"sem saco");
+        assertEquals(5, ausências.size());
+        
+        inícioAusência = new DateTime(2013,11,18,17,00);
+        finalAusência = new DateTime(2013,11,18,19,00);
+        períodoDeAusência = new Interval(inícioAusência, finalAusência);
+        
+        ausências = objetoEmTeste.gerarAusencias(períodoDeAusência,"sem saco");
+        assertEquals(1, ausências.size());
+        
+        inícioAusência = new DateTime(2013,11,18,17,00);
+        finalAusência = new DateTime(2013,11,18,20,00);
+        períodoDeAusência = new Interval(inícioAusência, finalAusência);
+        
+        ausências = objetoEmTeste.gerarAusencias(períodoDeAusência,"sem saco");
+        assertEquals(1, ausências.size());
+        
+        inícioAusência = new DateTime(2013,11,18,17,00);
+        finalAusência = new DateTime(2013,11,18,20,01);
+        períodoDeAusência = new Interval(inícioAusência, finalAusência);
+        
+        ausências = objetoEmTeste.gerarAusencias(períodoDeAusência,"sem saco");
+        assertEquals(2, ausências.size());
+        
+        inícioAusência = new DateTime(2013,11,18,00,00);
+        finalAusência = new DateTime(2013,11,19,23,59);
+        períodoDeAusência = new Interval(inícioAusência, finalAusência);
+        
+        ausências = objetoEmTeste.gerarAusencias(períodoDeAusência,"sem saco");
+        assertEquals(2, ausências.size());
+        
+        inícioAusência = new DateTime(2013,11,18,00,00);
+        finalAusência = new DateTime(2013,11,18,23,59);
+        períodoDeAusência = new Interval(inícioAusência, finalAusência);
+        
+        ausências = objetoEmTeste.gerarAusencias(períodoDeAusência,"sem saco");
+        assertEquals(2, ausências.size());
     }
 }
