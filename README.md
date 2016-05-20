@@ -1,4 +1,4 @@
-# Sistema de substituição de professores.
+# Sistema de substituição de professores. [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5baebcd1bb1b4dfb9016a7fd1e5b5200)](https://www.codacy.com/app/calebepb/substituicao?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Prof-Calebe/substituicao&amp;utm_campaign=Badge_Grade)
 
 Sistema para controle de professores substitutos.
 
@@ -22,5 +22,7 @@ Assim, utilizaremos [No Switch Yard (NoSY)](http://geant.cern.ch/content/suggest
 
 Alguns serviços automáticos foram associados a este repositório:
 - [Travis-CI](https://travis-ci.org/Prof-Calebe/substituicao)
-- [codacy](https://www.codacy.com/app/calebepb/substituicao/dashboard)
+- [Codacy](https://www.codacy.com/app/calebepb/substituicao/dashboard)
+
+**Muito cuidado** ao manipular o hook do Codacy, pois ele utiliza uma variável de ambiente com uma _chave secreta_ para enviar o relatório de code coverity para o dashborad. Se essa chave for pública, o dashboard ficará comprometido.
 
