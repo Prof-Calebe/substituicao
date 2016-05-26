@@ -4,19 +4,19 @@ Sistema para controle de professores substitutos.
 
 ### Issues
 
-Qualquer tarefa ou problema deve ser reportado como uma Issue **antes** de ser qualquer coisa, seja a realização de uma tarefa, ou a correção de um problema.
+Qualquer tarefa ou problema deve ser reportado como uma Issue **antes** de executar qualquer coisa, seja a realização de uma tarefa, ou a correção de um problema.
 
-Além disso, um desenvolvedor somente poderá trabalhar na Issue quando ela for classificada (bug, enhancement, etc) pelo dono do produto ou usário.
+Além disso, um desenvolvedor somente poderá trabalhar na Issue quando ela for classificada (bug, enhancement, etc) e/ou comentada pelo dono do produto ou usuário.
 
 ### Wiki
 
-Qualquer alteração na Wiki somente será feita depois de uma Issue específica para isso (veja item anterior) e de sua discussão/explicação por meio dos comentários da Issue.
+Qualquer alteração na Wiki somente será feita depois de uma Issue específica para isso (veja item anterior) e de sua discussão/explicação por meio dos comentários da própria Issue.
 
 ### Git & Branches
 
 O correto uso de git é fundamental. Assim, evitando problemas futuros, as branches `master` e `dev` estão bloqueadas para `push` e somente serão atualizadas por meio de `pull requests`. Estes serão inspecionados **por todos** os desenvolvedores e, caso algum problema seja encontrado, deverá ser corrigido antes de ser aceito.
 
-Assim, utilizaremos [No Switch Yard (NoSY)](http://geant.cern.ch/content/suggested-work-flow-distributed-projects-nosy) como workflow, além de usar um [modelo específico](http://nvie.com/posts/a-successful-git-branching-model/) para definição de branches.
+Assim, utilizaremos [No Switch Yard (NoSY)](http://geant.cern.ch/content/suggested-work-flow-distributed-projects-nosy) como workflow, além de usar um [Git Branch Model](http://nvie.com/posts/a-successful-git-branching-model/) específico para criação de `branches` e `pull requests`.
 
 ### Hooks
 
