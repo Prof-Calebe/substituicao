@@ -1,4 +1,4 @@
-# Sistema de substituição de professores. [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5baebcd1bb1b4dfb9016a7fd1e5b5200)](https://www.codacy.com/app/calebepb/substituicao?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Prof-Calebe/substituicao&amp;utm_campaign=Badge_Grade)
+# Sistema de substituição de professores. [![Build Status](https://travis-ci.org/Prof-Calebe/substituicao.svg?branch=master)](https://travis-ci.org/Prof-Calebe/substituicao) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5baebcd1bb1b4dfb9016a7fd1e5b5200)](https://www.codacy.com/app/calebepb/substituicao?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Prof-Calebe/substituicao&amp;utm_campaign=Badge_Grade)
 
 Sistema para controle de professores substitutos.
 
