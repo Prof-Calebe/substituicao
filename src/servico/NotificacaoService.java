@@ -108,20 +108,6 @@ public class NotificacaoService {
         return modelos;
     }
     
-    private String determinarEstado(EstadoAusencia estado){
-        if(estado == EstadoAusencia.Ausencia_Cancelada)
-            return "Ausência cancelada";
-        else if(estado == EstadoAusencia.Alocacao_Efetuada)
-            return "Alocação efetuada";
-        else if(estado == EstadoAusencia.Alocacao_Pendente)
-            return "Alocação pendente";
-        else if(estado == EstadoAusencia.Alocacao_Confirmada)
-            return "Alocação confirmada";
-        else{
-            return "Aulas canceladas";
-        }
-    }
-    
     /*
     public List<AusenciaModel> listarAusenciasPorEstado(EstadoAusencia estado){
         
@@ -237,7 +223,7 @@ public class NotificacaoService {
         }
         
         //modelo.professorSubstituto = ausencia.getIndicacoesSubstitutos().getNome();
-        modelo.estado = this.determinarEstado(ausencia.getEstado());
+        modelo.estado = ausencia.getEstado().getDescricao();
         modelo.id = ausencia.getId();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Interval periodo = ausencia.getPeriodo();
