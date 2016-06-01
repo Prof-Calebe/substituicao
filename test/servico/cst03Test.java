@@ -56,7 +56,7 @@ public class cst03Test {
     public void testeNotificaçãoDeAusência_SemMotivo() throws ParseException
     {
         LoginService loginService = new LoginService();
-        assertTrue(loginService.VerificarUsuarioESenha("Funcionario1", "123456"));
+        assertTrue(loginService.verificarUsuarioESenha("Funcionario1", "123456"));
         
         ProfessorService professorService = new ProfessorService();
         ProfessorModel professor = professorService.obterProfessorPorNome("Professor1");
@@ -76,7 +76,7 @@ public class cst03Test {
             exceptionOk = true;
         }
         
-        assertTrue(loginService.VerificarUsuarioESenha("Administrador", "123456"));
+        assertTrue(loginService.verificarUsuarioESenha("Administrador", "123456"));
         ausencias = notificaçãoService.listarAusencias();        
         assertEquals(0, ausencias.size());
         assertTrue(exceptionOk);

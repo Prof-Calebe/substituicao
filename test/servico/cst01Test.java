@@ -55,7 +55,7 @@ public class cst01Test {
     public void testeNotificaçãoDeAusência_ÚnicoHorário() throws ParseException
     {
         LoginService loginService = new LoginService();
-        assertTrue(loginService.VerificarUsuarioESenha("Funcionario1", "123456"));
+        assertTrue(loginService.verificarUsuarioESenha("Funcionario1", "123456"));
         
         ProfessorService professorService = new ProfessorService();
         ProfessorModel professor = professorService.obterProfessorPorNome("Professor1");
@@ -66,7 +66,7 @@ public class cst01Test {
         
         notificaçãoService.notificarAusencia(professor.id, "25/11/2013 20:01", "25/11/2013 21:29", "Motivo Declarado", new LinkedList<String>());
         
-        assertTrue(loginService.VerificarUsuarioESenha("Administrador", "123456"));
+        assertTrue(loginService.verificarUsuarioESenha("Administrador", "123456"));
         ausencias = notificaçãoService.listarAusencias();        
         assertEquals(1, ausencias.size());
         assertEquals("Professor1", ausencias.get(0).professorAusente);

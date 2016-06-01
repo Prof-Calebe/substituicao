@@ -202,11 +202,11 @@ public class Professor implements Serializable {
         
         for(Aula aulaPedida : this.getGrade())
         {                    
-            Avaliar(aulaPedida, primeiroDia, motivo, ausencias);
+            avaliar(aulaPedida, primeiroDia, motivo, ausencias);
             
             if(últimoDia != null)
             {
-                Avaliar(aulaPedida, últimoDia, motivo, ausencias);
+                avaliar(aulaPedida, últimoDia, motivo, ausencias);
             }
             
             if(diasCompletos != null)
@@ -220,7 +220,7 @@ public class Professor implements Serializable {
                     DateTime fimDoDiaAtual = new DateTime(diaAtual.getYear(),diaAtual.getMonthOfYear(),diaAtual.getDayOfMonth(),23,59);
                     Interval diaAtualCompleto = new Interval(diaAtual,fimDoDiaAtual);
                     
-                    Avaliar(aulaPedida, diaAtualCompleto, motivo, ausencias);
+                    avaliar(aulaPedida, diaAtualCompleto, motivo, ausencias);
                                     
                     diaAtual = diaAtual.plusDays(1);
                 }                
@@ -230,7 +230,7 @@ public class Professor implements Serializable {
         return ausencias;
     }
 
-    private void Avaliar(Aula aulaPedida, Interval primeiroDia, String motivo, List<Ausencia> ausencias) {
+    private void avaliar(Aula aulaPedida, Interval primeiroDia, String motivo, List<Ausencia> ausencias) {
         if(aulaPedida.getDiaDaSemana() == primeiroDia.getStart().getDayOfWeek())
         {
             if(aulaPedida.bateHorarioCom(primeiroDia))

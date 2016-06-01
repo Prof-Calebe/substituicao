@@ -27,7 +27,7 @@ public class LoginService {
         controller = new UsuarioJpaController(emf);
     }
     
-    public boolean VerificarUsuarioESenha(String usuario, String senha){
+    public boolean verificarUsuarioESenha(String usuario, String senha){
 
         List<Usuario> ListaDeUsuario = controller.findUsuarioEntities();
         

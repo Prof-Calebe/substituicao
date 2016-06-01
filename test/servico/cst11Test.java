@@ -71,7 +71,7 @@ public class cst11Test {
     public void testeRejeitarAlocação() throws ParseException
     {
         LoginService loginService = new LoginService();
-        assertTrue(loginService.VerificarUsuarioESenha("Professor3", "123456"));
+        assertTrue(loginService.verificarUsuarioESenha("Professor3", "123456"));
         
         NotificacaoService notificaçãoService = new NotificacaoService();
         List<AusenciaModel> ausencias = notificaçãoService.listarAusenciasPorSubstituto("Professor3");
