@@ -74,7 +74,7 @@ public class NotificacaoService {
         Interval periodo = new Interval(inícioReal, fimReal);
         
         Professor professor = profController.findProfessor(idProfessor);
-        List<Professor> professoresIndicados = new ArrayList<Professor>();
+        List<Professor> professoresIndicados = new ArrayList<>();
         
         //Professor professorSubstituto = profController.findProfessor(idProfessorSubstituto);
         
@@ -82,7 +82,7 @@ public class NotificacaoService {
                
         List<Ausencia> ausencias = professor.gerarAusencias(periodo, motivo);
         
-        List<String> codigos = new LinkedList<String>();
+        List<String> codigos = new LinkedList<>();
         
         for(Ausencia ausencia : ausencias)
         {
@@ -109,7 +109,7 @@ public class NotificacaoService {
     public List<AusenciaModel> listarAusencias() {
         
         List<Ausencia> ausencias = ausenciaController.findAusenciaEntities();
-        List<AusenciaModel> modelos = new LinkedList<AusenciaModel>();
+        List<AusenciaModel> modelos = new LinkedList<>();
         
         for(Ausencia ausencia : ausencias){
             
@@ -159,7 +159,7 @@ public class NotificacaoService {
         
         List<Ausencia> ausenciasPorProfessor = ausenciaController.listAusenciasPorProfessor(professor);
         
-        List<AusenciaModel> modelos = new ArrayList<AusenciaModel>();
+        List<AusenciaModel> modelos = new ArrayList<>();
         
         for(Ausencia ausencia : ausenciasPorProfessor){
             
@@ -178,7 +178,7 @@ public class NotificacaoService {
         
         List<Ausencia> ausenciasComIndicacaoDeSubstituto = ausenciaController.listAusenciasPorIndicacaoDeSubstituto(professorIndicado);
         
-        List<AusenciaModel> modelos = new ArrayList<AusenciaModel>();
+        List<AusenciaModel> modelos = new ArrayList<>();
         
         for(Ausencia ausencia : ausenciasComIndicacaoDeSubstituto){
             
@@ -197,7 +197,7 @@ public class NotificacaoService {
         
         List<Ausencia> ausenciasComIndicacaoDeSubstituto = ausenciaController.listAusenciasPorSubstituto(professorIndicado);
         
-        List<AusenciaModel> modelos = new ArrayList<AusenciaModel>();
+        List<AusenciaModel> modelos = new ArrayList<>();
         
         for(Ausencia ausencia : ausenciasComIndicacaoDeSubstituto){
             

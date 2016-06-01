@@ -99,7 +99,7 @@ public class AusenciaJpaController implements Serializable {
     public List<Ausencia> listAusenciasPorProfessor(Professor prof){
         List<Ausencia> ausencias = this.findAusenciaEntities();
         
-        List<Ausencia> ausenciasComProfessor = new ArrayList<Ausencia>();
+        List<Ausencia> ausenciasComProfessor = new ArrayList<>();
         
         for(Ausencia ausencia : ausencias){
             
@@ -115,7 +115,7 @@ public class AusenciaJpaController implements Serializable {
     public List<Ausencia> listAusenciasPorIndicacaoDeSubstituto(Professor professor){
         List<Ausencia> ausencias = this.findAusenciaEntities();
         
-        List<Ausencia> ausenciasComProfessor = new ArrayList<Ausencia>();
+        List<Ausencia> ausenciasComProfessor = new ArrayList<>();
         
         for(Ausencia ausencia : ausencias){
             
@@ -131,7 +131,7 @@ public class AusenciaJpaController implements Serializable {
     public List<Ausencia> listAusenciasPorSubstituto(Professor professor){
         List<Ausencia> ausencias = this.findAusenciaEntities();
         
-        List<Ausencia> ausenciasComProfessor = new ArrayList<Ausencia>();
+        List<Ausencia> ausenciasComProfessor = new ArrayList<>();
         
         for(Ausencia ausencia : ausencias){
             

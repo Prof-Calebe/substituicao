@@ -37,8 +37,8 @@ public class ProfessorService {
     public List<ProfessorModel> ListarProfessores(){
         // TODO letra minuscula do metodo
         
-        List<Professor> professores = new LinkedList<Professor>(); 
-        List<ProfessorModel> modelos = new LinkedList<ProfessorModel>();
+        List<Professor> professores = new LinkedList<>(); 
+        List<ProfessorModel> modelos = new LinkedList<>();
         
         professores = controller.findProfessorEntities();
         
@@ -56,7 +56,7 @@ public class ProfessorService {
         
         Ausencia ausência = ausenciasRepository.findAusencia(new Long(codigoAusencia ));
             
-        List<Aula> aulasPerdidas = new LinkedList<Aula>();
+        List<Aula> aulasPerdidas = new LinkedList<>();
         aulasPerdidas.add(ausência.getAula());
         
         Professor professorAusente = ausência.getProfessor();
@@ -64,7 +64,7 @@ public class ProfessorService {
         List<Professor> todosProfessores = controller.findProfessorEntities();
         List<Ausencia> todasAsAusencias = ausenciasRepository.findAusenciaEntities();
         
-        List<ProfessorModel> profsPossiveis = new ArrayList<ProfessorModel>();
+        List<ProfessorModel> profsPossiveis = new ArrayList<>();
         
         for(Professor professor : todosProfessores){
             
