@@ -94,7 +94,7 @@ public class AulaTest {
     
     @Test
     public void testeDevePermitirDefinirEConsultarIdDeUmaAula(){        
-        Long x = new Long("0");        
+        Long x = 0L;
         assertEquals(null, objetoEmTeste.getId());
         
         objetoEmTeste.setId(x);
@@ -103,12 +103,12 @@ public class AulaTest {
     
     @Test
     public void testeDeveReportarCorretamenteToString(){
-        Long x = new Long("0");    
+        Long x = 0L;    
         objetoEmTeste.setId(x);
         
         assertEquals("Dominio.Aula[ id=0 ]", objetoEmTeste.toString());
         
-        x = new Long("10");    
+        x = 10L;
         objetoEmTeste.setId(x);
         assertEquals("Dominio.Aula[ id=10 ]", objetoEmTeste.toString());        
     }

@@ -60,7 +60,7 @@ public class cst07Test {
         
         //Setup Professor 3 como substituto
         List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();    
-        notificaçãoService.definirSubstituto(ausencias.get(0).codigo,"Professor3");
+        notificaçãoService.definirSubstituto(ausencias.get(0).id, "Professor3");
         
         //Setup Professor 1 livre no horário da ausência
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
@@ -106,11 +106,11 @@ public class cst07Test {
         assertEquals("Alocação efetuada", ausencias.get(0).estado); 
         
         ProfessorService professorService = new ProfessorService();
-        List<ProfessorModel> professoresCompatíveis = professorService.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).id.toString());
+        List<ProfessorModel> professoresCompatíveis = professorService.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).id);
         assertEquals(1, professoresCompatíveis.size());
         assertEquals("Professor1", professoresCompatíveis.get(0).Nome);
         
-        notificaçãoService.definirSubstituto(ausencias.get(0).codigo,"Professor1");
+        notificaçãoService.definirSubstituto(ausencias.get(0).id, "Professor1");
         
         ausencias = notificaçãoService.listarAusencias();        
         assertEquals(1, ausencias.size());

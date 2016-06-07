@@ -268,16 +268,16 @@ public class ProfessorTest {
         Interval segundoHorário = new Interval(inícioSegundoHorário, finalSegundoHorário);
         
         Aula segundaFeiraPrimeiroHorário = new Aula("Aula1", org.joda.time.DateTimeConstants.MONDAY, primeiroHorário);
-        segundaFeiraPrimeiroHorário.setId(new Long("1"));        
+        segundaFeiraPrimeiroHorário.setId(1L);        
         
         Aula segundaFeiraSegundoHorário = new Aula("Aula2", org.joda.time.DateTimeConstants.MONDAY, segundoHorário);
-        segundaFeiraSegundoHorário.setId(new Long("2"));
+        segundaFeiraSegundoHorário.setId(2L);
         
         Aula terçaFeiraPrimeiroHorário = new Aula("Aula3", org.joda.time.DateTimeConstants.TUESDAY, primeiroHorário);
-        terçaFeiraPrimeiroHorário.setId(new Long("3"));
+        terçaFeiraPrimeiroHorário.setId(3L);
         
         Aula quartaFeiraSegundoHorário = new Aula("Aula4", org.joda.time.DateTimeConstants.WEDNESDAY, segundoHorário);
-        quartaFeiraSegundoHorário.setId(new Long("4"));
+        quartaFeiraSegundoHorário.setId(4L);
         
         objetoEmTeste.adicionarAula(segundaFeiraPrimeiroHorário);
         objetoEmTeste.adicionarAula(segundaFeiraSegundoHorário);

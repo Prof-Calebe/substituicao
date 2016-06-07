@@ -15,7 +15,6 @@ public class AusenciaModel {
     public String dataInicio;
     public String dataFim;
     public String estado;
-    public String codigo;
     public Long id;
     
 }

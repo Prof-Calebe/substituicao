@@ -60,7 +60,7 @@ public class cst09Test {
         
         //Setup Professor 3 como substituto
         List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();    
-        notificaçãoService.definirSubstituto(ausencias.get(0).codigo,"Professor3");
+        notificaçãoService.definirSubstituto(ausencias.get(0).id, "Professor3");
     }
     
     @After
@@ -83,7 +83,7 @@ public class cst09Test {
         assertEquals("Alocação efetuada", ausencias.get(0).estado); 
         
         ProfessorService professorService = new ProfessorService();
-        List<ProfessorModel> professoresCompatíveis = professorService.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).id.toString());
+        List<ProfessorModel> professoresCompatíveis = professorService.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).id);
         assertEquals(0, professoresCompatíveis.size());
         
     }

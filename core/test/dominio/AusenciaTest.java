@@ -41,7 +41,7 @@ public class AusenciaTest {
         professorSubstituto = EasyMock.createMock(Professor.class);
         motivo = "Congresso internacional";
         aulaPerdida = EasyMock.createMock(Aula.class);
-        objetoEmTeste = new Ausencia("1234", periodo, professor, motivo, aulaPerdida);
+        objetoEmTeste = new Ausencia((long) 1234, periodo, professor, motivo, aulaPerdida);
         estado = EstadoAusencia.Alocacao_Pendente;
     }
     
@@ -53,7 +53,7 @@ public class AusenciaTest {
     //
     @Test
     public void testeDeveSerInicializadoComPeriodoProfessorMotivoESemProfessorSubstituto() {
-        Assert.assertEquals(objetoEmTeste.getCodigo(), "1234");
+        Assert.assertEquals(objetoEmTeste.getId().longValue(), 1234L);
         Assert.assertEquals(objetoEmTeste.getPeriodo(), periodo);
         Assert.assertEquals(objetoEmTeste.getProfessor(), professor);
         Assert.assertEquals(objetoEmTeste.getMotivo(), motivo);
@@ -170,7 +170,7 @@ public class AusenciaTest {
     
     @Test
     public void testeDevePermitirDefinirEConsultarIdDeUmaAusencia(){        
-        Long x = new Long("0");        
+        Long x = 0L;
         assertEquals(null, objetoEmTeste.getId());
         
         objetoEmTeste.setId(x);
@@ -179,7 +179,7 @@ public class AusenciaTest {
     
     @Test
     public void testeDeveReportarCorretamenteToString(){
-        Long x = new Long("0");    
+        Long x = 0L;    
         objetoEmTeste.setId(x);
         
         assertEquals("Dominio.Ausencia[ id=0 ]", objetoEmTeste.toString());
@@ -194,7 +194,7 @@ public class AusenciaTest {
         int hashCode = 0;
         assertEquals(hashCode, objetoEmTeste.hashCode());
         
-        Long x = new Long("0");  
+        Long x = 0L;
         objetoEmTeste.setId(x);
         
         hashCode = x.hashCode();
@@ -204,10 +204,10 @@ public class AusenciaTest {
     @Test
     public void testeDeveSerConsideradoIgualSomenteAOutroProfessorDeIdIdentica()
     {
-        Long x = new Long("0");  
+        Long x = 0L;
         assertFalse(objetoEmTeste.equals(x));           
         
-        Ausencia outro = new Ausencia("1234", periodo, professor, motivo, aulaPerdida);
+        Ausencia outro = new Ausencia(1234L, periodo, professor, motivo, aulaPerdida);
         assertTrue(objetoEmTeste.equals(outro));  
         
         outro.setId(x);
@@ -216,7 +216,7 @@ public class AusenciaTest {
         objetoEmTeste.setId(x);
         assertTrue(objetoEmTeste.equals(outro));  
         
-        outro = new Ausencia("1234", periodo, professor, motivo, aulaPerdida);
+        outro = new Ausencia(1234L, periodo, professor, motivo, aulaPerdida);
         assertFalse(objetoEmTeste.equals(outro));       
     }   
     

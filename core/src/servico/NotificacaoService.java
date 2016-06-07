@@ -40,7 +40,7 @@ public class NotificacaoService {
         profController = new ProfessorJpaController(emf);
     }
     
-    public String notificarAusencia(Long idProfessor, String dataInicio, String dataFim, String motivo, List<String> nomesProfessoresIndicados) throws ParseException {
+    public long notificarAusencia(Long idProfessor, String dataInicio, String dataFim, String motivo, List<String> nomesProfessoresIndicados) throws ParseException {
         
         SimpleDateFormat sdf = null;
         
@@ -82,28 +82,24 @@ public class NotificacaoService {
                
         List<Ausencia> ausencias = professor.gerarAusencias(periodo, motivo);
         
-        List<String> codigos = new LinkedList<String>();
+        List<Long> codigos = new LinkedList<>();
         
         for(Ausencia ausencia : ausencias)
         {
-            String codigo = Integer.toString(r.nextInt(10000));
-            
-            ausencia.setCodigo(codigo);
-            
-            codigos.add(codigo);
+            ausenciaController.create(ausencia);
+           
+            codigos.add(ausencia.getId());
             
             for(String nomeProf : nomesProfessoresIndicados){
                 Professor professorIndicado = profController.findProfessor(nomeProf);
                 ausencia.indicarSubstituto(professorIndicado);
             }
-
-            ausenciaController.create(ausencia);
         }
         
         if(codigos.size() > 0)
             return codigos.get(0);       
         else
-            return "0";
+            return 0;
     }
 
     public List<AusenciaModel> listarAusencias() {
@@ -240,7 +236,7 @@ public class NotificacaoService {
 
         AusenciaModel modelo = new AusenciaModel();
 
-        modelo.codigo = ausencia.getCodigo();
+        modelo.id = ausencia.getId();
         modelo.professorAusente = ausencia.getProfessor().getNome();
         
         if(ausencia.getProfessorSubstituto() != null){
@@ -251,7 +247,7 @@ public class NotificacaoService {
         
         //modelo.professorSubstituto = ausencia.getIndicacoesSubstitutos().getNome();
         modelo.estado = this.determinarEstado(ausencia.getEstado());
-        modelo.id = ausencia.getId();
+        
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Interval periodo = ausencia.getPeriodo();
         modelo.dataInicio = sdf.format(periodo.getStart().toDate());
@@ -261,7 +257,7 @@ public class NotificacaoService {
         
     }
 
-    public void definirSubstituto(String codigo, String nomeProfessor) {
+    public void definirSubstituto(long id, String nomeProfessor) {
         
         Professor profSubstituto = profController.findProfessor(nomeProfessor);
 
@@ -269,11 +265,11 @@ public class NotificacaoService {
             throw new IllegalStateException("Professor de nome " + nomeProfessor + " não existe");
         }
         
-        Ausencia ausencia = ausenciaController.findAusencia(codigo);
+        Ausencia ausencia = ausenciaController.findAusencia(id);
         
         
         if(ausencia == null){
-            throw new IllegalStateException("Ausência de código " + codigo + " não existe");
+            throw new IllegalStateException("Ausência de código " + id + " não existe");
         }        
         
         ausencia.setProfessorSubstituto(profSubstituto);
@@ -289,9 +285,9 @@ public class NotificacaoService {
         
     }
     
-    public void cancelarAusencia(String codigo){
+    public void cancelarAusencia(long id){
         
-        Ausencia ausencia = ausenciaController.findAusencia(codigo);
+        Ausencia ausencia = ausenciaController.findAusencia(id);
         
         ausencia.cancelarAusencia();
         try {
@@ -304,9 +300,9 @@ public class NotificacaoService {
         
     }
     
-    public void cancelarAulas(String codigo){
+    public void cancelarAulas(long id){
         
-        Ausencia ausencia = ausenciaController.findAusencia(codigo);
+        Ausencia ausencia = ausenciaController.findAusencia(id);
         
         ausencia.cancelarAulas();
         try {

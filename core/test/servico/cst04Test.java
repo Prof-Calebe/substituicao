@@ -72,11 +72,11 @@ public class cst04Test {
         assertEquals("Alocação pendente", ausencias.get(0).estado);
         
         ProfessorService professorService = new ProfessorService();
-        List<ProfessorModel> professoresCompatíveis = professorService.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).id.toString());
+        List<ProfessorModel> professoresCompatíveis = professorService.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).id);
         assertEquals(1, professoresCompatíveis.size());
         assertEquals("Professor3", professoresCompatíveis.get(0).Nome);
         
-        notificaçãoService.definirSubstituto(ausencias.get(0).codigo,"Professor3");
+        notificaçãoService.definirSubstituto(ausencias.get(0).id,"Professor3");
         
         ausencias = notificaçãoService.listarAusencias();        
         assertEquals(1, ausencias.size());

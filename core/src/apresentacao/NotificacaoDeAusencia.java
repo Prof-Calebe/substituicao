@@ -319,7 +319,7 @@ public class NotificacaoDeAusencia extends javax.swing.JFrame {
         
         String motivo = txta_Motivo.getText();
         
-        String codigoAusencia = null;
+        long codigoAusencia = 0;
                 
         NotificacaoService notService = new NotificacaoService();
         

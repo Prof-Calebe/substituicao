@@ -51,9 +51,9 @@ public class ProfessorService {
         return modelos;
     }
     
-    public List<ProfessorModel> listarProfessoresCompativeisComAusenteNoPeriodo(String codigoAusencia){
+    public List<ProfessorModel> listarProfessoresCompativeisComAusenteNoPeriodo(long codigoAusencia){
         
-        Ausencia ausência = ausenciasRepository.findAusencia(new Long(codigoAusencia ));
+        Ausencia ausência = ausenciasRepository.findAusencia(codigoAusencia);
             
         List<Aula> aulasPerdidas = new LinkedList<Aula>();
         aulasPerdidas.add(ausência.getAula());

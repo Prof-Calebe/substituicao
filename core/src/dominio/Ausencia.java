@@ -57,15 +57,21 @@ public class Ausencia implements Serializable {
     
     private EstadoAusencia estado;
     
-    private String codigo;
     
     //blame Hibernate
     protected Ausencia(){
     
     }
 
-    public Ausencia(String codigo, Interval periodo, Professor professor, String motivo, Aula aula) {
-        this.codigo = codigo;
+    public Ausencia(Long id, Interval periodo, Professor professor, String motivo, Aula aula) {
+        this.id = id;
+        this.professor = professor;
+        this.aula = aula;
+        this.periodo = periodo;
+        this.motivo = motivo;
+    }
+    
+    public Ausencia(Interval periodo, Professor professor, String motivo, Aula aula) {
         this.periodo = periodo;
         this.professor = professor;
         this.motivo = motivo;
@@ -82,11 +88,6 @@ public class Ausencia implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-    
-    public void setCodigo(String codigo)
-    {
-        this.codigo = codigo;
     }
 
     @Override
@@ -195,13 +196,6 @@ public class Ausencia implements Serializable {
         }
         
         this.indicacoesSubstituto.remove(professor);
-    }
-
-    /**
-     * @return the codigothis
-     */
-    public String getCodigo() {
-        return codigo;
     }
 
     /**

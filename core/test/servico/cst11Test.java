@@ -60,7 +60,7 @@ public class cst11Test {
         
         //Setup Professor 3 como substituto
         List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();    
-        notificaçãoService.definirSubstituto(ausencias.get(0).codigo,"Professor3");
+        notificaçãoService.definirSubstituto(ausencias.get(0).id, "Professor3");
     }
     
     @After

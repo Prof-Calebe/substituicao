@@ -30,7 +30,7 @@ import servico.ProfessorService;
  *
  * @author Thiago Lima
  */
-public class Ausências extends javax.swing.JFrame {
+public class Ausencias extends javax.swing.JFrame {
 
     private JFrame previousFrame;
     
@@ -40,14 +40,14 @@ public class Ausências extends javax.swing.JFrame {
     
     private Interval periodoAusencia;
     
-    private String codigoAusencia;
+    private long codigoAusencia;
     
     private UsuarioModel usuario;
     
     /**
      * Creates new form AlocacoesPendentes
      */
-    public Ausências(UsuarioModel usuario) {
+    public Ausencias(UsuarioModel usuario) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.usuario = usuario;
@@ -55,7 +55,7 @@ public class Ausências extends javax.swing.JFrame {
         this.populateGrid(usuario);
     }
 
-    public Ausências(JFrame previous, UsuarioModel usuario) {
+    public Ausencias(JFrame previous, UsuarioModel usuario) {
         initComponents();
         previousFrame = previous;
         this.usuario = usuario;
@@ -231,7 +231,7 @@ public class Ausências extends javax.swing.JFrame {
             
             String estado = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 5);
                         
-            String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);
+            long codigo = (long)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);
             setCodigoAusencia(codigo);
             
             String nomeProf = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 1);
@@ -268,7 +268,7 @@ public class Ausências extends javax.swing.JFrame {
             
             String estado = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 5);
                         
-            String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);
+            long codigo = (long)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);
             setCodigoAusencia(codigo);
             
             if(estado.equals("Aulas canceladas")){
@@ -294,7 +294,7 @@ public class Ausências extends javax.swing.JFrame {
             String dataInicio = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 2);
             String dataFim = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 3);
             
-            String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);
+            long codigo = (long)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);
             setCodigoAusencia(codigo);
             
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -310,7 +310,7 @@ public class Ausências extends javax.swing.JFrame {
             }
             
             this.setPeriodoAusencia(new Interval(inicio, fim));
-
+            
             ListaProfessores listaProfessores = new ListaProfessores(this);
             listaProfessores.setVisible(true);
         }
@@ -318,7 +318,7 @@ public class Ausências extends javax.swing.JFrame {
 
     private void btnElegerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegerActionPerformed
 
-        String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);
+        long codigo = (long)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);
         setCodigoAusencia(codigo);
         String nomeProfessor = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 1);
         
@@ -382,7 +382,7 @@ public class Ausências extends javax.swing.JFrame {
             for (AusenciaModel model : listaAusencias) {
                 //if (model.estado.equals("Alocação pendente")) {
                     DefaultTableModel tableModel = (DefaultTableModel) tbl_Alocacoes.getModel();
-                    tableModel.addRow(new Object[]{model.codigo, model.professorAusente, model.dataInicio, model.dataFim, model.professorSubstituto, model.estado});
+                    tableModel.addRow(new Object[]{model.id, model.professorAusente, model.dataInicio, model.dataFim, model.professorSubstituto, model.estado});
                 //}
             }
     }
@@ -403,14 +403,15 @@ public class Ausências extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Ausências.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ausencias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Ausências.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ausencias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Ausências.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ausencias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Ausências.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ausencias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -421,7 +422,7 @@ public class Ausências extends javax.swing.JFrame {
 
                 UsuarioModel usuarioLogando = userService.obterUsuario("admin");
                 
-                new Ausências(usuarioLogando).setVisible(true);
+                new Ausencias(usuarioLogando).setVisible(true);
             }
         });
     }
@@ -470,7 +471,7 @@ public class Ausências extends javax.swing.JFrame {
         
         NotificacaoService notifService = new NotificacaoService();
         
-        String codigo = (String)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);
+        long codigo = (long)tbl_Alocacoes.getValueAt(tbl_Alocacoes.getSelectedRow(), 0);
         
         notifService.definirSubstituto(codigo, nomeProfessor);
         
@@ -490,11 +491,11 @@ public class Ausências extends javax.swing.JFrame {
         this.periodoAusencia = periodoAusencia;
     }
     
-    public String getCodigoAusencia() {
+    public long getCodigoAusencia() {
         return codigoAusencia;
     }
     
-    public void setCodigoAusencia(String codigo)
+    public void setCodigoAusencia(long codigo)
     {
         this.codigoAusencia = codigo;
     }

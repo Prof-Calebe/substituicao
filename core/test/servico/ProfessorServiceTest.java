@@ -105,7 +105,7 @@ public class ProfessorServiceTest {
         ausencias = ausenciasRepositorty.findAusenciaEntities();
         assertEquals(1, ausencias.size());
         
-        List<ProfessorModel> professoresDisponiveis = serviceEmTeste.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).getId().toString());
+        List<ProfessorModel> professoresDisponiveis = serviceEmTeste.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).getId());
         
         Assert.assertEquals(3, professoresDisponiveis.size());
         

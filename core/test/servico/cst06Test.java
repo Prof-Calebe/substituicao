@@ -96,7 +96,7 @@ public class cst06Test {
         assertEquals("Alocação pendente", ausencias.get(0).estado);
         
         ProfessorService professorService = new ProfessorService();
-        List<ProfessorModel> professoresCompatíveis = professorService.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).id.toString());
+        List<ProfessorModel> professoresCompatíveis = professorService.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).id);
         assertEquals(0, professoresCompatíveis.size());       
         
     }

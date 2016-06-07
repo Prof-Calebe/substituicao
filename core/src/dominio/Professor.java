@@ -246,7 +246,8 @@ public class Professor implements Serializable {
                 DateTime inícioAusênciaAula = new DateTime(anoAusência,mêsAusência,diaAusência,inícioHoraAula,inícioMinutoAula);
                 DateTime finalAusênciaAula = new DateTime(anoAusência,mêsAusência,diaAusência,finalHoraAula,finalMinutoAula);
                 Interval períodoAusência = new Interval(inícioAusênciaAula,finalAusênciaAula);
-                Ausencia ausência = new Ausencia("0", períodoAusência, this, motivo, aulaPedida);
+                Ausencia ausência = new Ausencia(períodoAusência, this, motivo, aulaPedida);
+
                 ausencias.add(ausência);
             }
         }

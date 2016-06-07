@@ -93,7 +93,7 @@ public class NotificacaoServiceTest {
          
          idsIndicacoesSubstituto.add(professores.get(1).getId());
          
-         String codigo = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
+         long codigo = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
 
          Ausencia ausencia = ausController.findAusencia(codigo);
          
@@ -113,19 +113,19 @@ public class NotificacaoServiceTest {
          String dataFim = "24/05/2013";
          String motivo = "Problemas pessoais";
          
-         String codigo = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
+         long codigo = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
          
          dataInicio = "21/05/2013";
          dataFim = "25/05/2013";
          motivo = "Assuntos pessoais";
          
-         String codigo2 = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
+         long codigo2 = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
          
          dataInicio = "15/05/2013";
          dataFim = "17/05/2013";
          motivo = "Pneumonia";
          
-         String codigo3 = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
+         long codigo3 = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
          
          int ausenciaCount = ausController.getAusenciaCount();
          
@@ -149,7 +149,7 @@ public class NotificacaoServiceTest {
          
          idsIndicacoesSubstituto.add(professores.get(1).getId());
          
-         String codigo = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
+         long codigo = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
          
          //Long idSubstituto = professores.get(2).getId();
          
@@ -179,7 +179,7 @@ public class NotificacaoServiceTest {
          
          idsIndicacoesSubstituto.add(professores.get(1).getId());
          
-         String codigo = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
+         long codigo = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
          
          //Long idSubstituto = professores.get(2).getId();
          
@@ -199,13 +199,13 @@ public class NotificacaoServiceTest {
          
          idsIndicacoesSubstituto.add(professores.get(1).getId());
          
-         String codigo = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
+         long codigo = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
          
          //Long idSubstituto = professores.get(2).getId();
          
          String nomeProf = professores.get(2).getNome();
          
-         serviceEmTeste.definirSubstituto("", nomeProf);         
+         serviceEmTeste.definirSubstituto(0, nomeProf);         
      }
      
      @Test
@@ -215,7 +215,7 @@ public class NotificacaoServiceTest {
          String dataFim = "24/05/2013";
          String motivo = "Problemas pessoais";
          
-         String codigo = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
+         long codigo = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
          
          Ausencia ausencia = ausController.findAusencia(codigo);
          
@@ -238,7 +238,7 @@ public class NotificacaoServiceTest {
          String dataFim = "24/05/2013";
          String motivo = "Problemas pessoais";
          
-         String codigo = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
+         long codigo = serviceEmTeste.notificarAusencia(professores.get(0).getId(), dataInicio, dataFim, motivo, nomesIndicacoesSubstituto);
          
          Ausencia ausencia = ausController.findAusencia(codigo);
          
@@ -356,7 +356,7 @@ public class NotificacaoServiceTest {
         List<Ausencia> ausenciasCriadas = ausenciasRepository.findAusenciaEntities();
         Assert.assertEquals(1, ausenciasCriadas.size());
         
-        String codigoAusencia = ausenciasCriadas.get(0).getCodigo();
+        long codigoAusencia = ausenciasCriadas.get(0).getId();
         
         ausencias = serviceEmTeste.listarAusencias();
         
