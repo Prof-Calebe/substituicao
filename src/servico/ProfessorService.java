@@ -66,29 +66,29 @@ public class ProfessorService {
         
         List<ProfessorModel> profsPossiveis = new ArrayList<>();
         
-        for(Professor professor : todosProfessores){
-            
-            if(!professor.equals(professorAusente)&&professor.EhCompativelCom(aulasPerdidas)){
-                
-                Boolean compatível = true;
-                    
-                for(Ausencia ausenciaPreExistente : todasAsAusencias){
-                    if(ausenciaPreExistente.getProfessorSubstituto() != null){
-                        if(ausenciaPreExistente.getProfessorSubstituto().getNome().equals(professor.getNome())){
-                            if(ausenciaPreExistente.getPeriodo().overlaps(ausência.getPeriodo())){
-                                compatível = false;
-                            }
-                        }
-                    }
+        for(Professor professor : todosProfessores) {
+            if(professor.equals(professorAusente) || !professor.EhCompativelCom(aulasPerdidas))
+                continue;
+
+            Boolean compatível = true;
+
+            for(Ausencia ausenciaPreExistente : todasAsAusencias) {
+                if(ausenciaPreExistente.getProfessorSubstituto() != null
+                    && ausenciaPreExistente.getProfessorSubstituto().equals(professor)
+                    && ausenciaPreExistente.getPeriodo().overlaps(ausência.getPeriodo())) {
+                    compatível = false;
+                    break;
                 }
-                
-                if(compatível){
-                    ProfessorModel model = new ProfessorModel();
-                    model.id = professor.getId();
-                    model.Nome = professor.getNome();
-                    profsPossiveis.add(model);
-                }
-            }   
+            }
+
+            if(compatível) {
+                ProfessorModel model = new ProfessorModel();
+
+                model.id = professor.getId();
+                model.Nome = professor.getNome();
+
+                profsPossiveis.add(model);
+            }
         }
         
         return profsPossiveis;
