@@ -45,38 +45,25 @@ public class NotificacaoService {
         SimpleDateFormat sdf = null;
         
         DateTime inicio = null;
-        DateTime inícioReal = null;
-        
         DateTime fim = null;
-        DateTime fimReal = null;
         
-        if(dataInicio.matches("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)"))
-        {
-            sdf = new SimpleDateFormat("dd/MM/yyyy");
-            
-            inicio = new DateTime(sdf.parse(dataInicio));
-            inícioReal = new DateTime(inicio.getYear(),inicio.getMonthOfYear(),inicio.getDayOfMonth(),00,00);
-
-            fim = new DateTime(sdf.parse(dataFim));
-            fimReal = new DateTime(fim.getYear(),fim.getMonthOfYear(),fim.getDayOfMonth(),23,59);            
-        }
-        else
-        {
+        try {
             sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                        
             inicio = new DateTime(sdf.parse(dataInicio));
-            inícioReal = new DateTime(inicio.getYear(),inicio.getMonthOfYear(),inicio.getDayOfMonth(),inicio.getHourOfDay(),inicio.getMinuteOfHour());
-
             fim = new DateTime(sdf.parse(dataFim));
-            fimReal = new DateTime(fim.getYear(),fim.getMonthOfYear(),fim.getDayOfMonth(),fim.getHourOfDay(),fim.getMinuteOfHour());
+        } catch (ParseException pe) {
+            try {
+                sdf = new SimpleDateFormat("dd/MM/yyyy");
+                inicio = new DateTime(sdf.parse(dataInicio)).withHourOfDay(0).withMinuteOfHour(0);
+                fim = new DateTime(sdf.parse(dataFim)).withHourOfDay(23).withMinuteOfHour(59);
+            } catch (ParseException pe2) {
+                throw pe2;
+            }
         }
-        
-        Interval periodo = new Interval(inícioReal, fimReal);
+
+        Interval periodo = new Interval(inicio, fim);
         
         Professor professor = profController.findProfessor(idProfessor);
-        List<Professor> professoresIndicados = new ArrayList<>();
-        
-        //Professor professorSubstituto = profController.findProfessor(idProfessorSubstituto);
         
         Random r = new Random();
                
