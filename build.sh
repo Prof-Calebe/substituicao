@@ -12,26 +12,6 @@ wget -nv -T 10 -t 0 "http://dlc.sun.com.edgesuite.net/glassfish/3.1.2/release/gl
 unzip -q glassfish-3.1.2.zip
 
 echo " "
-echo "Compiling these projects:"
-for i in * ; do
-  if [ -d "$i" ] && [ ! "$i" = "lib" ] && [ ! "$i" = "glassfish3" ]; then
-    cd "$i"
+ant
+exit $?
 
-    if [ -f "manifest.mf" ]; then
-        TARGET=jar
-    else
-        TARGET=dist
-    fi
-    TARGET=""
-
-    echo " "
-    echo "----- $i -----"
-    ant -Dj2ee.server.home="$_PWD\glassfish3\glassfish" $TARGET
-    RET=$?
-    if [ ! "$RET" = "0" ]; then
-        exit $RET
-    fi
-    echo " "
-    cd ..
-  fi
-done
