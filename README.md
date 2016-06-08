@@ -18,6 +18,42 @@ O correto uso de git é fundamental. Assim, evitando problemas futuros, as branc
 
 Assim, utilizaremos [No Switch Yard (NoSY)](http://geant.cern.ch/content/suggested-work-flow-distributed-projects-nosy) como workflow, além de usar um [Git Branch Model](http://nvie.com/posts/a-successful-git-branching-model/) específico para criação de `branches` e `pull requests`.
 
+Exemplo de criação de uma branch através de linha de comando git.
+
+Faça a sua branch a partir da dev, substituindo ## pelo número da issue que foi documentada.
+
+    git checkout -b [issue-##] remotes/origin/dev
+  
+  
+A partir de então, faça as alterações e sempre realize commit para marcar a evolução da correção.
+
+      git add # arquivos
+      
+      git commit # com os seus commits 
+Lembre-se que um commit pode abranger mais de um arquivo, portanto adicione quantos arquivos forem necessários para caracterizar o commit.
+
+Uma vez finalizada as alterações, sincronize sua branch com a dev. 
+
+      git checkout dev
+      git pull 
+      git checkout [issue-##]
+      git rebase origin/dev
+Se nenhum conflito for detectado, envie suas alterações para o repositório.
+
+     git push origin HEAD
+     
+A patir desse momento, a sua nova branch deve aparecer em seu repositório.
+
+Aguarde o build e os demais hooks avaliarem a nova branch. Caso nenhum erro seja encontrado, faça um pull request da branch-## para a dev e aguarde os comentários da revisão.
+
+Caso seja necessário alterar a sua branch devido a alguma falha do build, dos hooks, ou dos comentários de revisão, faça-os normalmente na sua branch issue-##, sincronizando-a novamente no final e enviando-a para o repositório. Aguarde os resultados do passo anterior e, se for o caso, repita todo esse processo.
+
+      git checkout [issue-##]
+      git add #arquivos 
+      git commit #com seus commits 
+      git rebase origin/dev
+      git push --force origin HEAD 
+
 ### Hooks
 
 Alguns serviços automáticos foram associados a este repositório:
