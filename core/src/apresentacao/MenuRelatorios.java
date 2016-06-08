@@ -30,7 +30,7 @@ public class MenuRelatorios extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         addRadioButtons();
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src\\apresentacao\\imagens\\logo_mackenzie.png"));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("imagens\\logo_mackenzie.png")));
     }
 
     public MenuRelatorios(JFrame previous) {
@@ -38,7 +38,7 @@ public class MenuRelatorios extends javax.swing.JFrame {
         previousFrame = previous;
         this.setLocationRelativeTo(null);
         addRadioButtons();
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src\\apresentacao\\imagens\\logo_mackenzie.png"));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("imagens\\logo_mackenzie.png")));
     }
     
     /**

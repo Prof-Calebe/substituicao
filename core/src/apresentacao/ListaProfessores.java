@@ -28,7 +28,7 @@ public class ListaProfessores extends javax.swing.JDialog {
     public ListaProfessores() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src\\apresentacao\\imagens\\logo_mackenzie.png"));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("imagens\\logo_mackenzie.png")));
     }
     
     public ListaProfessores(Ausências previous) {
@@ -36,7 +36,7 @@ public class ListaProfessores extends javax.swing.JDialog {
         previousFrame = previous;
         previousFrame.setEnabled(false);
         this.setLocationRelativeTo(null);
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src\\apresentacao\\imagens\\logo_mackenzie.png"));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("imagens\\logo_mackenzie.png")));
         
         populateCombo();
     }

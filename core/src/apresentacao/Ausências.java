@@ -51,7 +51,7 @@ public class Ausências extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.usuario = usuario;
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src\\apresentacao\\imagens\\logo_mackenzie.png"));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("imagens\\logo_mackenzie.png")));
         this.populateGrid(usuario);
     }
 
@@ -60,7 +60,7 @@ public class Ausências extends javax.swing.JFrame {
         previousFrame = previous;
         this.usuario = usuario;
         this.setLocationRelativeTo(null);
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src\\apresentacao\\imagens\\logo_mackenzie.png"));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("imagens\\logo_mackenzie.png")));
         
         //if (isPending) {
         btn_RejeitarAlocacao.setEnabled(false);

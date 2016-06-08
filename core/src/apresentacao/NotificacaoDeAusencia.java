@@ -37,7 +37,7 @@ public class NotificacaoDeAusencia extends javax.swing.JFrame {
     public NotificacaoDeAusencia() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src\\apresentacao\\imagens\\logo_mackenzie.png"));             
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("imagens\\logo_mackenzie.png")));             
         
         this.populateComboProfessor();
         
@@ -48,7 +48,7 @@ public class NotificacaoDeAusencia extends javax.swing.JFrame {
         initComponents();
         previousFrame = previous;
         this.setLocationRelativeTo(null);
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src\\apresentacao\\imagens\\logo_mackenzie.png"));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("imagens\\logo_mackenzie.png")));
         
         this.populateComboProfessor();
         
