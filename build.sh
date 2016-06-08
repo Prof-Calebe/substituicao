@@ -14,26 +14,4 @@ unzip -q glassfish-3.1.2.zip
 echo " "
 ant
 exit $?
-echo "Compiling these projects:"
-for i in * ; do
-  if [ -d "$i" ] && [ ! "$i" = "lib" ] && [ ! "$i" = "glassfish3" ]; then
-    cd "$i"
 
-    if [ -f "manifest.mf" ]; then
-        TARGET=jar
-    else
-        TARGET=dist
-    fi
-    TARGET=""
-
-    echo " "
-    echo "----- $i -----"
-    ant -Dj2ee.server.home="$_PWD\glassfish3\glassfish" $TARGET
-    RET=$?
-    if [ ! "$RET" = "0" ]; then
-        exit $RET
-    fi
-    echo " "
-    cd ..
-  fi
-done
