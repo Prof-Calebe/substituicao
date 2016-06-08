@@ -1,1 +1,0 @@
-This file was created only because github doesn't store empty folders.
