@@ -12,6 +12,8 @@ wget -nv -T 10 -t 0 "http://dlc.sun.com.edgesuite.net/glassfish/3.1.2/release/gl
 unzip -q glassfish-3.1.2.zip
 
 echo " "
+ant
+exit $?
 echo "Compiling these projects:"
 for i in * ; do
   if [ -d "$i" ] && [ ! "$i" = "lib" ] && [ ! "$i" = "glassfish3" ]; then
