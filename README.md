@@ -14,7 +14,7 @@ Qualquer alteração na Wiki somente será feita depois de uma Issue específica
 
 ### Git & Branches
 
-O correto uso de git é fundamental. Assim, evitando problemas futuros, as branches `master` e `dev` estão bloqueadas para `push` e somente serão atualizadas por meio de `pull requests`. Estes serão inspecionados **por todos** os desenvolvedores e, caso algum problema seja encontrado, deverá ser corrigido antes de ser aceito.
+O correto uso de git é fundamental. Assim, evitando problemas futuros, as branches `master` e `dev` estão bloqueadas para `push` e somente serão atualizadas por meio de `pull requests`. Estes serão inspecionados **por todos** os desenvolvedores e, caso algum problema seja encontrado, deverá ser corrigido antes de ser aceito - isso será feito tanto nos comentários das issues quanto nos pull-request.
 
 Assim, utilizaremos [No Switch Yard (NoSY)](http://geant.cern.ch/content/suggested-work-flow-distributed-projects-nosy) como workflow, além de usar um [Git Branch Model](http://nvie.com/posts/a-successful-git-branching-model/) específico para criação de `branches` e `pull requests`.
 
@@ -50,7 +50,7 @@ A patir desse momento, a sua nova branch deve aparecer em seu repositório.
 
 * Aguarde o build e demais hooks avaliarem a `branch`. Caso nenhuma falha seja encontrada, faça um pull-request da `branch-##` para a `dev` e aguarde os comentários da revisão.
 
-* Caso seja necessário alterar a sua `branch` devido a alguma falha do build, dos hooks, ou dos comentários de revisão, faça-os normalmente na sua branch `issue-##`, sincronizando-a novamente ao final das mudanças e reenviando-a para o repositório. Aguarde os resultados descritos no passo anterior e, se for o caso, repita todo este processo.
+* Caso seja necessário alterar a sua `branch` devido a alguma falha do build, dos hooks, ou dos comentários de revisão, faça-os normalmente na sua branch `issue-##`, sincronizando-a novamente ao final das mudanças e reenviando-a para o repositório. Aguarde os resultados descritos no passo anterior e, se for o caso, repita todo este processo. Se um pull-request já foi feito, não é necessário refazê-lo ou fechá-lo.
 ```bash
 $ git checkout [issue-##]
 $ git add # arquivos
