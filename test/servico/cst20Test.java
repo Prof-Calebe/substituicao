@@ -58,7 +58,7 @@ public class cst20Test {
 
         UsuarioModel professor1 = aus.obterUsuario(usuario1.getUsuario());
 
-        assertEquals("",professor1.Usuario);
+        assertEquals(null,professor1);
 
         aus.SalvarUsuario(usuario1.getUsuario(), usuario1.getSenha(), usuario1.getPermissao());
 
