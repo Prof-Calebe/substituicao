@@ -47,7 +47,7 @@ public class cst20Test {
     @Test
     public void testeCriarUsuario() {
         LoginService loginService = new LoginService();
-        assertTrue(loginService.VerificarUsuarioESenha("Admin", "123456"));
+        assertTrue(loginService.VerificarUsuarioESenha("Administrador", "123456"));
 
         AdministracaoDeUsuariosService aus = new AdministracaoDeUsuariosService();
         Usuario usuario1 = new Usuario();
