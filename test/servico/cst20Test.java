@@ -9,6 +9,7 @@ import auxiliar.Perfil;
 import datamapper.PopulateDB;
 import datamapper.exceptions.NonexistentEntityException;
 import dominio.Usuario;
+import java.util.List;
 import modelo.UsuarioModel;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -56,15 +57,17 @@ public class cst20Test {
         usuario1.setSenha("123456");
         usuario1.setPermissao(Perfil.PROFESSOR);
 
-        UsuarioModel professor1 = aus.obterUsuario(usuario1.getUsuario());
-        
-        if(professor1 == null){
-            
-            aus.SalvarUsuario(usuario1.getUsuario(), usuario1.getSenha(), usuario1.getPermissao());
+        List<UsuarioModel> usuariosCadastrados = aus.ListarUsuarios();
+      
+        for (UsuarioModel um : usuariosCadastrados) {
+            if(!um.Usuario.equals(usuario1.getUsuario())){
+                
+                aus.SalvarUsuario(usuario1.getUsuario(), usuario1.getSenha(), usuario1.getPermissao());
 
-            UsuarioModel professor2 = aus.obterUsuario(usuario1.getUsuario());
+                UsuarioModel professor2 = aus.obterUsuario(usuario1.getUsuario());
 
-            assertEquals(usuario1.getUsuario(), professor2.Usuario);
-        }   
+                assertEquals(usuario1.getUsuario(), professor2.Usuario);
+            }
+        }
     }
 }
