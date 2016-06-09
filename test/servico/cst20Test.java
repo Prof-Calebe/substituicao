@@ -60,6 +60,6 @@ public class cst20Test {
 
         UsuarioModel professor2 = aus.obterUsuario(usuario1.getUsuario());
 
-        assertEquals(usuario1, professor2);
+        assertEquals(usuario1.getUsuario(), professor2.Usuario);
     }
 }
