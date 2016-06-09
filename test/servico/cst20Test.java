@@ -56,13 +56,14 @@ public class cst20Test {
         usuario1.setSenha("123456");
         usuario1.setPermissao(Perfil.PROFESSOR);
 
-        assertNull(aus.obterUsuario(usuario1.getUsuario()));
+        UsuarioModel professor1 = aus.obterUsuario(usuario1.getUsuario());
 
+        assertNotSame(usuario1.getUsuario(), professor1.Usuario);
+        
         aus.SalvarUsuario(usuario1.getUsuario(), usuario1.getSenha(), usuario1.getPermissao());
 
         UsuarioModel professor2 = aus.obterUsuario(usuario1.getUsuario());
 
         assertEquals(usuario1, professor2);
     }
-
 }
