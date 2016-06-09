@@ -55,7 +55,11 @@ public class cst20Test {
         usuario1.setUsuario("ProfessorTest");
         usuario1.setSenha("123456");
         usuario1.setPermissao(Perfil.PROFESSOR);
-
+        
+        UsuarioModel professor1 = aus.obterUsuario(usuario1.getUsuario());
+        
+        assertNull(professor1);
+  
         aus.SalvarUsuario(usuario1.getUsuario(), usuario1.getSenha(), usuario1.getPermissao());
 
         UsuarioModel professor2 = aus.obterUsuario(usuario1.getUsuario());
