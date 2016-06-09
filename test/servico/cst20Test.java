@@ -58,8 +58,8 @@ public class cst20Test {
 
         UsuarioModel professor1 = aus.obterUsuario(usuario1.getUsuario());
 
-        assertNotSame(usuario1.getUsuario(), professor1.Usuario);
-        
+        assertEquals("",professor1.Usuario);
+
         aus.SalvarUsuario(usuario1.getUsuario(), usuario1.getSenha(), usuario1.getPermissao());
 
         UsuarioModel professor2 = aus.obterUsuario(usuario1.getUsuario());
