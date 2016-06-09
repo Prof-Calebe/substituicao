@@ -23,7 +23,7 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg"));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("imagens\\logo_mackenzie.png")));
     }
 
     /**
