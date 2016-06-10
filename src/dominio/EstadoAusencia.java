@@ -9,7 +9,7 @@ package dominio;
  * @author Thiago Lima
  */
 public enum EstadoAusencia {
-    Alocacao_Efetuada   (1, "Alocacao efetuada"),
+    Alocacao_Efetuada   (1, "Alocação efetuada"),
     Ausencia_Cancelada  (2, "Ausência cancelada"),
     Alocacao_Pendente   (3, "Alocação pendente"),
     Aulas_Canceladas    (4, "Aulas canceladas"),
