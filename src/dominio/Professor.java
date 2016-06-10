@@ -231,7 +231,8 @@ public class Professor implements Serializable {
     }
 
     private void avaliar(Aula aulaPedida, Interval primeiroDia, String motivo, List<Ausencia> ausencias) {
-        if(aulaPedida.bateHorarioCom(primeiroDia))
+        if(aulaPedida.getDiaDaSemana() == primeiroDia.getStart().getDayOfWeek()
+                && aulaPedida.bateHorarioCom(primeiroDia)) 
         {
             int anoAusência = primeiroDia.getStart().getYear();
             int mêsAusência = primeiroDia.getStart().getMonthOfYear();

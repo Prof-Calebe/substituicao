@@ -132,8 +132,7 @@ public class Aula implements Serializable {
         
         Interval intervaloTemp = new Interval(tempInicio, tempFim);
         
-        return diaDaSemana == outroPeriodo.getStart().getDayOfWeek()
-                && intervaloTemp.overlaps(outroPeriodo);
+        return intervaloTemp.overlaps(outroPeriodo);
     }
     
 }
