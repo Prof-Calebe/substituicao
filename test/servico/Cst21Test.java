@@ -8,7 +8,6 @@ package servico;
 import auxiliar.Perfil;
 import datamapper.PopulateDB;
 import dominio.Usuario;
-import java.util.List;
 import modelo.UsuarioModel;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -17,12 +16,10 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author 31449530
+ * @author Victor Messina
  */
 public class Cst21Test {
 
-    public Cst21Test() {
-    }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
