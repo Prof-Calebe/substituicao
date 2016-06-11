@@ -41,16 +41,16 @@ public class cst13Test {
 
     @Before
     public void setUp() throws ParseException, NonexistentEntityException {
-        //Setup Declaração de Ausência Professor 2
+        //Setup Declaração de Ausência Professor 1
         ProfessorService professorService = new ProfessorService();
-        ProfessorModel professor = professorService.obterProfessorPorNome("Professor2");
+        ProfessorModel professor = professorService.obterProfessorPorNome("Professor1");
 
         NotificacaoService notificaçãoService = new NotificacaoService();
-        notificaçãoService.notificarAusencia(professor.id, "25/11/2013 18:30", "25/11/2013 19:59", "Motivo Declarado", new LinkedList<String>());
+        notificaçãoService.notificarAusencia(professor.id, "13/06/2016 20:00", "13/06/2016 23:00", "Motivo Declarado", new LinkedList<String>());
 
-        //Setup Professor 3 como substituto
+        //Setup Professor 2 como substituto
         List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();
-        notificaçãoService.definirSubstituto(ausencias.get(0).codigo, "Professor3");
+        notificaçãoService.definirSubstituto(ausencias.get(0).codigo, "Professor2");
     }
 
     @After
@@ -64,7 +64,7 @@ public class cst13Test {
         assertTrue(loginService.VerificarUsuarioESenha("Professor1", "123456"));
         
         NotificacaoService notificaçãoService = new NotificacaoService();
-        List<AusenciaModel> ausencias = notificaçãoService.listarAusenciasPorSubstituto("Professor3");
+        List<AusenciaModel> ausencias = notificaçãoService.listarAusenciasPorSubstituto("Professor2");
         assertEquals(1, ausencias.size());
         assertEquals("Professor1", ausencias.get(0).professorAusente);
         assertEquals("Professor2", ausencias.get(0).professorSubstituto);
@@ -73,6 +73,7 @@ public class cst13Test {
         assertEquals("Alocação efetuada", ausencias.get(0).estado); 
         
         notificaçãoService.recusarSubstituicao(ausencias.get(0).id);
+        
         
         ausencias = notificaçãoService.listarAusencias();
         assertEquals(1, ausencias.size());
