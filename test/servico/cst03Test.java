@@ -21,14 +21,12 @@ import static org.junit.Assert.*;
 
 import modelo.AusenciaModel;
 import modelo.ProfessorModel;
-import servico.LoginService;
-import servico.NotificacaoService;
-import servico.ProfessorService;
 
 /**
  *
  * @author prgoes
  */
+
 public class cst03Test {
     
     public cst03Test() {
@@ -53,30 +51,34 @@ public class cst03Test {
     }
     
     @Test
-    public void testeNotificaçãoDeAusência_SemMotivo() throws ParseException
-    {
+    public void testeNotificaçãoDeAusência_SemMotivo() throws ParseException{
+        //Login com usuário "Funcionario"
         LoginService loginService = new LoginService();
-        assertTrue(loginService.VerificarUsuarioESenha("Funcionario1", "123456"));
+        assertTrue(loginService.VerificarUsuarioESenha("Funcionario", "123456"));
         
         ProfessorService professorService = new ProfessorService();
         ProfessorModel professor = professorService.obterProfessorPorNome("Professor1");
         
+        //Navegação de "Notificação de ausência" 
         NotificacaoService notificaçãoService = new NotificacaoService();
         List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();        
         assertEquals(0, ausencias.size());
         
         Boolean exceptionOk = false;
         
-        try
-        {
-            notificaçãoService.notificarAusencia(professor.id, "25/11/2013 20:01", "25/11/2013 21:29", "", new LinkedList<String>());
+        try{
+            //notifica ausência do Professor
+            notificaçãoService.notificarAusencia(professor.id, "13/06/2016 20:01", "13/06/2016 21:29", "", new LinkedList<String>());
         }
         catch(InvalidParameterException ex)
         {
             exceptionOk = true;
         }
         
+        //alteração de usuário logado
         assertTrue(loginService.VerificarUsuarioESenha("Administrador", "123456"));
+        
+        //navegação e verificação de notificações pendentes
         ausencias = notificaçãoService.listarAusencias();        
         assertEquals(0, ausencias.size());
         assertTrue(exceptionOk);
