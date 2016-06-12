@@ -57,8 +57,8 @@ public class cst16Test {
         assertTrue(loginService.VerificarUsuarioESenha("Administrador", "1234"));
 
         ProfessorService prof = new ProfessorService();
-        List<ProfessorModel> aulas = prof.ListarProfessores();
         
+        List<ProfessorModel> aulas = prof.ListarProfessores();
         Assert.assertEquals("Professor1", aulas.get(0).Nome);
         Assert.assertEquals(3, aulas.size());
     }
