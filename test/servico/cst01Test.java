@@ -23,7 +23,7 @@ import modelo.ProfessorModel;
 
 /**
  *
- * @author Amanda
+ * @author prgoes & camposmandy
  */
 
 public class cst01Test {
