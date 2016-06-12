@@ -26,7 +26,7 @@ import servico.ProfessorService;
 
 /**
  *
- * @author prgoes
+ * @author Amanda
  */
 public class cst01Test {
     
@@ -54,21 +54,21 @@ public class cst01Test {
     @Test
     public void testeNotificaçãoDeAusência_ÚnicoHorário() throws ParseException
     {
-        LoginService loginService = new LoginService();
-        assertTrue(loginService.VerificarUsuarioESenha("Funcionario1", "123456"));
+        LoginService loginService = new LoginService();//Login com usuário: Funcionario
+        assertTrue(loginService.VerificarUsuarioESenha("Funcionario", "123456"));
         
         ProfessorService professorService = new ProfessorService();
         ProfessorModel professor = professorService.obterProfessorPorNome("Professor1");
         
-        NotificacaoService notificaçãoService = new NotificacaoService();
+        NotificacaoService notificaçãoService = new NotificacaoService(); //Funcionalidade de "Notificação de Ausência" 
         List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();        
         assertEquals(0, ausencias.size());
         
-        notificaçãoService.notificarAusencia(professor.id, "25/11/2013 20:01", "25/11/2013 21:29", "Motivo Declarado", new LinkedList<String>());
+        notificaçãoService.notificarAusencia(professor.id, "13/06/2016 20:05", "13/06/2016 21:35", "Motivo: Palestra", new LinkedList<String>());
         
         assertTrue(loginService.VerificarUsuarioESenha("Administrador", "123456"));
         ausencias = notificaçãoService.listarAusencias();        
-        assertEquals(1, ausencias.size());
+        assertEquals(1, ausencias.size()); //1 notificação pendente
         assertEquals("Professor1", ausencias.get(0).professorAusente);
         assertEquals("", ausencias.get(0).professorSubstituto);
         assertEquals("Alocação pendente", ausencias.get(0).estado);        
