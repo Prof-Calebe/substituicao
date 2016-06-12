@@ -54,7 +54,7 @@ public class cst01Test {
         
         //Login com usuário: Funcionario
         LoginService loginService = new LoginService();
-        assertTrue(loginService.VerificarUsuarioESenha("Funcionario", "123456"));
+        assertTrue(loginService.VerificarUsuarioESenha("Funcionario1", "123456"));
         
         ProfessorService professorService = new ProfessorService();
         ProfessorModel professor = professorService.obterProfessorPorNome("Professor1");
