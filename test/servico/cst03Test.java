@@ -24,7 +24,7 @@ import modelo.ProfessorModel;
 
 /**
  *
- * @author prgoes
+ * @author prgoes e mohamad
  */
 
 public class cst03Test {
