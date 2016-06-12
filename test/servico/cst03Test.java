@@ -69,7 +69,7 @@ public class cst03Test {
         
         try
         {
-            notificaçãoService.notificarAusencia(professor.id, "25/11/2013 20:01", "25/11/2013 21:29", "", new LinkedList<String>());
+            notificaçãoService.notificarAusencia(professor.id, "25/11/2013 20:01", "25/11/2013 21:29", "Palestra", new LinkedList<String>());
         }
         catch(InvalidParameterException ex)
         {
@@ -77,7 +77,8 @@ public class cst03Test {
         }
         
         assertTrue(loginService.verificarUsuarioESenha("Administrador", "123456"));
-        ausencias = notificaçãoService.listarAusencias();        
+        ausencias = notificaçãoService.listarAusencias();       
+        //Retorno esperado deveria ser 3 ausencias
         assertEquals(0, ausencias.size());
         assertTrue(exceptionOk);
     }
