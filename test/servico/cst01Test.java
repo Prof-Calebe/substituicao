@@ -20,9 +20,7 @@ import static org.junit.Assert.*;
 
 import modelo.AusenciaModel;
 import modelo.ProfessorModel;
-import servico.LoginService;
-import servico.NotificacaoService;
-import servico.ProfessorService;
+
 
 /**
  *
