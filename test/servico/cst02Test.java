@@ -64,7 +64,7 @@ public class cst02Test {
         List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();        
         assertEquals(0, ausencias.size());
         
-        notificaçãoService.notificarAusencia(professor.id, "25/11/2013", "25/11/2013", "Motivo Declarado", new LinkedList<String>());
+        notificaçãoService.notificarAusencia(professor.id, "25/11/2013", "25/11/2013", "Palestra", new LinkedList<String>());
         
         assertTrue(loginService.verificarUsuarioESenha("Administrador", "123456"));
         ausencias = notificaçãoService.listarAusencias();        
