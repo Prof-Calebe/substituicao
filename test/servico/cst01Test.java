@@ -21,11 +21,11 @@ import static org.junit.Assert.*;
 import modelo.AusenciaModel;
 import modelo.ProfessorModel;
 
-
 /**
  *
  * @author Amanda
  */
+
 public class cst01Test {
     
     public cst01Test() {
@@ -50,15 +50,17 @@ public class cst01Test {
     }
     
     @Test
-    public void testeNotificaçãoDeAusência_ÚnicoHorário() throws ParseException
-    {
-        LoginService loginService = new LoginService();//Login com usuário: Funcionario
+    public void testeNotificaçãoDeAusência_ÚnicoHorário() throws ParseException{
+        
+        //Login com usuário: Funcionario
+        LoginService loginService = new LoginService();
         assertTrue(loginService.VerificarUsuarioESenha("Funcionario", "123456"));
         
         ProfessorService professorService = new ProfessorService();
         ProfessorModel professor = professorService.obterProfessorPorNome("Professor1");
         
-        NotificacaoService notificaçãoService = new NotificacaoService(); //Funcionalidade de "Notificação de Ausência" 
+        //Funcionalidade de "Notificação de Ausência" 
+        NotificacaoService notificaçãoService = new NotificacaoService(); 
         List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();        
         assertEquals(0, ausencias.size());
         
