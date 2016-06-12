@@ -72,5 +72,6 @@ public class cst14Test {
         assertEquals(0, ausencias.size());
         
         
+        
     }
 }
