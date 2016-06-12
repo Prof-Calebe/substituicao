@@ -50,7 +50,7 @@ public class AdministracaoDeUsuarios extends javax.swing.JFrame {
         salvarButton.setEnabled(false);
         
         aum = new AdministracaoDeUsuariosService();
-        List<UsuarioModel> usuarios = aum.ListarUsuarios();
+        List<UsuarioModel> usuarios = aum.listarUsuarios();
         List<String> listaDeUsuarios = new ArrayList<String>();
         
         cmb_Nome.addItem("Selecione um usuário");
@@ -269,7 +269,7 @@ public class AdministracaoDeUsuarios extends javax.swing.JFrame {
         
         aum = new AdministracaoDeUsuariosService(); 
         
-        List<UsuarioModel> usuarios = aum.ListarUsuarios();
+        List<UsuarioModel> usuarios = aum.listarUsuarios();
         List<String> listaDeUsuarios = new ArrayList<String>();
         
         cmb_Nome.addItem("Selecione um usuário");
@@ -310,7 +310,7 @@ public class AdministracaoDeUsuarios extends javax.swing.JFrame {
                 
                 
                 
-                aum.EditarUsuario(txt_Senha.getText(), perfil, model.id);
+                aum.editarUsuario(txt_Senha.getText(), perfil, model.id);
             } catch (NonexistentEntityException ex) {
                 Logger.getLogger(AdministracaoDeUsuarios.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
@@ -318,7 +318,7 @@ public class AdministracaoDeUsuarios extends javax.swing.JFrame {
             }
         }
         else{
-            aum.SalvarUsuario(txt_Nome.getText(),txt_Senha.getText(), perfil);
+            aum.salvarUsuario(txt_Nome.getText(),txt_Senha.getText(), perfil);
         }
 		
     }//GEN-LAST:event_salvarButtonActionPerformed

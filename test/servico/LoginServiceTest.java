@@ -43,7 +43,8 @@ public class LoginServiceTest {
         
         user = new Usuario("Calebe","123456");
         
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
+        EntityManagerFactory emf = 
+                Persistence.createEntityManagerFactory("pro_subPU");
         UserController = new UsuarioJpaController(emf);
         UserController.create(user);
         
