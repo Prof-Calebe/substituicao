@@ -5,14 +5,12 @@
 package servico;
 
 import dominio.Usuario;
-import modelo.UsuarioModel;
 import datamapper.UsuarioJpaController;
-import datamapper.exceptions.NonexistentEntityException;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import org.joda.time.Interval;
+
 
 /**
  *
