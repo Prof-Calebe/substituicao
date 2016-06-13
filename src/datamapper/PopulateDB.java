@@ -148,7 +148,7 @@ public class PopulateDB {
         UsuarioJpaController usuarioJpa = new UsuarioJpaController(emf);
         ProfessorJpaController profJpa = new ProfessorJpaController(emf);
         
-        Usuario u0 = Usuario.createUsuarioPadrao("Funcionario1");
+        Usuario u0 = Usuario.createUsuarioPadrao("Funcionario");
         u0.setPermissao(Perfil.FUNCIONARIO);
         
         Usuario u1 = Usuario.createUsuarioPadrao("Funcionario1");
