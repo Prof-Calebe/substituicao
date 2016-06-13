@@ -9,6 +9,7 @@ package servico;
 import datamapper.PopulateDB;
 import datamapper.exceptions.NonexistentEntityException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.After;
@@ -20,14 +21,12 @@ import static org.junit.Assert.*;
 
 import modelo.AusenciaModel;
 import modelo.ProfessorModel;
-import servico.LoginService;
-import servico.NotificacaoService;
-import servico.ProfessorService;
 
 /**
  *
- * @author prgoes
+ * @author prgoes & camposmandy
  */
+
 public class cst01Test {
     
     public cst01Test() {
@@ -52,23 +51,25 @@ public class cst01Test {
     }
     
     @Test
-    public void testeNotificaçãoDeAusência_ÚnicoHorário() throws ParseException
-    {
+    public void testeNotificaçãoDeAusência_ÚnicoHorário() throws ParseException{
+        
+        //Login com usuário: Funcionario
         LoginService loginService = new LoginService();
-        assertTrue(loginService.VerificarUsuarioESenha("Funcionario1", "123456"));
+        assertTrue(loginService.VerificarUsuarioESenha("Funcionario", "123456"));
         
         ProfessorService professorService = new ProfessorService();
         ProfessorModel professor = professorService.obterProfessorPorNome("Professor1");
         
-        NotificacaoService notificaçãoService = new NotificacaoService();
+        //Funcionalidade de "Notificação de Ausência" 
+        NotificacaoService notificaçãoService = new NotificacaoService(); 
         List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();        
         assertEquals(0, ausencias.size());
         
-        notificaçãoService.notificarAusencia(professor.id, "25/11/2013 20:01", "25/11/2013 21:29", "Motivo Declarado", new LinkedList<String>());
+        notificaçãoService.notificarAusencia(professor.id, "13/06/2016 20:05", "13/06/2016 21:30", "Motivo: Palestra", new LinkedList<String>());
         
         assertTrue(loginService.VerificarUsuarioESenha("Administrador", "123456"));
         ausencias = notificaçãoService.listarAusencias();        
-        assertEquals(1, ausencias.size());
+        assertEquals(1, ausencias.size()); //1 notificação pendente
         assertEquals("Professor1", ausencias.get(0).professorAusente);
         assertEquals("", ausencias.get(0).professorSubstituto);
         assertEquals("Alocação pendente", ausencias.get(0).estado);        
