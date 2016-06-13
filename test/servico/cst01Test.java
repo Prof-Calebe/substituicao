@@ -65,13 +65,10 @@ public class cst01Test {
         List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();        
         assertEquals(0, ausencias.size());
         
-        List<String> professores = new ArrayList();
-        professores.add("Professor1");
-        
-        notificaçãoService.notificarAusencia(professor.id, "13/06/2016 20:05", "13/06/2016 21:35", "Motivo: Palestra", professores);
+        notificaçãoService.notificarAusencia(professor.id, "13/06/2016 20:05", "13/06/2016 21:35", "Motivo: Palestra", new LinkedList<String>());
         
         assertTrue(loginService.VerificarUsuarioESenha("Administrador", "123456"));
-        ausencias = notificaçãoService.listarAusenciasPorProfessor(professor.Nome);        
+        ausencias = notificaçãoService.listarAusencias();        
         assertEquals(1, ausencias.size()); //1 notificação pendente
         assertEquals("Professor1", ausencias.get(0).professorAusente);
         assertEquals("", ausencias.get(0).professorSubstituto);
