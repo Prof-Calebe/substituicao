@@ -9,6 +9,7 @@ package servico;
 import datamapper.PopulateDB;
 import datamapper.exceptions.NonexistentEntityException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.After;
@@ -54,7 +55,7 @@ public class cst01Test {
         
         //Login com usuário: Funcionario
         LoginService loginService = new LoginService();
-        assertTrue(loginService.VerificarUsuarioESenha("Funcionario1", "123456"));
+        assertTrue(loginService.VerificarUsuarioESenha("Funcionario", "123456"));
         
         ProfessorService professorService = new ProfessorService();
         ProfessorModel professor = professorService.obterProfessorPorNome("Professor1");
@@ -64,10 +65,14 @@ public class cst01Test {
         List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();        
         assertEquals(0, ausencias.size());
         
-        notificaçãoService.notificarAusencia(professor.id, "13/06/2016 20:05", "13/06/2016 21:35", "Motivo: Palestra", new LinkedList<String>());
+        List<String> professores = new ArrayList();
+        
+        professores.add("Professor1");
+        
+        notificaçãoService.notificarAusencia(professor.id, "13/06/2016 20:05", "13/06/2016 21:35", "Motivo: Palestra", professores);
         
         assertTrue(loginService.VerificarUsuarioESenha("Administrador", "123456"));
-        ausencias = notificaçãoService.listarAusencias();        
+       // ausencias = notificaçãoService.listarAusencias();        
         assertEquals(1, ausencias.size()); //1 notificação pendente
         assertEquals("Professor1", ausencias.get(0).professorAusente);
         assertEquals("", ausencias.get(0).professorSubstituto);
