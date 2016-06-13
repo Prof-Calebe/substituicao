@@ -72,7 +72,7 @@ public class cst01Test {
         notificaçãoService.notificarAusencia(professor.id, "13/06/2016 20:05", "13/06/2016 21:35", "Motivo: Palestra", professores);
         
         assertTrue(loginService.VerificarUsuarioESenha("Administrador", "123456"));
-       // ausencias = notificaçãoService.listarAusencias();        
+        ausencias = notificaçãoService.listarAusencias();        
         assertEquals(1, ausencias.size()); //1 notificação pendente
         assertEquals("Professor1", ausencias.get(0).professorAusente);
         assertEquals("", ausencias.get(0).professorSubstituto);
