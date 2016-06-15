@@ -71,7 +71,7 @@ public class cst09Test {
     public void testeEfetuarRealocação_SemSubstitutosDisponíveis() throws ParseException
     {
         LoginService loginService = new LoginService();
-        assertTrue(loginService.VerificarUsuarioESenha("Administrador", "123456"));
+        assertTrue(loginService.verificarUsuarioESenha("Administrador", "123456"));
         
         NotificacaoService notificaçãoService = new NotificacaoService();
         List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();        

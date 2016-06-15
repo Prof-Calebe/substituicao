@@ -94,7 +94,7 @@ public class cst07Test {
     public void testeEfetuarRealocação_Confirmar() throws ParseException
     {
         LoginService loginService = new LoginService();
-        assertTrue(loginService.VerificarUsuarioESenha("Administrador", "123456"));
+        assertTrue(loginService.verificarUsuarioESenha("Administrador", "123456"));
         
         NotificacaoService notificaçãoService = new NotificacaoService();
         List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();        

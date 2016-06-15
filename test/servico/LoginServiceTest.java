@@ -63,9 +63,9 @@ public class LoginServiceTest {
     public void testeValidaUsuarioeSenha(){
 
         
-        Assert.assertTrue(LgnService.VerificarUsuarioESenha("Calebe", "123456"));
-        Assert.assertFalse(LgnService.VerificarUsuarioESenha("Calebe", ""));
-        Assert.assertFalse(LgnService.VerificarUsuarioESenha("noEcsiste", ""));
+        Assert.assertTrue(LgnService.verificarUsuarioESenha("Calebe", "123456"));
+        Assert.assertFalse(LgnService.verificarUsuarioESenha("Calebe", ""));
+        Assert.assertFalse(LgnService.verificarUsuarioESenha("noEcsiste", ""));
         
     }
     
