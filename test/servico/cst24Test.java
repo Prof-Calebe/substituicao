@@ -19,6 +19,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
 import modelo.UsuarioModel;
 
 /*
@@ -29,26 +30,23 @@ import modelo.UsuarioModel;
 
 public class cst24Test {
     
-    public cst24Test() {
-    }
-    
     @BeforeClass
     public static void setUpClass() throws NonexistentEntityException, Exception{
         PopulateDB.recreateDB("prosub", "root", "");
         PopulateDB.populateUseCaseTest();
     }
     
-    @AfterClass
-    public static void tearDownClass() {
-    }
+    //@AfterClass
+    //public static void tearDownClass() {
+    //}
     
-    @Before
-    public void setUp() throws ParseException, NonexistentEntityException {
-    }
+    //@Before
+    //public void setUp() throws ParseException, NonexistentEntityException {
+    //}
     
-    @After
-    public void tearDown() {
-    }
+    //@After
+    //public void tearDown() {
+    //}
     
     @Test
     public void testeEdicaoDeUsuarioCancelada() throws ParseException{
@@ -66,15 +64,9 @@ public class cst24Test {
         assertEquals(editarUsuario.Usuario,"Professor1");
         assertEquals(editarUsuario.Senha,"123456");
         
-        try {
-            //Editar usuário
-            editarUs.EditarUsuario("111111", Perfil.PROFESSOR, usuarios.get(1).id);
-        } catch (Exception ex) {
-            Logger.getLogger(cst24Test.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
         //Verficação de que os dados não foram alterados
-        assertEquals(editarUsuario.Usuario,"Professor1");
-        assertEquals(editarUsuario.Senha, "123456");
+        UsuarioModel usuario = editarUs.obterUsuario("Professor1");
+        assertEquals(usuario.Usuario,"Professor1");
+        assertEquals(usuario.Senha,"123456");
     }
 }
