@@ -2,11 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+ 
 package servico;
 
 import datamapper.AusenciaJpaController;
 import datamapper.ProfessorJpaController;
-import datamapper.UsuarioJpaController;
 import dominio.Aula;
 import dominio.Ausencia;
 import dominio.Professor;
@@ -16,7 +16,6 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import org.joda.time.Interval;
 
 /**
  *
@@ -24,8 +23,9 @@ import org.joda.time.Interval;
  */
 public class ProfessorService {
     
-   private ProfessorJpaController controller;
-   private AusenciaJpaController ausenciasRepository;
+    private ProfessorJpaController controller;
+    
+    private AusenciaJpaController ausenciasRepository;
     
     public ProfessorService(){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
@@ -35,6 +35,7 @@ public class ProfessorService {
     
     
     public List<ProfessorModel> ListarProfessores(){
+        // TODO letra minuscula do metodo
         
         List<Professor> professores = new LinkedList<Professor>(); 
         List<ProfessorModel> modelos = new LinkedList<ProfessorModel>();
@@ -67,34 +68,25 @@ public class ProfessorService {
         
         for(Professor professor : todosProfessores){
             
-            if(!professor.equals(professorAusente)){
-                //profsMenosAusente.add(professor);
+            if(!professor.equals(professorAusente)&&professor.EhCompativelCom(aulasPerdidas)){
                 
-                if(professor.EhCompativelCom(aulasPerdidas)){
+                Boolean compatível = true;
                     
-                    Boolean compatível = true;
-                    
-                    for(Ausencia ausenciaPreExistente : todasAsAusencias)
-                    {
-                        if(ausenciaPreExistente.getProfessorSubstituto() != null)
-                        {
-                            if(ausenciaPreExistente.getProfessorSubstituto().getNome().equals(professor.getNome()))
-                            {
-                                if(ausenciaPreExistente.getPeriodo().overlaps(ausência.getPeriodo()))
-                                    compatível = false;
+                for(Ausencia ausenciaPreExistente : todasAsAusencias){
+                    if(ausenciaPreExistente.getProfessorSubstituto() != null){
+                        if(ausenciaPreExistente.getProfessorSubstituto().getNome().equals(professor.getNome())){
+                            if(ausenciaPreExistente.getPeriodo().overlaps(ausência.getPeriodo())){
+                                compatível = false;
                             }
                         }
                     }
-                    
-                    if(compatível)
-                    {
-                        ProfessorModel model = new ProfessorModel();
-
-                        model.id = professor.getId();
-                        model.Nome = professor.getNome();
-
-                        profsPossiveis.add(model);
-                    }
+                }
+                
+                if(compatível){
+                    ProfessorModel model = new ProfessorModel();
+                    model.id = professor.getId();
+                    model.Nome = professor.getNome();
+                    profsPossiveis.add(model);
                 }
             }   
         }
@@ -106,8 +98,9 @@ public class ProfessorService {
         
         Professor professor = controller.findProfessor(nome);
         
-        if(professor == null)
+        if(professor == null){
             return null;
+        }
         
         ProfessorModel model = new ProfessorModel();
         
