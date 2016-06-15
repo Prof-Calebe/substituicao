@@ -77,7 +77,7 @@ public class cst03Test {
         }
         
         assertTrue(loginService.verificarUsuarioESenha("Administrador", "123456"));
-        ausencias = notificaçãoService.listarAusencias();        
+        ausencias = notificaçãoService.listarAusencias();      
         assertEquals(0, ausencias.size());
         assertTrue(exceptionOk);
     }
