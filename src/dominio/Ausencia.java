@@ -71,7 +71,7 @@ public class Ausencia implements Serializable {
         this.motivo = motivo;
         this.motivoRejeicao = null;
         //this.indicacaoSubstituto = null;
-        this.indicacoesSubstituto = new ArrayList<Professor>();
+        this.indicacoesSubstituto = new ArrayList<>();
         this.estado = EstadoAusencia.Alocacao_Pendente;       
         this.aula = aula;
     }

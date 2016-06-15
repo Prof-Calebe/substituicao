@@ -53,7 +53,7 @@ public class AdministracaoDeUsuariosService {
         
         UsuarioJpaController controller = new UsuarioJpaController(emf);
         List<Usuario> usuarios = controller.findUsuarioEntities();
-        List<UsuarioModel> modelos = new LinkedList<UsuarioModel>();
+        List<UsuarioModel> modelos = new LinkedList<>();
         
         for (Usuario usuario : usuarios){
             UsuarioModel model = new UsuarioModel();

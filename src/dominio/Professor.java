@@ -57,7 +57,7 @@ public class Professor implements Serializable {
 
     public Professor(String nome, String username) {
         this.nome = nome;
-        this.grade = new ArrayList<Aula>();
+        this.grade = new ArrayList<>();
         this.username = username;
         
     }

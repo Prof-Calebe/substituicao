@@ -29,9 +29,7 @@ public class LoginService {
     
     public boolean VerificarUsuarioESenha(String usuario, String senha){
 
-        List<Usuario> ListaDeUsuario = new LinkedList<Usuario>();
-        
-        ListaDeUsuario = controller.findUsuarioEntities();
+        List<Usuario> ListaDeUsuario = controller.findUsuarioEntities();
         
         for (Usuario user : ListaDeUsuario){
             if(user.getUsuario().equals(usuario) && user.getSenha().equals(senha))
