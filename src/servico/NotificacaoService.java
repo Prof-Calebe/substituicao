@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+ 
 package servico;
 
 import datamapper.AusenciaJpaController;
@@ -31,6 +32,7 @@ import org.joda.time.Interval;
 public class NotificacaoService {
     
     private AusenciaJpaController ausenciaController;
+    
     private ProfessorJpaController profController;
     
     public NotificacaoService(){
@@ -58,7 +60,11 @@ public class NotificacaoService {
             inícioReal = new DateTime(inicio.getYear(),inicio.getMonthOfYear(),inicio.getDayOfMonth(),00,00);
 
             fim = new DateTime(sdf.parse(dataFim));
-            fimReal = new DateTime(fim.getYear(),fim.getMonthOfYear(),fim.getDayOfMonth(),23,59);            
+            
+            int hourOfDay = 23;
+            int minuteOfHour = 59;
+            
+            fimReal = new DateTime(fim.getYear(),fim.getMonthOfYear(),fim.getDayOfMonth(),hourOfDay,minuteOfHour);            
         }
         else
         {
@@ -74,7 +80,7 @@ public class NotificacaoService {
         Interval periodo = new Interval(inícioReal, fimReal);
         
         Professor professor = profController.findProfessor(idProfessor);
-        List<Professor> professoresIndicados = new ArrayList<Professor>();
+        //List<Professor> professoresIndicados = new ArrayList<Professor>();
         
         //Professor professorSubstituto = profController.findProfessor(idProfessorSubstituto);
         
@@ -86,7 +92,10 @@ public class NotificacaoService {
         
         for(Ausencia ausencia : ausencias)
         {
-            String codigo = Integer.toString(r.nextInt(10000));
+            
+            int randomNumber = r.nextInt(10000);
+            
+            String codigo = Integer.toString(randomNumber);
             
             ausencia.setCodigo(codigo);
             
@@ -100,10 +109,11 @@ public class NotificacaoService {
             ausenciaController.create(ausencia);
         }
         
-        if(codigos.size() > 0)
+        if(codigos.size() > 0){
             return codigos.get(0);       
-        else
+        } else {
             return "0";
+        }
     }
 
     public List<AusenciaModel> listarAusencias() {
@@ -122,15 +132,15 @@ public class NotificacaoService {
     }
     
     private String determinarEstado(EstadoAusencia estado){
-        if(estado == EstadoAusencia.Ausencia_Cancelada)
+        if(estado == EstadoAusencia.Ausencia_Cancelada) {
             return "Ausência cancelada";
-        else if(estado == EstadoAusencia.Alocacao_Efetuada)
+        } else if(estado == EstadoAusencia.Alocacao_Efetuada) {
             return "Alocação efetuada";
-        else if(estado == EstadoAusencia.Alocacao_Pendente)
+        } else if(estado == EstadoAusencia.Alocacao_Pendente) {
             return "Alocação pendente";
-        else if(estado == EstadoAusencia.Alocacao_Confirmada)
+        } else if(estado == EstadoAusencia.Alocacao_Confirmada) {
             return "Alocação confirmada";
-        else{
+        } else {
             return "Aulas canceladas";
         }
     }
@@ -219,6 +229,7 @@ public class NotificacaoService {
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
+            // TODO tratar Exeptions!
             Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
