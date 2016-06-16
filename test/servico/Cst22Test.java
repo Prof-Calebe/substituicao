@@ -37,7 +37,7 @@ public class Cst22Test {
     @Test
     public void testeCriarUsuarioEcancelar() {
         LoginService loginService = new LoginService();
-        assertTrue(loginService.VerificarUsuarioESenha("Administrador", ""));
+        assertTrue(loginService.VerificarUsuarioESenha("Administrador", "123456"));
 
         AdministracaoDeUsuariosService aus;
 
