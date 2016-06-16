@@ -25,6 +25,7 @@ import static org.junit.Assert.*;
  *
  * @author Victor Messina
  */
+
 public class Cst22Test {
 
     @BeforeClass
