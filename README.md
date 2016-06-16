@@ -6,7 +6,7 @@ Sistema para controle de professores substitutos.
 
 Qualquer tarefa ou problema deve ser reportado como uma Issue **antes** de executar qualquer coisa, seja a realização de uma tarefa, ou a correção de um problema.
 
-Além disso, um desenvolvedor somente poderá trabalhar na Issue quando ela for classificada (bug, enhancement, etc) e/ou comentada pelo dono do produto ou usuário.
+Além disso, um desenvolvedor somente poderá trabalhar na Issue quando ela for classificada (bug, enhancement, etc) e/ou comentada pelo proprietário ou algum administrador do repositório.
 
 ### Wiki
 
@@ -46,9 +46,9 @@ $ git rebase origin/dev
 $ git push origin HEAD
 ```
 
-A patir desse momento, a sua nova branch deve aparecer em seu repositório.
+A patir desse momento, a sua nova branch deve aparecer no repositório.
 
-* Aguarde o build e demais hooks avaliarem a `branch`. Caso nenhuma falha seja encontrada, faça um pull-request da `branch-##` para a `dev` e aguarde os comentários da revisão.
+* Aguarde o build e demais hooks avaliarem a `branch`. Caso nenhuma falha seja encontrada, faça um `pull-request` da `branch-##` para a `dev` e aguarde os comentários da revisão - alguns hooks farão comentários automáticos neste `pull-request` e, portanto, as anotações deverão ser corrigidas e/ou explicadas.
 
 * Caso seja necessário alterar a sua `branch` devido a alguma falha do build, dos hooks, ou dos comentários de revisão, faça-os normalmente na sua branch `issue-##`, sincronizando-a novamente ao final das mudanças e reenviando-a para o repositório. Aguarde os resultados descritos no passo anterior e, se for o caso, repita todo este processo. Se um pull-request já foi feito, não é necessário refazê-lo ou fechá-lo.
 ```bash
@@ -58,6 +58,9 @@ $ git commit # com os seus commits
 $ git rebase origin/dev
 $ git push --force origin HEAD
 ```
+
+A primeira linha de uma mensagem de `commit` deve ser simples, precisa e significativa e, se possível, conter no máximo 50 caracteres. Se for necessária uma mansagem maior, resuma o problema corrigido na **1a linha** e a partir da **3a linha** (_terceira linha_) da mensagem explique com mais detalhes o `commit`, mantendo 120 caracteres por linha. Quando pertinente e possível, utilize [auto-referências](https://help.github.com/articles/autolinked-references-and-urls/) às issues e desenvolvedores, e mensagens com [palavras-chaves](https://help.github.com/articles/closing-issues-via-commit-messages/).
+
 
 ### Hooks
 
