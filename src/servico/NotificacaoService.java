@@ -52,13 +52,11 @@ public class NotificacaoService {
             inicio = new DateTime(sdf.parse(dataInicio));
             fim = new DateTime(sdf.parse(dataFim));
         } catch (ParseException pe) {
-            try {
-                sdf = new SimpleDateFormat("dd/MM/yyyy");
-                inicio = new DateTime(sdf.parse(dataInicio)).withHourOfDay(0).withMinuteOfHour(0);
-                fim = new DateTime(sdf.parse(dataFim)).withHourOfDay(23).withMinuteOfHour(59);
-            } catch (ParseException pe2) {
-                throw pe2;
-            }
+            sdf = new SimpleDateFormat("dd/MM/yyyy");
+            inicio = new DateTime(sdf.parse(dataInicio)).withHourOfDay(0)
+                    .withMinuteOfHour(0);
+            fim = new DateTime(sdf.parse(dataFim)).withHourOfDay(23)
+                    .withMinuteOfHour(59);
         }
 
         Interval periodo = new Interval(inicio, fim);
