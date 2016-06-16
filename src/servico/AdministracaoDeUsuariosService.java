@@ -38,7 +38,7 @@ public class AdministracaoDeUsuariosService {
     }
     
     public void EditarUsuario(String senha, Perfil profile, Long id) throws NonexistentEntityException, Exception{
-        if(!senha.equals("")){
+        if(!"".equals(senha)){
             UsuarioJpaController controller = new UsuarioJpaController(emf);
             Usuario usuarioAEditar = controller.findUsuario(id);
 
