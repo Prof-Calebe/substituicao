@@ -30,14 +30,14 @@ public class Cst22Test {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        PopulateDB.recreateDB("prosub", "root", "");
+        PopulateDB.recreateDB("pro_subPU", "root", "");
         PopulateDB.populateUseCaseTest();
     }
 
     @Test
     public void testeCriarUsuarioEcancelar() {
         LoginService loginService = new LoginService();
-        assertTrue(loginService.VerificarUsuarioESenha("Administrador", "123456"));
+        assertTrue(loginService.VerificarUsuarioESenha("Administrador", ""));
 
         AdministracaoDeUsuariosService aus;
 
