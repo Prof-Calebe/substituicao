@@ -45,9 +45,9 @@ public class cst24Test {
     @Test
     public void testeEdicaoDeUsuarioCancelada() throws ParseException{
         
-        //Login como usuário "administrador" 
+        //Login como usuário "Administrador" 
         LoginService loginService = new LoginService();
-        assertTrue(loginService.VerificarUsuarioESenha("administrador", "123456"));
+        assertTrue(loginService.VerificarUsuarioESenha("Administrador", "123456"));
         
         //Navegação até "Editar Usuário" 
         AdministracaoDeUsuariosService editarUs = new AdministracaoDeUsuariosService();
