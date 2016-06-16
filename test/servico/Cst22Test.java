@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package servico;
 
 import auxiliar.Perfil;
@@ -28,7 +29,7 @@ public class Cst22Test {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        PopulateDB.recreateDB("pro_subPU", "root", "");
+        PopulateDB.recreateDB("prosub", "root", "");
         PopulateDB.populateUseCaseTest();
     }
 
