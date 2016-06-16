@@ -51,7 +51,7 @@ public class cst03Test {
     }
     
     @Test
-    public void testeNotificaçãoDeAusência_SemMotivo() throws ParseException{
+    public void testeNotificaçãoDeAusênciaSemMotivo() throws ParseException{
         //Login com usuário "Funcionario"
         LoginService loginService = new LoginService();
         assertTrue(loginService.VerificarUsuarioESenha("Funcionario", "123456"));
