@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package servico;
-
 import auxiliar.Perfil;
 import datamapper.PopulateDB;
 import dominio.Usuario;
@@ -13,7 +12,6 @@ import modelo.UsuarioModel;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-
 /**
  *
  * @author Victor Messina
