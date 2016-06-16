@@ -6,6 +6,7 @@
 
 package servico;
 
+import auxiliar.Perfil;
 import datamapper.PopulateDB;
 import datamapper.exceptions.NonexistentEntityException;
 import java.text.ParseException;
@@ -43,7 +44,7 @@ public class cst24Test {
     //}
     
     @Test
-    public void testeEdicaoDeUsuarioCancelada() throws ParseException{
+    public void testeEdicaoDeUsuarioCancelada() throws ParseException, Exception{
         
         //Login como usuário "Administrador" 
         LoginService loginService = new LoginService();
@@ -57,6 +58,8 @@ public class cst24Test {
         UsuarioModel editarUsuario = usuarios.get(1);
         assertEquals(editarUsuario.Usuario,"Professor1");
         assertEquals(editarUsuario.Senha,"123456");
+        
+        editarUs.EditarUsuario("", Perfil.PROFESSOR, editarUsuario.id);
         
         //Verficação de que os dados não foram alterados
         UsuarioModel usuario = editarUs.obterUsuario("Professor1");
