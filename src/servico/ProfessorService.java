@@ -67,19 +67,15 @@ public class ProfessorService {
         List<ProfessorModel> profsPossiveis = new ArrayList<>();
         
         for(Professor professor : todosProfessores) {
-            if(professor.equals(professorAusente) 
-                    || !professor.EhCompativelCom(aulasPerdidas)) {
+            if(professor.equals(professorAusente) || !professor.EhCompativelCom(aulasPerdidas))
                 continue;
-            }
 
             Boolean compatível = true;
 
             for(Ausencia ausenciaPreExistente : todasAsAusencias) {
                 if(ausenciaPreExistente.getProfessorSubstituto() != null
-                    && ausenciaPreExistente.getProfessorSubstituto()
-                            .equals(professor)
-                    && ausenciaPreExistente.getPeriodo()
-                            .overlaps(ausência.getPeriodo())) {
+                    && ausenciaPreExistente.getProfessorSubstituto().equals(professor)
+                    && ausenciaPreExistente.getPeriodo().overlaps(ausência.getPeriodo())) {
                     compatível = false;
                     break;
                 }
