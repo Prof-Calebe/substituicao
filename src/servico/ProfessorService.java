@@ -67,8 +67,9 @@ public class ProfessorService {
         List<ProfessorModel> profsPossiveis = new ArrayList<>();
         
         for(Professor professor : todosProfessores) {
-            if(professor.equals(professorAusente) || !professor.EhCompativelCom(aulasPerdidas))
+            if(professor.equals(professorAusente) || !professor.EhCompativelCom(aulasPerdidas)) {
                 continue;
+            }
 
             Boolean compatível = true;
 
