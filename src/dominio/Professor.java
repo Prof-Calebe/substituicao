@@ -231,24 +231,22 @@ public class Professor implements Serializable {
     }
 
     private void avaliar(Aula aulaPedida, Interval primeiroDia, String motivo, List<Ausencia> ausencias) {
-        if(aulaPedida.getDiaDaSemana() == primeiroDia.getStart().getDayOfWeek())
+        if(aulaPedida.getDiaDaSemana() == primeiroDia.getStart().getDayOfWeek()
+                && aulaPedida.bateHorarioCom(primeiroDia)) 
         {
-            if(aulaPedida.bateHorarioCom(primeiroDia))
-            {
-                int anoAusência = primeiroDia.getStart().getYear();
-                int mêsAusência = primeiroDia.getStart().getMonthOfYear();
-                int diaAusência = primeiroDia.getStart().getDayOfMonth();
-                int inícioHoraAula = aulaPedida.getPeriodo().getStart().getHourOfDay();
-                int inícioMinutoAula = aulaPedida.getPeriodo().getStart().getMinuteOfHour();
-                int finalHoraAula = aulaPedida.getPeriodo().getEnd().getHourOfDay();
-                int finalMinutoAula = aulaPedida.getPeriodo().getEnd().getMinuteOfHour();
-                
-                DateTime inícioAusênciaAula = new DateTime(anoAusência,mêsAusência,diaAusência,inícioHoraAula,inícioMinutoAula);
-                DateTime finalAusênciaAula = new DateTime(anoAusência,mêsAusência,diaAusência,finalHoraAula,finalMinutoAula);
-                Interval períodoAusência = new Interval(inícioAusênciaAula,finalAusênciaAula);
-                Ausencia ausência = new Ausencia("0", períodoAusência, this, motivo, aulaPedida);
-                ausencias.add(ausência);
-            }
+            int anoAusência = primeiroDia.getStart().getYear();
+            int mêsAusência = primeiroDia.getStart().getMonthOfYear();
+            int diaAusência = primeiroDia.getStart().getDayOfMonth();
+            int inícioHoraAula = aulaPedida.getPeriodo().getStart().getHourOfDay();
+            int inícioMinutoAula = aulaPedida.getPeriodo().getStart().getMinuteOfHour();
+            int finalHoraAula = aulaPedida.getPeriodo().getEnd().getHourOfDay();
+            int finalMinutoAula = aulaPedida.getPeriodo().getEnd().getMinuteOfHour();
+
+            DateTime inícioAusênciaAula = new DateTime(anoAusência,mêsAusência,diaAusência,inícioHoraAula,inícioMinutoAula);
+            DateTime finalAusênciaAula = new DateTime(anoAusência,mêsAusência,diaAusência,finalHoraAula,finalMinutoAula);
+            Interval períodoAusência = new Interval(inícioAusênciaAula,finalAusênciaAula);
+            Ausencia ausência = new Ausencia("0", períodoAusência, this, motivo, aulaPedida);
+            ausencias.add(ausência);
         }
     }
     

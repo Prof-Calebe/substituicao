@@ -21,7 +21,7 @@ import javax.persistence.Persistence;
 public class AdministracaoDeUsuariosService {
     
    //private UsuarioJpaController controller;
-    private EntityManagerFactory emf;
+    private final EntityManagerFactory emf;
     
     public AdministracaoDeUsuariosService(){
         

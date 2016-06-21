@@ -18,7 +18,7 @@ import javax.persistence.Persistence;
  */
 public class LoginService {
     
-    private UsuarioJpaController controller;
+    private final UsuarioJpaController controller;
     
     public LoginService(){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");

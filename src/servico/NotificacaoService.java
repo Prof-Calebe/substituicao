@@ -30,8 +30,8 @@ import org.joda.time.Interval;
  */
 public class NotificacaoService {
     
-    private AusenciaJpaController ausenciaController;
-    private ProfessorJpaController profController;
+    private final AusenciaJpaController ausenciaController;
+    private final ProfessorJpaController profController;
     
     public NotificacaoService(){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
