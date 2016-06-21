@@ -25,7 +25,7 @@ import static org.junit.Assert.*;
  *
  * @author Victor Messina
  */
-public class Cst22Test {
+public class cst22Test {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
@@ -49,7 +49,7 @@ public class Cst22Test {
         usuario1.setPermissao(Perfil.PROFESSOR);
 
         List<UsuarioModel> usuariosCadastrados;
-        usuariosCadastrados = aus.ListarUsuarios();
+        usuariosCadastrados = aus.listarUsuarios();
 
         boolean flag = false;
 
