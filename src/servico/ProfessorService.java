@@ -23,9 +23,9 @@ import javax.persistence.Persistence;
  */
 public class ProfessorService {
     
-   private final ProfessorJpaController controller;
+    private final ProfessorJpaController controller;
 
-   private final AusenciaJpaController ausenciasRepository;
+    private final AusenciaJpaController ausenciasRepository;
     
     public ProfessorService(){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
