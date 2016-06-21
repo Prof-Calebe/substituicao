@@ -31,7 +31,8 @@ public class cst02Test {
     }
     
     @BeforeClass
-    public static void setUpClass() throws NonexistentEntityException, Exception{
+    public static void setUpClass() 
+            throws NonexistentEntityException, Exception{
         PopulateDB.recreateDB("prosub", "root", "");
         PopulateDB.populateUseCaseTest();
     }   
@@ -55,7 +56,8 @@ public class cst02Test {
         assertTrue(loginService.verificarUsuarioESenha("Funcionario1", "123456"));
         
         ProfessorService professorService = new ProfessorService();
-        ProfessorModel professor = professorService.obterProfessorPorNome("Professor1");
+        ProfessorModel professor = professorService.obterProfessorPorNome(
+                "Professor1");
         
         NotificacaoService notificaçãoService = new NotificacaoService();
         List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();        

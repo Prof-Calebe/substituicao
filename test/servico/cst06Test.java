@@ -40,18 +40,23 @@ public class cst06Test {
     }
     
     @BeforeClass
-    public static void setUpClass() throws NonexistentEntityException, Exception{
+    public static void setUpClass() 
+            throws NonexistentEntityException, Exception{
         PopulateDB.recreateDB("prosub", "root", "");
         PopulateDB.populateUseCaseTest();
         
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
+        EntityManagerFactory emf = 
+                Persistence.createEntityManagerFactory("pro_subPU");
         
         DateTime inícioPrimeiroHorário = new DateTime(1900, 01, 01, 18, 30);
         DateTime finalPrimeiroHorário = new DateTime(1900, 01, 01, 20, 00);        
-        Interval primeiroHorário = new Interval(inícioPrimeiroHorário, finalPrimeiroHorário);
+        Interval primeiroHorário = 
+                new Interval(inícioPrimeiroHorário, finalPrimeiroHorário);
         
         AulaJpaController aulaJpa = new AulaJpaController(emf);
-        Aula aulaProfessor3SegundaFeiraPrimeiroHorário = new Aula("P3 - Segunda 18:30", DateTimeConstants.MONDAY, primeiroHorário);
+        Aula aulaProfessor3SegundaFeiraPrimeiroHorário = 
+                new Aula("P3 - Segunda 18:30", 
+                        DateTimeConstants.MONDAY, primeiroHorário);
         aulaJpa.create(aulaProfessor3SegundaFeiraPrimeiroHorário);
         
         ProfessorJpaController profJpa = new ProfessorJpaController(emf);
@@ -68,10 +73,13 @@ public class cst06Test {
     @Before
     public void setUp() throws ParseException {
         ProfessorService professorService = new ProfessorService();
-        ProfessorModel professor = professorService.obterProfessorPorNome("Professor2");
+        ProfessorModel professor = 
+                professorService.obterProfessorPorNome("Professor2");
         
         NotificacaoService notificaçãoService = new NotificacaoService();
-        notificaçãoService.notificarAusencia(professor.id, "25/11/2013 18:30", "25/11/2013 19:59", "Motivo Declarado", new LinkedList<String>());
+        notificaçãoService.notificarAusencia(
+                professor.id, "25/11/2013 18:30", "25/11/2013 19:59", 
+                "Motivo Declarado", new LinkedList<String>());
         
         
     }

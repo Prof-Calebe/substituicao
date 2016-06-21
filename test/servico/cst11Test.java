@@ -6,17 +6,11 @@
 
 package servico;
 
-import datamapper.AulaJpaController;
 import datamapper.PopulateDB;
-import datamapper.ProfessorJpaController;
 import datamapper.exceptions.NonexistentEntityException;
-import dominio.Aula;
-import dominio.Professor;
 import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -26,9 +20,6 @@ import static org.junit.Assert.*;
 
 import modelo.AusenciaModel;
 import modelo.ProfessorModel;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeConstants;
-import org.joda.time.Interval;
 
 /**
  *
@@ -40,7 +31,8 @@ public class cst11Test {
     }
     
     @BeforeClass
-    public static void setUpClass() throws NonexistentEntityException, Exception{
+    public static void setUpClass() 
+            throws NonexistentEntityException, Exception{
         PopulateDB.recreateDB("prosub", "root", "");
         PopulateDB.populateUseCaseTest();
     }
@@ -53,14 +45,18 @@ public class cst11Test {
     public void setUp() throws ParseException, NonexistentEntityException {
         //Setup Declaração de Ausência Professor 2
         ProfessorService professorService = new ProfessorService();
-        ProfessorModel professor = professorService.obterProfessorPorNome("Professor2");
+        ProfessorModel professor = 
+                professorService.obterProfessorPorNome("Professor2");
         
         NotificacaoService notificaçãoService = new NotificacaoService();
-        notificaçãoService.notificarAusencia(professor.id, "25/11/2013 18:30", "25/11/2013 19:59", "Motivo Declarado", new LinkedList<String>());
+        notificaçãoService.notificarAusencia(
+                professor.id, "25/11/2013 18:30", "25/11/2013 19:59",
+                "Motivo Declarado", new LinkedList<String>());
         
         //Setup Professor 3 como substituto
         List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();    
-        notificaçãoService.definirSubstituto(ausencias.get(0).codigo,"Professor3");
+        notificaçãoService.definirSubstituto(
+                ausencias.get(0).codigo,"Professor3");
     }
     
     @After
@@ -74,7 +70,8 @@ public class cst11Test {
         assertTrue(loginService.verificarUsuarioESenha("Professor3", "123456"));
         
         NotificacaoService notificaçãoService = new NotificacaoService();
-        List<AusenciaModel> ausencias = notificaçãoService.listarAusenciasPorSubstituto("Professor3");
+        List<AusenciaModel> ausencias = 
+                notificaçãoService.listarAusenciasPorSubstituto("Professor3");
         assertEquals(1, ausencias.size());
         assertEquals("Professor2", ausencias.get(0).professorAusente);
         assertEquals("Professor3", ausencias.get(0).professorSubstituto);

@@ -29,7 +29,7 @@ public class AdministracaoDeUsuariosService {
         //controller = new UsuarioJpaController(emf);
     }
     
-    public void SalvarUsuario(String Nome, String Senha, Perfil profile){
+    public void salvarUsuario(String Nome, String Senha, Perfil profile){
         UsuarioJpaController controller = new UsuarioJpaController(emf);
         Usuario usuario = Usuario.createUsuarioPadrao(Nome);
         usuario.setSenha(Senha);
@@ -37,7 +37,8 @@ public class AdministracaoDeUsuariosService {
         controller.create(usuario);
     }
     
-    public void EditarUsuario(String senha, Perfil profile, Long id) throws NonexistentEntityException, Exception{
+    public void editarUsuario(String senha, Perfil profile, Long id) 
+            throws NonexistentEntityException, Exception{
         
         UsuarioJpaController controller = new UsuarioJpaController(emf);
         Usuario usuarioAEditar = controller.findUsuario(id);
@@ -49,7 +50,7 @@ public class AdministracaoDeUsuariosService {
         controller.edit(usuarioAEditar);
     }
     
-    public List<UsuarioModel> ListarUsuarios(){
+    public List<UsuarioModel> listarUsuarios(){
         
         UsuarioJpaController controller = new UsuarioJpaController(emf);
         List<Usuario> usuarios = controller.findUsuarioEntities();
