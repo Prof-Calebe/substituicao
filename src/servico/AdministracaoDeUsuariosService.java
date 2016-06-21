@@ -38,15 +38,16 @@ public class AdministracaoDeUsuariosService {
     }
     
     public void EditarUsuario(String senha, Perfil profile, Long id) throws NonexistentEntityException, Exception{
-        
-        UsuarioJpaController controller = new UsuarioJpaController(emf);
-        Usuario usuarioAEditar = controller.findUsuario(id);
-        
-        usuarioAEditar.setUsuario(usuarioAEditar.getUsuario());
-        usuarioAEditar.setSenha(senha);
-        usuarioAEditar.setPermissao(profile);
-        
-        controller.edit(usuarioAEditar);
+        if(!"".equals(senha)){
+            UsuarioJpaController controller = new UsuarioJpaController(emf);
+            Usuario usuarioAEditar = controller.findUsuario(id);
+
+            usuarioAEditar.setUsuario(usuarioAEditar.getUsuario());
+            usuarioAEditar.setSenha(senha);
+            usuarioAEditar.setPermissao(profile);
+
+            controller.edit(usuarioAEditar);
+        }
     }
     
     public List<UsuarioModel> ListarUsuarios(){
