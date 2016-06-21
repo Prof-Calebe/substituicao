@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+ 
 package datamapper;
 
 import datamapper.exceptions.NonexistentEntityException;
@@ -19,11 +20,13 @@ import javax.persistence.EntityNotFoundException;
  *
  * @author Leticia
  */
+ 
 public class AusenciaJpaController implements Serializable {
 
     public AusenciaJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
+    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -44,17 +47,17 @@ public class AusenciaJpaController implements Serializable {
         }
     }
 
-    public void edit(Ausencia ausencia) throws NonexistentEntityException, Exception {
+    public void edit(Ausencia ausencias) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            ausencia = em.merge(ausencia);
+            ausencias = em.merge(ausencias);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Long id = ausencia.getId();
+                Long id = ausencias.getId();
                 if (findAusencia(id) == null) {
                     throw new NonexistentEntityException("The ausencia with id " + id + " no longer exists.");
                 }
@@ -72,10 +75,10 @@ public class AusenciaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Ausencia ausencia;
+            Ausencia ausencias;
             try {
-                ausencia = em.getReference(Ausencia.class, id);
-                ausencia.getId();
+                ausencias = em.getReference(Ausencia.class, id);
+                ausencias.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The ausencia with id " + id + " no longer exists.", enfe);
             }
@@ -170,9 +173,9 @@ public class AusenciaJpaController implements Serializable {
     public Ausencia findAusencia(String codigo){
     List<Ausencia> ausencias = this.findAusenciaEntities();
     for(Ausencia ausencia : ausencias){
-        if(ausencia.getCodigo().equals(codigo))
+        if(ausencia.getCodigo().equals(codigo)){
             return ausencia;
-    }
+    }}
         
         return null;
     }
