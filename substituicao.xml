@@ -4,11 +4,11 @@
   <description>Builds and tests the project substituicao.</description>
 
   <!-- Importing the references from a NetBeans project.  -->
-
-  <!-- Defining some JaCoCo properties -->
   <property name="base" value="lib"/>
   <property file="./lib/nblibraries.properties" />
   <property file="./nbproject/project.properties" />
+
+  <!-- Defining some JaCoCo properties -->
   <property name="result.dir" location="${build.test.results.dir}"/>
   <property name="result.report.dir" location="${result.dir}/jacoco"/>
   <property name="result.exec.file" location="${result.dir}/jacoco.exec"/>
@@ -46,7 +46,7 @@
       </executiondata>
       <structure name="JaCoCo Ant for substituicao">
         <classfiles>
-          <fileset dir="${build.test.classes.dir}"/>
+          <fileset dir="${build.classes.dir}"/>
         </classfiles>
         <sourcefiles encoding="UTF-8">
           <fileset dir="${src.dir}"/>
