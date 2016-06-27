@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:jacoco="antlib:org.jacoco.ant" name="substituicao" default="substituicao" basedir=".">
+  <!-- XML based on http://www.eclemma.org/jacoco/trunk/doc/examples/build/build.xml  -->
+  <description>Builds and tests the project substituicao.</description>
+
+  <!-- Importing the references from a NetBeans project.  -->
+
+  <!-- Defining some JaCoCo properties -->
+  <property name="base" value="lib"/>
+  <property file="./lib/nblibraries.properties" />
+  <property file="./nbproject/project.properties" />
+  <property name="result.dir" location="${build.test.results.dir}"/>
+  <property name="result.report.dir" location="${result.dir}/jacoco"/>
+  <property name="result.exec.file" location="${result.dir}/jacoco.exec"/>
+
+  <!-- Building this porject calling the rigth build.xml from a NetBeans project -->
+  <target name="sub-init" description="Calling build-impl.xml from NetBeans">
+    <ant antfile="build.xml" target="default" />
+  </target>
+
+  <!--  Step 1: Import JaCoCo Ant tasks  -->
+  <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+    <classpath path="./lib/jacocoant.jar"/>
+  </taskdef>
+
+  <target name="sub-junit" depends="sub-init" description="Run unit tests and code coverage">
+    <jacoco:coverage destfile="${result.dir}/jacoco.exec" xmlns:jacoco="antlib:org.jacoco.ant">
+      <junit haltonfailure="yes" fork="true" forkmode="once" description="Rerunning JUnit with JaCoCo Coverage">
+        <classpath>
+          <path path="${run.test.classpath}"/>
+        </classpath>
+        <formatter type="xml"/>
+        <batchtest todir="${result.dir}">
+          <fileset dir="${test.src.dir}">
+            <include name="**/*Test*.java"/>
+          </fileset>
+        </batchtest>
+      </junit>
+    </jacoco:coverage>
+  </target>
+
+  <target name="sub-report" depends="sub-junit" description="Creating JaCoCo report">
+    <jacoco:report>
+      <executiondata>
+        <file file="${result.exec.file}"/>
+      </executiondata>
+      <structure name="JaCoCo Ant for substituicao">
+        <classfiles>
+          <fileset dir="${build.test.classes.dir}"/>
+        </classfiles>
+        <sourcefiles encoding="UTF-8">
+          <fileset dir="${src.dir}"/>
+        </sourcefiles>
+      </structure>
+
+      <!--  to produce reports in different formats.  -->
+      <html destdir="${result.report.dir}"/>
+      <csv destfile="${result.report.dir}/report.csv"/>
+      <xml destfile="${result.report.dir}/report.xml"/>
+    </jacoco:report>
+  </target>
+
+  <target name="clean">
+    <ant antfile="build.xml" target="clean" />
+  </target>
+
+  <target name="substituicao" depends="sub-report" description="Build substituicao project."/>
+
+</project>

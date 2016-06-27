@@ -14,8 +14,7 @@ wget -nv -T 10 -t 0 "http://download.java.net/glassfish/3.1.2/release/glassfish-
 # já cria um diretório chamado glassfish3
 unzip -q glassfish-3.1.2.zip
 
-ant
-java -jar lib/jpm4j.jar -u init
+ant -buildfile substituicao.xml substituicao
 curl https://www.jpm4j.org/install/script | sudo sh
 sudo jpm install com.codacy:codacy-coverage-reporter:assembly
-codacy-coverage-reporter -l Java -r build/coverage.xml
+codacy-coverage-reporter -l Java -r build/test/results/jacoco/report.xml
