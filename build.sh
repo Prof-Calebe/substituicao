@@ -1,4 +1,7 @@
 #!/bin/bash
+# Exits if any command fails: http://stackoverflow.com/questions/821396/aborting-a-shell-script-if-any-command-returns-a-non-zero-value
+set -e
+set -o pipefail
 
 _PWD=`pwd`
 CopyLibs=$_PWD/lib/org-netbeans-modules-java-j2seproject-copylibstask.jar
@@ -11,7 +14,8 @@ wget -nv -T 10 -t 0 "http://download.java.net/glassfish/3.1.2/release/glassfish-
 # já cria um diretório chamado glassfish3
 unzip -q glassfish-3.1.2.zip
 
-echo " "
 ant
-exit $?
-
+java -jar lib/jpm4j.jar -u init
+curl https://www.jpm4j.org/install/script | sudo sh
+sudo jpm install com.codacy:codacy-coverage-reporter:assembly
+codacy-coverage-reporter -l Java -r build/coverage.xml
