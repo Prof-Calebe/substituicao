@@ -91,7 +91,7 @@ public class AdministracaoDeUsuariosServiceTest {
         
         int countUsuarios = controller.getUsuarioCount();
         
-        List<UsuarioModel> this.modelos = serviceEmTeste.listarUsuarios();
+        List<UsuarioModel> modelos = this.serviceEmTeste.listarUsuarios();
         Assert.assertEquals(countUsuarios, modelos.size());
     }
     
