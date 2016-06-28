@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package dominio;
 
 /**
@@ -18,18 +19,18 @@ public enum EstadoAusencia {
     private final int code;
     private final String descricao;
 
-    private EstadoAusencia(int code, String descricao) {
-        this.code = code;
-        this.descricao = descricao;
+    private EstadoAusencia(int aCode, String aDescricao) {
+        this.code = aCode;
+        this.descricao = aDescricao;
     }
 
     public int getCode() {
-        return code;
+        return this.code;
     }
 
     public String getDescricao() {
-        return descricao;
+        return this.descricao;
     }
     
     
-};
+}

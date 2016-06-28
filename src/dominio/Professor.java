@@ -202,11 +202,11 @@ public class Professor implements Serializable {
         
         for(Aula aulaPedida : this.getGrade())
         {                    
-            avaliar(aulaPedida, primeiroDia, motivo, ausencias);
+            this.avaliar(aulaPedida, primeiroDia, motivo, ausencias);
             
             if(últimoDia != null)
             {
-                avaliar(aulaPedida, últimoDia, motivo, ausencias);
+                this.avaliar(aulaPedida, últimoDia, motivo, ausencias);
             }
             
             if(diasCompletos != null)
@@ -230,7 +230,7 @@ public class Professor implements Serializable {
         return ausencias;
     }
 
-    private void avaliar(Aula aulaPedida, Interval primeiroDia, String motivo, List<Ausencia> ausencias) {
+    private void avaliar(Aula aulaPedida, Interval primeiroDia, String motivo, List<Ausencia> ListaDeAusencias) {
         if(aulaPedida.getDiaDaSemana() == primeiroDia.getStart().getDayOfWeek()
                 && aulaPedida.bateHorarioCom(primeiroDia)) 
         {
@@ -242,11 +242,13 @@ public class Professor implements Serializable {
             int finalHoraAula = aulaPedida.getPeriodo().getEnd().getHourOfDay();
             int finalMinutoAula = aulaPedida.getPeriodo().getEnd().getMinuteOfHour();
 
-            DateTime inícioAusênciaAula = new DateTime(anoAusência,mêsAusência,diaAusência,inícioHoraAula,inícioMinutoAula);
-            DateTime finalAusênciaAula = new DateTime(anoAusência,mêsAusência,diaAusência,finalHoraAula,finalMinutoAula);
-            Interval períodoAusência = new Interval(inícioAusênciaAula,finalAusênciaAula);
+            DateTime inícioAusênciaAula = new DateTime(anoAusência, mêsAusência, diaAusência, inícioHoraAula,
+                inícioMinutoAula);
+            DateTime finalAusênciaAula = new DateTime(anoAusência, mêsAusência, diaAusência, finalHoraAula,
+                finalMinutoAula);
+            Interval períodoAusência = new Interval(inícioAusênciaAula, finalAusênciaAula);
             Ausencia ausência = new Ausencia("0", períodoAusência, this, motivo, aulaPedida);
-            ausencias.add(ausência);
+            ListaDeAusencias.add(ausência);
         }
     }
     
