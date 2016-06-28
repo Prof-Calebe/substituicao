@@ -27,7 +27,7 @@ public class LoginService {
     
     public boolean verificarUsuarioESenha(String usuario, String senha){
 
-        List<Usuario> ListaDeUsuario = controller.findUsuarioEntities();
+        List<Usuario> ListaDeUsuario = this.controller.findUsuarioEntities();
         
         for (Usuario user : ListaDeUsuario){
             if(user.getUsuario().equals(usuario) && user.getSenha().equals(senha))
