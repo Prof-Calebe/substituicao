@@ -60,7 +60,7 @@ public class AdministracaoDeUsuariosServiceTest {
     @Test
     public void testeDeveSalvarUsuario() throws NonexistentEntityException {
         
-        serviceEmTeste.salvarUsuario("Victor hugo", "senhaDificil",
+        this.serviceEmTeste.salvarUsuario("Victor hugo", "senhaDificil",
                 Perfil.FUNCIONARIO);
 
         Usuario usuarioQueEuColoquei = controller.findUsuario(proximoId);
@@ -75,8 +75,8 @@ public class AdministracaoDeUsuariosServiceTest {
     public void testeEditarUsuario() throws NonexistentEntityException,
             Exception{
               
-        serviceEmTeste.editarUsuario("novaSenhaDificil", Perfil.PROFESSOR,
-                idUsuarioJaNoBanco);
+        this.serviceEmTeste.editarUsuario("novaSenhaDificil", Perfil.PROFESSOR,
+                this.idUsuarioJaNoBanco);
         
         Usuario usuarioModificado = controller.findUsuario(idUsuarioJaNoBanco);
         
@@ -91,7 +91,7 @@ public class AdministracaoDeUsuariosServiceTest {
         
         int countUsuarios = controller.getUsuarioCount();
         
-        List<UsuarioModel> modelos = serviceEmTeste.listarUsuarios();
+        List<UsuarioModel> this.modelos = serviceEmTeste.listarUsuarios();
         Assert.assertEquals(countUsuarios, modelos.size());
     }
     

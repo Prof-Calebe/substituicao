@@ -27,6 +27,9 @@ import static org.junit.Assert.*;
  */
 public class cst22Test {
 
+    public cst22Test() {
+    }
+
     @BeforeClass
     public static void setUpClass() throws Exception {
         PopulateDB.recreateDB("prosub", "root", "");

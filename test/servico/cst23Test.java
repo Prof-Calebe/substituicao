@@ -27,16 +27,8 @@ import modelo.UsuarioModel;
  * @author prgoes
  */
 public class cst23Test {
-    
-    
-    @BeforeClass
-    public static void setUpClass(){ 
-        //
-    }   
-    
-    @AfterClass
-    public static void tearDownClass() {
-        //
+
+    public cst23Test() {
     }
     
     @Before
@@ -46,11 +38,6 @@ public class cst23Test {
         
     }
     
-    @After
-    public void tearDown() {
-        //
-    }
-
     @Test
     public void testeEditarUsuario() throws ParseException, Exception {
 

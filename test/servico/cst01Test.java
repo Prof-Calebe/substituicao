@@ -65,7 +65,7 @@ public class cst01Test {
         assertEquals(0, ausencias.size());
         
         notificaçãoService.notificarAusencia(professor.id, "25/11/2013 20:01",
-                "25/11/2013 21:29","Motivo Declarado",new LinkedList<String>());
+                "25/11/2013 21:29", "Motivo Declarado", new LinkedList<String>());
         
         assertTrue(loginService.verificarUsuarioESenha("Administrador", "123456"));
         ausencias = notificaçãoService.listarAusencias();        
