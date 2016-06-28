@@ -34,7 +34,7 @@ public class AdministracaoDeUsuarios extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         btnGroup_Acao.add(rbtn_CriarUsuario);
         btnGroup_Acao.add(rbtn_EditarUsuario); 
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("imagens\\logo_mackenzie.png")));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(Recursos.LOGO_DO_MACKENZIE)));
         
         
  
@@ -46,7 +46,7 @@ public class AdministracaoDeUsuarios extends javax.swing.JFrame {
         previousFrame = previous;
         btnGroup_Acao.add(rbtn_CriarUsuario);
         btnGroup_Acao.add(rbtn_EditarUsuario);
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("imagens\\logo_mackenzie.png")));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(Recursos.LOGO_DO_MACKENZIE)));
         salvarButton.setEnabled(false);
         
         aum = new AdministracaoDeUsuariosService();

@@ -22,7 +22,7 @@ public class MotivoRejeitarAlocacao extends javax.swing.JDialog {
     public MotivoRejeitarAlocacao() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("imagens\\logo_mackenzie.png")));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(Recursos.LOGO_DO_MACKENZIE)));
     }
     
     public MotivoRejeitarAlocacao(JFrame previous) {
@@ -30,7 +30,7 @@ public class MotivoRejeitarAlocacao extends javax.swing.JDialog {
         previousFrame = previous;
         previousFrame.setEnabled(false);
         this.setLocationRelativeTo(null);
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("imagens\\logo_mackenzie.png")));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(Recursos.LOGO_DO_MACKENZIE)));
     }
 
     /**

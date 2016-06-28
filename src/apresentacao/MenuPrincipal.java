@@ -34,7 +34,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         this.user = user;
         
         this.setLocationRelativeTo(null);
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("imagens\\logo_mackenzie.png")));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(Recursos.LOGO_DO_MACKENZIE)));
     }
 
     /**

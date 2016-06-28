@@ -23,7 +23,7 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("imagens\\logo_mackenzie.png")));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(Recursos.LOGO_DO_MACKENZIE)));
     }
 
     /**
@@ -140,7 +140,7 @@ public class Login extends javax.swing.JFrame {
     		} else {
                     String strSenha = new String(senha);
                     LoginService LgnService = new LoginService();
-                    if (!LgnService.verificarUsuarioESenha(usuario, strSenha)){
+                    if (!LgnService.verificarUsuarioESenha(usuario, strSenha)) {
                         JOptionPane.showMessageDialog(null, "Usuário e/ou Senha Inválidos!", "Login", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                        AdministracaoDeUsuariosService usuarioService = new AdministracaoDeUsuariosService();
