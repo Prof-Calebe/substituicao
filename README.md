@@ -29,10 +29,10 @@ para criação de `branches` e `pull requests`.
 Para facilitar um pouco esse entendimento, segue um **exemplo prático** de uso no NoSY e do Git Branch Model (com
 algumas padronização de nomes):
 
-* Faça a sua `branch` a partir da `dev`, substituindo **##** pelo número da issue que foi documentada (com o hífen).
+* Faça a sua `branch` a partir da `dev`, substituindo **XX** pelo número da issue que foi documentada (com o hífen).
 
 ```bash
-$ git checkout -b [issue-##] remotes/origin/dev
+$ git checkout -b [issue-XX] remotes/origin/dev
 ```
 
 * A partir de então, faça as alterações e sempre realize `commit` para marcar a evolução da correção.
@@ -50,7 +50,7 @@ caracterizar o seu `commit`.
 ```bash
 $ git checkout dev
 $ git pull
-$ git checkout [issue-##]
+$ git checkout [issue-XX]
 $ git rebase origin/dev
 ```
 
@@ -63,16 +63,16 @@ $ git push origin HEAD
 A patir desse momento, a sua nova branch deve aparecer no repositório.
 
 * Aguarde o build e demais hooks avaliarem a `branch`. Caso nenhuma falha seja encontrada, faça um `pull-request` da
-  `branch-##` para a `dev` e aguarde os comentários da revisão - alguns hooks farão comentários automáticos neste
+  `branch-XX` para a `dev` e aguarde os comentários da revisão - alguns hooks farão comentários automáticos neste
   `pull-request` e, portanto, as anotações deverão ser corrigidas e/ou explicadas.
 
 * Caso seja necessário alterar a sua `branch` devido a alguma falha do build, dos hooks, ou dos comentários de revisão,
-  faça-os normalmente na sua branch `issue-##`, sincronizando-a novamente ao final das mudanças e reenviando-a para o
+  faça-os normalmente na sua branch `issue-XX`, sincronizando-a novamente ao final das mudanças e reenviando-a para o
   repositório. Aguarde os resultados descritos no passo anterior e, se for o caso, repita todo este processo. Se um
   pull-request já foi feito, não é necessário refazê-lo ou fechá-lo.
 
 ```bash
-$ git checkout [issue-##]
+$ git checkout [issue-XX]
 $ git add # arquivos
 $ git commit # com os seus commits
 $ git rebase origin/dev
