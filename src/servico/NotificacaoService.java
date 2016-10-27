@@ -8,7 +8,6 @@ import datamapper.AusenciaJpaController;
 import datamapper.ProfessorJpaController;
 import datamapper.exceptions.NonexistentEntityException;
 import dominio.Ausencia;
-import dominio.EstadoAusencia;
 import dominio.Professor;
 import modelo.AusenciaModel;
 import java.text.ParseException;
