@@ -75,15 +75,16 @@ public class AusenciaJpaController implements Serializable {
         try {
             em = this.getEntityManager();
             em.getTransaction().begin();
-            ausencia = em.merge(ausencia);
+            //ausencia = em.merge(ausencia);
+            em.merge(ausencia);
             em.getTransaction().commit();
         } catch (EntityNotFoundException enfe) {
             String msg = enfe.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Long id = ausencia.getId();
                 if (this.findAusencia(id) == null) {
-                    throw new NonexistentEntityException("Ausencia with id " + 
-                    id + " no longer exists. Object Ausencia could not be changed.", enfe);
+                    throw new NonexistentEntityException("Ausencia with id " +
+                            id + " no longer exists. Object Ausencia could not be changed.", enfe);
                 }
             }
             throw enfe;
@@ -112,8 +113,8 @@ public class AusenciaJpaController implements Serializable {
                 ausencia = em.getReference(Ausencia.class, id);
                 ausencia.getId();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("This ausencia with id " + 
-                    id + " no longer exists. Object ausencia could not be destroyed.", enfe);
+                throw new NonexistentEntityException("This ausencia with id " +
+                        id + " no longer exists. Object ausencia could not be destroyed.", enfe);
             }
             em.remove(ausencia);
             em.getTransaction().commit();
@@ -147,6 +148,8 @@ public class AusenciaJpaController implements Serializable {
     }
 
     /**
+     * This method returns a List of Object Ausencia from this professor object.
+     *
      * @param prof A professor object
      * @return A list of ausencias from this professor object.
      */
@@ -167,6 +170,9 @@ public class AusenciaJpaController implements Serializable {
     }
 
     /**
+     * This method returns a List of Ausencia Object based on the type of
+     * professor. Only returns the ausencia of IndicacoesSubstitutos.
+     *
      * @param professor It's a professor object.
      * @return A list of Ausencia Objects based on IndicacaoDeSubstituto.
      */
@@ -187,6 +193,9 @@ public class AusenciaJpaController implements Serializable {
     }
 
     /**
+     * This method returns a List of Ausencia Objects based on the type of
+     * professor. Only returns the ausencia of ProfessorSubstituto.
+     *
      * @param professor It's a professor object.
      * @return A List of Ausencia of Professores of type Substituto.
      */
@@ -207,6 +216,12 @@ public class AusenciaJpaController implements Serializable {
     }
 
     /**
+     * This method returns a List of Ausencia Objects based on the parameters
+     * you give. If boolean is false, you have to send a quantity of max results
+     * you're looking for and the first result you're looking for. If the
+     * boolean is true, you don't have to worry about that. The method will
+     * return all the Ausencia Objecs on the DataBase.
+     *
      *
      * @param all It's a Boolean, true for all and false for especifics.
      * @param maxResults It's an int for the Max Results
@@ -229,6 +244,9 @@ public class AusenciaJpaController implements Serializable {
     }
 
     /**
+     * This method returns from the DataBase a single Ausencia object based on
+     * the ID. The ID is a Long.
+     *
      * @param id The identificator of the Ausencia Object you're looking for.
      * @return An Ausencia object, if it is found.
      * @throws NonexistentEntityException This is thrown when the object no
@@ -239,7 +257,7 @@ public class AusenciaJpaController implements Serializable {
         try {
             return em.find(Ausencia.class, id);
         } catch (EntityNotFoundException enfe) {
-            throw new NonexistentEntityException("The ausencia with id " + 
+            throw new NonexistentEntityException("The ausencia with id " +
                     id + " no longer exists. Object ausencia could not be found.", enfe);
         } finally {
             em.close();
@@ -247,6 +265,9 @@ public class AusenciaJpaController implements Serializable {
     }
 
     /**
+     * This method returns from the DataBase a single Ausencia object based on
+     * the ID. The ID is a String.
+     *
      * @param codigo It's an ID of the Ausencia Object
      * @return The Ausencia Object itself.
      */
