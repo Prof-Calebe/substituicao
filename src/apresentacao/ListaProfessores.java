@@ -1,5 +1,6 @@
 package apresentacao;
 
+import datamapper.exceptions.NonexistentEntityException;
 import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.JFrame;
@@ -31,7 +32,7 @@ public class ListaProfessores extends javax.swing.JDialog {
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(Recursos.LOGO_DO_MACKENZIE)));
     }
     
-    public ListaProfessores(Ausências previous) {
+    public ListaProfessores(Ausências previous) throws NonexistentEntityException {
         initComponents();
         previousFrame = previous;
         previousFrame.setEnabled(false);
@@ -179,7 +180,7 @@ public class ListaProfessores extends javax.swing.JDialog {
         });
     }
     
-    private void populateCombo(){
+    private void populateCombo() throws NonexistentEntityException{
         
             cmb_Professor.addItem("- Selecione um professor - ");
             
