@@ -20,6 +20,7 @@ import javax.persistence.EntityNotFoundException;
  *
  * @author Leticia
  */
+
 public class AusenciaJpaController implements Serializable {
 
     private EntityManagerFactory emf;
@@ -61,7 +62,7 @@ public class AusenciaJpaController implements Serializable {
 
     /**
      *
-     * @param ausencia Is a Ausencia Object.
+     * @param ausencia Is an Ausencia Object.
      * @throws NonexistentEntityException This is thrown when the object no longer exists in the DataBase.
      * This Method tryes to override an already existent object Ausencia in the DataBase with the same Id. It's an update.
      */
@@ -123,6 +124,12 @@ public class AusenciaJpaController implements Serializable {
         return this.findAusenciaEntities(true, -1, -1);
     }
 
+    /**
+     *
+     * @param maxResults It's an int for the maxResults.
+     * @param firstResult It's an int apointing the first result.
+     * @return Retruns a list of Ausencia Objects based on the parameters.
+     */
     public List<Ausencia> findAusenciaEntities(int maxResults, int firstResult) {
         return this.findAusenciaEntities(false, maxResults, firstResult);
     }
@@ -148,6 +155,11 @@ public class AusenciaJpaController implements Serializable {
         return ausenciasComProfessor;
     }
 
+    /**
+     *
+     * @param professor It's a professor object.
+     * @return A list of Ausencia Objects based on IndicacaoDeSubstituto.
+     */
     public List<Ausencia> listAusenciasPorIndicacaoDeSubstituto(Professor professor) {
         List<Ausencia> ausencias = this.findAusenciaEntities();
 
@@ -164,6 +176,11 @@ public class AusenciaJpaController implements Serializable {
         return ausenciasComProfessor;
     }
 
+    /**
+     *
+     * @param professor It's a professor object.
+     * @return A List of Ausencia of Professores of type Substituto. 
+     */
     public List<Ausencia> listAusenciasPorSubstituto(Professor professor) {
         List<Ausencia> ausencias = this.findAusenciaEntities();
 
@@ -179,7 +196,14 @@ public class AusenciaJpaController implements Serializable {
 
         return ausenciasComProfessor;
     }
-
+    
+     /**
+     *
+     * @param all It's a Boolean, true for all and false for especifics.
+     * @param maxResults It's an int for the Max Results
+     * @param firstResult It's an int for the first Result
+     * @return A List of Ausencia Objects. 
+     */
     private List<Ausencia> findAusenciaEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = this.getEntityManager();
         try {
@@ -212,6 +236,11 @@ public class AusenciaJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param codigo String codigo, its an ID of the Ausencia Object
+     * @return The Ausencia Object itself. 
+     */
     public Ausencia findAusencia(String codigo) {
         List<Ausencia> ausencias = this.findAusenciaEntities();
         for (Ausencia ausencia : ausencias) {
@@ -223,6 +252,10 @@ public class AusenciaJpaController implements Serializable {
         return null;
     }
 
+    /**
+     *
+     * @return The number of Ausencias Object in the DataBase. 
+     */
     public int getAusenciaCount() {
         EntityManager em = this.getEntityManager();
         try {
