@@ -82,8 +82,8 @@ public class AusenciaJpaController implements Serializable {
             if (msg == null || msg.length() == 0) {
                 Long id = ausencia.getId();
                 if (this.findAusencia(id) == null) {
-                    throw new NonexistentEntityException("Ausencia with id "
-                            + id + " no longer exists. Object Ausencia could not be changed.", enfe);
+                    throw new NonexistentEntityException("Ausencia with id " + 
+                    id + " no longer exists. Object Ausencia could not be changed.", enfe);
                 }
             }
             throw enfe;
@@ -112,8 +112,8 @@ public class AusenciaJpaController implements Serializable {
                 ausencia = em.getReference(Ausencia.class, id);
                 ausencia.getId();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("This ausencia with id "
-                        + id + " no longer exists. Object ausencia could not be destroyed.", enfe);
+                throw new NonexistentEntityException("This ausencia with id " + 
+                    id + " no longer exists. Object ausencia could not be destroyed.", enfe);
             }
             em.remove(ausencia);
             em.getTransaction().commit();
@@ -239,8 +239,8 @@ public class AusenciaJpaController implements Serializable {
         try {
             return em.find(Ausencia.class, id);
         } catch (EntityNotFoundException enfe) {
-            throw new NonexistentEntityException("The ausencia with id "
-                    + id + " no longer exists. Object ausencia could not be found.", enfe);
+            throw new NonexistentEntityException("The ausencia with id " + 
+                    id + " no longer exists. Object ausencia could not be found.", enfe);
         } finally {
             em.close();
         }
