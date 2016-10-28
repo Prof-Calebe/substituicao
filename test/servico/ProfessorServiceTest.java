@@ -84,7 +84,7 @@ public class ProfessorServiceTest {
     }
     
     @Test
-    public void testeDeveListarProfessoresPossiveisDadoUmPeriodoDeAusenciaEAulasDeProfessorAusente(){
+    public void testeDeveListarProfessoresPossiveisDadoUmPeriodoDeAusenciaEAulasDeProfessorAusente() throws NonexistentEntityException{
         
         //Ausência numa segunda feira.
         DateTime inicio = new DateTime(2013, 11, 18, 0, 0);
