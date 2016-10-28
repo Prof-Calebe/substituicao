@@ -1,6 +1,7 @@
 package apresentacao;
 
 import auxiliar.Perfil;
+import datamapper.exceptions.NonexistentEntityException;
 import dominio.EstadoAusencia;
 import modelo.AusenciaModel;
 import servico.NotificacaoService;
@@ -311,8 +312,15 @@ public class Ausências extends javax.swing.JFrame {
             
             this.setPeriodoAusencia(new Interval(inicio, fim));
 
-            ListaProfessores listaProfessores = new ListaProfessores(this);
-            listaProfessores.setVisible(true);
+            ListaProfessores listaProfessores = null;
+            
+            try {
+                listaProfessores = new ListaProfessores(this);
+                listaProfessores.setVisible(true);
+            } catch (NonexistentEntityException ex) {
+                Logger.getLogger(Ausências.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         }
     }//GEN-LAST:event_btnAlocacaoActionPerformed
 
