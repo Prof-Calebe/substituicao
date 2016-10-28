@@ -31,7 +31,7 @@ import servico.ProfessorService;
  *
  * @author Thiago Lima
  */
-public class Ausências extends javax.swing.JFrame {
+public class Ausencias extends javax.swing.JFrame {
 
     private JFrame previousFrame;
     
@@ -48,7 +48,7 @@ public class Ausências extends javax.swing.JFrame {
     /**
      * Creates new form AlocacoesPendentes
      */
-    public Ausências(UsuarioModel usuario) {
+    public Ausencias(UsuarioModel usuario) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.usuario = usuario;
@@ -56,7 +56,7 @@ public class Ausências extends javax.swing.JFrame {
         this.populateGrid(usuario);
     }
 
-    public Ausências(JFrame previous, UsuarioModel usuario) {
+    public Ausencias(JFrame previous, UsuarioModel usuario) {
         initComponents();
         previousFrame = previous;
         this.usuario = usuario;
@@ -318,7 +318,7 @@ public class Ausências extends javax.swing.JFrame {
                 listaProfessores = new ListaProfessores(this);
                 listaProfessores.setVisible(true);
             } catch (NonexistentEntityException ex) {
-                Logger.getLogger(Ausências.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Ausencias.class.getName()).log(Level.SEVERE, null, ex);
             }
             
         }
@@ -411,14 +411,15 @@ public class Ausências extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Ausências.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ausencias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Ausências.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ausencias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Ausências.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ausencias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Ausências.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ausencias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -429,7 +430,7 @@ public class Ausências extends javax.swing.JFrame {
 
                 UsuarioModel usuarioLogando = userService.obterUsuario("admin");
                 
-                new Ausências(usuarioLogando).setVisible(true);
+                new Ausencias(usuarioLogando).setVisible(true);
             }
         });
     }

@@ -21,7 +21,7 @@ public class ListaProfessores extends javax.swing.JDialog {
 
     //private JFrame previousFrame;
 
-    private Ausências previousFrame; 
+    private Ausencias previousFrame; 
     
     /**
      * Creates new form ListaProfessores
@@ -32,7 +32,7 @@ public class ListaProfessores extends javax.swing.JDialog {
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(Recursos.LOGO_DO_MACKENZIE)));
     }
     
-    public ListaProfessores(Ausências previous) throws NonexistentEntityException {
+    public ListaProfessores(Ausencias previous) throws NonexistentEntityException {
         initComponents();
         previousFrame = previous;
         previousFrame.setEnabled(false);
