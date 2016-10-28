@@ -17,7 +17,6 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 
 /**
- *
  * @author Leticia
  */
 
@@ -26,7 +25,7 @@ public class AusenciaJpaController implements Serializable {
     private EntityManagerFactory emf;
 
     /**
-     *
+     * Constructor method
      * @param emf EntityManagerFactory object
      */
     public AusenciaJpaController(EntityManagerFactory emf) {
@@ -39,12 +38,12 @@ public class AusenciaJpaController implements Serializable {
      */
     public EntityManager getEntityManager() {
         return this.emf.createEntityManager();
+        
     }
-
+   
     /**
-     *
-     * @param ausencia Is a Ausencia Object.
      * This method persists an Ausencia Object on the DataBase
+     * @param ausencia Is a Ausencia Object.
      */
     public void create(Ausencia ausencia) {
         EntityManager em = null;
@@ -61,10 +60,9 @@ public class AusenciaJpaController implements Serializable {
     }
 
     /**
-     *
+     * This Method tryes to override an already existent object Ausencia in the DataBase with the same Id. It's an update.
      * @param ausencia Is an Ausencia Object.
      * @throws NonexistentEntityException This is thrown when the object no longer exists in the DataBase.
-     * This Method tryes to override an already existent object Ausencia in the DataBase with the same Id. It's an update.
      */
     public void edit(Ausencia ausencia) throws NonexistentEntityException {
         EntityManager em = null;
@@ -90,10 +88,9 @@ public class AusenciaJpaController implements Serializable {
     }
 
     /**
-     *
+     * This method tryes to remove an existing object from the DataBase based on it's id. 
      * @param id It's an identificator for the Object on the DataBase.
      * @throws NonexistentEntityException This is thrown when the object no longer exists in the DataBase.
-     * This method tryes to remove an existing object from the DataBase based on it's id. 
      */
     public void destroy(Long id) throws NonexistentEntityException {
         EntityManager em = null;
@@ -117,15 +114,16 @@ public class AusenciaJpaController implements Serializable {
     }
 
     /**
-     *
+     * This method lists all Ausencia Objects on the DataBase.
      * @return Returns all Ausencia objects.
      */
     public List<Ausencia> findAusenciaEntities() {
         return this.findAusenciaEntities(true, -1, -1);
+        
     }
 
     /**
-     *
+     * This method lists some Ausencia Objects on the DataBase utilizing this parameters of search.
      * @param maxResults It's an int for the maxResults.
      * @param firstResult It's an int apointing the first result.
      * @return Retruns a list of Ausencia Objects based on the parameters.
@@ -135,9 +133,8 @@ public class AusenciaJpaController implements Serializable {
     }
     
     /**
-     *
-     * @param prof Um objeto professor / a professor object
-     * @return Uma lista de ausências desse professor. / A list of ausencias of this professor object.
+     * @param prof A professor object
+     * @return A list of ausencias from this professor object.
      */
     public List<Ausencia> listAusenciasPorProfessor(Professor prof) {
         List<Ausencia> ausencias = this.findAusenciaEntities();
@@ -156,7 +153,6 @@ public class AusenciaJpaController implements Serializable {
     }
 
     /**
-     *
      * @param professor It's a professor object.
      * @return A list of Ausencia Objects based on IndicacaoDeSubstituto.
      */
@@ -177,7 +173,6 @@ public class AusenciaJpaController implements Serializable {
     }
 
     /**
-     *
      * @param professor It's a professor object.
      * @return A List of Ausencia of Professores of type Substituto. 
      */
@@ -220,9 +215,8 @@ public class AusenciaJpaController implements Serializable {
     }
 
     /**
-     *
      * @param id The identificator of the Ausencia Object you're looking for.
-     * @return An Ausencia object, if was found. 
+     * @return An Ausencia object, if it is found. 
      * @throws NonexistentEntityException This is thrown when the object no longer exists in the DataBase.
      */
     public Ausencia findAusencia(Long id) throws NonexistentEntityException {
@@ -237,8 +231,7 @@ public class AusenciaJpaController implements Serializable {
     }
 
     /**
-     *
-     * @param codigo String codigo, its an ID of the Ausencia Object
+     * @param codigo It's an ID of the Ausencia Object
      * @return The Ausencia Object itself. 
      */
     public Ausencia findAusencia(String codigo) {
@@ -253,7 +246,7 @@ public class AusenciaJpaController implements Serializable {
     }
 
     /**
-     *
+     * This method counts the number of Ausencias Object in the DataBse.
      * @return The number of Ausencias Object in the DataBase. 
      */
     public int getAusenciaCount() {
