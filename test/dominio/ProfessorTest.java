@@ -49,6 +49,7 @@ public class ProfessorTest {
     private Aula aula8;
     
     private static final String MOTIVO = "sem saco";
+    private static final String USERNAME = "username";
     
     public ProfessorTest() {
     }
@@ -151,13 +152,13 @@ public class ProfessorTest {
 
         Assert.assertFalse(objetoEmTeste.EhCompativelCom(aulas));
         
-        objetoEmTeste = new Professor("outroNome", "username");
+        objetoEmTeste = new Professor("outroNome", USERNAME);
         
         objetoEmTeste.adicionarAula(aula6);
         
         Assert.assertFalse(objetoEmTeste.EhCompativelCom(aulas));
         
-        objetoEmTeste = new Professor("outroNomeAinda", "username");
+        objetoEmTeste = new Professor("outroNomeAinda", USERNAME);
         
         objetoEmTeste.adicionarAula(aula7);
         
@@ -169,7 +170,7 @@ public class ProfessorTest {
         DateTime fimAula2 = new DateTime(2013, 05, 24, 07, 0);
         Interval intervalAula2 = new Interval(inicioAula2, fimAula2);
         Aula aula2 = new Aula("Aula2", DateTimeConstants.FRIDAY, intervalAula2);
-        objetoEmTeste = new Professor("outroProf", "username");
+        objetoEmTeste = new Professor("outroProf", USERNAME);
         objetoEmTeste.adicionarAula(aula2);
         return aula2;
     }
@@ -182,7 +183,7 @@ public class ProfessorTest {
         
         Aula aula1 = new Aula("Aula1", DateTimeConstants.TUESDAY, intervalAula1);
         
-        objetoEmTeste = new Professor("umProf", "username");
+        objetoEmTeste = new Professor("umProf", USERNAME);
         objetoEmTeste.adicionarAula(aula1);
     }
 
