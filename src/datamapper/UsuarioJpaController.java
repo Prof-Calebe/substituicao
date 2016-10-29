@@ -20,7 +20,10 @@ import javax.persistence.Query;
  */
 public class UsuarioJpaController implements Serializable {
 
-    private EntityManagerFactory emf = null;
+    /**
+     * Fábrica usada para obter instâncias de EntityManager
+     */
+    private EntityManagerFactory emf;
 
     public UsuarioJpaController(EntityManagerFactory emf) {
         this.emf = emf;
@@ -30,6 +33,12 @@ public class UsuarioJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
+    /**
+     *
+     * @param u Novo registro de Usuário para ser inserido na base
+     * @throws PersistenceException - Exception genérica de operações do
+     * EntityManager
+     */
     public void create(Usuario u) throws PersistenceException {
         EntityManager em = null;
         try {
@@ -37,8 +46,6 @@ public class UsuarioJpaController implements Serializable {
             em.getTransaction().begin();
             em.persist(u);
             em.getTransaction().commit();
-        } catch (PersistenceException ex) {
-            throw ex;
         } finally {
             if (em != null && !em.isOpen()) {
                 em.close();
@@ -46,15 +53,19 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param u Usuário a ser merged na base.
+     * @throws PersistenceException - Exception genérica de operações do
+     * EntityManager
+     */
     public void edit(Usuario u) throws PersistenceException {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            u = em.merge(u);
+            em.merge(u);
             em.getTransaction().commit();
-        } catch (PersistenceException ex) {
-            throw ex;
         } finally {
             if (em != null && !em.isOpen()) {
                 em.close();
@@ -62,6 +73,11 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param id Chave primária de um registro existente de Usuario
+     * @throws NonexistentEntityException Registro de Usuario não existe
+     */
     public void destroy(Long id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
@@ -83,10 +99,20 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @return Retorna todos registros de Usuario na base
+     */
     public List<Usuario> findUsuarioEntities() {
         return findUsuarioEntities(true, -1, -1);
     }
 
+    /**
+     *
+     * @param maxResults Numero máximo de registros retornados
+     * @param firstResult A partir de qual registro deve ser retornado
+     * @return registros de Usuario encontrados na base
+     */
     public List<Usuario> findUsuarioEntities(int maxResults, int firstResult) {
         return findUsuarioEntities(false, maxResults, firstResult);
     }
@@ -105,6 +131,11 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param id Chave primária de um registro existente de Usuario
+     * @return Retorna registro encontrado ou null
+     */
     public Usuario findUsuario(Long id) {
         EntityManager em = getEntityManager();
         try {
@@ -114,6 +145,11 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param nome Busca registro de Usuario por nome
+     * @return Retorna registro encontrado ou null
+     */
     public Usuario findUsuario(String nome) {
         List<Usuario> usuarios = this.findUsuarioEntities();
         for (Usuario usuario : usuarios) {
@@ -124,6 +160,10 @@ public class UsuarioJpaController implements Serializable {
         return null;
     }
 
+    /**
+     *
+     * @return Numero de registros de Usuario na base
+     */
     public int getUsuarioCount() {
         EntityManager em = getEntityManager();
         try {
