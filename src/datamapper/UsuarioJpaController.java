@@ -1,8 +1,8 @@
+package datamapper;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package datamapper;
 
 import datamapper.exceptions.NonexistentEntityException;
 import dominio.Usuario;
@@ -10,8 +10,9 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 /**
  *
@@ -19,47 +20,43 @@ import javax.persistence.EntityNotFoundException;
  */
 public class UsuarioJpaController implements Serializable {
 
+    private EntityManagerFactory emf = null;
+
     public UsuarioJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public void create(Usuario usuario) {
+    public void create(Usuario u) throws PersistenceException {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(usuario);
+            em.persist(u);
             em.getTransaction().commit();
+        } catch (PersistenceException ex) {
+            throw ex;
         } finally {
-            if (em != null) {
+            if (em != null && !em.isOpen()) {
                 em.close();
             }
         }
     }
 
-    public void edit(Usuario usuario) throws NonexistentEntityException, Exception {
+    public void edit(Usuario u) throws PersistenceException {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            usuario = em.merge(usuario);
+            u = em.merge(u);
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            String msg = ex.getLocalizedMessage();
-            if (msg == null || msg.length() == 0) {
-                Long id = usuario.getId();
-                if (findUsuario(id) == null) {
-                    throw new NonexistentEntityException("The usuario with id " + id + " no longer exists.");
-                }
-            }
+        } catch (PersistenceException ex) {
             throw ex;
         } finally {
-            if (em != null) {
+            if (em != null && !em.isOpen()) {
                 em.close();
             }
         }
@@ -74,13 +71,13 @@ public class UsuarioJpaController implements Serializable {
             try {
                 usuario = em.getReference(Usuario.class, id);
                 usuario.getId();
+                em.remove(usuario);
+                em.getTransaction().commit();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The usuario with id " + id + " no longer exists.", enfe);
             }
-            em.remove(usuario);
-            em.getTransaction().commit();
         } finally {
-            if (em != null) {
+            if (em != null && !em.isOpen()) {
                 em.close();
             }
         }
@@ -116,15 +113,15 @@ public class UsuarioJpaController implements Serializable {
             em.close();
         }
     }
-    
-    public Usuario findUsuario(String nome){
-    List<Usuario> usuarios = this.findUsuarioEntities();
-    for(Usuario usuario : usuarios){
-        if(usuario.getUsuario().equals(nome))
-            return usuario;
-    }
 
-    return null;
+    public Usuario findUsuario(String nome) {
+        List<Usuario> usuarios = this.findUsuarioEntities();
+        for (Usuario usuario : usuarios) {
+            if (usuario.getUsuario().equals(nome)) {
+                return usuario;
+            }
+        }
+        return null;
     }
 
     public int getUsuarioCount() {
@@ -136,5 +133,5 @@ public class UsuarioJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }
