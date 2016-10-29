@@ -5,11 +5,8 @@
 package dominio;
 
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import org.easymock.EasyMock;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.Interval;
