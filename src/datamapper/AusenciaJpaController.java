@@ -71,11 +71,12 @@ public class AusenciaJpaController implements Serializable {
      * longer exists in the DataBase.
      */
     public void edit(Ausencia ausencia) throws NonexistentEntityException {
+      
+                 
         EntityManager em = null;
         try {
             em = this.getEntityManager();
-            em.getTransaction().begin();
-            //ausencia = em.merge(ausencia);
+            em.getTransaction().begin();                
             em.merge(ausencia);
             em.getTransaction().commit();
         } catch (EntityNotFoundException enfe) {
@@ -93,6 +94,7 @@ public class AusenciaJpaController implements Serializable {
                 em.close();
             }
         }
+        
     }
 
     /**
