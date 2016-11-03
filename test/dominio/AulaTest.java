@@ -20,7 +20,7 @@ import org.junit.Test;
  */
 public class AulaTest {
 
-    public static final String AULA_NOME = "Nome";
+    public static final String AULA_NOME = "Engenharia de software II";
     private Aula objetoEmTeste;
     private Interval periodo;
     private Interval periodo2;
