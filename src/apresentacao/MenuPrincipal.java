@@ -152,7 +152,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void btn_ConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ConfirmarActionPerformed
         if (rbtn_AdministrarAlocacoes.isSelected()) {
             this.setVisible(false);
-            Ausências alocacoesPendentes = new Ausências(this, this.user);
+            Ausencias alocacoesPendentes = new Ausencias(this, this.user);
             alocacoesPendentes.setVisible(true);
         }
 //        else if (rbtn_AlocacoesPendentes.isSelected()) {
