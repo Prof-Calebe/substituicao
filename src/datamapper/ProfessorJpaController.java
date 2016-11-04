@@ -93,7 +93,7 @@ public class ProfessorJpaController implements Serializable {
     }
 
     /**
-     * <p>Delete an Professor
+     * <p>Delete a Professor
      * This method receives the id of a Professor instead of the object in fact. It searches for
      * the respective professor and delete it. In case it doesn't exist an exception is thrown.</p>
      * @param id
