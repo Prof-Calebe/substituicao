@@ -89,7 +89,7 @@ public class cst06Test {
     }
     
     @Test
-    public void testeEfetuarAlocação_Confirmar() throws ParseException, NonexistentEntityException
+    public void testeEfetuarAlocação_Confirmar() throws ParseException
     {
         LoginService loginService = new LoginService();
         assertTrue(loginService.verificarUsuarioESenha("Administrador", "123456"));

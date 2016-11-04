@@ -64,7 +64,7 @@ public class cst09Test {
     
     @Test
     public void testeEfetuarRealocacaoSemSubstitutosDisponiveis() 
-            throws ParseException, NonexistentEntityException
+            throws ParseException
     {
         LoginService loginService = new LoginService();
         assertTrue(loginService.verificarUsuarioESenha("Administrador", "123456"));
