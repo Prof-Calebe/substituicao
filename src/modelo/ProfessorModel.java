@@ -23,7 +23,7 @@ public class ProfessorModel {
             return true;
         }
         
-        if(obj == null || obj.getClass() != this.getClass()) {
+        if (obj == null || obj.getClass() != this.getClass()) {
             return false;
         }
         
