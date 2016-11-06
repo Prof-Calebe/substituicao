@@ -12,6 +12,9 @@ public class ProfessorModel {
     
     public String Nome;
     public Long id;
+
+    public ProfessorModel() {
+    }
     
     @Override
     public boolean equals(Object obj){
