@@ -27,12 +27,12 @@ public class PopulateDB {
     private static final Logger LOG = Logger.getLogger(PopulateDB.class.getName());
     private static final String PERSISTENCE_UNIT = "pro_subPU";
     
-    public static void main(String[] args) throws NonexistentEntityException, RuntimeException {
+    public static void main(String[] args) {
         try {
             PopulateDB.fullSetupDB("prosub", "root", "");
             //PopulateDB.recreateDB("prosub", "root", "");
-        } catch (RuntimeException ex) {
-            LOG.info(("" + ex));
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(PopulateDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
