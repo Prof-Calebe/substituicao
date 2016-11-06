@@ -1,11 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @since 1.0
+ * @author Rick & Julio Bertolacini
+ * @version 1.0
  */
 
-/**
- * Package: modelo
- */
 package modelo;
 
 /**
