@@ -19,18 +19,21 @@ public class ProfessorModel {
     @Override
     public boolean equals(Object obj){
         
-        if (obj == this)
+        if (obj == this) {
             return true;
+        }
         
-        if(obj == null || obj.getClass() != this.getClass())
+        if(obj == null || obj.getClass() != this.getClass()) {
             return false;
+        }
         
         ProfessorModel outroObj = (ProfessorModel) obj;
         
-        if(this.Nome.equals(outroObj.Nome) )
+        if(this.Nome.equals(outroObj.Nome)) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
     
     @Override
