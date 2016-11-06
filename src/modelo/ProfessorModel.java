@@ -18,7 +18,7 @@ public class ProfessorModel {
     }
     
     @Override
-    public boolean equals(Object obj){
+    public boolean equals(Object obj) {
         
         if (obj == this) {
             return true;
@@ -34,7 +34,7 @@ public class ProfessorModel {
     }
     
     @Override
-    public int hashCode(){
+    public int hashCode() {
         int result = 1;
         result = 31*result + ( (this.Nome == null) ? 0 : this.Nome.hashCode() );
         return result;
