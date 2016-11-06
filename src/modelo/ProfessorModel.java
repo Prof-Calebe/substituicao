@@ -29,11 +29,7 @@ public class ProfessorModel {
         
         ProfessorModel outroObj = (ProfessorModel) obj;
         
-        if(this.Nome.equals(outroObj.Nome)) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.Nome.equals(outroObj.Nome);
     }
     
     @Override
