@@ -11,9 +11,19 @@ package modelo;
  */
 public class ProfessorModel {
     
+    /**
+     * Attribute:  nome
+     */
     public String Nome;
+    
+    /**
+     * Attribute: id
+     */
     public Long id;
 
+    /**
+     * Default constructor
+     */
     public ProfessorModel() {
     }
     
