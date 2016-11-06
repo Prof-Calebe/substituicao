@@ -25,6 +25,7 @@ import org.joda.time.Interval;
 public class PopulateDB {
 
     private static final Logger LOG = Logger.getLogger(PopulateDB.class.getName());
+    private static final String PERSISTENCE_UNIT = "pro_subPU";
 
     public static void main(String[] args) throws NonexistentEntityException, RuntimeException {
         try {
@@ -162,14 +163,14 @@ public class PopulateDB {
 
     private static void populateDB() {
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 
         populateUsuario(emf);
         populateProfessores(emf);
     }
 
     public static void populateUseCaseTest() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 
         UsuarioJpaController usuarioJpa = new UsuarioJpaController(emf);
         ProfessorJpaController profJpa = new ProfessorJpaController(emf);
@@ -352,12 +353,12 @@ public class PopulateDB {
     }
 
     public static void populateUsuario() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
         PopulateDB.populateUsuario(emf);
     }
 
     public static void populateProfessores() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
         PopulateDB.populateProfessores(emf);
     }
 }
