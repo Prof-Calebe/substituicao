@@ -42,8 +42,8 @@ public class PopulateDB {
         createDB(dbName, user, password);
         try {
             populateDB();
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
+        } catch (RuntimeException ex) {
+            LOG.info("" + ex);
         }
     }
     
