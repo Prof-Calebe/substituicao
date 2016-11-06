@@ -106,7 +106,7 @@ public class ProfessorService {
         
         ProfessorModel model = new ProfessorModel();
         
-        model.ProfessorModel.this.nome = professor.getNome();
+        model.Nome = professor.getNome();
         model.id = professor.getId();
         
         return model;
