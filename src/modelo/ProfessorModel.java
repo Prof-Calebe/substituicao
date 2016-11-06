@@ -46,7 +46,7 @@ public class ProfessorModel {
     @Override
     public int hashCode() {
         int result = 1;
-        result = 31*result + ( (this.Nome == null) ? 0 : this.Nome.hashCode() );
+        result = 31 * result + ( (this.Nome == null) ? 0 : this.Nome.hashCode() );
         return result;
     }
     
