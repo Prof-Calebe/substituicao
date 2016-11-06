@@ -43,7 +43,7 @@ public class PopulateDB {
         try {
             populateDB();
         } catch (RuntimeException ex) {
-            LOG.info("" + ex);
+            LOG.info(("" + ex));
         }
     }
     
@@ -81,7 +81,7 @@ public class PopulateDB {
         } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
             //se.printStackTrace();
-            LOG.log(Level.INFO, "{0}", se);
+            LOG.info((""+ se));
         } finally {
             //finally block used to close resources
             try {
@@ -133,7 +133,7 @@ public class PopulateDB {
         } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
             //se.printStackTrace();
-            LOG.log(Level.INFO, "{0}", se);
+            LOG.info((""+ se));
         } finally {
             //finally block used to close resources
             try {
@@ -148,7 +148,7 @@ public class PopulateDB {
                 }
             } catch (SQLException se) {
                 //se.printStackTrace();
-                LOG.log(Level.INFO, "{0}", se);
+                LOG.info((""+ se));
             }//end finally try
         }//end try
         //System.out.println("Finished!");
