@@ -5,7 +5,8 @@
 package modelo;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import org.junit.Assert;
 
 /**
  *
@@ -13,36 +14,52 @@ import static org.junit.Assert.*;
  */
 public class ProfessorModelTest {
     
+    /**
+     * Default constructor
+     */
     public ProfessorModelTest() {
     }
     
+    /**
+     * Testing the contructor method.
+     */
     @Test
     public void testingConstructor() {
         ProfessorModel pm = new ProfessorModel();
-        assertNotNull(this);
+        Assert.assertNotNull(pm);
     }
     
+    /**
+     * Testing "eguals" method for comparing the same instance object
+     */
     @Test
     public void testingEqualsToSameInstance() {
         ProfessorModel pm = new ProfessorModel();
         ProfessorModel pm2 = pm;
-        assertTrue(pm.equals(pm2));
+        Assert.assertTrue(pm.equals(pm2));
     }
     
+    /**
+     * Testing "equals" method for comparing to a null reference
+     */
     @Test
     public void testingEqualsToNull() {
         ProfessorModel pm = new ProfessorModel();
         ProfessorModel pm2 = null;
-        assertFalse(pm.equals(pm2));
+        Assert.assertFalse(pm.equals(pm2));
     }
     
+    /**
+     * Testing "equals" method for comparing to the same instance
+     */
     @Test
     public void testingEqualsToSameName() {
         ProfessorModel pm = new ProfessorModel();
         ProfessorModel pm2 = new ProfessorModel();
-        pm.Nome = "Bob";
-        pm2.Nome = "Bob";
-        assertTrue(pm.equals(pm2));
+        final String name = "Bob";
+        pm.Nome = name;
+        pm2.Nome = name;
+        Assert.assertTrue(pm.equals(pm2));
     }
     
 }
