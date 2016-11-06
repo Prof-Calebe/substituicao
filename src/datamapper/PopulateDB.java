@@ -71,10 +71,12 @@ public class PopulateDB {
             //System.out.println("Database deleted successfully...");
         } catch (SQLException se) {
             //Handle errors for JDBC
-            se.printStackTrace();
+            //se.printStackTrace();
+            LOG.log(Level.INFO, "{0}", se);
         } catch (Exception e) {
             //Handle errors for Class.forName
-            e.printStackTrace();
+            //e.printStackTrace();
+            LOG.log(Level.INFO, "{0}", e);
         } finally {
             //finally block used to close resources
             try {
@@ -88,7 +90,8 @@ public class PopulateDB {
                     conn.close();
                 }
             } catch (SQLException se) {
-                se.printStackTrace();
+                //se.printStackTrace();
+                LOG.log(Level.INFO, "{0}", se);
             }//end finally try
         }//end try
         //System.out.println("Finished!");
@@ -124,10 +127,12 @@ public class PopulateDB {
             //System.out.println("Database deleted successfully...");
         } catch (SQLException se) {
             //Handle errors for JDBC
-            se.printStackTrace();
+            //se.printStackTrace();
+            LOG.log(Level.INFO, "{0}", se);
         } catch (Exception e) {
             //Handle errors for Class.forName
-            e.printStackTrace();
+            //e.printStackTrace();
+            LOG.log(Level.INFO, "{0}", e);
         } finally {
             //finally block used to close resources
             try {
@@ -141,7 +146,8 @@ public class PopulateDB {
                     conn.close();
                 }
             } catch (SQLException se) {
-                se.printStackTrace();
+                //se.printStackTrace();
+                LOG.log(Level.INFO, "{0}", se);
             }//end finally try
         }//end try
         //System.out.println("Finished!");
