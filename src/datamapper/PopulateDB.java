@@ -78,14 +78,10 @@ public class PopulateDB {
             stmt.executeUpdate(sql);
             LOG.info("Database deleted successfully...");
             //System.out.println("Database deleted successfully...");
-        } catch (SQLException se) {
+        } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
             //se.printStackTrace();
             LOG.log(Level.INFO, "{0}", se);
-        } catch (Exception e) {
-            //Handle errors for Class.forName
-            //e.printStackTrace();
-            LOG.log(Level.INFO, "{0}", e);
         } finally {
             //finally block used to close resources
             try {
