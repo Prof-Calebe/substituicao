@@ -26,16 +26,24 @@ public class PopulateDB {
 
     private static final Logger LOG = Logger.getLogger(PopulateDB.class.getName());
 
-    public static void main(String[] args) throws NonexistentEntityException, Exception {
-        PopulateDB.fullSetupDB("prosub", "root", "");
-        //PopulateDB.recreateDB("prosub", "root", "");
+    public static void main(String[] args) throws NonexistentEntityException, RuntimeException {
+        try {
+            PopulateDB.fullSetupDB("prosub", "root", "");
+            //PopulateDB.recreateDB("prosub", "root", "");
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
-    public static void fullSetupDB(String dbName, String user, String password) throws NonexistentEntityException, Exception {
+    public static void fullSetupDB(String dbName, String user, String password) throws NonexistentEntityException, RuntimeException {
 
         dropDB(dbName, user, password);
         createDB(dbName, user, password);
-        populateDB();
+        try {
+            populateDB();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     public static void recreateDB(String dbName, String user, String password) {
@@ -125,14 +133,10 @@ public class PopulateDB {
             stmt.executeUpdate(sql);
             LOG.info("Database deleted successfully...");
             //System.out.println("Database deleted successfully...");
-        } catch (SQLException se) {
+        } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
             //se.printStackTrace();
             LOG.log(Level.INFO, "{0}", se);
-        } catch (Exception e) {
-            //Handle errors for Class.forName
-            //e.printStackTrace();
-            LOG.log(Level.INFO, "{0}", e);
         } finally {
             //finally block used to close resources
             try {
@@ -156,7 +160,7 @@ public class PopulateDB {
         LOG.info("========================================================================");
     }
 
-    private static void populateDB() throws NonexistentEntityException, Exception {
+    private static void populateDB() {
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
 
@@ -164,7 +168,7 @@ public class PopulateDB {
         populateProfessores(emf);
     }
 
-    public static void populateUseCaseTest() throws NonexistentEntityException, Exception {
+    public static void populateUseCaseTest() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
 
         UsuarioJpaController usuarioJpa = new UsuarioJpaController(emf);
