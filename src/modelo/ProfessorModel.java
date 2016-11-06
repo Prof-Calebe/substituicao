@@ -46,8 +46,8 @@ public class ProfessorModel {
     @Override
     public int hashCode() {
         int result = 1;
-        final int HASH_MULTIPLIER = 31; 
-        result = HASH_MULTIPLIER * result + ( (this.Nome == null) ? 0 : this.Nome.hashCode() );
+        int hashMultiplier = 31; 
+        result = hashMultiplier * result + ( (this.Nome == null) ? 0 : this.Nome.hashCode() );
         return result;
     }
     
