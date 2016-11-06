@@ -9,6 +9,8 @@ import dominio.Aula;
 import dominio.Professor;
 import dominio.Usuario;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.joda.time.DateTime;
@@ -20,6 +22,8 @@ import org.joda.time.Interval;
  * @author Leticia
  */
 public class PopulateDB {
+
+    private static final Logger LOG = Logger.getLogger(PopulateDB.class.getName());
     
     public static void main (String[]args) throws NonexistentEntityException, Exception{
         PopulateDB.fullSetupDB("prosub", "root", "");
@@ -49,17 +53,21 @@ public class PopulateDB {
       Class.forName("com.mysql.jdbc.Driver");
 
       //STEP 3: Open a connection
-      System.out.println("Connecting to a selected database...");
+      //System.out.println("Connecting to a selected database...");
+      LOG.info("Connecting to a selected database...");
       conn = DriverManager.getConnection(dbURL, username, password);
-      System.out.println("Connected database successfully...");
+      LOG.info("Connected database successfully...");
+      //System.out.println("Connected database successfully...");
       
       //STEP 4: Execute a query
-      System.out.println("Deleting database " + dbName + "...");
+      //System.out.println("Deleting database " + dbName + "...");
+      LOG.log(Level.INFO, "Deleting database {0}...", dbName);
       stmt = conn.createStatement();
       
       String sql = "DROP DATABASE " + dbName;
       stmt.executeUpdate(sql);
-      System.out.println("Database deleted successfully...");
+      LOG.info("Database deleted successfully...");
+      //System.out.println("Database deleted successfully...");
    }catch(SQLException se){
       //Handle errors for JDBC
       se.printStackTrace();
@@ -80,9 +88,10 @@ public class PopulateDB {
          se.printStackTrace();
       }//end finally try
    }//end try
-   System.out.println("Finished!");
-   System.out.println("========================================================================");
-        
+   //System.out.println("Finished!");
+   //System.out.println("========================================================================");
+     LOG.info("Finished!");   
+     LOG.info("========================================================================");
     }
     
     private static void createDB(String dbName, String username, String password){
@@ -95,17 +104,21 @@ public class PopulateDB {
       Class.forName("com.mysql.jdbc.Driver");
 
       //STEP 3: Open a connection
-      System.out.println("Connecting to a selected database...");
-      conn = DriverManager.getConnection(dbURL, username, password);
-      System.out.println("Connected database successfully...");
+      //System.out.println("Connecting to a selected database...");
+      LOG.info("Connecting to a selected database...");
+      conn = DriverManager.getConnection(dbURL, username, password);      
+       LOG.info("Connected database successfully...");
+       //System.out.println("Connected database successfully...");
       
       //STEP 4: Execute a query
-      System.out.println("Creating database " + dbName +  "...");
+      //System.out.println("Creating database " + dbName +  "...");
+      LOG.log(Level.INFO, "Creating database {0}...", dbName);
       stmt = conn.createStatement();
       
       String sql = "CREATE DATABASE " + dbName;
       stmt.executeUpdate(sql);
-      System.out.println("Database deleted successfully...");
+      LOG.info("Database deleted successfully...");
+      //System.out.println("Database deleted successfully...");
    }catch(SQLException se){
       //Handle errors for JDBC
       se.printStackTrace();
@@ -126,9 +139,10 @@ public class PopulateDB {
          se.printStackTrace();
       }//end finally try
    }//end try
-   System.out.println("Finished!");
-   System.out.println("========================================================================");
-        
+   //System.out.println("Finished!");
+   //System.out.println("========================================================================");
+     LOG.info("Finished!");
+     LOG.info("========================================================================");
     }
     
     private static void populateDB() throws NonexistentEntityException, Exception{
