@@ -8,7 +8,6 @@ import datamapper.AusenciaJpaController;
 import datamapper.ProfessorJpaController;
 import datamapper.exceptions.NonexistentEntityException;
 import dominio.Ausencia;
-import dominio.EstadoAusencia;
 import dominio.Professor;
 import modelo.AusenciaModel;
 import java.text.ParseException;
@@ -37,7 +36,6 @@ public class NotificacaoService {
     public NotificacaoService(){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
         ausenciaController = new AusenciaJpaController(emf);
-//        periodoController = new PeriodoJpaController(emf);
         profController = new ProfessorJpaController(emf);
     }
     

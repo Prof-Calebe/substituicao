@@ -15,6 +15,6 @@ wget -nv -T 10 -t 0 "http://download.java.net/glassfish/3.1.2/release/glassfish-
 unzip -q glassfish-3.1.2.zip
 
 ant -buildfile substituicao.xml substituicao
-curl https://www.jpm4j.org/install/script | sudo sh
+curl -k https://www.jpm4j.org/install/script | sudo sh
 sudo jpm install com.codacy:codacy-coverage-reporter:assembly
 codacy-coverage-reporter -l Java -r build/test/results/jacoco/report.xml
