@@ -9,14 +9,9 @@ import datamapper.PopulateDB;
 import datamapper.UsuarioJpaController;
 import datamapper.exceptions.NonexistentEntityException;
 import dominio.Usuario;
-import modelo.UsuarioModel;
-import servico.AdministracaoDeUsuariosService;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -91,14 +86,14 @@ public class AdministracaoDeUsuariosServiceTest {
         
         int countUsuarios = controller.getUsuarioCount();
         
-        List<UsuarioModel> modelos = this.serviceEmTeste.listarUsuarios();
+        List<Usuario> modelos = this.serviceEmTeste.listarUsuarios();
         Assert.assertEquals(countUsuarios, modelos.size());
     }
     
     @Test
     public void testeEncontrarUsuarioPorNome(){
         
-        UsuarioModel modelo = serviceEmTeste.obterUsuario("calebe");
+        Usuario modelo = serviceEmTeste.obterUsuario("calebe");
         
         assertNotNull(modelo);
     }
