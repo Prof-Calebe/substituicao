@@ -2,7 +2,7 @@ package apresentacao;
 
 import auxiliar.Perfil;
 import datamapper.exceptions.NonexistentEntityException;
-import modelo.UsuarioModel;
+import dominio.Usuario;
 import servico.AdministracaoDeUsuariosService;
 import java.awt.Toolkit;
 import java.awt.event.ItemEvent;
@@ -50,13 +50,13 @@ public class AdministracaoDeUsuarios extends javax.swing.JFrame {
         salvarButton.setEnabled(false);
         
         aum = new AdministracaoDeUsuariosService();
-        List<UsuarioModel> usuarios = aum.listarUsuarios();
+        List<Usuario> usuarios = aum.listarUsuarios();
         List<String> listaDeUsuarios = new ArrayList<String>();
         
         cmb_Nome.addItem("Selecione um usuário");
         
-        for(UsuarioModel modelo : usuarios){
-             cmb_Nome.addItem(modelo.Usuario);
+        for(Usuario modelo : usuarios){
+             cmb_Nome.addItem(modelo.getUsuario());
         }
     }
 
@@ -269,13 +269,13 @@ public class AdministracaoDeUsuarios extends javax.swing.JFrame {
         
         aum = new AdministracaoDeUsuariosService(); 
         
-        List<UsuarioModel> usuarios = aum.listarUsuarios();
+        List<Usuario> usuarios = aum.listarUsuarios();
         List<String> listaDeUsuarios = new ArrayList<String>();
         
         cmb_Nome.addItem("Selecione um usuário");
         
-        for(UsuarioModel modelo : usuarios){
-             cmb_Nome.addItem(modelo.Usuario);
+        for(Usuario modelo : usuarios){
+             cmb_Nome.addItem(modelo.getUsuario());
         }
     }//GEN-LAST:event_rbtn_EditarUsuarioActionPerformed
 
@@ -306,11 +306,11 @@ public class AdministracaoDeUsuarios extends javax.swing.JFrame {
         if(rbtn_EditarUsuario.isSelected()){
             try {
                 
-                UsuarioModel model = aum.obterUsuario(txt_Nome.getText());
+                Usuario model = aum.obterUsuario(txt_Nome.getText());
                 
                 
                 
-                aum.editarUsuario(txt_Senha.getText(), perfil, model.id);
+                aum.editarUsuario(txt_Senha.getText(), perfil, model.getId());
             } catch (NonexistentEntityException ex) {
                 Logger.getLogger(AdministracaoDeUsuarios.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
@@ -333,13 +333,13 @@ public class AdministracaoDeUsuarios extends javax.swing.JFrame {
                     String username = (String)evt.getItem();
                     
                     aum = new AdministracaoDeUsuariosService();
-                    UsuarioModel modelo = aum.obterUsuario(username);
+                    Usuario modelo = aum.obterUsuario(username);
                     
-                    txt_Nome.setText(modelo.Usuario);
-                    txt_Senha.setText(modelo.Senha);
-                    txt_Confirme.setText(modelo.Senha);
+                    txt_Nome.setText(modelo.getUsuario());
+                    txt_Senha.setText(modelo.getSenha());
+                    txt_Confirme.setText(modelo.getSenha());
 
-                    cmb_Perfil.setSelectedItem(modelo.profile);
+                    cmb_Perfil.setSelectedItem(modelo.getPermissao());
                 }
     }//GEN-LAST:event_cmb_NomeItemStateChanged
 
