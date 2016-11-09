@@ -238,7 +238,7 @@ public class Ausencias extends javax.swing.JFrame {
             ProfessorService profService = new ProfessorService();
             
             Professor professor = profService.obterProfessorPorUsername(this.usuario.getUsuario());
-            
+              
             if(estado.equals("Ausência cancelada")){
                 
                 JOptionPane.showMessageDialog(null, "Ausência nº " + codigo + " já foi cancelada." , "Administrar Alocação", JOptionPane.INFORMATION_MESSAGE);
@@ -331,7 +331,7 @@ public class Ausencias extends javax.swing.JFrame {
         ProfessorService profService = new ProfessorService();
         
         Professor professor = profService.obterProfessorPorUsername(this.usuario.getUsuario());
-        
+
         if(nomeProfessor.equals(professor.getNome())){
             
             JOptionPane.showMessageDialog(null, "Não é possivel cobrir a própria ausência." , "Administrar Alocação", JOptionPane.INFORMATION_MESSAGE);
