@@ -14,8 +14,6 @@ import dominio.Usuario;
 
 import java.util.List;
 
-import modelo.UsuarioModel;
-
 import org.junit.BeforeClass;
 
 import org.junit.Test;
@@ -51,13 +49,13 @@ public class cst22Test {
         usuario1.setSenha("123456");
         usuario1.setPermissao(Perfil.PROFESSOR);
 
-        List<UsuarioModel> usuariosCadastrados;
+        List<Usuario> usuariosCadastrados;
         usuariosCadastrados = aus.listarUsuarios();
 
         boolean flag = false;
 
-        for (UsuarioModel um : usuariosCadastrados) {
-            if (um.Usuario.equals(usuario1.getUsuario())) {
+        for (Usuario um : usuariosCadastrados) {
+            if (um.getUsuario().equals(usuario1.getUsuario())) {
 
                 flag = true;
 
