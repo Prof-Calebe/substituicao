@@ -3,7 +3,7 @@ package apresentacao;
 import auxiliar.Perfil;
 import datamapper.exceptions.NonexistentEntityException;
 import dominio.Usuario;
-import modelo.AusenciaModel;
+import dominio.Ausencia;
 import servico.NotificacaoService;
 import java.awt.Toolkit;
 import java.text.ParseException;
@@ -355,7 +355,7 @@ public class Ausencias extends javax.swing.JFrame {
             dm.getDataVector().removeAllElements();
         
             NotificacaoService listaAlocacoesPendentes = new NotificacaoService();
-            List<AusenciaModel> listaAusencias = null;
+            List<Ausencia> listaAusencias = null;
                     
             Perfil perfil = usuario.getPermissao();
             
@@ -385,10 +385,10 @@ public class Ausencias extends javax.swing.JFrame {
                 //Algum erro
             }
             
-            for (AusenciaModel model : listaAusencias) {
+            for (Ausencia model : listaAusencias) {
                 //if (model.estado.equals("Alocação pendente")) {
                     DefaultTableModel tableModel = (DefaultTableModel) tbl_Alocacoes.getModel();
-                    tableModel.addRow(new Object[]{model.codigo, model.professorAusente, model.dataInicio, model.dataFim, model.professorSubstituto, model.estado});
+                    tableModel.addRow(new Object[]{model.getCodigo(), model.getProfessor().getNome(), model.getPeriodo().getStart(), model.getPeriodo().getEnd(), model.getProfessorSubstituto().getNome(), model.getEstado()});
                 //}
             }
     }
