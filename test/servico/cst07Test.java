@@ -24,11 +24,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import modelo.AusenciaModel;
+import dominio.Ausencia;
 import modelo.ProfessorModel;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeConstants;
-import org.joda.time.Interval;
 
 /**
  *
@@ -59,8 +56,8 @@ public class cst07Test {
         notificaçãoService.notificarAusencia(professor.id, "25/11/2013 18:30", "25/11/2013 19:59", "Motivo Declarado", new LinkedList<String>());
         
         //Setup Professor 3 como substituto
-        List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();    
-        notificaçãoService.definirSubstituto(ausencias.get(0).codigo,"Professor3");
+        List<Ausencia> ausencias = notificaçãoService.listarAusencias();    
+        notificaçãoService.definirSubstituto(ausencias.get(0).getCodigo(),"Professor3");
         
         //Setup Professor 1 livre no horário da ausência
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
@@ -97,28 +94,28 @@ public class cst07Test {
         assertTrue(loginService.verificarUsuarioESenha("Administrador", "123456"));
         
         NotificacaoService notificaçãoService = new NotificacaoService();
-        List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();        
+        List<Ausencia> ausencias = notificaçãoService.listarAusencias();        
         assertEquals(1, ausencias.size());
-        assertEquals("Professor2", ausencias.get(0).professorAusente);
-        assertEquals("Professor3", ausencias.get(0).professorSubstituto);
-        assertEquals("25/11/2013 18:30", ausencias.get(0).dataInicio);
-        assertEquals("25/11/2013 20:00", ausencias.get(0).dataFim);
-        assertEquals("Alocação efetuada", ausencias.get(0).estado); 
+        assertEquals("Professor2", ausencias.get(0).getProfessor().getNome());
+        assertEquals("Professor3", ausencias.get(0).getProfessorSubstituto().getNome());
+        assertEquals("25/11/2013 18:30", ausencias.get(0).getPeriodo().getStart());
+        assertEquals("25/11/2013 20:00", ausencias.get(0).getPeriodo().getEnd());
+        assertEquals("Alocação efetuada", ausencias.get(0).getEstado()); 
         
         ProfessorService professorService = new ProfessorService();
-        List<ProfessorModel> professoresCompatíveis = professorService.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).id.toString());
+        List<ProfessorModel> professoresCompatíveis = professorService.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).getId().toString());
         assertEquals(1, professoresCompatíveis.size());
         assertEquals("Professor1", professoresCompatíveis.get(0).Nome);
         
-        notificaçãoService.definirSubstituto(ausencias.get(0).codigo,"Professor1");
+        notificaçãoService.definirSubstituto(ausencias.get(0).getCodigo(),"Professor1");
         
         ausencias = notificaçãoService.listarAusencias();        
         assertEquals(1, ausencias.size());
-        assertEquals("Professor2", ausencias.get(0).professorAusente);
-        assertEquals("Professor1", ausencias.get(0).professorSubstituto);
-        assertEquals("25/11/2013 18:30", ausencias.get(0).dataInicio);
-        assertEquals("25/11/2013 20:00", ausencias.get(0).dataFim);
-        assertEquals("Alocação efetuada", ausencias.get(0).estado);
+        assertEquals("Professor2", ausencias.get(0).getProfessor().getNome());
+        assertEquals("Professor1", ausencias.get(0).getProfessorSubstituto().getNome());
+        assertEquals("25/11/2013 18:30", ausencias.get(0).getPeriodo().getStart());
+        assertEquals("25/11/2013 20:00", ausencias.get(0).getPeriodo().getEnd());
+        assertEquals("Alocação efetuada", ausencias.get(0).getEstado());
     }
 
 }
