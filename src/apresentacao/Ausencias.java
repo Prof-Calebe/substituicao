@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.ProfessorModel;
+import dominio.Professor;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import servico.AdministracaoDeUsuariosService;
@@ -237,13 +237,13 @@ public class Ausencias extends javax.swing.JFrame {
             
             ProfessorService profService = new ProfessorService();
             
-            ProfessorModel professor = profService.obterProfessorPorUsername(this.usuario.getUsuario());
+            Professor professor = profService.obterProfessorPorUsername(this.usuario.getUsuario());
             
             if(estado.equals("Ausência cancelada")){
                 
                 JOptionPane.showMessageDialog(null, "Ausência nº " + codigo + " já foi cancelada." , "Administrar Alocação", JOptionPane.INFORMATION_MESSAGE);
                 
-            } else if(!professor.Nome.equals(nomeProf)){
+            } else if(!professor.getNome().equals(nomeProf)){
                 JOptionPane.showMessageDialog(null, "Não é possível cancelar a ausência de código " + codigo + " pois ela não foi criada por você." , 
                         "Administrar Alocação", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -330,16 +330,16 @@ public class Ausencias extends javax.swing.JFrame {
         
         ProfessorService profService = new ProfessorService();
         
-        ProfessorModel professor = profService.obterProfessorPorUsername(this.usuario.getUsuario());
+        Professor professor = profService.obterProfessorPorUsername(this.usuario.getUsuario());
         
-        if(nomeProfessor.equals(professor.Nome)){
+        if(nomeProfessor.equals(professor.getNome())){
             
             JOptionPane.showMessageDialog(null, "Não é possivel cobrir a própria ausência." , "Administrar Alocação", JOptionPane.INFORMATION_MESSAGE);
             
         } else{
             NotificacaoService notifService = new NotificacaoService();
 
-            notifService.definirSubstituto(codigo, professor.Nome);
+            notifService.definirSubstituto(codigo, professor.getNome());
 
             this.populateGrid(usuario);
         }
