@@ -19,7 +19,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import dominio.Ausencia;
-import modelo.ProfessorModel;
+import dominio.Professor;
 
 /**
  *
@@ -55,7 +55,7 @@ public class cst03Test {
         assertTrue(loginService.verificarUsuarioESenha("Funcionario1", "123456"));
         
         ProfessorService professorService = new ProfessorService();
-        ProfessorModel professor = 
+        Professor professor = 
                 professorService.obterProfessorPorNome("Professor1");
         
         NotificacaoService notificaçãoService = new NotificacaoService();
@@ -67,7 +67,7 @@ public class cst03Test {
         try
         {
             notificaçãoService.notificarAusencia(
-                    professor.id, "25/11/2013 20:01", "25/11/2013 21:29",
+                    professor.getId(), "25/11/2013 20:01", "25/11/2013 21:29",
                     "", new LinkedList<String>());
         }
         catch(InvalidParameterException ex)
