@@ -19,7 +19,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import dominio.Ausencia;
-import modelo.ProfessorModel;
+import dominio.Professor;
 
 /**
  *
@@ -45,12 +45,12 @@ public class cst11Test {
     public void setUp() throws ParseException, NonexistentEntityException {
         //Setup Declaração de Ausência Professor 2
         ProfessorService professorService = new ProfessorService();
-        ProfessorModel professor = 
+        Professor professor = 
                 professorService.obterProfessorPorNome("Professor2");
         
         NotificacaoService notificaçãoService = new NotificacaoService();
         notificaçãoService.notificarAusencia(
-                professor.id, "25/11/2013 18:30", "25/11/2013 19:59",
+                professor.getId(), "25/11/2013 18:30", "25/11/2013 19:59",
                 "Motivo Declarado", new LinkedList<String>());
         
         //Setup Professor 3 como substituto
