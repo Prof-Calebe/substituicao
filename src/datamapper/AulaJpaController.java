@@ -21,10 +21,11 @@ import javax.persistence.criteria.Root;
  */
 public class AulaJpaController implements Serializable {
 
+    private EntityManagerFactory emf = null;
+    
     public AulaJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
@@ -44,7 +45,7 @@ public class AulaJpaController implements Serializable {
         }
     }
 
-    public void edit(Aula aula) throws NonexistentEntityException, Exception {
+    public void edit(Aula aula) throws NonexistentEntityException{
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -67,7 +68,7 @@ public class AulaJpaController implements Serializable {
         }
     }
 
-    public void destroy(Long id) throws NonexistentEntityException {
+    public void destroy(Long id) throws NonexistentEntityException{
         EntityManager em = null;
         try {
             em = getEntityManager();
