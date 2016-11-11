@@ -19,7 +19,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import dominio.Ausencia;
-import modelo.ProfessorModel;
+import dominio.Professor;
 
 /**
  *
@@ -56,14 +56,14 @@ public class cst02Test {
         assertTrue(loginService.verificarUsuarioESenha("Funcionario1", "123456"));
         
         ProfessorService professorService = new ProfessorService();
-        ProfessorModel professor = professorService.obterProfessorPorNome(
+        Professor professor = professorService.obterProfessorPorNome(
                 "Professor1");
         
         NotificacaoService notificaçãoService = new NotificacaoService();
         List<Ausencia> ausencias = notificaçãoService.listarAusencias();        
         assertEquals(0, ausencias.size());
         
-        notificaçãoService.notificarAusencia(professor.id, "25/11/2013", "25/11/2013", "Palestra",
+        notificaçãoService.notificarAusencia(professor.getId(), "25/11/2013", "25/11/2013", "Palestra",
             new LinkedList<String>());
         
         assertTrue(loginService.verificarUsuarioESenha("Administrador", "123456"));
