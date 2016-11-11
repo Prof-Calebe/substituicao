@@ -60,7 +60,7 @@ public class Ausencia implements Serializable {
     private String codigo;
     
     //blame Hibernate
-    protected Ausencia(){
+    public Ausencia(){
     
     }
 
@@ -169,6 +169,10 @@ public class Ausencia implements Serializable {
     
     public EstadoAusencia getEstado() {
         return this.estado;
+    }
+    
+    public void setEstado(EstadoAusencia ea){
+        this.estado = ea;
     }
     
     /**
