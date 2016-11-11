@@ -9,6 +9,7 @@ package servico;
 import datamapper.PopulateDB;
 import datamapper.exceptions.NonexistentEntityException;
 import dominio.Ausencia;
+import dominio.Professor;
 import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,7 +21,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 
-import modelo.ProfessorModel;
 
 /**
  *
@@ -58,14 +58,14 @@ public class cst01Test {
         assertTrue(loginService.verificarUsuarioESenha("Funcionario1", "123456"));
         
         ProfessorService professorService = new ProfessorService();
-        ProfessorModel professor = 
+        Professor professor = 
                 professorService.obterProfessorPorNome("Professor1");
         
         NotificacaoService notificaçãoService = new NotificacaoService();
         List<Ausencia> ausencias = notificaçãoService.listarAusencias();        
         assertEquals(0, ausencias.size());
         
-        notificaçãoService.notificarAusencia(professor.id, "25/11/2013 20:01",
+        notificaçãoService.notificarAusencia(professor.getId(), "25/11/2013 20:01",
                 "25/11/2013 21:29", "Motivo Declarado", new LinkedList<String>());
         
         assertTrue(loginService.verificarUsuarioESenha("Administrador", "123456"));
