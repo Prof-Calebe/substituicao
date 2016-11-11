@@ -18,12 +18,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-
-import modelo.AusenciaModel;
+import dominio.Ausencia;
 import modelo.ProfessorModel;
-import servico.LoginService;
-import servico.NotificacaoService;
-import servico.ProfessorService;
 
 /**
  *
@@ -63,7 +59,7 @@ public class cst03Test {
                 professorService.obterProfessorPorNome("Professor1");
         
         NotificacaoService notificaçãoService = new NotificacaoService();
-        List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();        
+        List<Ausencia> ausencias = notificaçãoService.listarAusencias();        
         assertEquals(0, ausencias.size());
         
         Boolean exceptionOk = false;
