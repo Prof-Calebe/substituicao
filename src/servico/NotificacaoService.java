@@ -8,9 +8,7 @@ import datamapper.AusenciaJpaController;
 import datamapper.ProfessorJpaController;
 import datamapper.exceptions.NonexistentEntityException;
 import dominio.Ausencia;
-import dominio.EstadoAusencia;
 import dominio.Professor;
-import modelo.AusenciaModel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -90,14 +88,14 @@ public class NotificacaoService {
             return "0";
     }
 
-    public List<AusenciaModel> listarAusencias() {
+    public List<Ausencia> listarAusencias() {
         
         List<Ausencia> ausencias = ausenciaController.findAusenciaEntities();
-        List<AusenciaModel> modelos = new LinkedList<>();
+        List<Ausencia> modelos = new LinkedList<>();
         
         for(Ausencia ausencia : ausencias){
             
-            AusenciaModel modelo = this.montarAusencia(ausencia);
+            Ausencia modelo = this.montarAusencia(ausencia);
             
             modelos.add(modelo);
         }
@@ -106,15 +104,15 @@ public class NotificacaoService {
     }
     
     /*
-    public List<AusenciaModel> listarAusenciasPorEstado(EstadoAusencia estado){
+    public List<Ausencia> listarAusenciasPorEstado(EstadoAusencia estado){
         
         List<Ausencia> ausencias = ausenciaController.findAusenciaEntities();
-        List<AusenciaModel> modelos = new ArrayList<AusenciaModel>();
+        List<Ausencia> modelos = new ArrayList<Ausencia>();
         
         for(Ausencia ausencia : ausencias){
             
             if(ausencia.getEstado().equals(estado)){
-                AusenciaModel modelo = this.montarAusencia(ausencia);
+                Ausencia modelo = this.montarAusencia(ausencia);
                 
                 modelos.add(modelo);   
             }               
@@ -123,17 +121,17 @@ public class NotificacaoService {
     }
     */
     
-    public List<AusenciaModel> listarAusenciasPorProfessor(String usernameProfessor){
+    public List<Ausencia> listarAusenciasPorProfessor(String usernameProfessor){
         
         Professor professor = profController.findProfessorPorUsername(usernameProfessor);
         
         List<Ausencia> ausenciasPorProfessor = ausenciaController.listAusenciasPorProfessor(professor);
         
-        List<AusenciaModel> modelos = new ArrayList<>();
+        List<Ausencia> modelos = new ArrayList<>();
         
         for(Ausencia ausencia : ausenciasPorProfessor){
             
-            AusenciaModel modelo = this.montarAusencia(ausencia);
+            Ausencia modelo = this.montarAusencia(ausencia);
             
             modelos.add(modelo);
             
@@ -142,17 +140,17 @@ public class NotificacaoService {
         return modelos;
     }
     
-    public List<AusenciaModel> listarAusenciasPorIndicacaoDeSubstituto(String usernameProfessor){
+    public List<Ausencia> listarAusenciasPorIndicacaoDeSubstituto(String usernameProfessor){
         
         Professor professorIndicado = profController.findProfessorPorUsername(usernameProfessor);
         
         List<Ausencia> ausenciasComIndicacaoDeSubstituto = ausenciaController.listAusenciasPorIndicacaoDeSubstituto(professorIndicado);
         
-        List<AusenciaModel> modelos = new ArrayList<>();
+        List<Ausencia> modelos = new ArrayList<>();
         
         for(Ausencia ausencia : ausenciasComIndicacaoDeSubstituto){
             
-            AusenciaModel modelo = this.montarAusencia(ausencia);
+            Ausencia modelo = this.montarAusencia(ausencia);
             
             modelos.add(modelo);
             
@@ -161,17 +159,17 @@ public class NotificacaoService {
         return modelos;
     }
     
-    public List<AusenciaModel> listarAusenciasPorSubstituto(String usernameProfessor){
+    public List<Ausencia> listarAusenciasPorSubstituto(String usernameProfessor){
         
         Professor professorIndicado = profController.findProfessorPorUsername(usernameProfessor);
         
         List<Ausencia> ausenciasComIndicacaoDeSubstituto = ausenciaController.listAusenciasPorSubstituto(professorIndicado);
         
-        List<AusenciaModel> modelos = new ArrayList<>();
+        List<Ausencia> modelos = new ArrayList<>();
         
         for(Ausencia ausencia : ausenciasComIndicacaoDeSubstituto){
             
-            AusenciaModel modelo = this.montarAusencia(ausencia);
+            Ausencia modelo = this.montarAusencia(ausencia);
             
             modelos.add(modelo);
             
@@ -206,26 +204,24 @@ public class NotificacaoService {
         }
     }
     
-    private AusenciaModel montarAusencia(Ausencia ausencia){
+    private Ausencia montarAusencia(Ausencia ausencia){
 
-        AusenciaModel modelo = new AusenciaModel();
+        Ausencia modelo = new Ausencia();
 
-        modelo.codigo = ausencia.getCodigo();
-        modelo.professorAusente = ausencia.getProfessor().getNome();
+        modelo.setCodigo(ausencia.getCodigo());
+        modelo.setProfessor(ausencia.getProfessor());
         
         if(ausencia.getProfessorSubstituto() != null){
-            modelo.professorSubstituto = ausencia.getProfessorSubstituto().getNome();    
-        }else{
-            modelo.professorSubstituto = "";
+            modelo.setProfessorSubstituto(ausencia.getProfessorSubstituto());    
         }
         
         //modelo.professorSubstituto = ausencia.getIndicacoesSubstitutos().getNome();
-        modelo.estado = ausencia.getEstado().getDescricao();
-        modelo.id = ausencia.getId();
+        modelo.setEstado(ausencia.getEstado());
+        modelo.setId(ausencia.getId());
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Interval periodo = ausencia.getPeriodo();
-        modelo.dataInicio = sdf.format(periodo.getStart().toDate());
-        modelo.dataFim = sdf.format(periodo.getEnd().toDate());
+        modelo.setPeriodo(periodo);
+        
         
         return modelo;
         
