@@ -4,7 +4,7 @@ import datamapper.exceptions.NonexistentEntityException;
 import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.JFrame;
-import modelo.ProfessorModel;
+import dominio.Professor;
 import org.joda.time.Interval;
 import servico.ProfessorService;
 
@@ -174,6 +174,7 @@ public class ListaProfessores extends javax.swing.JDialog {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new ListaProfessores().setVisible(true);
             }
@@ -189,13 +190,13 @@ public class ListaProfessores extends javax.swing.JDialog {
             
             ProfessorService profService = new ProfessorService();
             
-            List<ProfessorModel> professores = profService.listarProfessoresCompativeisComAusenteNoPeriodo(previousFrame.getCodigoAusencia());
+            List<Professor> professores = profService.listarProfessoresCompativeisComAusenteNoPeriodo(previousFrame.getCodigoAusencia());
             
-            for (ProfessorModel professor : professores){
+            for (Professor professor : professores){
                 
-                if(!professor.Nome.equals(nomeProfAusente)){
+                if(!professor.getNome().equals(nomeProfAusente)){
                     
-                    cmb_Professor.addItem(professor.Nome);
+                    cmb_Professor.addItem(professor.getNome());
                 
                 }
 
