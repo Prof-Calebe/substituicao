@@ -19,7 +19,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import dominio.Ausencia;
-import modelo.ProfessorModel;
+import dominio.Professor;
 
 /**
  *
@@ -43,10 +43,10 @@ public class cst04Test {
     @Before
     public void setUp() throws ParseException {
         ProfessorService professorService = new ProfessorService();
-        ProfessorModel professor = professorService.obterProfessorPorNome("Professor2");
+        Professor professor = professorService.obterProfessorPorNome("Professor2");
         
         NotificacaoService notificaçãoService = new NotificacaoService();
-        notificaçãoService.notificarAusencia(professor.id, "25/11/2013 18:30", "25/11/2013 19:59", "Motivo Declarado", new LinkedList<String>());
+        notificaçãoService.notificarAusencia(professor.getId(), "25/11/2013 18:30", "25/11/2013 19:59", "Motivo Declarado", new LinkedList<String>());
     }
     
     @After
@@ -69,9 +69,9 @@ public class cst04Test {
         assertEquals("Alocação pendente", ausencias.get(0).getEstado());
         
         ProfessorService professorService = new ProfessorService();
-        List<ProfessorModel> professoresCompatíveis = professorService.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).getId().toString());
+        List<Professor> professoresCompatíveis = professorService.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).getId().toString());
         assertEquals(1, professoresCompatíveis.size());
-        assertEquals("Professor3", professoresCompatíveis.get(0).Nome);
+        assertEquals("Professor3", professoresCompatíveis.get(0).getNome());
         
         notificaçãoService.definirSubstituto(ausencias.get(0).getCodigo(),"Professor3");
         
