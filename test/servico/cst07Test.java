@@ -25,7 +25,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import dominio.Ausencia;
-import modelo.ProfessorModel;
+import dominio.Professor;
 
 /**
  *
@@ -50,10 +50,10 @@ public class cst07Test {
     public void setUp() throws ParseException, NonexistentEntityException {
         //Setup Declaração de Ausência Professor 2
         ProfessorService professorService = new ProfessorService();
-        ProfessorModel professor = professorService.obterProfessorPorNome("Professor2");
+        Professor professor = professorService.obterProfessorPorNome("Professor2");
         
         NotificacaoService notificaçãoService = new NotificacaoService();
-        notificaçãoService.notificarAusencia(professor.id, "25/11/2013 18:30", "25/11/2013 19:59", "Motivo Declarado", new LinkedList<String>());
+        notificaçãoService.notificarAusencia(professor.getId(), "25/11/2013 18:30", "25/11/2013 19:59", "Motivo Declarado", new LinkedList<String>());
         
         //Setup Professor 3 como substituto
         List<Ausencia> ausencias = notificaçãoService.listarAusencias();    
@@ -103,9 +103,9 @@ public class cst07Test {
         assertEquals("Alocação efetuada", ausencias.get(0).getEstado()); 
         
         ProfessorService professorService = new ProfessorService();
-        List<ProfessorModel> professoresCompatíveis = professorService.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).getId().toString());
+        List<Professor> professoresCompatíveis = professorService.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).getId().toString());
         assertEquals(1, professoresCompatíveis.size());
-        assertEquals("Professor1", professoresCompatíveis.get(0).Nome);
+        assertEquals("Professor1", professoresCompatíveis.get(0).getNome());
         
         notificaçãoService.definirSubstituto(ausencias.get(0).getCodigo(),"Professor1");
         
