@@ -11,7 +11,6 @@ import datamapper.exceptions.NonexistentEntityException;
 import dominio.Ausencia;
 import dominio.EstadoAusencia;
 import dominio.Professor;
-import modelo.AusenciaModel;
 import servico.NotificacaoService;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -129,7 +128,7 @@ public class NotificacaoServiceTest {
          
          int ausenciaCount = ausController.getAusenciaCount();
          
-         List<AusenciaModel> modelos = serviceEmTeste.listarAusencias();
+         List<Ausencia> modelos = serviceEmTeste.listarAusencias();
          
          Assert.assertEquals(ausenciaCount, modelos.size());
          
@@ -259,7 +258,7 @@ public class NotificacaoServiceTest {
          PopulateDB.recreateDB("prosub", "root", "");
          PopulateDB.populateProfessores();
          
-         List<AusenciaModel> ausencias = serviceEmTeste.listarAusenciasPorProfessor("calebe");
+         List<Ausencia> ausencias = serviceEmTeste.listarAusenciasPorProfessor("calebe");
          
          Assert.assertEquals(0, ausencias.size());
          
@@ -292,7 +291,7 @@ public class NotificacaoServiceTest {
          PopulateDB.recreateDB("prosub", "root", "");
          PopulateDB.populateProfessores();
          
-         List<AusenciaModel> ausencias = serviceEmTeste.listarAusenciasPorProfessor("calebe");
+         List<Ausencia> ausencias = serviceEmTeste.listarAusenciasPorProfessor("calebe");
          
          Assert.assertEquals(0, ausencias.size());
          
@@ -334,7 +333,7 @@ public class NotificacaoServiceTest {
          PopulateDB.recreateDB("prosub", "root", "");
          PopulateDB.populateProfessores();
          
-         List<AusenciaModel> ausencias = serviceEmTeste.listarAusencias();
+         List<Ausencia> ausencias = serviceEmTeste.listarAusencias();
          
          Assert.assertEquals(0, ausencias.size());
          
@@ -362,13 +361,13 @@ public class NotificacaoServiceTest {
         
         Assert.assertEquals(1, ausencias.size());
         
-        AusenciaModel ausenciaParaValidar = ausencias.get(0);
+        Ausencia ausenciaParaValidar = ausencias.get(0);
         
-         assertEquals("Calebe", ausenciaParaValidar.professorAusente);
-         assertEquals("", ausenciaParaValidar.professorSubstituto);
-         assertEquals("18/11/2013 20:00", ausenciaParaValidar.dataInicio);
-         assertEquals("18/11/2013 21:30", ausenciaParaValidar.dataFim);
-         assertEquals("Alocação pendente", ausenciaParaValidar.estado);
+         assertEquals("Calebe", ausenciaParaValidar.getProfessor().getNome());
+         assertEquals("", ausenciaParaValidar.getProfessorSubstituto().getNome());
+         assertEquals("18/11/2013 20:00", ausenciaParaValidar.getPeriodo().getStart());
+         assertEquals("18/11/2013 21:30", ausenciaParaValidar.getPeriodo().getEnd());
+         assertEquals("Alocação pendente", ausenciaParaValidar.getEstado());
         
         serviceEmTeste.definirSubstituto(codigoAusencia, "Vilar");
         
@@ -376,11 +375,11 @@ public class NotificacaoServiceTest {
                 
         ausenciaParaValidar = ausencias.get(0);
 
-        assertEquals("Calebe", ausenciaParaValidar.professorAusente);
-        assertEquals("Vilar", ausenciaParaValidar.professorSubstituto);
-        assertEquals("18/11/2013 20:00", ausenciaParaValidar.dataInicio);
-        assertEquals("18/11/2013 21:30", ausenciaParaValidar.dataFim);
-        assertEquals("Alocação efetuada", ausenciaParaValidar.estado);
+        assertEquals("Calebe", ausenciaParaValidar.getProfessor().getNome());
+        assertEquals("Vilar", ausenciaParaValidar.getProfessorSubstituto().getNome());
+        assertEquals("18/11/2013 20:00", ausenciaParaValidar.getPeriodo().getStart());
+        assertEquals("18/11/2013 21:30", ausenciaParaValidar.getPeriodo().getEnd());
+        assertEquals("Alocação efetuada",  ausenciaParaValidar.getEstado());
         
         serviceEmTeste.cancelarAulas(codigoAusencia);
         
@@ -388,11 +387,11 @@ public class NotificacaoServiceTest {
                 
         ausenciaParaValidar = ausencias.get(0);
 
-        assertEquals("Calebe", ausenciaParaValidar.professorAusente);
-        assertEquals("", ausenciaParaValidar.professorSubstituto);
-        assertEquals("18/11/2013 20:00", ausenciaParaValidar.dataInicio);
-        assertEquals("18/11/2013 21:30", ausenciaParaValidar.dataFim);
-        assertEquals("Aulas canceladas", ausenciaParaValidar.estado);
+        assertEquals("Calebe", ausenciaParaValidar.getProfessor().getNome());
+        assertEquals("", ausenciaParaValidar.getProfessorSubstituto().getNome());
+        assertEquals("18/11/2013 20:00", ausenciaParaValidar.getPeriodo().getStart());
+        assertEquals("18/11/2013 21:30", ausenciaParaValidar.getPeriodo().getEnd());
+        assertEquals("Aulas canceladas",  ausenciaParaValidar.getEstado());
         
         serviceEmTeste.cancelarAusencia(codigoAusencia);
         
@@ -400,11 +399,11 @@ public class NotificacaoServiceTest {
                 
         ausenciaParaValidar = ausencias.get(0);
 
-        assertEquals("Calebe", ausenciaParaValidar.professorAusente);
-        assertEquals("", ausenciaParaValidar.professorSubstituto);
-        assertEquals("18/11/2013 20:00", ausenciaParaValidar.dataInicio);
-        assertEquals("18/11/2013 21:30", ausenciaParaValidar.dataFim);
-        assertEquals("Ausência cancelada", ausenciaParaValidar.estado);
+        assertEquals("Calebe", ausenciaParaValidar.getProfessor().getNome());
+        assertEquals("", ausenciaParaValidar.getProfessorSubstituto().getNome());
+        assertEquals("18/11/2013 20:00", ausenciaParaValidar.getPeriodo().getStart());
+        assertEquals("18/11/2013 21:30", ausenciaParaValidar.getPeriodo().getEnd());
+        assertEquals("Ausência cancelada", ausenciaParaValidar.getEstado());
      }
      
 }
