@@ -18,7 +18,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import modelo.AusenciaModel;
+import dominio.Ausencia;
 import modelo.ProfessorModel;
 
 /**
@@ -54,9 +54,9 @@ public class cst11Test {
                 "Motivo Declarado", new LinkedList<String>());
         
         //Setup Professor 3 como substituto
-        List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();    
+        List<Ausencia> ausencias = notificaçãoService.listarAusencias();    
         notificaçãoService.definirSubstituto(
-                ausencias.get(0).codigo, "Professor3");
+                ausencias.get(0).getCodigo(), "Professor3");
     }
     
     @After
@@ -70,24 +70,24 @@ public class cst11Test {
         assertTrue(loginService.verificarUsuarioESenha("Professor3", "123456"));
         
         NotificacaoService notificaçãoService = new NotificacaoService();
-        List<AusenciaModel> ausencias = 
+        List<Ausencia> ausencias = 
                 notificaçãoService.listarAusenciasPorSubstituto("Professor3");
         assertEquals(1, ausencias.size());
-        assertEquals("Professor2", ausencias.get(0).professorAusente);
-        assertEquals("Professor3", ausencias.get(0).professorSubstituto);
-        assertEquals("25/11/2013 18:30", ausencias.get(0).dataInicio);
-        assertEquals("25/11/2013 20:00", ausencias.get(0).dataFim);
-        assertEquals("Alocação efetuada", ausencias.get(0).estado); 
+        assertEquals("Professor2", ausencias.get(0).getProfessor().getNome());
+        assertEquals("Professor3", ausencias.get(0).getProfessorSubstituto().getNome());
+        assertEquals("25/11/2013 18:30", ausencias.get(0).getPeriodo().getStart());
+        assertEquals("25/11/2013 20:00", ausencias.get(0).getPeriodo().getEnd());
+        assertEquals("Alocação efetuada", ausencias.get(0).getEstado()); 
         
-        notificaçãoService.recusarSubstituicao(ausencias.get(0).id);
+        notificaçãoService.recusarSubstituicao(ausencias.get(0).getId());
         
         ausencias = notificaçãoService.listarAusencias();
         assertEquals(1, ausencias.size());
-        assertEquals("Professor2", ausencias.get(0).professorAusente);
-        assertEquals("", ausencias.get(0).professorSubstituto);
-        assertEquals("25/11/2013 18:30", ausencias.get(0).dataInicio);
-        assertEquals("25/11/2013 20:00", ausencias.get(0).dataFim);
-        assertEquals("Alocação pendente", ausencias.get(0).estado);         
+        assertEquals("Professor2", ausencias.get(0).getProfessor().getNome());
+        assertEquals("", ausencias.get(0).getProfessorSubstituto().getNome());
+        assertEquals("25/11/2013 18:30", ausencias.get(0).getPeriodo().getStart());
+        assertEquals("25/11/2013 20:00", ausencias.get(0).getPeriodo().getEnd());
+        assertEquals("Alocação pendente", ausencias.get(0).getEstado());         
     }
 
 }
