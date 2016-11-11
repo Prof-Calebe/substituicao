@@ -25,7 +25,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import dominio.Ausencia;
-import modelo.ProfessorModel;
+import dominio.Professor;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.Interval;
@@ -73,12 +73,12 @@ public class cst06Test {
     @Before
     public void setUp() throws ParseException {
         ProfessorService professorService = new ProfessorService();
-        ProfessorModel professor = 
+        Professor professor = 
                 professorService.obterProfessorPorNome("Professor2");
         
         NotificacaoService notificaçãoService = new NotificacaoService();
         notificaçãoService.notificarAusencia(
-                professor.id, "25/11/2013 18:30", "25/11/2013 19:59", 
+                professor.getId(), "25/11/2013 18:30", "25/11/2013 19:59", 
                 "Motivo Declarado", new LinkedList<String>());
         
         
@@ -104,7 +104,7 @@ public class cst06Test {
         assertEquals("Alocação pendente", ausencias.get(0).getEstado());
         
         ProfessorService professorService = new ProfessorService();
-        List<ProfessorModel> professoresCompatíveis = professorService.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).getId().toString());
+        List<Professor> professoresCompatíveis = professorService.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).getId().toString());
         assertEquals(0, professoresCompatíveis.size());       
         
     }
