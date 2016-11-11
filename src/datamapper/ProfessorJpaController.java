@@ -14,13 +14,19 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 
-/**
+/*
  *
  * @author Leticia
  */
+ 
 public class ProfessorJpaController implements Serializable {
 
-    private EntityManagerFactory emf = null;
+    /**
+     * <p>Atribute of the class ProfessorJpaController that references to an EntityManagerFactory, used all over the class
+     * in many methods.</p>
+     * @param emf EntityManagerFactory
+     */
+    private EntityManagerFactory emf;
     
     /**
      * <p>Constructor of the class ProfessorJpaController
@@ -45,7 +51,7 @@ public class ProfessorJpaController implements Serializable {
      * <p>Create a Professor
      * Simply implements the creation of a Professor in the database, persisting and commiting it.
      * It has no returns, void method that receives an Object of a Professor as parameter</p>
-     * @param professor object
+     * @param professor Object
      */
     public void create(Professor professor) {
         EntityManager em = null;
@@ -66,15 +72,15 @@ public class ProfessorJpaController implements Serializable {
      * This method implements the Update part of a database of the Entity Professor.
      * It receveis a professor Object, in case of this object doens't exist it throws an exception.
      * It is a void method.</p>
-     * @param professor object
+     * @param professor Object
      * @throws NonexistentEntityException
      */
-    public void edit(Professor professor) throws NonexistentEntityException{
+    public void edit(Professor professor) throws NonexistentEntityException {
         EntityManager em = null;
         try {
-            em = getEntityManager();
+            em = this.getEntityManager();
             em.getTransaction().begin();
-            professor = em.merge(professor);
+            em.merge(professor);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -96,7 +102,7 @@ public class ProfessorJpaController implements Serializable {
      * <p>Delete a Professor
      * This method receives the id of a Professor instead of the object in fact. It searches for
      * the respective professor and delete it. In case it doesn't exist an exception is thrown.</p>
-     * @param id
+     * @param id Long identification to find a professor
      * @throws NonexistentEntityException
      */
     public void destroy(Long id) throws NonexistentEntityException {
@@ -135,8 +141,8 @@ public class ProfessorJpaController implements Serializable {
      * This method is called by the first Find Professor Entities method and it only calls another 
      * method with different parameters. This is only necessary because its a Public method that calls
      * a private one</p>
-     * @param maxResults
-     * @param firstResult
+     * @param maxResults Integer thats passes the max quantity of results
+     * @param firstResult Integer to represent the first result
      * @return List of Professors
      */
     public List<Professor> findProfessorEntities(int maxResults, int firstResult) {
@@ -148,8 +154,8 @@ public class ProfessorJpaController implements Serializable {
      * This method is called by the second Find Professor Entities method and it only calls another 
      * method with different parameters. This one acces the database and get as return a list of 
      * professors within the asked parameters.</p>
-     * @param maxResults
-     * @param firstResult
+     * @param maxResults Integer thats passes the max quantity of results
+     * @param firstResult Integer to represent the first result
      * @return List of Professors
      */
     private List<Professor> findProfessorEntities(boolean all, int maxResults, int firstResult) {
@@ -170,11 +176,11 @@ public class ProfessorJpaController implements Serializable {
      * <p>Find Professor
      * Search method thats uses Eager way to get a Professor, found by it Id, passed as
      * parameter.</p>
-     * @param id
+     * @param id Long used to as an identification to find a professor
      * @return Professor object
      */
     public Professor findProfessor(Long id) {
-        EntityManager em = getEntityManager();
+        EntityManager em = this.getEntityManager();
         try {
             return em.find(Professor.class, id);
         } finally {
@@ -186,13 +192,13 @@ public class ProfessorJpaController implements Serializable {
      * <p>Find Professor by Name
      * This method search in the list of Professors returned by the method findProfessorEntities
      * the Professor with the same name as the parameter</p>
-     * @param nome
+     * @param nome String used to find a Professor by his name
      * @return Professor Object or null if it doesn't find any one
      */
-    public Professor findProfessor(String nome){
+    public Professor findProfessor(String nome) {
         List<Professor> professores = this.findProfessorEntities();
-        for(Professor professor : professores){
-            if(professor.getNome().equals(nome)){
+        for (Professor professor : professores) {
+            if (professor.getNome().equals(nome)) {
                 return professor;
             }
         }
@@ -204,13 +210,13 @@ public class ProfessorJpaController implements Serializable {
      * <p>Find Professor by Name
      * This method search in the list of Professors returned by the method findProfessorEntities
      * the Professor with the same username as the parameter</p>
-     * @param username
+     * @param username String used to find a Professor by his name
      * @return Professor Object or null if it doesn't find any one
      */
-    public Professor findProfessorPorUsername(String username){
+    public Professor findProfessorPorUsername(String username) {
         List<Professor> professores = this.findProfessorEntities();
-        for(Professor professor : professores){
-            if(professor.getUsername().equals(username)){
+        for (Professor professor : professores) {
+            if (professor.getUsername().equals(username)) {
                 return professor;
             }
         }
