@@ -30,9 +30,8 @@ public class PopulateDB {
     public static void main(String[] args) {
         try {
             PopulateDB.fullSetupDB("prosub", "root", "");
-            //PopulateDB.recreateDB("prosub", "root", "");
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(PopulateDB.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.severe(ex.toString());
         }
     }
 
@@ -59,24 +58,19 @@ public class PopulateDB {
             Class.forName("com.mysql.jdbc.Driver");
 
             //STEP 3: Open a connection
-            //System.out.println("Connecting to a selected database...");
             LOG.info("Connecting to a selected database...");
             conn = DriverManager.getConnection(dbURL, username, password);
             LOG.info("Connected database successfully...");
-            //System.out.println("Connected database successfully...");
 
             //STEP 4: Execute a query
-            //System.out.println("Deleting database " + dbName + "...");
             LOG.log(Level.INFO, "Deleting database {0}...", dbName);
             stmt = conn.createStatement();
 
             String sql = "DROP DATABASE " + dbName;
             stmt.executeUpdate(sql);
             LOG.info("Database deleted successfully...");
-            //System.out.println("Database deleted successfully...");
         } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
-            //se.printStackTrace();
             LOG.info(("" + se));
         } finally {
             //finally block used to close resources
@@ -91,12 +85,9 @@ public class PopulateDB {
                     conn.close();
                 }
             } catch (SQLException se) {
-                //se.printStackTrace();
                 LOG.log(Level.INFO, "{0}", se);
             }//end finally try
         }//end try
-        //System.out.println("Finished!");
-        //System.out.println("========================================================================");
         LOG.info("Finished!");
         LOG.info("========================================================================");
     }
@@ -111,24 +102,19 @@ public class PopulateDB {
             Class.forName("com.mysql.jdbc.Driver");
 
             //STEP 3: Open a connection
-            //System.out.println("Connecting to a selected database...");
             LOG.info("Connecting to a selected database...");
             conn = DriverManager.getConnection(dbURL, username, password);
             LOG.info("Connected database successfully...");
-            //System.out.println("Connected database successfully...");
 
             //STEP 4: Execute a query
-            //System.out.println("Creating database " + dbName +  "...");
             LOG.log(Level.INFO, "Creating database {0}...", dbName);
             stmt = conn.createStatement();
 
             String sql = "CREATE DATABASE " + dbName;
             stmt.executeUpdate(sql);
             LOG.info("Database deleted successfully...");
-            //System.out.println("Database deleted successfully...");
         } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
-            //se.printStackTrace();
             LOG.info(("" + se));
         } finally {
             //finally block used to close resources
@@ -143,12 +129,9 @@ public class PopulateDB {
                     conn.close();
                 }
             } catch (SQLException se) {
-                //se.printStackTrace();
                 LOG.info(("" + se));
             }//end finally try
         }//end try
-        //System.out.println("Finished!");
-        //System.out.println("========================================================================");
         LOG.info("Finished!");
         LOG.info("========================================================================");
     }
