@@ -69,7 +69,7 @@ public class PopulateDB {
             String sql = "DROP DATABASE " + dbName;
             stmt.executeUpdate(sql);
             LOG.info("Database deleted successfully...");
-        
+
         } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
             LOG.severe(se.toString());
@@ -109,13 +109,13 @@ public class PopulateDB {
             LOG.info("Connected database successfully...");
 
             //STEP 4: Execute a query
-            LOG.log(Level.INFO, "Creating database {0}...", dbName);
+            LOG.info("Creating database " + dbName + "...");
             stmt = conn.createStatement();
 
             String sql = "CREATE DATABASE " + dbName;
             stmt.executeUpdate(sql);
             LOG.info("Database deleted successfully...");
-            
+
         } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
             LOG.severe(se.toString());
