@@ -69,9 +69,10 @@ public class PopulateDB {
             String sql = "DROP DATABASE " + dbName;
             stmt.executeUpdate(sql);
             LOG.info("Database deleted successfully...");
+        
         } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
-            LOG.info(("" + se));
+            LOG.severe(se.toString());
         } finally {
             //finally block used to close resources
             try {
@@ -79,13 +80,14 @@ public class PopulateDB {
                     conn.close();
                 }
             } catch (SQLException se) {
-            }// do nothing
+                LOG.severe(se.toString());
+            }
             try {
                 if (conn != null) {
                     conn.close();
                 }
             } catch (SQLException se) {
-                LOG.log(Level.INFO, "{0}", se);
+                LOG.severe(se.toString());
             }//end finally try
         }//end try
         LOG.info("Finished!");
@@ -113,9 +115,10 @@ public class PopulateDB {
             String sql = "CREATE DATABASE " + dbName;
             stmt.executeUpdate(sql);
             LOG.info("Database deleted successfully...");
+            
         } catch (SQLException | ClassNotFoundException se) {
             //Handle errors for JDBC
-            LOG.info(("" + se));
+            LOG.severe(se.toString());
         } finally {
             //finally block used to close resources
             try {
@@ -123,13 +126,14 @@ public class PopulateDB {
                     conn.close();
                 }
             } catch (SQLException se) {
-            }// do nothing
+                LOG.severe(se.toString());
+            }
             try {
                 if (conn != null) {
                     conn.close();
                 }
             } catch (SQLException se) {
-                LOG.info(("" + se));
+                LOG.severe(se.toString());
             }//end finally try
         }//end try
         LOG.info("Finished!");
