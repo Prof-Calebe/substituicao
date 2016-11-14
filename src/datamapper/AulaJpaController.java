@@ -20,17 +20,33 @@ import javax.persistence.criteria.Root;
  * @author Leticia
  */
 public class AulaJpaController implements Serializable {
-
-    private EntityManagerFactory emf = null;
     
+    /**
+     *  <p> Attribute used for represent a EntityManagerFactory </p>
+     * @param emf Object of type EntityManagerFactory
+     */
+    private EntityManagerFactory emf;
+    /**
+     * <p>Constructor's class, used to construct a object representation
+     * of this class</p>
+     * @param emf EntityManagerFactory object
+     */
     public AulaJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-
+    /**
+     * <p>A get method, used to create a EntityManager and return it</p>
+     * @return emf EntityManager object
+     */
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-
+    
+    /**
+     * <p>Method used to create the representation of object of type Aula and
+     * insert into database</p>
+     * @param aula Object that represent the Aula class
+     */
     public void create(Aula aula) {
         EntityManager em = null;
         try {
@@ -44,8 +60,13 @@ public class AulaJpaController implements Serializable {
             }
         }
     }
-
-    public void edit(Aula aula) throws NonexistentEntityException{
+    
+    /**
+     * <p>Method used to update an existence of object representation in database</p>
+     * @param aula Object that represent the Aula class
+     * @throws NonexistentEntityException 
+     */
+    public void edit(Aula aula) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -67,8 +88,12 @@ public class AulaJpaController implements Serializable {
             }
         }
     }
-
-    public void destroy(Long id) throws NonexistentEntityException{
+    /**
+     * <p>Method used to delete the especific object in database by id</p>
+     * @param id Long variable used to indentify an unique Aula object
+     * @throws NonexistentEntityException 
+     */
+    public void destroy(Long id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -88,15 +113,30 @@ public class AulaJpaController implements Serializable {
             }
         }
     }
-
+    /**
+     * <p>Method used to return a List of all objects of type Aula</p>
+     * @return List of Aula entities
+     */
     public List<Aula> findAulaEntities() {
         return findAulaEntities(true, -1, -1);
     }
-
+    
+    /**
+     * <p>Method used to return a List of objects of type Aula</p>
+     * @param maxResults Int variable used to control the maximum result of return list
+     * @param firstResult Int Variable used to set where the list starts
+     * @return List of Aula entities
+     */
     public List<Aula> findAulaEntities(int maxResults, int firstResult) {
         return findAulaEntities(false, maxResults, firstResult);
     }
-
+    /**
+     * <p>Method used to return a List of objects of type Aula</p>
+     * @param all Boolean used to verify if return all of entities or not
+     * @param maxResults Int variable used to control the maximum result of return list
+     * @param firstResult Int Variable used to set where the list starts
+     * @return List of Aula entities
+     */
     private List<Aula> findAulaEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
@@ -112,7 +152,11 @@ public class AulaJpaController implements Serializable {
             em.close();
         }
     }
-
+    /**
+     * <p>Simple method to find a specific Aula by id</p>
+     * @param id Long used to represent an unique object representation of Aula
+     * @return Object of type Aula
+     */
     public Aula findAula(Long id) {
         EntityManager em = getEntityManager();
         try {
@@ -121,7 +165,10 @@ public class AulaJpaController implements Serializable {
             em.close();
         }
     }
-
+    /**
+     * <p>Method used to count how many object of Aula exist in the database</p>
+     * @return Int number of objects of Aula in the database 
+     */
     public int getAulaCount() {
         EntityManager em = getEntityManager();
         try {
