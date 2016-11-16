@@ -77,7 +77,7 @@ public class cst11Test {
         assertEquals("Professor3", ausencias.get(0).getProfessorSubstituto().getNome());
         assertEquals("25/11/2013 18:30", ausencias.get(0).getPeriodo().getStart());
         assertEquals("25/11/2013 20:00", ausencias.get(0).getPeriodo().getEnd());
-        assertEquals("Alocação efetuada", ausencias.get(0).getEstado()); 
+        assertEquals("Alocação efetuada", ausencias.get(0).getEstado().getDescricao()); 
         
         notificaçãoService.recusarSubstituicao(ausencias.get(0).getId());
         
@@ -87,7 +87,7 @@ public class cst11Test {
         assertEquals("", ausencias.get(0).getProfessorSubstituto().getNome());
         assertEquals("25/11/2013 18:30", ausencias.get(0).getPeriodo().getStart());
         assertEquals("25/11/2013 20:00", ausencias.get(0).getPeriodo().getEnd());
-        assertEquals("Alocação pendente", ausencias.get(0).getEstado());         
+        assertEquals("Alocação pendente", ausencias.get(0).getEstado().getDescricao());         
     }
 
 }

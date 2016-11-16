@@ -101,7 +101,7 @@ public class cst06Test {
         assertEquals("", ausencias.get(0).getProfessorSubstituto().getNome());
         assertEquals("25/11/2013 18:30", ausencias.get(0).getPeriodo().getStart());
         assertEquals("25/11/2013 20:00", ausencias.get(0).getPeriodo().getEnd());
-        assertEquals("Alocação pendente", ausencias.get(0).getEstado());
+        assertEquals("Alocação pendente", ausencias.get(0).getEstado().getDescricao());
         
         ProfessorService professorService = new ProfessorService();
         List<Professor> professoresCompatíveis = professorService.listarProfessoresCompativeisComAusenteNoPeriodo(ausencias.get(0).getId().toString());

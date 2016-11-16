@@ -73,7 +73,7 @@ public class cst01Test {
         assertEquals(1, ausencias.size());
         assertEquals("Professor1", ausencias.get(0).getProfessor().getNome());
         assertEquals("", ausencias.get(0).getProfessorSubstituto().getNome());
-        assertEquals("Alocação pendente", ausencias.get(0).getEstado());        
+        assertEquals("Alocação pendente", ausencias.get(0).getEstado().getDescricao());        
     }
 
 }

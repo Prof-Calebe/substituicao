@@ -71,13 +71,13 @@ public class cst02Test {
         assertEquals(3, ausencias.size());
         assertEquals("Professor1", ausencias.get(0).getProfessor().getNome());
         assertEquals("", ausencias.get(0).getProfessorSubstituto().getNome());
-        assertEquals("Alocação pendente", ausencias.get(0).getEstado());
+        assertEquals("Alocação pendente", ausencias.get(0).getEstado().getDescricao());
         assertEquals("Professor1", ausencias.get(1).getProfessor().getNome());
         assertEquals("", ausencias.get(1).getProfessorSubstituto().getNome());
-        assertEquals("Alocação pendente", ausencias.get(1).getEstado());
+        assertEquals("Alocação pendente", ausencias.get(1).getEstado().getDescricao());
         assertEquals("Professor1", ausencias.get(2).getProfessor().getNome());
         assertEquals("", ausencias.get(2).getProfessorSubstituto().getNome());
-        assertEquals("Alocação pendente", ausencias.get(2).getEstado());
+        assertEquals("Alocação pendente", ausencias.get(2).getEstado().getDescricao());
         
     }
 }
