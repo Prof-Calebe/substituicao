@@ -213,13 +213,18 @@ public class NotificacaoService {
         
         if(ausencia.getProfessorSubstituto() != null){
             modelo.setProfessorSubstituto(ausencia.getProfessorSubstituto());    
+        }else{
+            Professor professor = new Professor("", "");
+            modelo.setProfessorSubstituto(professor);
         }
         
         //modelo.professorSubstituto = ausencia.getIndicacoesSubstitutos().getNome();
         modelo.setEstado(ausencia.getEstado());
         modelo.setId(ausencia.getId());
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        
         Interval periodo = ausencia.getPeriodo();
+        
         modelo.setPeriodo(periodo);
         
         
