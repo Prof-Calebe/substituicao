@@ -20,6 +20,7 @@ import static org.junit.Assert.*;
 
 import dominio.Ausencia;
 import dominio.Professor;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -66,6 +67,10 @@ public class cst11Test {
     @Test
     public void testeRejeitarAlocação() throws ParseException
     {
+        
+        DateTime inicio = new DateTime(2013, 11, 25, 18, 30);
+        DateTime fim = new DateTime(2013, 11, 25, 20, 00);
+        
         LoginService loginService = new LoginService();
         assertTrue(loginService.verificarUsuarioESenha("Professor3", "123456"));
         
@@ -75,8 +80,8 @@ public class cst11Test {
         assertEquals(1, ausencias.size());
         assertEquals("Professor2", ausencias.get(0).getProfessor().getNome());
         assertEquals("Professor3", ausencias.get(0).getProfessorSubstituto().getNome());
-        assertEquals("25/11/2013 18:30", ausencias.get(0).getPeriodo().getStart());
-        assertEquals("25/11/2013 20:00", ausencias.get(0).getPeriodo().getEnd());
+        assertEquals(inicio.toDate(), ausencias.get(0).getPeriodo().getStart().toDate());
+        assertEquals(fim.toDate(), ausencias.get(0).getPeriodo().getEnd().toDate());
         assertEquals("Alocação efetuada", ausencias.get(0).getEstado().getDescricao()); 
         
         notificaçãoService.recusarSubstituicao(ausencias.get(0).getId());
@@ -85,8 +90,8 @@ public class cst11Test {
         assertEquals(1, ausencias.size());
         assertEquals("Professor2", ausencias.get(0).getProfessor().getNome());
         assertEquals("", ausencias.get(0).getProfessorSubstituto().getNome());
-        assertEquals("25/11/2013 18:30", ausencias.get(0).getPeriodo().getStart());
-        assertEquals("25/11/2013 20:00", ausencias.get(0).getPeriodo().getEnd());
+        assertEquals(inicio.toDate(), ausencias.get(0).getPeriodo().getStart().toDate());
+        assertEquals(fim.toDate(), ausencias.get(0).getPeriodo().getEnd().toDate());
         assertEquals("Alocação pendente", ausencias.get(0).getEstado().getDescricao());         
     }
 

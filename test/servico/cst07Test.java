@@ -26,6 +26,7 @@ import static org.junit.Assert.*;
 
 import dominio.Ausencia;
 import dominio.Professor;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -90,6 +91,9 @@ public class cst07Test {
     @Test
     public void testeEfetuarRealocação_Confirmar() throws ParseException, NonexistentEntityException
     {
+        DateTime inicio = new DateTime(2013, 11, 25, 18, 30);
+        DateTime fim = new DateTime(2013, 11, 25, 20, 00);
+        
         LoginService loginService = new LoginService();
         assertTrue(loginService.verificarUsuarioESenha("Administrador", "123456"));
         
@@ -98,8 +102,8 @@ public class cst07Test {
         assertEquals(1, ausencias.size());
         assertEquals("Professor2", ausencias.get(0).getProfessor().getNome());
         assertEquals("Professor3", ausencias.get(0).getProfessorSubstituto().getNome());
-        assertEquals("25/11/2013 18:30", ausencias.get(0).getPeriodo().getStart());
-        assertEquals("25/11/2013 20:00", ausencias.get(0).getPeriodo().getEnd());
+        assertEquals(inicio.toDate(),ausencias.get(0).getPeriodo().getStart().toDate());
+        assertEquals(fim.toDate(),ausencias.get(0).getPeriodo().getEnd().toDate());
         assertEquals("Alocação efetuada", ausencias.get(0).getEstado().getDescricao()); 
         
         ProfessorService professorService = new ProfessorService();
@@ -113,8 +117,8 @@ public class cst07Test {
         assertEquals(1, ausencias.size());
         assertEquals("Professor2", ausencias.get(0).getProfessor().getNome());
         assertEquals("Professor1", ausencias.get(0).getProfessorSubstituto().getNome());
-        assertEquals("25/11/2013 18:30", ausencias.get(0).getPeriodo().getStart());
-        assertEquals("25/11/2013 20:00", ausencias.get(0).getPeriodo().getEnd());
+        assertEquals(inicio.toDate(),ausencias.get(0).getPeriodo().getStart().toDate());
+        assertEquals(fim.toDate(),ausencias.get(0).getPeriodo().getEnd().toDate());
         assertEquals("Alocação efetuada", ausencias.get(0).getEstado().getDescricao());
     }
 
