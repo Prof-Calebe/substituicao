@@ -233,7 +233,7 @@ public class NotificacaoService {
 
         Interval periodoModel = new Interval(inicio, fim);
 
-        modelo.setPeriodo(periodoModel);
+        modelo.setPeriodo(periodo);
 
         return modelo;
 

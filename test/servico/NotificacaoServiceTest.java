@@ -367,8 +367,8 @@ public class NotificacaoServiceTest {
 
         assertEquals("Calebe", ausenciaParaValidar.getProfessor().getNome());
         assertEquals("Vilar", ausenciaParaValidar.getProfessorSubstituto().getNome());
-        assertEquals(inicio.toString(), ausenciaParaValidar.getPeriodo().getStart().toString());
-        assertEquals(fim.toString(), ausenciaParaValidar.getPeriodo().getEnd().toString());
+        assertEquals(inicio.toDate().toString(), ausenciaParaValidar.getPeriodo().getStart().toDate().toString());
+        assertEquals(fim.toDate().toString(), ausenciaParaValidar.getPeriodo().getEnd().toString());
         assertEquals("Alocação efetuada", ausenciaParaValidar.getEstado().getDescricao());
 
         serviceEmTeste.cancelarAulas(codigoAusencia);
@@ -379,8 +379,8 @@ public class NotificacaoServiceTest {
 
         assertEquals("Calebe", ausenciaParaValidar.getProfessor().getNome());
         assertEquals("", ausenciaParaValidar.getProfessorSubstituto().getNome());
-        assertEquals(inicio.toString(), ausenciaParaValidar.getPeriodo().getStart().toString());
-        assertEquals(fim.toString(), ausenciaParaValidar.getPeriodo().getEnd().toString());
+        assertEquals(inicio.toDate().toString(), ausenciaParaValidar.getPeriodo().getStart().toDate().toString());
+        assertEquals(fim.toDate().toString(), ausenciaParaValidar.getPeriodo().getEnd().toString());
         assertEquals("Aulas canceladas", ausenciaParaValidar.getEstado().getDescricao());
 
         serviceEmTeste.cancelarAusencia(codigoAusencia);
@@ -391,8 +391,8 @@ public class NotificacaoServiceTest {
 
         assertEquals("Calebe", ausenciaParaValidar.getProfessor().getNome());
         assertEquals("", ausenciaParaValidar.getProfessorSubstituto().getNome());
-        assertEquals(inicio.toString(), ausenciaParaValidar.getPeriodo().getStart().toString());
-        assertEquals(fim.toString(), ausenciaParaValidar.getPeriodo().getEnd().toString());
+        assertEquals(inicio.toDate().toString(), ausenciaParaValidar.getPeriodo().getStart().toDate().toString());
+        assertEquals(fim.toDate().toString(), ausenciaParaValidar.getPeriodo().getEnd().toString());
         assertEquals("Ausência cancelada", ausenciaParaValidar.getEstado().getDescricao());
     }
 
