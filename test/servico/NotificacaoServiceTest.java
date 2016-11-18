@@ -355,7 +355,7 @@ public class NotificacaoServiceTest {
 
         assertEquals("Calebe", ausenciaParaValidar.getProfessor().getNome());
         assertEquals("", ausenciaParaValidar.getProfessorSubstituto().getNome());
-        assertEquals(inicio.toString(), ausenciaParaValidar.getPeriodo().getStart().toString());
+        assertEquals(inicio, ausenciaParaValidar.getPeriodo().getStart());
         assertEquals(fim.toString(), ausenciaParaValidar.getPeriodo().getEnd().toString());
         assertEquals("Alocação pendente", ausenciaParaValidar.getEstado().getDescricao());
 
