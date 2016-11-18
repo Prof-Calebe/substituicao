@@ -58,7 +58,7 @@ public class cst04Test {
     public void testeEfetuarAlocação_Confirmar() throws ParseException, NonexistentEntityException
     {
         DateTime inicio = new DateTime(2013, 11, 25, 18, 30);
-        DateTime fim = new DateTime(2013, 11, 25, 19, 59);
+        DateTime fim = new DateTime(2013, 11, 25, 20, 00);
         
         
         LoginService loginService = new LoginService();
