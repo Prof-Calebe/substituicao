@@ -329,7 +329,7 @@ public class NotificacaoServiceTest {
 
         //Ausência numa segunda feira.
         DateTime inicio = new DateTime(2013, 11, 18, 20, 0);
-        DateTime fim = new DateTime(2013, 11, 18, 23, 59);
+        DateTime fim = new DateTime(2013, 11, 18, 21, 30);
         Interval periodo = new Interval(inicio, fim);
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
