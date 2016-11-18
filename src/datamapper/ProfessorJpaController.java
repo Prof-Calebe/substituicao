@@ -22,8 +22,8 @@ import javax.persistence.EntityNotFoundException;
 public class ProfessorJpaController implements Serializable {
 
     /**
-     * <p>Atribute of the class ProfessorJpaController that references to an EntityManagerFactory, used all over the class
-     * in many methods.</p>
+     * <p>Atribute of the class ProfessorJpaController that references to an
+     * EntityManagerFactory, used all over the class in many methods.</p>
      * @param emf EntityManagerFactory
      */
     private EntityManagerFactory emf;
@@ -73,7 +73,7 @@ public class ProfessorJpaController implements Serializable {
      * It receveis a professor Object, in case of this object doens't exist it throws an exception.
      * It is a void method.</p>
      * @param professor Object
-     * @throws NonexistentEntityException
+     * @throws NonexistentEntityException Exception used in the case it doesn't find a professor
      */
     public void edit(Professor professor) throws NonexistentEntityException {
         EntityManager em = null;
@@ -103,12 +103,12 @@ public class ProfessorJpaController implements Serializable {
      * This method receives the id of a Professor instead of the object in fact. It searches for
      * the respective professor and delete it. In case it doesn't exist an exception is thrown.</p>
      * @param id Long identification to find a professor
-     * @throws NonexistentEntityException
+     * @throws NonexistentEntityException Exception in case it finds nothing
      */
     public void destroy(Long id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
-            em = getEntityManager();
+            em = this.getEntityManager();
             em.getTransaction().begin();
             Professor professor;
             try {
@@ -156,7 +156,7 @@ public class ProfessorJpaController implements Serializable {
      * professors within the asked parameters.</p>
      * @param maxResults Integer thats passes the max quantity of results
      * @param firstResult Integer to represent the first result
-     * @return List of Professors
+     * @return List<Professor> A list with all found professors
      */
     private List<Professor> findProfessorEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = this.getEntityManager();
@@ -231,7 +231,7 @@ public class ProfessorJpaController implements Serializable {
      * @return the number of Professors in total
      */
     public int getProfessorCount() {
-        EntityManager em = getEntityManager();
+        EntityManager em = this.getEntityManager();
         try {
             Query q = em.createQuery("select count(o) from Professor as o");
             return ((Long) q.getSingleResult()).intValue();
