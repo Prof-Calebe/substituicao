@@ -156,7 +156,8 @@ public class ProfessorJpaController implements Serializable {
      * professors within the asked parameters.</p>
      * @param maxResults Integer thats passes the max quantity of results
      * @param firstResult Integer to represent the first result
-     * @return List<Professor> A list with all found professors
+     * @param all Bollean used to check if its all or not
+     * @return List of Professors A list with all found professors
      */
     private List<Professor> findProfessorEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = this.getEntityManager();
