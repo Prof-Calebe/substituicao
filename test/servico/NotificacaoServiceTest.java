@@ -355,8 +355,8 @@ public class NotificacaoServiceTest {
 
         assertEquals("Calebe", ausenciaParaValidar.getProfessor().getNome());
         assertEquals("", ausenciaParaValidar.getProfessorSubstituto().getNome());
-        assertEquals(inicio, ausenciaParaValidar.getPeriodo().getStart());
-        assertEquals(fim.toString(), ausenciaParaValidar.getPeriodo().getEnd().toString());
+        assertEquals(inicio.toDate(), ausenciaParaValidar.getPeriodo().getStart().toDate());
+        assertEquals(fim.toDate(), ausenciaParaValidar.getPeriodo().getEnd().toDate());
         assertEquals("Alocação pendente", ausenciaParaValidar.getEstado().getDescricao());
 
         serviceEmTeste.definirSubstituto(codigoAusencia, "Vilar");
@@ -367,8 +367,8 @@ public class NotificacaoServiceTest {
 
         assertEquals("Calebe", ausenciaParaValidar.getProfessor().getNome());
         assertEquals("Vilar", ausenciaParaValidar.getProfessorSubstituto().getNome());
-        assertEquals(inicio.toDate().toString(), ausenciaParaValidar.getPeriodo().getStart().toDate().toString());
-        assertEquals(fim.toDate().toString(), ausenciaParaValidar.getPeriodo().getEnd().toString());
+        assertEquals(inicio.toDate(), ausenciaParaValidar.getPeriodo().getStart().toDate());
+        assertEquals(fim.toDate(), ausenciaParaValidar.getPeriodo().getEnd().toDate());
         assertEquals("Alocação efetuada", ausenciaParaValidar.getEstado().getDescricao());
 
         serviceEmTeste.cancelarAulas(codigoAusencia);
@@ -379,8 +379,8 @@ public class NotificacaoServiceTest {
 
         assertEquals("Calebe", ausenciaParaValidar.getProfessor().getNome());
         assertEquals("", ausenciaParaValidar.getProfessorSubstituto().getNome());
-        assertEquals(inicio.toDate().toString(), ausenciaParaValidar.getPeriodo().getStart().toDate().toString());
-        assertEquals(fim.toDate().toString(), ausenciaParaValidar.getPeriodo().getEnd().toString());
+        assertEquals(inicio.toDate(), ausenciaParaValidar.getPeriodo().getStart().toDate());
+        assertEquals(fim.toDate(), ausenciaParaValidar.getPeriodo().getEnd().toDate());
         assertEquals("Aulas canceladas", ausenciaParaValidar.getEstado().getDescricao());
 
         serviceEmTeste.cancelarAusencia(codigoAusencia);
@@ -391,8 +391,8 @@ public class NotificacaoServiceTest {
 
         assertEquals("Calebe", ausenciaParaValidar.getProfessor().getNome());
         assertEquals("", ausenciaParaValidar.getProfessorSubstituto().getNome());
-        assertEquals(inicio.toDate().toString(), ausenciaParaValidar.getPeriodo().getStart().toDate().toString());
-        assertEquals(fim.toDate().toString(), ausenciaParaValidar.getPeriodo().getEnd().toString());
+        assertEquals(inicio.toDate(), ausenciaParaValidar.getPeriodo().getStart().toDate());
+        assertEquals(fim.toDate(), ausenciaParaValidar.getPeriodo().getEnd().toDate());
         assertEquals("Ausência cancelada", ausenciaParaValidar.getEstado().getDescricao());
     }
 
