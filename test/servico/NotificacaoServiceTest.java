@@ -328,7 +328,7 @@ public class NotificacaoServiceTest {
         Assert.assertEquals(0, ausencias.size());
 
         //Ausência numa segunda feira.
-        DateTime inicio = new DateTime(2013, 11, 18, 0, 0);
+        DateTime inicio = new DateTime(2013, 11, 18, 20, 0);
         DateTime fim = new DateTime(2013, 11, 18, 23, 59);
         Interval periodo = new Interval(inicio, fim);
 
