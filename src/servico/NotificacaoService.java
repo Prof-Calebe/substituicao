@@ -219,19 +219,7 @@ public class NotificacaoService {
         modelo.setEstado(ausencia.getEstado());
         modelo.setId(ausencia.getId());
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
         Interval periodo = ausencia.getPeriodo();
-
-        DateTime inicio;
-        DateTime fim;
-        String dataInicio = sdf.format(periodo.getStart().toDate());
-        String dataFim = sdf.format(periodo.getEnd().toDate());
-
-        inicio = new DateTime((dataInicio));
-        fim = new DateTime((dataFim));
-
-        Interval periodoModel = new Interval(inicio, fim);
 
         modelo.setPeriodo(periodo);
 
