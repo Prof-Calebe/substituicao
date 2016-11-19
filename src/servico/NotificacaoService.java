@@ -39,6 +39,11 @@ public class NotificacaoService {
      * Attribute:  profController
      */
     private final ProfessorJpaController profController;
+    
+    /**
+     * Atribute: firstFormat
+     */
+    private final String firstFormat = "dd/MM/yyyy HH:mm";
 
     /**
      * Default constructor
@@ -52,14 +57,13 @@ public class NotificacaoService {
 
     /**
      * Método para notificar ausência.
-     * 
      * @param idProfessor
      * @param dataInicio
      * @param dataFim
      * @param motivo
      * @param nomesProfessoresIndicados
-     * @return 
-     * @throws java.text.ParseException
+     * @return string de confirmação
+     * @throws ParseException 
      */
     public String notificarAusencia(
             Long idProfessor,
@@ -75,10 +79,9 @@ public class NotificacaoService {
         DateTime fim = null;
 
         final int hour23 = 23;
-        final String firstFormat = "dd/MM/yyyy HH:mm";
         final String seccondFormat = "dd/MM/yyyy";
         try {
-            sdf = new SimpleDateFormat(firstFormat);
+            sdf = new SimpleDateFormat(this.firstFormat);
             inicio = new DateTime(sdf.parse(dataInicio));
             fim = new DateTime(sdf.parse(dataFim));
         } catch (ParseException pe) {
@@ -130,7 +133,8 @@ public class NotificacaoService {
      */
     public List<AusenciaModel> listarAusencias() {
 
-        List<Ausencia> ausencias = this.ausenciaController.findAusenciaEntities();
+        List<Ausencia> ausencias = 
+                this.ausenciaController.findAusenciaEntities();
         List<AusenciaModel> modelos = new LinkedList<>();
 
         for (Ausencia ausencia : ausencias) {
@@ -241,11 +245,11 @@ public class NotificacaoService {
             ausencia.confirmar();
             this.ausenciaController.edit(ausencia);
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(NotificacaoService.class.getName())
-                    .log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName()).
+                    log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(NotificacaoService.class.getName())
-                    .log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
     }
 
@@ -261,17 +265,16 @@ public class NotificacaoService {
             ausencia.recusar();
             this.ausenciaController.edit(ausencia);
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(NotificacaoService.class.getName())
-                    .log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName()).
+                    log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(NotificacaoService.class.getName())
-                    .log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
     }
 
     /**
      * Método para montar uma ausência
-     * 
      * @param ausencia
      * @return 
      */
@@ -291,8 +294,7 @@ public class NotificacaoService {
 
         modelo.estado = ausencia.getEstado().getDescricao();
         modelo.id = ausencia.getId();
-        final String firstFormat = "dd/MM/yyyy HH:mm";
-        SimpleDateFormat sdf = new SimpleDateFormat(firstFormat);
+        SimpleDateFormat sdf = new SimpleDateFormat(this.firstFormat);
         Interval periodo = ausencia.getPeriodo();
         modelo.dataInicio = sdf.format(periodo.getStart().toDate());
         modelo.dataFim = sdf.format(periodo.getEnd().toDate());
@@ -329,11 +331,11 @@ public class NotificacaoService {
         try {
             this.ausenciaController.edit(ausencia);
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(NotificacaoService.class.getName())
-                    .log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName()).
+                    log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(NotificacaoService.class.getName())
-                    .log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
 
     }
@@ -351,11 +353,11 @@ public class NotificacaoService {
         try {
             this.ausenciaController.edit(ausencia);
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(NotificacaoService.class.getName())
-                    .log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName()).
+                    log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(NotificacaoService.class.getName())
-                    .log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
 
     }
@@ -373,11 +375,11 @@ public class NotificacaoService {
         try {
             this.ausenciaController.edit(ausencia);
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(NotificacaoService.class.getName())
-                    .log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName()).
+                    log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(NotificacaoService.class.getName())
-                    .log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
 
     }
