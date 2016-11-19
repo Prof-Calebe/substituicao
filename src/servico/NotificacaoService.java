@@ -77,6 +77,7 @@ public class NotificacaoService {
         final int hour23 = 23;
         final int minute59 = 59;
         final String seccondFormat = "dd/MM/yyyy";
+        
         try {
             sdf = new SimpleDateFormat(NotificacaoService.firstFormat);
             inicio = new DateTime(sdf.parse(dataInicio));
