@@ -50,7 +50,6 @@ public class NotificacaoService {
     }
 
     /**
-     * 
      * Método para notificar ausência.
      * 
      * @param idProfessor
@@ -61,7 +60,13 @@ public class NotificacaoService {
      * @return 
      * @throws java.text.ParseException
      */
-    public String notificarAusencia(Long idProfessor, String dataInicio, String dataFim, String motivo, List<String> nomesProfessoresIndicados) throws ParseException {
+    public String notificarAusencia(
+            Long idProfessor,
+            String dataInicio,
+            String dataFim,
+            String motivo,
+            List<String> nomesProfessoresIndicados)
+            throws ParseException {
 
         SimpleDateFormat sdf = null;
 
@@ -111,7 +116,6 @@ public class NotificacaoService {
     }
 
     /**
-     * 
      * Método para listar ausências.
      * 
      * @return 
@@ -132,7 +136,6 @@ public class NotificacaoService {
     }
 
     /**
-     * 
      * Método para listar ausências por professor.
      * 
      * @param usernameProfessor
@@ -183,7 +186,6 @@ public class NotificacaoService {
     }
 
     /**
-     * 
      * Método para listar ausências por professor substituto.
      * 
      * @param usernameProfessor
@@ -209,10 +211,9 @@ public class NotificacaoService {
     }
 
     /**
-     * 
      * Método para aceitar uma substituição.
      * 
-     * @param ausenciaId
+     * @param ausenciaId 
      */
     public void aceitarSubstituicao(Long ausenciaId) {
         try {
@@ -227,10 +228,9 @@ public class NotificacaoService {
     }
 
     /**
-     * 
      * Método para recusar uma substituição.
      * 
-     * @param ausenciaId
+     * @param ausenciaId 
      */
     public void recusarSubstituicao(Long ausenciaId) {
         try {
@@ -245,8 +245,10 @@ public class NotificacaoService {
     }
 
     /**
-     * 
      * Método para montar uma ausência
+     * 
+     * @param ausencia
+     * @return 
      */
     private AusenciaModel montarAusencia(Ausencia ausencia) {
 
@@ -274,11 +276,10 @@ public class NotificacaoService {
     }
 
     /**
-     * 
      * Método para definir um professor substituto.
      * 
      * @param codigo
-     * @param nomeProfessor
+     * @param nomeProfessor 
      */
     public void definirSubstituto(String codigo, String nomeProfessor) {
 
@@ -309,7 +310,7 @@ public class NotificacaoService {
     /**
      * Método para cancelar uma ausência.
      * 
-     * @param codigo
+     * @param codigo 
      */
     public void cancelarAusencia(String codigo) {
 
@@ -329,7 +330,7 @@ public class NotificacaoService {
     /**
      * Método para cancelar aulas.
      * 
-     * @param codigo
+     * @param codigo 
      */
     public void cancelarAulas(String codigo) {
 
