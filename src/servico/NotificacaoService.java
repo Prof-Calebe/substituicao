@@ -44,7 +44,8 @@ public class NotificacaoService {
      * Default constructor
      */
     public NotificacaoService() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
+        EntityManagerFactory emf = 
+                Persistence.createEntityManagerFactory("pro_subPU");
         this.ausenciaController = new AusenciaJpaController(emf);
         this.profController = new ProfessorJpaController(emf);
     }
@@ -73,14 +74,19 @@ public class NotificacaoService {
         DateTime inicio = null;
         DateTime fim = null;
 
+        final int hour23 = 23;
+        final String firstFormat = "dd/MM/yyyy HH:mm";
+        final String seccondFormat = "dd/MM/yyyy";
         try {
-            sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            sdf = new SimpleDateFormat(firstFormat);
             inicio = new DateTime(sdf.parse(dataInicio));
             fim = new DateTime(sdf.parse(dataFim));
         } catch (ParseException pe) {
-            sdf = new SimpleDateFormat("dd/MM/yyyy");
-            inicio = new DateTime(sdf.parse(dataInicio)).withHourOfDay(0).withMinuteOfHour(0);
-            fim = new DateTime(sdf.parse(dataFim)).withHourOfDay(23).withMinuteOfHour(59);
+            sdf = new SimpleDateFormat(seccondFormat);
+            inicio = new DateTime(sdf.parse(dataInicio)).withHourOfDay(0)
+                    .withMinuteOfHour(0);
+            fim = new DateTime(sdf.parse(dataFim)).withHourOfDay(hour23)
+                    .withMinuteOfHour(59);
         }
 
         Interval periodo = new Interval(inicio, fim);
@@ -93,15 +99,17 @@ public class NotificacaoService {
 
         List<String> codigos = new LinkedList<>();
 
+        final int num1 = 10000;
         for (Ausencia ausencia : ausencias) {
-            String codigo = Integer.toString(r.nextInt(10000));
+            String codigo = Integer.toString(r.nextInt(num1));
 
             ausencia.setCodigo(codigo);
 
             codigos.add(codigo);
 
             for (String nomeProf : nomesProfessoresIndicados) {
-                Professor professorIndicado = this.profController.findProfessor(nomeProf);
+                Professor professorIndicado = 
+                        this.profController.findProfessor(nomeProf);
                 ausencia.indicarSubstituto(professorIndicado);
             }
 
@@ -141,11 +149,14 @@ public class NotificacaoService {
      * @param usernameProfessor
      * @return 
      */
-    public List<AusenciaModel> listarAusenciasPorProfessor(String usernameProfessor) {
+    public List<AusenciaModel> listarAusenciasPorProfessor(
+            String usernameProfessor) {
 
-        Professor professor = this.profController.findProfessorPorUsername(usernameProfessor);
+        Professor professor = this.profController.findProfessorPorUsername(
+                usernameProfessor);
 
-        List<Ausencia> ausenciasPorProfessor = this.ausenciaController.listAusenciasPorProfessor(professor);
+        List<Ausencia> ausenciasPorProfessor = 
+                this.ausenciaController.listAusenciasPorProfessor(professor);
 
         List<AusenciaModel> modelos = new ArrayList<>();
 
@@ -166,11 +177,15 @@ public class NotificacaoService {
      * @param usernameProfessor
      * @return 
      */
-    public List<AusenciaModel> listarAusenciasPorIndicacaoDeSubstituto(String usernameProfessor) {
+    public List<AusenciaModel> listarAusenciasPorIndicacaoDeSubstituto(
+            String usernameProfessor) {
 
-        Professor professorIndicado = this.profController.findProfessorPorUsername(usernameProfessor);
+        Professor professorIndicado = 
+                this.profController.findProfessorPorUsername(usernameProfessor);
 
-        List<Ausencia> ausenciasComIndicacaoDeSubstituto = this.ausenciaController.listAusenciasPorIndicacaoDeSubstituto(professorIndicado);
+        List<Ausencia> ausenciasComIndicacaoDeSubstituto = 
+                this.ausenciaController.listAusenciasPorIndicacaoDeSubstituto(
+                        professorIndicado);
 
         List<AusenciaModel> modelos = new ArrayList<>();
 
@@ -191,11 +206,15 @@ public class NotificacaoService {
      * @param usernameProfessor
      * @return 
      */
-    public List<AusenciaModel> listarAusenciasPorSubstituto(String usernameProfessor) {
+    public List<AusenciaModel> listarAusenciasPorSubstituto(
+            String usernameProfessor) {
 
-        Professor professorIndicado = this.profController.findProfessorPorUsername(usernameProfessor);
+        Professor professorIndicado = 
+                this.profController.findProfessorPorUsername(usernameProfessor);
 
-        List<Ausencia> ausenciasComIndicacaoDeSubstituto = this.ausenciaController.listAusenciasPorSubstituto(professorIndicado);
+        List<Ausencia> ausenciasComIndicacaoDeSubstituto = 
+                this.ausenciaController.listAusenciasPorSubstituto(
+                        professorIndicado);
 
         List<AusenciaModel> modelos = new ArrayList<>();
 
@@ -217,13 +236,16 @@ public class NotificacaoService {
      */
     public void aceitarSubstituicao(Long ausenciaId) {
         try {
-            Ausencia ausencia = this.ausenciaController.findAusencia(ausenciaId);
+            Ausencia ausencia = 
+                    this.ausenciaController.findAusencia(ausenciaId);
             ausencia.confirmar();
             this.ausenciaController.edit(ausencia);
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName())
+                    .log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName())
+                    .log(Level.SEVERE, null, ex);
         }
     }
 
@@ -234,13 +256,16 @@ public class NotificacaoService {
      */
     public void recusarSubstituicao(Long ausenciaId) {
         try {
-            Ausencia ausencia = this.ausenciaController.findAusencia(ausenciaId);
+            Ausencia ausencia = 
+                    this.ausenciaController.findAusencia(ausenciaId);
             ausencia.recusar();
             this.ausenciaController.edit(ausencia);
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName())
+                    .log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName())
+                    .log(Level.SEVERE, null, ex);
         }
     }
 
@@ -258,15 +283,16 @@ public class NotificacaoService {
         modelo.professorAusente = ausencia.getProfessor().getNome();
 
         if (ausencia.getProfessorSubstituto() != null) {
-            modelo.professorSubstituto = ausencia.getProfessorSubstituto().getNome();
+            modelo.professorSubstituto = 
+                    ausencia.getProfessorSubstituto().getNome();
         } else {
             modelo.professorSubstituto = "";
         }
 
-        //modelo.professorSubstituto = ausencia.getIndicacoesSubstitutos().getNome();
         modelo.estado = ausencia.getEstado().getDescricao();
         modelo.id = ausencia.getId();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        final String firstFormat = "dd/MM/yyyy HH:mm";
+        SimpleDateFormat sdf = new SimpleDateFormat(firstFormat);
         Interval periodo = ausencia.getPeriodo();
         modelo.dataInicio = sdf.format(periodo.getStart().toDate());
         modelo.dataFim = sdf.format(periodo.getEnd().toDate());
@@ -283,16 +309,19 @@ public class NotificacaoService {
      */
     public void definirSubstituto(String codigo, String nomeProfessor) {
 
-        Professor profSubstituto = profController.findProfessor(nomeProfessor);
+        Professor profSubstituto = this.profController.findProfessor(nomeProfessor);
+        final String naoExiste = " não existe";
 
         if (profSubstituto == null) {
-            throw new IllegalStateException("Professor de nome " + nomeProfessor + " não existe");
+            throw new IllegalStateException(
+                    "Professor de nome " + nomeProfessor + naoExiste);
         }
 
         Ausencia ausencia = this.ausenciaController.findAusencia(codigo);
 
         if (ausencia == null) {
-            throw new IllegalStateException("Ausência de código " + codigo + " não existe");
+            throw new IllegalStateException(
+                    "Ausência de código " + codigo + naoExiste);
         }
 
         ausencia.setProfessorSubstituto(profSubstituto);
@@ -300,9 +329,11 @@ public class NotificacaoService {
         try {
             this.ausenciaController.edit(ausencia);
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName())
+                    .log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName())
+                    .log(Level.SEVERE, null, ex);
         }
 
     }
@@ -320,9 +351,11 @@ public class NotificacaoService {
         try {
             this.ausenciaController.edit(ausencia);
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName())
+                    .log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName())
+                    .log(Level.SEVERE, null, ex);
         }
 
     }
@@ -340,9 +373,11 @@ public class NotificacaoService {
         try {
             this.ausenciaController.edit(ausencia);
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName())
+                    .log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName())
+                    .log(Level.SEVERE, null, ex);
         }
 
     }
