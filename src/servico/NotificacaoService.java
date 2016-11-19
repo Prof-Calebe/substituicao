@@ -30,17 +30,37 @@ import org.joda.time.Interval;
  */
 public class NotificacaoService {
 
+    /**
+     * Attribute:  ausenciaController
+     */
     private final AusenciaJpaController ausenciaController;
 
+    /**
+     * Attribute:  profController
+     */
     private final ProfessorJpaController profController;
 
+    /**
+     * Default constructor
+     */
     public NotificacaoService() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
         ausenciaController = new AusenciaJpaController(emf);
-//        periodoController = new PeriodoJpaController(emf);
         profController = new ProfessorJpaController(emf);
     }
 
+    /**
+     * 
+     * Método para notificar ausência.
+     * 
+     * @param idProfessor
+     * @param dataInicio
+     * @param dataFim
+     * @param motivo
+     * @param nomesProfessoresIndicados
+     * @return 
+     * @throws java.text.ParseException
+     */
     public String notificarAusencia(Long idProfessor, String dataInicio, String dataFim, String motivo, List<String> nomesProfessoresIndicados) throws ParseException {
 
         SimpleDateFormat sdf = null;
@@ -90,6 +110,12 @@ public class NotificacaoService {
         }
     }
 
+    /**
+     * 
+     * Método para listar ausências.
+     * 
+     * @return 
+     */
     public List<AusenciaModel> listarAusencias() {
 
         List<Ausencia> ausencias = ausenciaController.findAusenciaEntities();
@@ -105,22 +131,12 @@ public class NotificacaoService {
         return modelos;
     }
 
-    /*
-    public List<AusenciaModel> listarAusenciasPorEstado(EstadoAusencia estado){
-        
-        List<Ausencia> ausencias = ausenciaController.findAusenciaEntities();
-        List<AusenciaModel> modelos = new ArrayList<AusenciaModel>();
-        
-        for(Ausencia ausencia : ausencias){
-            
-            if(ausencia.getEstado().equals(estado)){
-                AusenciaModel modelo = this.montarAusencia(ausencia);
-                
-                modelos.add(modelo);   
-            }               
-        }            
-        return modelos;   
-    }
+    /**
+     * 
+     * Método para listar ausências por professor.
+     * 
+     * @param usernameProfessor
+     * @return 
      */
     public List<AusenciaModel> listarAusenciasPorProfessor(String usernameProfessor) {
 
@@ -141,6 +157,12 @@ public class NotificacaoService {
         return modelos;
     }
 
+    /**
+     * Método para listar ausências por indicação de professor substituto.
+     * 
+     * @param usernameProfessor
+     * @return 
+     */
     public List<AusenciaModel> listarAusenciasPorIndicacaoDeSubstituto(String usernameProfessor) {
 
         Professor professorIndicado = profController.findProfessorPorUsername(usernameProfessor);
@@ -160,6 +182,13 @@ public class NotificacaoService {
         return modelos;
     }
 
+    /**
+     * 
+     * Método para listar ausências por professor substituto.
+     * 
+     * @param usernameProfessor
+     * @return 
+     */
     public List<AusenciaModel> listarAusenciasPorSubstituto(String usernameProfessor) {
 
         Professor professorIndicado = profController.findProfessorPorUsername(usernameProfessor);
@@ -179,6 +208,12 @@ public class NotificacaoService {
         return modelos;
     }
 
+    /**
+     * 
+     * Método para aceitar uma substituição.
+     * 
+     * @param ausenciaId
+     */
     public void aceitarSubstituicao(Long ausenciaId) {
         try {
             Ausencia ausencia = ausenciaController.findAusencia(ausenciaId);
@@ -191,6 +226,12 @@ public class NotificacaoService {
         }
     }
 
+    /**
+     * 
+     * Método para recusar uma substituição.
+     * 
+     * @param ausenciaId
+     */
     public void recusarSubstituicao(Long ausenciaId) {
         try {
             Ausencia ausencia = ausenciaController.findAusencia(ausenciaId);
@@ -203,6 +244,10 @@ public class NotificacaoService {
         }
     }
 
+    /**
+     * 
+     * Método para montar uma ausência
+     */
     private AusenciaModel montarAusencia(Ausencia ausencia) {
 
         AusenciaModel modelo = new AusenciaModel();
@@ -228,6 +273,13 @@ public class NotificacaoService {
 
     }
 
+    /**
+     * 
+     * Método para definir um professor substituto.
+     * 
+     * @param codigo
+     * @param nomeProfessor
+     */
     public void definirSubstituto(String codigo, String nomeProfessor) {
 
         Professor profSubstituto = profController.findProfessor(nomeProfessor);
@@ -254,6 +306,11 @@ public class NotificacaoService {
 
     }
 
+    /**
+     * Método para cancelar uma ausência.
+     * 
+     * @param codigo
+     */
     public void cancelarAusencia(String codigo) {
 
         Ausencia ausencia = ausenciaController.findAusencia(codigo);
@@ -269,6 +326,11 @@ public class NotificacaoService {
 
     }
 
+    /**
+     * Método para cancelar aulas.
+     * 
+     * @param codigo
+     */
     public void cancelarAulas(String codigo) {
 
         Ausencia ausencia = ausenciaController.findAusencia(codigo);
