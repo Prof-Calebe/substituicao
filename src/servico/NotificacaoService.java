@@ -65,9 +65,13 @@ public class NotificacaoService {
      * @return string de confirmação
      * @throws ParseException 
      */
-    public String notificarAusencia(Long idProfessor, String dataInicio, 
-            String dataFim, String motivo, 
-            List<String> nomesProfessoresIndicados) throws ParseException {
+    public String notificarAusencia(
+            Long idProfessor,
+            String dataInicio,
+            String dataFim,
+            String motivo,
+            List<String> nomesProfessoresIndicados)
+            throws ParseException {
 
         SimpleDateFormat sdf = null;
 
