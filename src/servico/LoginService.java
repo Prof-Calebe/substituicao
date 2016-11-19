@@ -4,9 +4,8 @@
  */
 package servico;
 
-import dominio.Usuario;
 import datamapper.UsuarioJpaController;
-import java.util.LinkedList;
+import dominio.Usuario;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -18,6 +17,7 @@ import javax.persistence.Persistence;
  */
 public class LoginService {
     
+    
     private final UsuarioJpaController controller;
     
     public LoginService(){
@@ -25,6 +25,12 @@ public class LoginService {
         controller = new UsuarioJpaController(emf);
     }
     
+    /**
+     * Confere se usuário e senha batem com os registros no banco
+     * @param usuario Usuario a ser buscado
+     * @param senha Senha a ser conferida
+     * @return true se existir usuário e senha for correta, false caso contrário
+     */
     public boolean verificarUsuarioESenha(String usuario, String senha){
 
         List<Usuario> ListaDeUsuario = this.controller.findUsuarioEntities();

@@ -7,6 +7,7 @@ package servico;
 
 import datamapper.AusenciaJpaController;
 import datamapper.ProfessorJpaController;
+import datamapper.exceptions.NonexistentEntityException;
 import dominio.Aula;
 import dominio.Ausencia;
 import dominio.Professor;
@@ -52,7 +53,7 @@ public class ProfessorService {
         return modelos;
     }
     
-    public List<ProfessorModel> listarProfessoresCompativeisComAusenteNoPeriodo(String codigoAusencia){
+    public List<ProfessorModel> listarProfessoresCompativeisComAusenteNoPeriodo(String codigoAusencia) throws NonexistentEntityException{
         
         Ausencia ausência = ausenciasRepository.findAusencia(new Long(codigoAusencia ));
             

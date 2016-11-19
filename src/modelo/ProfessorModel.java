@@ -1,7 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @see modelo
+ * 
  */
+
 package modelo;
 
 /**
@@ -10,30 +11,43 @@ package modelo;
  */
 public class ProfessorModel {
     
+    /**
+     * Attribute:  nome
+     */
     public String Nome;
-    public Long id;
     
-    @Override
-    public boolean equals(Object obj){
-        
-        if (obj == this)
-            return true;
-        
-        if(obj == null || obj.getClass() != this.getClass())
-            return false;
-        
-        ProfessorModel outroObj = (ProfessorModel) obj;
-        
-        if(this.Nome.equals(outroObj.Nome) )
-            return true;
-        else
-            return false;
+    /**
+     * Attribute: id
+     */
+    public Long id;
+
+    /**
+     * Default constructor
+     */
+    public ProfessorModel() {
     }
     
     @Override
-    public int hashCode(){
+    public boolean equals(Object obj) {
+        
+        if (obj == this) {
+            return true;
+        }
+        
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        
+        ProfessorModel outroObj = (ProfessorModel) obj;
+        
+        return this.Nome.equals(outroObj.Nome);
+    }
+    
+    @Override
+    public int hashCode() {
         int result = 1;
-        result = 31*result + ( (this.Nome == null) ? 0 : this.Nome.hashCode() );
+        final int hashMultiplier = 31; 
+        result = hashMultiplier * result + ( (this.Nome == null) ? 0 : this.Nome.hashCode() );
         return result;
     }
     
