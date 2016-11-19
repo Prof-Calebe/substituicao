@@ -47,7 +47,7 @@ public class ProfessorTest {
     private Aula aula7;
     private Aula aula8;
 
-    private static final String MOTIVO = "sem saco";
+    private static final String MOTIVO = "realizacao de exame medico";
     private static final String USERNAME = "username";
 
     public ProfessorTest() {
