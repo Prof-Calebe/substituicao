@@ -1,6 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @see servico
+ * 
  */
 
 package servico;
@@ -41,9 +41,9 @@ public class NotificacaoService {
     private final ProfessorJpaController profController;
     
     /**
-     * Atribute: firstFormat
+     * Attribute: firstFormat
      */
-    private final String firstFormat = "dd/MM/yyyy HH:mm";
+    private static final String firstFormat = "dd/MM/yyyy HH:mm";
 
     /**
      * Default constructor
@@ -79,17 +79,18 @@ public class NotificacaoService {
         DateTime fim = null;
 
         final int hour23 = 23;
+        final int minute59 = 59;
         final String seccondFormat = "dd/MM/yyyy";
         try {
-            sdf = new SimpleDateFormat(this.firstFormat);
+            sdf = new SimpleDateFormat(NotificacaoService.firstFormat);
             inicio = new DateTime(sdf.parse(dataInicio));
             fim = new DateTime(sdf.parse(dataFim));
-        } catch (ParseException pe) {
+        } catch (ParseException ex) {
             sdf = new SimpleDateFormat(seccondFormat);
-            inicio = new DateTime(sdf.parse(dataInicio)).withHourOfDay(0)
-                    .withMinuteOfHour(0);
-            fim = new DateTime(sdf.parse(dataFim)).withHourOfDay(hour23)
-                    .withMinuteOfHour(59);
+            inicio = new DateTime(sdf.parse(dataInicio)).withHourOfDay(0).
+                    withMinuteOfHour(0);
+            fim = new DateTime(sdf.parse(dataFim)).withHourOfDay(hour23).
+                    withMinuteOfHour(minute59);
         }
 
         Interval periodo = new Interval(inicio, fim);
@@ -129,7 +130,7 @@ public class NotificacaoService {
     /**
      * Método para listar ausências.
      * 
-     * @return 
+     * @return  lista de ausencias
      */
     public List<AusenciaModel> listarAusencias() {
 
@@ -151,7 +152,7 @@ public class NotificacaoService {
      * Método para listar ausências por professor.
      * 
      * @param usernameProfessor
-     * @return 
+     * @return  lista de ausencias
      */
     public List<AusenciaModel> listarAusenciasPorProfessor(
             String usernameProfessor) {
@@ -179,7 +180,7 @@ public class NotificacaoService {
      * Método para listar ausências por indicação de professor substituto.
      * 
      * @param usernameProfessor
-     * @return 
+     * @return  lista de ausencias
      */
     public List<AusenciaModel> listarAusenciasPorIndicacaoDeSubstituto(
             String usernameProfessor) {
@@ -208,7 +209,7 @@ public class NotificacaoService {
      * Método para listar ausências por professor substituto.
      * 
      * @param usernameProfessor
-     * @return 
+     * @return lista de ausencias
      */
     public List<AusenciaModel> listarAusenciasPorSubstituto(
             String usernameProfessor) {
@@ -276,7 +277,7 @@ public class NotificacaoService {
     /**
      * Método para montar uma ausência
      * @param ausencia
-     * @return 
+     * @return objeto ausencia
      */
     private AusenciaModel montarAusencia(Ausencia ausencia) {
 
@@ -294,7 +295,7 @@ public class NotificacaoService {
 
         modelo.estado = ausencia.getEstado().getDescricao();
         modelo.id = ausencia.getId();
-        SimpleDateFormat sdf = new SimpleDateFormat(this.firstFormat);
+        SimpleDateFormat sdf = new SimpleDateFormat(NotificacaoService.firstFormat);
         Interval periodo = ausencia.getPeriodo();
         modelo.dataInicio = sdf.format(periodo.getStart().toDate());
         modelo.dataFim = sdf.format(periodo.getEnd().toDate());
