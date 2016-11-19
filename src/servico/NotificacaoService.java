@@ -62,7 +62,7 @@ public class NotificacaoService {
      * @param dataFim
      * @param motivo
      * @param nomesProfessoresIndicados
-     * @return string de confirmação
+     * @return
      * @throws ParseException 
      */
     public String notificarAusencia(Long idProfessor, String dataInicio, 
@@ -150,8 +150,7 @@ public class NotificacaoService {
      * @param usernameProfessor
      * @return  lista de ausencias
      */
-    public List<AusenciaModel> listarAusenciasPorProfessor(
-            String usernameProfessor) {
+    public List<AusenciaModel> listarAusenciasPorProfessor(String usernameProfessor) {
 
         Professor professor = this.profController.findProfessorPorUsername(
                 usernameProfessor);
@@ -272,8 +271,9 @@ public class NotificacaoService {
 
     /**
      * Método para montar uma ausência
+     * 
      * @param ausencia
-     * @return objeto ausencia
+     * @return objeto de ausencia
      */
     private AusenciaModel montarAusencia(Ausencia ausencia) {
 
