@@ -15,13 +15,15 @@ public class NonexistentEntityException extends Exception {
      * message</p> 
      * @param entity Class of the object
      * @param object Object tried to be accessed
+     * @param cause The cause acussed of the exception
      * @throws NonexistentEntityException Own exception class 
      */
-    public NonexistentEntityException(Class entity, Object object, Throwable cause) throws NonexistentEntityException{
-        String message = "The " + entity.getName() + " with identification " + object.getClass() + " " + object.toString() + " does not exist";
-        if (cause==null){
+    public NonexistentEntityException(Class entity, Object object, Throwable cause) throws NonexistentEntityException {
+        String message = "The " + entity.getName() + " with identification " + 
+                object.getClass() + " " + object.toString() + " does not exist";
+        if (cause == null) {
             throw new NonexistentEntityException(message);
-        }else{
+        } else {
             throw new NonexistentEntityException(message, cause);
         }
     }
