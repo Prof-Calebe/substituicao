@@ -148,8 +148,8 @@ public class NotificacaoService {
     /**
      * Método para listar ausências por professor.
      * 
-     * @param usernameProfessor
-     * @return  lista de ausencias
+     * @param usernameProfessor Username do professor.
+     * @return  Lista de ausencias.
      */
     public List<AusenciaModel> listarAusenciasPorProfessor(String usernameProfessor) {
 
@@ -175,8 +175,8 @@ public class NotificacaoService {
     /**
      * Método para listar ausências por indicação de professor substituto.
      * 
-     * @param usernameProfessor
-     * @return  lista de ausencias
+     * @param usernameProfessor Username do professor.
+     * @return  Lista de ausencias.
      */
     public List<AusenciaModel> listarAusenciasPorIndicacaoDeSubstituto(
             String usernameProfessor) {
@@ -273,8 +273,8 @@ public class NotificacaoService {
     /**
      * Método para montar uma ausência
      * 
-     * @param ausencia
-     * @return objeto de ausencia
+     * @param ausencia Ausencia.
+     * @return Objeto de ausencia.
      */
     private AusenciaModel montarAusencia(Ausencia ausencia) {
 
