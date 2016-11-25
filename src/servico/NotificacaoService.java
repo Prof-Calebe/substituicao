@@ -57,12 +57,12 @@ public class NotificacaoService {
 
     /**
      * Método para notificar ausência.
-     * @param idProfessor
-     * @param dataInicio
-     * @param dataFim
-     * @param motivo
-     * @param nomesProfessoresIndicados
-     * @return
+     * @param idProfessor Id do professor.
+     * @param dataInicio Data de Início.
+     * @param dataFim Data Final.
+     * @param motivo Motivo.
+     * @param nomesProfessoresIndicados Lista dos nomes dos professores indicados.
+     * @return Retorno de confirmação.
      * @throws ParseException 
      */
     public String notificarAusencia(Long idProfessor, String dataInicio, 
