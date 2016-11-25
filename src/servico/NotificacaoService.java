@@ -127,7 +127,7 @@ public class NotificacaoService {
     /**
      * Método para listar ausências.
      * 
-     * @return  lista de ausencias
+     * @return  Lista de ausencias.
      */
     public List<AusenciaModel> listarAusencias() {
 
@@ -204,8 +204,8 @@ public class NotificacaoService {
     /**
      * Método para listar ausências por professor substituto.
      * 
-     * @param usernameProfessor
-     * @return lista de ausencias
+     * @param usernameProfessor Username do professor.
+     * @return Lista de ausencias.
      */
     public List<AusenciaModel> listarAusenciasPorSubstituto(
             String usernameProfessor) {
@@ -233,7 +233,7 @@ public class NotificacaoService {
     /**
      * Método para aceitar uma substituição.
      * 
-     * @param ausenciaId 
+     * @param ausenciaId Id da ausencia.
      */
     public void aceitarSubstituicao(Long ausenciaId) {
         try {
@@ -253,7 +253,7 @@ public class NotificacaoService {
     /**
      * Método para recusar uma substituição.
      * 
-     * @param ausenciaId 
+     * @param ausenciaId Id da ausencia.
      */
     public void recusarSubstituicao(Long ausenciaId) {
         try {
@@ -304,8 +304,8 @@ public class NotificacaoService {
     /**
      * Método para definir um professor substituto.
      * 
-     * @param codigo
-     * @param nomeProfessor 
+     * @param codigo Código do professor.
+     * @param nomeProfessor Nome do professor.
      */
     public void definirSubstituto(String codigo, String nomeProfessor) {
 
@@ -341,7 +341,7 @@ public class NotificacaoService {
     /**
      * Método para cancelar uma ausência.
      * 
-     * @param codigo 
+     * @param codigo Cõdigo da ausencia.
      */
     public void cancelarAusencia(String codigo) {
 
@@ -363,7 +363,7 @@ public class NotificacaoService {
     /**
      * Método para cancelar aulas.
      * 
-     * @param codigo 
+     * @param codigo Cõdigo da ausencia.
      */
     public void cancelarAulas(String codigo) {
 
