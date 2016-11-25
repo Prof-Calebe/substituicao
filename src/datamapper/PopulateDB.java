@@ -4,13 +4,11 @@
  */
 package datamapper;
 import auxiliar.Perfil;
-import datamapper.exceptions.NonexistentEntityException;
 import dominio.Aula;
-import dominio.Ausencia;
 import dominio.Professor;
 import dominio.Usuario;
 import java.sql.*;
-import java.util.List;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.joda.time.DateTime;
@@ -22,13 +20,14 @@ import org.joda.time.Interval;
  * @author Leticia
  */
 public class PopulateDB {
-    
-    public static void main (String[]args) throws NonexistentEntityException, Exception{
+    private static final String pro_sub = "pro_subPU";
+        
+    public static void main (String[]args) throws Exception{
         PopulateDB.fullSetupDB("prosub", "root", "");
         //PopulateDB.recreateDB("prosub", "root", "");
     }
     
-    public static void fullSetupDB(String dbName, String user, String password) throws NonexistentEntityException, Exception{
+    public static void fullSetupDB(String dbName, String user, String password) throws Exception{
                 
         dropDB(dbName, user, password);
         createDB(dbName, user, password);
@@ -45,34 +44,32 @@ public class PopulateDB {
     Connection conn = null;
     Statement stmt = null;
     String dbURL = "jdbc:mysql://localhost";
+    Logger log = Logger.getLogger(PopulateDB.class.getName());
 
    try{
       //STEP 2: Register JDBC driver
       Class.forName("com.mysql.jdbc.Driver");
 
       //STEP 3: Open a connection
-      System.out.println("Connecting to a selected database...");
+      log.fine("Connecting to a selected database...");
       conn = DriverManager.getConnection(dbURL, username, password);
-      System.out.println("Connected database successfully...");
+      log.fine("Connected database successfully...");
       
       //STEP 4: Execute a query
-      System.out.println("Deleting database " + dbName + "...");
+      log.fine("Deleting database " + dbName + "...");
       stmt = conn.createStatement();
       
       String sql = "DROP DATABASE " + dbName;
       stmt.executeUpdate(sql);
       System.out.println("Database deleted successfully...");
    }catch(SQLException se){
-      //Handle errors for JDBC
-      se.printStackTrace();
    }catch(Exception e){
-      //Handle errors for Class.forName
-      e.printStackTrace();
    }finally{
       //finally block used to close resources
       try{
-         if(stmt!=null)
-            conn.close();
+         if(stmt!=null){
+            conn.close(); 
+         }            
       }catch(SQLException se){
       }// do nothing
       try{
@@ -82,8 +79,8 @@ public class PopulateDB {
          se.printStackTrace();
       }//end finally try
    }//end try
-   System.out.println("Finished!");
-   System.out.println("========================================================================");
+   log.fine("Finished!");
+   log.fine("========================================================================");
         
     }
     
@@ -91,29 +88,28 @@ public class PopulateDB {
     Connection conn = null;
     Statement stmt = null;
     String dbURL = "jdbc:mysql://localhost";
+    Logger log = Logger.getLogger(PopulateDB.class.getName());
 
    try{
       //STEP 2: Register JDBC driver
       Class.forName("com.mysql.jdbc.Driver");
 
       //STEP 3: Open a connection
-      System.out.println("Connecting to a selected database...");
+      log.fine("Connecting to a selected database...");
       conn = DriverManager.getConnection(dbURL, username, password);
-      System.out.println("Connected database successfully...");
+      log.fine("Connected database successfully...");
       
       //STEP 4: Execute a query
-      System.out.println("Creating database " + dbName +  "...");
+      log.fine("Creating database " + dbName +  "...");
       stmt = conn.createStatement();
       
       String sql = "CREATE DATABASE " + dbName;
       stmt.executeUpdate(sql);
-      System.out.println("Database deleted successfully...");
+      log.fine("Database deleted successfully...");
    }catch(SQLException se){
       //Handle errors for JDBC
       se.printStackTrace();
    }catch(Exception e){
-      //Handle errors for Class.forName
-      e.printStackTrace();
    }finally{
       //finally block used to close resources
       try{
@@ -122,10 +118,10 @@ public class PopulateDB {
       }catch(SQLException se){
       }// do nothing
       try{
-         if(conn!=null)
-            conn.close();
+         if(conn!=null){
+            conn.close(); 
+         }            
       }catch(SQLException se){
-         se.printStackTrace();
       }//end finally try
    }//end try
    System.out.println("Finished!");
@@ -133,17 +129,17 @@ public class PopulateDB {
         
     }
     
-    private static void populateDB() throws NonexistentEntityException, Exception{
+    private static void populateDB() throws Exception{
         
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(pro_sub);
         
         populateUsuario(emf);
         populateProfessores(emf);        
     }
     
-    public static void populateUseCaseTest() throws NonexistentEntityException, Exception
+    public static void populateUseCaseTest() throws  Exception
     {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(pro_sub);
         
         UsuarioJpaController usuarioJpa = new UsuarioJpaController(emf);
         ProfessorJpaController profJpa = new ProfessorJpaController(emf);
@@ -327,12 +323,12 @@ public class PopulateDB {
     }
     
     public static void populateUsuario(){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(pro_sub);
         PopulateDB.populateUsuario(emf);
     }
     
     public static void populateProfessores(){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(pro_sub);
         PopulateDB.populateProfessores(emf);        
     }
 }
