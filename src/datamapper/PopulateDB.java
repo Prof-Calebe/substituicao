@@ -129,7 +129,7 @@ public class PopulateDB {
         
     }
     
-    private static void populateDB() throws Exception{
+    private static void populateDB(){
         
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(pro_sub);
         
