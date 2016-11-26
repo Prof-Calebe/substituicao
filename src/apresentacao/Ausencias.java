@@ -2,21 +2,19 @@ package apresentacao;
 
 import auxiliar.Perfil;
 import datamapper.exceptions.NonexistentEntityException;
-import dominio.EstadoAusencia;
-import modelo.AusenciaModel;
+import dominio.Usuario;
+import dominio.Ausencia;
 import servico.NotificacaoService;
 import java.awt.Toolkit;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.ProfessorModel;
-import modelo.UsuarioModel;
+import dominio.Professor;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import servico.AdministracaoDeUsuariosService;
@@ -43,12 +41,12 @@ public class Ausencias extends javax.swing.JFrame {
     
     private String codigoAusencia;
     
-    private UsuarioModel usuario;
+    private Usuario usuario;
     
     /**
      * Creates new form AlocacoesPendentes
      */
-    public Ausencias(UsuarioModel usuario) {
+    public Ausencias(Usuario usuario) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.usuario = usuario;
@@ -56,7 +54,7 @@ public class Ausencias extends javax.swing.JFrame {
         this.populateGrid(usuario);
     }
 
-    public Ausencias(JFrame previous, UsuarioModel usuario) {
+    public Ausencias(JFrame previous, Usuario usuario) {
         initComponents();
         previousFrame = previous;
         this.usuario = usuario;
@@ -239,13 +237,13 @@ public class Ausencias extends javax.swing.JFrame {
             
             ProfessorService profService = new ProfessorService();
             
-            ProfessorModel professor = profService.obterProfessorPorUsername(this.usuario.Usuario);
-            
+            Professor professor = profService.obterProfessorPorUsername(this.usuario.getUsuario());
+              
             if(estado.equals("Ausência cancelada")){
                 
                 JOptionPane.showMessageDialog(null, "Ausência nº " + codigo + " já foi cancelada." , "Administrar Alocação", JOptionPane.INFORMATION_MESSAGE);
                 
-            } else if(!professor.Nome.equals(nomeProf)){
+            } else if(!professor.getNome().equals(nomeProf)){
                 JOptionPane.showMessageDialog(null, "Não é possível cancelar a ausência de código " + codigo + " pois ela não foi criada por você." , 
                         "Administrar Alocação", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -332,16 +330,16 @@ public class Ausencias extends javax.swing.JFrame {
         
         ProfessorService profService = new ProfessorService();
         
-        ProfessorModel professor = profService.obterProfessorPorUsername(this.usuario.Usuario);
-        
-        if(nomeProfessor.equals(professor.Nome)){
+        Professor professor = profService.obterProfessorPorUsername(this.usuario.getUsuario());
+
+        if(nomeProfessor.equals(professor.getNome())){
             
             JOptionPane.showMessageDialog(null, "Não é possivel cobrir a própria ausência." , "Administrar Alocação", JOptionPane.INFORMATION_MESSAGE);
             
         } else{
             NotificacaoService notifService = new NotificacaoService();
 
-            notifService.definirSubstituto(codigo, professor.Nome);
+            notifService.definirSubstituto(codigo, professor.getNome());
 
             this.populateGrid(usuario);
         }
@@ -351,15 +349,15 @@ public class Ausencias extends javax.swing.JFrame {
         this.populateGrid(this.usuario);
     }
     
-    private void populateGrid(UsuarioModel usuario){
+    private void populateGrid(Usuario usuario){
         
             DefaultTableModel dm = (DefaultTableModel)tbl_Alocacoes.getModel();
             dm.getDataVector().removeAllElements();
         
             NotificacaoService listaAlocacoesPendentes = new NotificacaoService();
-            List<AusenciaModel> listaAusencias = null;
+            List<Ausencia> listaAusencias = null;
                     
-            Perfil perfil = usuario.profile;
+            Perfil perfil = usuario.getPermissao();
             
             if(perfil.equals(Perfil.ADMINISTRADOR)){
                 listaAusencias = listaAlocacoesPendentes.listarAusencias();
@@ -380,17 +378,17 @@ public class Ausencias extends javax.swing.JFrame {
                 btnAlocacao.setVisible(false);
                 btnCancelarAulas.setVisible(false);
                 
-                listaAusencias = listaAlocacoesPendentes.listarAusenciasPorProfessor(usuario.Usuario);
-                listaAusencias.addAll(listaAlocacoesPendentes.listarAusenciasPorIndicacaoDeSubstituto(usuario.Usuario));
+                listaAusencias = listaAlocacoesPendentes.listarAusenciasPorProfessor(usuario.getUsuario());
+                listaAusencias.addAll(listaAlocacoesPendentes.listarAusenciasPorIndicacaoDeSubstituto(usuario.getUsuario()));
             }
             else{
                 //Algum erro
             }
             
-            for (AusenciaModel model : listaAusencias) {
+            for (Ausencia model : listaAusencias) {
                 //if (model.estado.equals("Alocação pendente")) {
                     DefaultTableModel tableModel = (DefaultTableModel) tbl_Alocacoes.getModel();
-                    tableModel.addRow(new Object[]{model.codigo, model.professorAusente, model.dataInicio, model.dataFim, model.professorSubstituto, model.estado});
+                    tableModel.addRow(new Object[]{model.getCodigo(), model.getProfessor().getNome(), model.getPeriodo().getStart(), model.getPeriodo().getEnd(), model.getProfessorSubstituto().getNome(), model.getEstado()});
                 //}
             }
     }
@@ -424,11 +422,12 @@ public class Ausencias extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 
                 AdministracaoDeUsuariosService userService = new AdministracaoDeUsuariosService();
 
-                UsuarioModel usuarioLogando = userService.obterUsuario("admin");
+                Usuario usuarioLogando = userService.obterUsuario("admin");
                 
                 new Ausencias(usuarioLogando).setVisible(true);
             }

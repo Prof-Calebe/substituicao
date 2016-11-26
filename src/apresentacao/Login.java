@@ -1,10 +1,9 @@
 package apresentacao;
 
-import datamapper.PopulateDB;
+import dominio.Usuario;
 import servico.LoginService;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
-import modelo.UsuarioModel;
 import servico.AdministracaoDeUsuariosService;
 /*
  * To change this template, choose Tools | Templates
@@ -144,7 +143,7 @@ public class Login extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Usuário e/ou Senha Inválidos!", "Login", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                        AdministracaoDeUsuariosService usuarioService = new AdministracaoDeUsuariosService();
-                       UsuarioModel model = usuarioService.obterUsuario(usuario);
+                       Usuario model = usuarioService.obterUsuario(usuario);
                        
                        MenuPrincipal mainMenu = new MenuPrincipal(model);
                        mainMenu.setVisible(true);
@@ -187,6 +186,7 @@ public class Login extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Login().setVisible(true);
             }

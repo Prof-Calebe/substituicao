@@ -2,7 +2,7 @@ package apresentacao;
 
 import java.awt.Toolkit;
 import auxiliar.Perfil;
-import modelo.UsuarioModel;
+import dominio.Usuario;
 import servico.AdministracaoDeUsuariosService;
 
 /*
@@ -20,9 +20,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
      * Creates new form MainMenu
      */
     
-    private UsuarioModel user;
+    private Usuario user;
     
-    public MenuPrincipal(UsuarioModel user) {
+    public MenuPrincipal(Usuario user) {
         initComponents();
 //        btnGroup_Opcoes.add(rbtn_AlocacoesConfirmadas);
         btnGroup_Opcoes.add(rbtn_AdministrarAlocacoes);
@@ -175,9 +175,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_ConfirmarActionPerformed
 
-    private void resolverTelasVisiveisPorPerfil(UsuarioModel usuario){
+    private void resolverTelasVisiveisPorPerfil(Usuario usuario){
         
-        Perfil perfil = usuario.profile;
+        Perfil perfil = usuario.getPermissao();
         
         if(perfil == Perfil.ADMINISTRADOR){ //admin
 
@@ -228,10 +228,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 AdministracaoDeUsuariosService userService = new AdministracaoDeUsuariosService();
 
-                UsuarioModel usuarioLogando = userService.obterUsuario("admin");
+                Usuario usuarioLogando = userService.obterUsuario("admin");
                 
                 new MenuPrincipal(usuarioLogando).setVisible(true);
             }

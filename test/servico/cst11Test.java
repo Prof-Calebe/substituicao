@@ -18,8 +18,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import modelo.AusenciaModel;
-import modelo.ProfessorModel;
+import dominio.Ausencia;
+import dominio.Professor;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -45,18 +46,18 @@ public class cst11Test {
     public void setUp() throws ParseException, NonexistentEntityException {
         //Setup Declaração de Ausência Professor 2
         ProfessorService professorService = new ProfessorService();
-        ProfessorModel professor = 
+        Professor professor = 
                 professorService.obterProfessorPorNome("Professor2");
         
         NotificacaoService notificaçãoService = new NotificacaoService();
         notificaçãoService.notificarAusencia(
-                professor.id, "25/11/2013 18:30", "25/11/2013 19:59",
+                professor.getId(), "25/11/2013 18:30", "25/11/2013 19:59",
                 "Motivo Declarado", new LinkedList<String>());
         
         //Setup Professor 3 como substituto
-        List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();    
+        List<Ausencia> ausencias = notificaçãoService.listarAusencias();    
         notificaçãoService.definirSubstituto(
-                ausencias.get(0).codigo, "Professor3");
+                ausencias.get(0).getCodigo(), "Professor3");
     }
     
     @After
@@ -66,28 +67,32 @@ public class cst11Test {
     @Test
     public void testeRejeitarAlocação() throws ParseException
     {
+        
+        DateTime inicio = new DateTime(2013, 11, 25, 18, 30);
+        DateTime fim = new DateTime(2013, 11, 25, 20, 00);
+        
         LoginService loginService = new LoginService();
         assertTrue(loginService.verificarUsuarioESenha("Professor3", "123456"));
         
         NotificacaoService notificaçãoService = new NotificacaoService();
-        List<AusenciaModel> ausencias = 
+        List<Ausencia> ausencias = 
                 notificaçãoService.listarAusenciasPorSubstituto("Professor3");
         assertEquals(1, ausencias.size());
-        assertEquals("Professor2", ausencias.get(0).professorAusente);
-        assertEquals("Professor3", ausencias.get(0).professorSubstituto);
-        assertEquals("25/11/2013 18:30", ausencias.get(0).dataInicio);
-        assertEquals("25/11/2013 20:00", ausencias.get(0).dataFim);
-        assertEquals("Alocação efetuada", ausencias.get(0).estado); 
+        assertEquals("Professor2", ausencias.get(0).getProfessor().getNome());
+        assertEquals("Professor3", ausencias.get(0).getProfessorSubstituto().getNome());
+        assertEquals(inicio.toDate(), ausencias.get(0).getPeriodo().getStart().toDate());
+        assertEquals(fim.toDate(), ausencias.get(0).getPeriodo().getEnd().toDate());
+        assertEquals("Alocação efetuada", ausencias.get(0).getEstado().getDescricao()); 
         
-        notificaçãoService.recusarSubstituicao(ausencias.get(0).id);
+        notificaçãoService.recusarSubstituicao(ausencias.get(0).getId());
         
         ausencias = notificaçãoService.listarAusencias();
         assertEquals(1, ausencias.size());
-        assertEquals("Professor2", ausencias.get(0).professorAusente);
-        assertEquals("", ausencias.get(0).professorSubstituto);
-        assertEquals("25/11/2013 18:30", ausencias.get(0).dataInicio);
-        assertEquals("25/11/2013 20:00", ausencias.get(0).dataFim);
-        assertEquals("Alocação pendente", ausencias.get(0).estado);         
+        assertEquals("Professor2", ausencias.get(0).getProfessor().getNome());
+        assertEquals("", ausencias.get(0).getProfessorSubstituto().getNome());
+        assertEquals(inicio.toDate(), ausencias.get(0).getPeriodo().getStart().toDate());
+        assertEquals(fim.toDate(), ausencias.get(0).getPeriodo().getEnd().toDate());
+        assertEquals("Alocação pendente", ausencias.get(0).getEstado().getDescricao());         
     }
 
 }

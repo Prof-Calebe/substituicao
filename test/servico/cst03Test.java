@@ -18,12 +18,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-
-import modelo.AusenciaModel;
-import modelo.ProfessorModel;
-import servico.LoginService;
-import servico.NotificacaoService;
-import servico.ProfessorService;
+import dominio.Ausencia;
+import dominio.Professor;
 
 /**
  *
@@ -59,11 +55,11 @@ public class cst03Test {
         assertTrue(loginService.verificarUsuarioESenha("Funcionario1", "123456"));
         
         ProfessorService professorService = new ProfessorService();
-        ProfessorModel professor = 
+        Professor professor = 
                 professorService.obterProfessorPorNome("Professor1");
         
         NotificacaoService notificaçãoService = new NotificacaoService();
-        List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();        
+        List<Ausencia> ausencias = notificaçãoService.listarAusencias();        
         assertEquals(0, ausencias.size());
         
         Boolean exceptionOk = false;
@@ -71,7 +67,7 @@ public class cst03Test {
         try
         {
             notificaçãoService.notificarAusencia(
-                    professor.id, "25/11/2013 20:01", "25/11/2013 21:29",
+                    professor.getId(), "25/11/2013 20:01", "25/11/2013 21:29",
                     "", new LinkedList<String>());
         }
         catch(InvalidParameterException ex)

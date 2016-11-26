@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.ProfessorModel;
+import dominio.Professor;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import servico.ProfessorService;
@@ -270,7 +270,7 @@ public class NotificacaoDeAusencia extends javax.swing.JFrame {
             
             ProfessorService profService = new ProfessorService();
              
-            //List<ProfessorModel> professores = profService.ListarProfessores();
+            //List<Professor> professores = profService.ListarProfessores();
             
             String dataInicio = txt_dataInicio.getText();
             String dataFim = txt_dataFim.getText();
@@ -289,15 +289,15 @@ public class NotificacaoDeAusencia extends javax.swing.JFrame {
             
             Interval periodo = new Interval(inicio, fim);
             
-            List<ProfessorModel> professores = profService.ListarProfessores();
+            List<Professor> professores = profService.ListarProfessores();
             
             cmb_ProfessorSugerido.addItem("- Indique professores - ");
             
-            for (ProfessorModel professor : professores){
+            for (Professor professor : professores){
                 
-                if(!professor.Nome.equals(nomeProfEscolhido)){
+                if(!professor.getNome().equals(nomeProfEscolhido)){
                     
-                    cmb_ProfessorSugerido.addItem(professor.Nome);
+                    cmb_ProfessorSugerido.addItem(professor.getNome());
                 
                 }
 
@@ -311,8 +311,8 @@ public class NotificacaoDeAusencia extends javax.swing.JFrame {
 
         ProfessorService listProfService = new ProfessorService();
         
-        ProfessorModel profAusente = listProfService.obterProfessorPorNome(nomeProfAusente);
-        //ProfessorModel profSugerido = listProfService.obterProfessor(nomeProfSugerido);
+        Professor profAusente = listProfService.obterProfessorPorNome(nomeProfAusente);
+        //Professor profSugerido = listProfService.obterProfessor(nomeProfSugerido);
         
         String dataInicio = txt_dataInicio.getText();
         String dataFim = txt_dataFim.getText();
@@ -335,7 +335,7 @@ public class NotificacaoDeAusencia extends javax.swing.JFrame {
         }
         
         try {
-            codigoAusencia = notService.notificarAusencia(profAusente.id, dataInicio, dataFim, motivo, nomeProfs);
+            codigoAusencia = notService.notificarAusencia(profAusente.getId(), dataInicio, dataFim, motivo, nomeProfs);
         } catch (ParseException ex) {
             Logger.getLogger(NotificacaoDeAusencia.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -362,11 +362,11 @@ public class NotificacaoDeAusencia extends javax.swing.JFrame {
         cmb_Professor.addItem("- Selecione um professor - ");
         
         ProfessorService profService = new ProfessorService();          
-        List<ProfessorModel> professores = profService.ListarProfessores();
+        List<Professor> professores = profService.ListarProfessores();
 
-        for(ProfessorModel professor : professores){
+        for(Professor professor : professores){
             
-            cmb_Professor.addItem(professor.Nome);
+            cmb_Professor.addItem(professor.getNome());
             
         } 
     }
@@ -401,6 +401,7 @@ public class NotificacaoDeAusencia extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new NotificacaoDeAusencia().setVisible(true);
             }

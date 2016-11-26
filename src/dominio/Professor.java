@@ -53,7 +53,7 @@ public class Professor implements Serializable {
     private List<Ausencia> ausencias;
     
     
-    protected Professor(){}
+    public Professor(){}
 
     public Professor(String nome, String username) {
         this.nome = nome;
@@ -155,6 +155,22 @@ public class Professor implements Serializable {
         }
         return ehCompativel;
 
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setGrade(List<Aula> grade) {
+        this.grade = grade;
+    }
+
+    public void setAusencias(List<Ausencia> ausencias) {
+        this.ausencias = ausencias;
     }
 
     /**

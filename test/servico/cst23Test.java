@@ -9,18 +9,15 @@ package servico;
 import auxiliar.Perfil;
 import datamapper.PopulateDB;
 import datamapper.exceptions.NonexistentEntityException;
+import dominio.Usuario;
 import java.text.ParseException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import modelo.UsuarioModel;
 
 /**
  *
@@ -46,21 +43,21 @@ public class cst23Test {
                 "Administrador", "123456"));
         AdministracaoDeUsuariosService administracaoDeUsuarioService
                 = new AdministracaoDeUsuariosService();
-        List<UsuarioModel> usuariosList
+        List<Usuario> usuariosList
                 = administracaoDeUsuarioService.listarUsuarios();
-        UsuarioModel usuario = usuariosList.get(3);
-        assertEquals(usuario.Usuario, "Professor3");
-        assertEquals(usuario.Senha, "123456");
-        assertEquals(usuario.profile, Perfil.PROFESSOR);
+        Usuario usuario = usuariosList.get(3);
+        assertEquals(usuario.getUsuario(), "Professor3");
+        assertEquals(usuario.getSenha(), "123456");
+        assertEquals(usuario.getPermissao(), Perfil.PROFESSOR);
 
         try {
             administracaoDeUsuarioService.editarUsuario(
-                    "SenhaEditadaTeste", Perfil.PROFESSOR, usuario.id);
+                    "SenhaEditadaTeste", Perfil.PROFESSOR, usuario.getId());
 
-            UsuarioModel usuarioEditado
+            Usuario usuarioEditado
                     = administracaoDeUsuarioService.obterUsuario("Professor3");
-            assertEquals(usuarioEditado.Usuario, "Professor3");
-            assertEquals(usuarioEditado.Senha, "SenhaEditadaTeste");
+            assertEquals(usuarioEditado.getUsuario(), "Professor3");
+            assertEquals(usuarioEditado.getSenha(), "SenhaEditadaTeste");
 
             assertTrue(loginService.verificarUsuarioESenha(
                     "Professor3", "SenhaEditadaTeste"));

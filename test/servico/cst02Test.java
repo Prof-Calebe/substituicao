@@ -18,8 +18,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import modelo.AusenciaModel;
-import modelo.ProfessorModel;
+import dominio.Ausencia;
+import dominio.Professor;
 
 /**
  *
@@ -56,28 +56,28 @@ public class cst02Test {
         assertTrue(loginService.verificarUsuarioESenha("Funcionario1", "123456"));
         
         ProfessorService professorService = new ProfessorService();
-        ProfessorModel professor = professorService.obterProfessorPorNome(
+        Professor professor = professorService.obterProfessorPorNome(
                 "Professor1");
         
         NotificacaoService notificaçãoService = new NotificacaoService();
-        List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();        
+        List<Ausencia> ausencias = notificaçãoService.listarAusencias();        
         assertEquals(0, ausencias.size());
         
-        notificaçãoService.notificarAusencia(professor.id, "25/11/2013", "25/11/2013", "Palestra",
+        notificaçãoService.notificarAusencia(professor.getId(), "25/11/2013", "25/11/2013", "Palestra",
             new LinkedList<String>());
         
         assertTrue(loginService.verificarUsuarioESenha("Administrador", "123456"));
         ausencias = notificaçãoService.listarAusencias();        
         assertEquals(3, ausencias.size());
-        assertEquals("Professor1", ausencias.get(0).professorAusente);
-        assertEquals("", ausencias.get(0).professorSubstituto);
-        assertEquals("Alocação pendente", ausencias.get(0).estado);
-        assertEquals("Professor1", ausencias.get(1).professorAusente);
-        assertEquals("", ausencias.get(1).professorSubstituto);
-        assertEquals("Alocação pendente", ausencias.get(1).estado);
-        assertEquals("Professor1", ausencias.get(2).professorAusente);
-        assertEquals("", ausencias.get(2).professorSubstituto);
-        assertEquals("Alocação pendente", ausencias.get(2).estado);
+        assertEquals("Professor1", ausencias.get(0).getProfessor().getNome());
+        assertEquals("", ausencias.get(0).getProfessorSubstituto().getNome());
+        assertEquals("Alocação pendente", ausencias.get(0).getEstado().getDescricao());
+        assertEquals("Professor1", ausencias.get(1).getProfessor().getNome());
+        assertEquals("", ausencias.get(1).getProfessorSubstituto().getNome());
+        assertEquals("Alocação pendente", ausencias.get(1).getEstado().getDescricao());
+        assertEquals("Professor1", ausencias.get(2).getProfessor().getNome());
+        assertEquals("", ausencias.get(2).getProfessorSubstituto().getNome());
+        assertEquals("Alocação pendente", ausencias.get(2).getEstado().getDescricao());
         
     }
 }

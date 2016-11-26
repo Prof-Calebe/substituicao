@@ -8,6 +8,8 @@ package servico;
 
 import datamapper.PopulateDB;
 import datamapper.exceptions.NonexistentEntityException;
+import dominio.Ausencia;
+import dominio.Professor;
 import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,8 +20,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import modelo.AusenciaModel;
-import modelo.ProfessorModel;
+
 
 /**
  *
@@ -57,22 +58,22 @@ public class cst01Test {
         assertTrue(loginService.verificarUsuarioESenha("Funcionario1", "123456"));
         
         ProfessorService professorService = new ProfessorService();
-        ProfessorModel professor = 
+        Professor professor = 
                 professorService.obterProfessorPorNome("Professor1");
         
         NotificacaoService notificaçãoService = new NotificacaoService();
-        List<AusenciaModel> ausencias = notificaçãoService.listarAusencias();        
+        List<Ausencia> ausencias = notificaçãoService.listarAusencias();        
         assertEquals(0, ausencias.size());
         
-        notificaçãoService.notificarAusencia(professor.id, "25/11/2013 20:01",
+        notificaçãoService.notificarAusencia(professor.getId(), "25/11/2013 20:01",
                 "25/11/2013 21:29", "Motivo Declarado", new LinkedList<String>());
         
         assertTrue(loginService.verificarUsuarioESenha("Administrador", "123456"));
         ausencias = notificaçãoService.listarAusencias();        
         assertEquals(1, ausencias.size());
-        assertEquals("Professor1", ausencias.get(0).professorAusente);
-        assertEquals("", ausencias.get(0).professorSubstituto);
-        assertEquals("Alocação pendente", ausencias.get(0).estado);        
+        assertEquals("Professor1", ausencias.get(0).getProfessor().getNome());
+        assertEquals("", ausencias.get(0).getProfessorSubstituto().getNome());
+        assertEquals("Alocação pendente", ausencias.get(0).getEstado().getDescricao());        
     }
 
 }
