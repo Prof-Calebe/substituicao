@@ -8,15 +8,9 @@ import dominio.Aula;
 import java.io.Serializable;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ElementCollection;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,8 +20,6 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.joda.time.DateTime;
-import org.joda.time.Days;
-import org.joda.time.Hours;
 import org.joda.time.Interval;
 
 /**
@@ -87,14 +79,7 @@ public class Professor implements Serializable {
         
         if(this.id == null)
         {
-            if(other.id == null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return other.id == null;
         }
         else
         {
@@ -139,7 +124,7 @@ public class Professor implements Serializable {
         
     }
 
-    public boolean  EhCompativelCom(List<Aula> aulas) {
+    public boolean  ehCompativelCom(List<Aula> aulas) {
         
 //        Collections.sort(this.grade, new AulaComparator());
         
@@ -166,9 +151,10 @@ public class Professor implements Serializable {
     
     public List<Ausencia> gerarAusencias(Interval periodoDeAusencia, String motivo)
     {
-        if(motivo.equals(""))
+        if(motivo.equals("")){
             throw new InvalidParameterException();
-        
+        }
+            
         List<Ausencia> ausencias = new LinkedList<Ausencia>();
         
         Interval primeiroDia = null;

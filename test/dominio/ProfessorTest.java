@@ -150,19 +150,19 @@ public class ProfessorTest {
         
         //Collections.sort(aulas, new AulaComparator());
 
-        Assert.assertFalse(objetoEmTeste.EhCompativelCom(aulas));
+        Assert.assertFalse(objetoEmTeste.ehCompativelCom(aulas));
         
         objetoEmTeste = new Professor("outroNome", "username");
         
         objetoEmTeste.adicionarAula(aula6);
         
-        Assert.assertFalse(objetoEmTeste.EhCompativelCom(aulas));
+        Assert.assertFalse(objetoEmTeste.ehCompativelCom(aulas));
         
         objetoEmTeste = new Professor("outroNomeAinda", "username");
         
         objetoEmTeste.adicionarAula(aula7);
         
-        Assert.assertTrue(objetoEmTeste.EhCompativelCom(aulas));
+        Assert.assertTrue(objetoEmTeste.ehCompativelCom(aulas));
     }
    
     private Aula setUpAulaSextaFeira() {
