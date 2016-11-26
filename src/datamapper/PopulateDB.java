@@ -9,6 +9,7 @@ import dominio.Aula;
 import dominio.Professor;
 import dominio.Usuario;
 import java.sql.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -23,12 +24,12 @@ import org.joda.time.Interval;
 public class PopulateDB {
     private static final String pro_sub = "pro_subPU";
         
-    public static void main (String[]args) throws Exception{
+    public static void main (String[]args) throws  NonexistentEntityRunTimeException{
         PopulateDB.fullSetupDB("prosub", "root", "");
         //PopulateDB.recreateDB("prosub", "root", "");
     }
     
-    public static void fullSetupDB(String dbName, String user, String password) throws Exception{
+    public static void fullSetupDB(String dbName, String user, String password) throws  NonexistentEntityRunTimeException{
                 
         dropDB(dbName, user, password);
         createDB(dbName, user, password);
@@ -62,7 +63,7 @@ public class PopulateDB {
       
       String sql = "DROP DATABASE " + dbName;
       stmt.executeUpdate(sql);
-      System.out.println("Database deleted successfully...");
+      log.fine("Database deleted successfully...");
    }catch(SQLException se){
    }catch(Exception e){
    }finally{
@@ -77,7 +78,7 @@ public class PopulateDB {
          if(conn!=null)
             conn.close();
       }catch(SQLException se){
-         se.printStackTrace();
+         Logger.getLogger(PopulateDB.class.getName()).log(Level.SEVERE, null, se);
       }//end finally try
    }//end try
    log.fine("Finished!");
@@ -109,13 +110,14 @@ public class PopulateDB {
       log.fine("Database deleted successfully...");
    }catch(SQLException se){
       //Handle errors for JDBC
-      se.printStackTrace();
+      
    }catch(Exception e){
    }finally{
       //finally block used to close resources
       try{
-         if(stmt!=null)
-            conn.close();
+         if(stmt!=null){
+            conn.close();              
+         }            
       }catch(SQLException se){
       }// do nothing
       try{
