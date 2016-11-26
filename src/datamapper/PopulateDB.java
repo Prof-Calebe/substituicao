@@ -4,6 +4,7 @@
  */
 package datamapper;
 import auxiliar.Perfil;
+import datamapper.exceptions.NonexistentEntityRunTimeException;
 import dominio.Aula;
 import dominio.Professor;
 import dominio.Usuario;
@@ -129,7 +130,7 @@ public class PopulateDB {
         
     }
     
-    private static void populateDB(){
+    private static void populateDB() throws NonexistentEntityRunTimeException {
         
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(pro_sub);
         
@@ -137,8 +138,7 @@ public class PopulateDB {
         populateProfessores(emf);        
     }
     
-    public static void populateUseCaseTest() throws  Exception
-    {
+    public static void populateUseCaseTest() throws  NonexistentEntityRunTimeException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(pro_sub);
         
         UsuarioJpaController usuarioJpa = new UsuarioJpaController(emf);
