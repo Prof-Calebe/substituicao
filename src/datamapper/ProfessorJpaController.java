@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+ 
 package datamapper;
 
 import datamapper.exceptions.NonexistentEntityException;
@@ -17,12 +18,14 @@ import javax.persistence.EntityNotFoundException;
  *
  * @author Leticia
  */
+ 
 public class ProfessorJpaController implements Serializable {
+    
+    private EntityManagerFactory emf = null;
 
     public ProfessorJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
@@ -42,17 +45,17 @@ public class ProfessorJpaController implements Serializable {
         }
     }
 
-    public void edit(Professor professor) throws NonexistentEntityException, Exception {
+    public void edit(Professor prof) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            professor = em.merge(professor);
+            prof = em.merge(prof);
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            String msg = ex.getLocalizedMessage();
+        }   
+        String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Long id = professor.getId();
+                Long id = prof.getId();
                 if (findProfessor(id) == null) {
                     throw new NonexistentEntityException("The professor with id " + id + " no longer exists.");
                 }
@@ -63,7 +66,7 @@ public class ProfessorJpaController implements Serializable {
                 em.close();
             }
         }
-    }
+    
 
     public void destroy(Long id) throws NonexistentEntityException {
         EntityManager em = null;
@@ -120,8 +123,9 @@ public class ProfessorJpaController implements Serializable {
     public Professor findProfessor(String nome){
         List<Professor> professores = this.findProfessorEntities();
         for(Professor professor : professores){
-            if(professor.getNome().equals(nome))
+            if(professor.getNome().equals(nome)){
                 return professor;
+            }
         }
         
         return null;
@@ -130,8 +134,9 @@ public class ProfessorJpaController implements Serializable {
     public Professor findProfessorPorUsername(String username){
         List<Professor> professores = this.findProfessorEntities();
         for(Professor professor : professores){
-            if(professor.getUsername().equals(username))
+            if(professor.getUsername().equals(username)){
                 return professor;
+            }
         }
         
         return null;
