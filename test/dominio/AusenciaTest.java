@@ -1,21 +1,21 @@
 package dominio;
 
+import org.easymock.EasyMock;
+import org.joda.time.Interval;
+import org.junit.After;
+import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 
-import dominio.Professor;
-import java.lang.reflect.Field;
-import junit.framework.Assert;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.easymock.*;
-import org.joda.time.Interval;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+
 
 /**
  *

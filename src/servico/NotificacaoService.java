@@ -1,14 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @see servico
+ * 
  */
+
 package servico;
 
 import datamapper.AusenciaJpaController;
 import datamapper.ProfessorJpaController;
 import datamapper.exceptions.NonexistentEntityException;
 import dominio.Ausencia;
-import dominio.EstadoAusencia;
 import dominio.Professor;
 import modelo.AusenciaModel;
 import java.text.ParseException;
@@ -29,264 +29,357 @@ import org.joda.time.Interval;
  * @author Thiago Lima
  */
 public class NotificacaoService {
-    
+
+    /**
+     * Attribute:  ausenciaController
+     */
     private final AusenciaJpaController ausenciaController;
 
+    /**
+     * Attribute:  profController
+     */
     private final ProfessorJpaController profController;
     
-    public NotificacaoService(){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pro_subPU");
-        ausenciaController = new AusenciaJpaController(emf);
-//        periodoController = new PeriodoJpaController(emf);
-        profController = new ProfessorJpaController(emf);
+    /**
+     * Attribute: firstFormat
+     */
+    private static final String firstFormat = "dd/MM/yyyy HH:mm";
+
+    /**
+     * Default constructor
+     */
+    public NotificacaoService() {
+        EntityManagerFactory emf = 
+                Persistence.createEntityManagerFactory("pro_subPU");
+        this.ausenciaController = new AusenciaJpaController(emf);
+        this.profController = new ProfessorJpaController(emf);
     }
-    
-    public String notificarAusencia(Long idProfessor, String dataInicio, String dataFim, String motivo, List<String> nomesProfessoresIndicados) throws ParseException {
-        
+
+    /**
+     * Método para notificar ausência.
+     * @param idProfessor Id do professor.
+     * @param dataInicio Data de Início.
+     * @param dataFim Data Final.
+     * @param motivo Motivo.
+     * @param nomesProfessoresIndicados Lista dos nomes dos professores indicados.
+     * @return Retorno de confirmação.
+     * @throws ParseException 
+     */
+    public String notificarAusencia(Long idProfessor, String dataInicio, 
+            String dataFim, String motivo, 
+            List<String> nomesProfessoresIndicados) throws ParseException {
+
         SimpleDateFormat sdf = null;
-        
+
         DateTime inicio = null;
         DateTime fim = null;
+
+        final int hour23 = 23;
+        final int minute59 = 59;
+        final String seccondFormat = "dd/MM/yyyy";
         
         try {
-            sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            sdf = new SimpleDateFormat(NotificacaoService.firstFormat);
             inicio = new DateTime(sdf.parse(dataInicio));
             fim = new DateTime(sdf.parse(dataFim));
-        } catch (ParseException pe) {
-            sdf = new SimpleDateFormat("dd/MM/yyyy");
-            inicio = new DateTime(sdf.parse(dataInicio)).withHourOfDay(0).withMinuteOfHour(0);
-            fim = new DateTime(sdf.parse(dataFim)).withHourOfDay(23).withMinuteOfHour(59);
+        } catch (ParseException ex) {
+            sdf = new SimpleDateFormat(seccondFormat);
+            inicio = new DateTime(sdf.parse(dataInicio)).withHourOfDay(0).
+                    withMinuteOfHour(0);
+            fim = new DateTime(sdf.parse(dataFim)).withHourOfDay(hour23).
+                    withMinuteOfHour(minute59);
         }
 
         Interval periodo = new Interval(inicio, fim);
-        
-        Professor professor = profController.findProfessor(idProfessor);
-        
+
+        Professor professor = this.profController.findProfessor(idProfessor);
+
         Random r = new Random();
-               
+
         List<Ausencia> ausencias = professor.gerarAusencias(periodo, motivo);
-        
+
         List<String> codigos = new LinkedList<>();
-        
-        for(Ausencia ausencia : ausencias)
-        {
-            String codigo = Integer.toString(r.nextInt(10000));
-            
+
+        final int num1 = 10000;
+        for (Ausencia ausencia : ausencias) {
+            String codigo = Integer.toString(r.nextInt(num1));
+
             ausencia.setCodigo(codigo);
-            
+
             codigos.add(codigo);
-            
-            for(String nomeProf : nomesProfessoresIndicados){
-                Professor professorIndicado = profController.findProfessor(nomeProf);
+
+            for (String nomeProf : nomesProfessoresIndicados) {
+                Professor professorIndicado = 
+                        this.profController.findProfessor(nomeProf);
                 ausencia.indicarSubstituto(professorIndicado);
             }
 
-            ausenciaController.create(ausencia);
+            this.ausenciaController.create(ausencia);
         }
-        
-        if(codigos.size() > 0)
-            return codigos.get(0);       
-        else
+
+        if (codigos.size() > 0) {
+            return codigos.get(0);
+        } else {
             return "0";
+        }
     }
 
+    /**
+     * Método para listar ausências.
+     * 
+     * @return  Lista de ausencias.
+     */
     public List<AusenciaModel> listarAusencias() {
-        
-        List<Ausencia> ausencias = ausenciaController.findAusenciaEntities();
+
+        List<Ausencia> ausencias = 
+                this.ausenciaController.findAusenciaEntities();
         List<AusenciaModel> modelos = new LinkedList<>();
-        
-        for(Ausencia ausencia : ausencias){
-            
+
+        for (Ausencia ausencia : ausencias) {
+
             AusenciaModel modelo = this.montarAusencia(ausencia);
-            
+
             modelos.add(modelo);
         }
-        
+
         return modelos;
     }
-    
-    /*
-    public List<AusenciaModel> listarAusenciasPorEstado(EstadoAusencia estado){
-        
-        List<Ausencia> ausencias = ausenciaController.findAusenciaEntities();
-        List<AusenciaModel> modelos = new ArrayList<AusenciaModel>();
-        
-        for(Ausencia ausencia : ausencias){
-            
-            if(ausencia.getEstado().equals(estado)){
-                AusenciaModel modelo = this.montarAusencia(ausencia);
-                
-                modelos.add(modelo);   
-            }               
-        }            
-        return modelos;   
-    }
-    */
-    
-    public List<AusenciaModel> listarAusenciasPorProfessor(String usernameProfessor){
-        
-        Professor professor = profController.findProfessorPorUsername(usernameProfessor);
-        
-        List<Ausencia> ausenciasPorProfessor = ausenciaController.listAusenciasPorProfessor(professor);
-        
+
+    /**
+     * Método para listar ausências por professor.
+     * 
+     * @param usernameProfessor Username do professor.
+     * @return  Lista de ausencias.
+     */
+    public List<AusenciaModel> listarAusenciasPorProfessor(String usernameProfessor) {
+
+        Professor professor = this.profController.findProfessorPorUsername(
+                usernameProfessor);
+
+        List<Ausencia> ausenciasPorProfessor = 
+                this.ausenciaController.listAusenciasPorProfessor(professor);
+
         List<AusenciaModel> modelos = new ArrayList<>();
-        
-        for(Ausencia ausencia : ausenciasPorProfessor){
-            
+
+        for (Ausencia ausencia : ausenciasPorProfessor) {
+
             AusenciaModel modelo = this.montarAusencia(ausencia);
-            
+
             modelos.add(modelo);
-            
+
         }
-        
+
         return modelos;
     }
-    
-    public List<AusenciaModel> listarAusenciasPorIndicacaoDeSubstituto(String usernameProfessor){
-        
-        Professor professorIndicado = profController.findProfessorPorUsername(usernameProfessor);
-        
-        List<Ausencia> ausenciasComIndicacaoDeSubstituto = ausenciaController.listAusenciasPorIndicacaoDeSubstituto(professorIndicado);
-        
+
+    /**
+     * Método para listar ausências por indicação de professor substituto.
+     * 
+     * @param usernameProfessor Username do professor.
+     * @return  Lista de ausencias.
+     */
+    public List<AusenciaModel> listarAusenciasPorIndicacaoDeSubstituto(
+            String usernameProfessor) {
+
+        Professor professorIndicado = 
+                this.profController.findProfessorPorUsername(usernameProfessor);
+
+        List<Ausencia> ausenciasComIndicacaoDeSubstituto = 
+                this.ausenciaController.listAusenciasPorIndicacaoDeSubstituto(
+                        professorIndicado);
+
         List<AusenciaModel> modelos = new ArrayList<>();
-        
-        for(Ausencia ausencia : ausenciasComIndicacaoDeSubstituto){
-            
+
+        for (Ausencia ausencia : ausenciasComIndicacaoDeSubstituto) {
+
             AusenciaModel modelo = this.montarAusencia(ausencia);
-            
+
             modelos.add(modelo);
-            
+
         }
-        
+
         return modelos;
     }
-    
-    public List<AusenciaModel> listarAusenciasPorSubstituto(String usernameProfessor){
-        
-        Professor professorIndicado = profController.findProfessorPorUsername(usernameProfessor);
-        
-        List<Ausencia> ausenciasComIndicacaoDeSubstituto = ausenciaController.listAusenciasPorSubstituto(professorIndicado);
-        
+
+    /**
+     * Método para listar ausências por professor substituto.
+     * 
+     * @param usernameProfessor Username do professor.
+     * @return Lista de ausencias.
+     */
+    public List<AusenciaModel> listarAusenciasPorSubstituto(
+            String usernameProfessor) {
+
+        Professor professorIndicado = 
+                this.profController.findProfessorPorUsername(usernameProfessor);
+
+        List<Ausencia> ausenciasComIndicacaoDeSubstituto = 
+                this.ausenciaController.listAusenciasPorSubstituto(
+                        professorIndicado);
+
         List<AusenciaModel> modelos = new ArrayList<>();
-        
-        for(Ausencia ausencia : ausenciasComIndicacaoDeSubstituto){
-            
+
+        for (Ausencia ausencia : ausenciasComIndicacaoDeSubstituto) {
+
             AusenciaModel modelo = this.montarAusencia(ausencia);
-            
+
             modelos.add(modelo);
-            
+
         }
-        
+
         return modelos;
     }
-    
-    public void aceitarSubstituicao(Long ausenciaId)
-    {        
+
+    /**
+     * Método para aceitar uma substituição.
+     * 
+     * @param ausenciaId Id da ausencia.
+     */
+    public void aceitarSubstituicao(Long ausenciaId) {
         try {
-            Ausencia ausencia = ausenciaController.findAusencia(ausenciaId);
+            Ausencia ausencia = 
+                    this.ausenciaController.findAusencia(ausenciaId);
             ausencia.confirmar();
-            ausenciaController.edit(ausencia);
+            this.ausenciaController.edit(ausencia);
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName()).
+                    log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void recusarSubstituicao(Long ausenciaId)
-    {
+
+    /**
+     * Método para recusar uma substituição.
+     * 
+     * @param ausenciaId Id da ausencia.
+     */
+    public void recusarSubstituicao(Long ausenciaId) {
         try {
-            Ausencia ausencia = ausenciaController.findAusencia(ausenciaId);
+            Ausencia ausencia = 
+                    this.ausenciaController.findAusencia(ausenciaId);
             ausencia.recusar();
-            ausenciaController.edit(ausencia);
+            this.ausenciaController.edit(ausencia);
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName()).
+                    log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
     }
-    
-    private AusenciaModel montarAusencia(Ausencia ausencia){
+
+    /**
+     * Método para montar uma ausência
+     * 
+     * @param ausencia Ausencia.
+     * @return Objeto de ausencia.
+     */
+    private AusenciaModel montarAusencia(Ausencia ausencia) {
 
         AusenciaModel modelo = new AusenciaModel();
 
         modelo.codigo = ausencia.getCodigo();
         modelo.professorAusente = ausencia.getProfessor().getNome();
-        
-        if(ausencia.getProfessorSubstituto() != null){
-            modelo.professorSubstituto = ausencia.getProfessorSubstituto().getNome();    
-        }else{
+
+        if (ausencia.getProfessorSubstituto() != null) {
+            modelo.professorSubstituto = 
+                    ausencia.getProfessorSubstituto().getNome();
+        } else {
             modelo.professorSubstituto = "";
         }
-        
-        //modelo.professorSubstituto = ausencia.getIndicacoesSubstitutos().getNome();
+
         modelo.estado = ausencia.getEstado().getDescricao();
         modelo.id = ausencia.getId();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat(NotificacaoService.firstFormat);
         Interval periodo = ausencia.getPeriodo();
         modelo.dataInicio = sdf.format(periodo.getStart().toDate());
         modelo.dataFim = sdf.format(periodo.getEnd().toDate());
-        
+
         return modelo;
-        
+
     }
 
+    /**
+     * Método para definir um professor substituto.
+     * 
+     * @param codigo Código do professor.
+     * @param nomeProfessor Nome do professor.
+     */
     public void definirSubstituto(String codigo, String nomeProfessor) {
-        
-        Professor profSubstituto = profController.findProfessor(nomeProfessor);
 
-        if(profSubstituto == null){
-            throw new IllegalStateException("Professor de nome " + nomeProfessor + " não existe");
+        Professor profSubstituto = this.profController.findProfessor(nomeProfessor);
+        final String naoExiste = " não existe";
+
+        if (profSubstituto == null) {
+            throw new IllegalStateException(
+                    "Professor de nome " + nomeProfessor + naoExiste);
         }
-        
-        Ausencia ausencia = ausenciaController.findAusencia(codigo);
-        
-        
-        if(ausencia == null){
-            throw new IllegalStateException("Ausência de código " + codigo + " não existe");
-        }        
-        
+
+        Ausencia ausencia = this.ausenciaController.findAusencia(codigo);
+
+        if (ausencia == null) {
+            throw new IllegalStateException(
+                    "Ausência de código " + codigo + naoExiste);
+        }
+
         ausencia.setProfessorSubstituto(profSubstituto);
-        
+
         try {
-            ausenciaController.edit(ausencia);
+            this.ausenciaController.edit(ausencia);
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName()).
+                    log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
 
-        
     }
-    
-    public void cancelarAusencia(String codigo){
-        
-        Ausencia ausencia = ausenciaController.findAusencia(codigo);
-        
+
+    /**
+     * Método para cancelar uma ausência.
+     * 
+     * @param codigo Cõdigo da ausencia.
+     */
+    public void cancelarAusencia(String codigo) {
+
+        Ausencia ausencia = this.ausenciaController.findAusencia(codigo);
+
         ausencia.cancelarAusencia();
         try {
-            ausenciaController.edit(ausencia);
+            this.ausenciaController.edit(ausencia);
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName()).
+                    log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
-    public void cancelarAulas(String codigo){
-        
-        Ausencia ausencia = ausenciaController.findAusencia(codigo);
-        
+
+    /**
+     * Método para cancelar aulas.
+     * 
+     * @param codigo Cõdigo da ausencia.
+     */
+    public void cancelarAulas(String codigo) {
+
+        Ausencia ausencia = this.ausenciaController.findAusencia(codigo);
+
         ausencia.cancelarAulas();
         try {
-            ausenciaController.edit(ausencia);
+            this.ausenciaController.edit(ausencia);
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName()).
+                    log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(NotificacaoService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NotificacaoService.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
 }
