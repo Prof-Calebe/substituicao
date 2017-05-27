@@ -6,6 +6,7 @@ package servico;
 
 import datamapper.UsuarioJpaController;
 import dominio.Usuario;
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
