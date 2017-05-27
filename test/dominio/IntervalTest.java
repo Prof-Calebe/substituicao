@@ -6,15 +6,15 @@ package dominio;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
+import org.joda.time.Interval;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import org.joda.time.Interval;
-import org.junit.Assert;
-import org.joda.time.Instant;
+
+
 
 /**
  *
