@@ -17,7 +17,6 @@ import javax.persistence.Persistence;
  */
 public class LoginService {
 
-
     private final UsuarioJpaController controller;
 
     public LoginService(){
