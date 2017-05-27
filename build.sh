@@ -6,7 +6,7 @@ set -o pipefail
 _PWD=`pwd`
 CopyLibs=$_PWD/lib/org-netbeans-modules-java-j2seproject-copylibstask.jar
 
-CLASSPATH=$CLASSPATH:$_PWD/lib/ant-contrib-1.0b3.jar:$CopyLibs:$_PWD\glassfish3\glassfish\lib\appserv-rt.jar:$_PWD\glassfish3\glassfish\lib\gf-client.jar:$_PWD/lib/junit-4.12.jar
+CLASSPATH=$CLASSPATH:$_PWD/lib/ant-contrib-1.0b3.jar:$CopyLibs:$_PWD\glassfish3\glassfish\lib\appserv-rt.jar:$_PWD\glassfish3\glassfish\lib\gf-client.jar
 export CLASSPATH
 echo "CLASSPATH:"$CLASSPATH
 
