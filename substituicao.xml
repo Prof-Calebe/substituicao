@@ -60,9 +60,9 @@
     </jacoco:report>
   </target>
 
-  <target name="clean">
+<!--  <target name="clean">
     <ant antfile="build.xml" target="clean" />
-  </target>
+  </target>-->
 
   <target name="substituicao" depends="sub-report" description="Build substituicao project."/>
   
