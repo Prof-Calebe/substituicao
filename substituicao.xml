@@ -60,12 +60,10 @@
     </jacoco:report>
   </target>
 
-<!--  <target name="clean">
-    <ant antfile="build.xml" target="clean" />
-  </target>-->
-
   <target name="substituicao" depends="sub-report" description="Build substituicao project."/>
   
+  
+  <!-- Example-->
   <path id="classpath.base" />
 
   <path id="classpath.test">
