@@ -88,6 +88,9 @@
         <Property name="hideActionText" type="boolean" value="true"/>
         <Property name="label" type="java.lang.String" value="Confirmar"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_ConfirmarMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="btn_Cancelar">
       <Properties>
