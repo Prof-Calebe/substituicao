@@ -106,6 +106,7 @@ public class Aula implements Serializable {
     public boolean bateCom(Aula outraAula) {
         return this.diaDaSemana == outraAula.getDiaDaSemana()
         && this.bateHorarioCom(outraAula.getPeriodo());
+        
     }
     
     public boolean bateHorarioCom(Interval outroPeriodo){
